@@ -1,0 +1,103 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?geequ 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?geequ \- Computes row and column scaling factors intended to equilibrate a general rectangular distributed matrix and reduce its condition number.
+.SH SYNOPSIS
+.PP
+\fBcall psgeequ\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIr\fR, \fIc\fR, \fIrowcnd\fR, \fIcolcnd\fR, \fIamax\fR, \fIinfo\fR)
+.PP
+\fBcall pdgeequ\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIr\fR, \fIc\fR, \fIrowcnd\fR, \fIcolcnd\fR, \fIamax\fR, \fIinfo\fR)
+.PP
+\fBcall pcgeequ\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIr\fR, \fIc\fR, \fIrowcnd\fR, \fIcolcnd\fR, \fIamax\fR, \fIinfo\fR)
+.PP
+\fBcall pzgeequ\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIr\fR, \fIc\fR, \fIrowcnd\fR, \fIcolcnd\fR, \fIamax\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. The number of rows  to be operated on, that is, the number of rows of the distributed submatrix sub(\fIA\fR)  (\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The number of columns  to be operated on, that is, the number of columns of the distributed submatrix sub(\fIA\fR) (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgeequ\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgeequ\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgeequ\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgeequ\fR . 
+.IP
+Pointer into the local memory to an array of local dimension \fIa\fR(\fIlld\(ula\fR,\fILOCc\fR(\fIja\fR+\fIn\fR-1)).
+.IP
+The array \fIa\fR contains the local pieces of the \fIm\fR-by-\fIn\fR distributed matrix whose equilibration factors are to be computed.
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIA\fR indicating the first row and the first column of the submatrix sub(\fIA\fR), respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBr\fR, \fBc\fR
+.NL
+(local) \fBREAL\fR for single precision flavors;
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Arrays, dimension \fILOCr\fR(\fIm\(ula)\fR and \fILOCc\fR(\fIn\(ula)\fR, respectively. 
+.IP
+If \fIinfo\fR = 0, or \fIinfo\fR>\fIia+m-1\fR, the array \fIr\fR (\fIia:ia+m-1\fR) contains the row scale factors for sub(\fIA\fR). \fIr\fR is aligned with the distributed matrix \fIA\fR, and replicated across every process column. \fIr\fR is tied to the distributed matrix \fIA\fR. 
+.IP
+If \fIinfo\fR = 0, the array \fIc\fR (\fIja:ja+n-1\fR) contains the column scale factors for sub(\fIA\fR). \fIc\fR is aligned with the distributed matrix \fIA\fR, and replicated down every process row. \fIc\fR is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBrowcnd\fR, \fBcolcnd\fR
+.NL
+(global) \fBREAL\fR for single precision flavors;
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+If \fIinfo\fR = 0 or \fIinfo\fR>\fIia+m-1\fR, \fIrowcnd\fR contains the ratio of the smallest \fIr\fR(i) to the largest \fIr\fR(i) (\fIia\fR \(<= i \(<= \fIia+m-1\fR).  If \fIrowcnd\fR\(>= 0.1 and \fIamax\fR is neither too large nor too small, it is not worth scaling by \fIr\fR (\fIia:ia+m-1\fR). 
+.IP
+If \fIinfo\fR = 0, \fIcolcnd\fR contains the ratio of the smallest \fIc\fR(j) to the largest \fIc\fR(j)  (\fIja\fR \(<= j \(<= \fIja+n-1\fR). 
+.IP
+If \fIcolcnd\fR\(>= 0.1, it is not worth scaling by \fIc\fR(\fIja:ja+n-1\fR).
+.TP 10
+\fBamax\fR
+.NL
+(global) \fBREAL\fR for single precision flavors;
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Absolute value of the largest matrix element. If \fIamax\fR is very close to overflow or very close to underflow, the matrix should be scaled.
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. If \fIinfo\fR=0, the execution is successful.
+.IP
+\fIinfo\fR < 0: 
+.IP
+If the \fIi\fRth argument is an array and the \fIj\fRth entry had an illegal value, then \fIinfo\fR = -(\fIi\fR*100+\fIj\fR); if the \fIi-\fRth argument is a  scalar and had an illegal value, then \fIinfo\fR = \fI-i\fR.
+.IP
+\fIinfo\fR> 0: 
+.IP
+If \fIinfo\fR = \fIi\fR and 
+.IP
+\fIi\fR\(<= \fIm\fR, the \fIi\fRth row of the distributed matrix
+.IP
+sub(\fIA\fR) is exactly zero;
+.IP
+\fIi\fR>\fIm\fR, the (\fIi\fR\fB-\fR\fIm\fR)th column of the distributed
+.IP
+matrix sub(\fIA\fR) is exactly zero.

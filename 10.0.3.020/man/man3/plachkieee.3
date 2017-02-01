@@ -1,0 +1,41 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lachkieee 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lachkieee \- Performs a simple check for the features of the IEEE standard. (C interface function).
+.SH SYNOPSIS
+.PP
+\fBvoid pslachkieee\fR(\fBint \fR\fI*isieee\fR, \fBfloat \fR\fI*rmax\fR, \fBfloat \fR\fI*rmin\fR);
+.PP
+\fBvoid pdlachkieee\fR(\fBint \fR\fI*isieee\fR, \fBfloat \fR\fI*rmax\fR, \fBfloat \fR\fI*rmin\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBrmax\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslachkieee\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlachkieee\fR
+.IP
+The overflow threshold(= \fB?lamch\fR (\fB\'O\'\fR)).
+.TP 10
+\fBrmin\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslachkieee\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlachkieee\fR
+.IP
+The underflow threshold(= \fB?lamch\fR (\fB\'U\'\fR)).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBisieee\fR
+.NL
+(local). \fBINTEGER\fR.
+.IP
+On exit, \fIisieee\fR = 1 implies that all the features of the IEEE standard that we rely on are implemented. On exit, \fIisieee\fR = 0 implies that some the features of the IEEE standard that we rely on are missing. 

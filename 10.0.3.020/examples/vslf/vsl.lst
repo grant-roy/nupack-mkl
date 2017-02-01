@@ -1,0 +1,33 @@
+VSL =                                                                          \
+      vsrngcauchy   vsrngexponential vsrnggaussian vsrnggumbel                 \
+      vsrnglaplace  vsrnglognormal   vsrngrayleigh vsrnguniform                \
+      vsrngweibull vsrnggaussianmv                                             \
+      vdrngcauchy   vdrngexponential vdrnggaussian vdrnggumbel                 \
+      vdrnglaplace  vdrnglognormal   vdrngrayleigh vdrnguniform                \
+      vdrngweibull vdrnggaussianmv                                             \
+      virngbernoulli virngbinomial virnggeometric                              \
+      virnghypergeometric virngnegbinomial virngpoisson                        \
+      virnguniformbits virnguniform virngpoissonv                              \
+      vslcopystream vslcopystreamstate                                         \
+      vslgetnumregbrngs vslgetstreamstatebrng vslleapfrogstream                \
+      vslnewstreamex vslskipaheadstream                                        \
+      vdrngbeta vdrnggamma vsrngbeta vsrnggamma                                \
+      vabsrngipoisson soboluserdirnums                                         \
+      vslstream2file                                                           \
+      example_ddcon example_ddcor example_scond example_sconf                  \
+      example_scord example_scorf example_sdcon example_sdcor                  \
+      example_sddcon example_sddcor                                            \
+      vslconvcopytask vslconvdeletetask vslconvsetdecimation                   \
+      vslconvsetinternalprecision vslconvsetmode vslconvsetstart               \
+      vslcorrcopytask vslcorrdeletetask vslcorrsetdecimation                   \
+      vslcorrsetinternalprecision vslcorrsetmode vslcorrsetstart               \
+      vsldconvexec vsldconvexec1d vsldconvexecx vsldconvexecx1d                \
+      vsldconvnewtask vsldconvnewtask1d vsldconvnewtaskx                       \
+      vsldconvnewtaskx1d vsldcorrexec vsldcorrexec1d                           \
+      vsldcorrexecx vsldcorrexecx1d vsldcorrnewtask                            \
+      vsldcorrnewtask1d vsldcorrnewtaskx vsldcorrnewtaskx1d                    \
+      vslsconvexec vslsconvexec1d vslsconvexecx vslsconvexecx1d                \
+      vslsconvnewtask vslsconvnewtask1d vslsconvnewtaskx                       \
+      vslsconvnewtaskx1d vslscorrexec vslscorrexec1d                           \
+      vslscorrexecx vslscorrexecx1d vslscorrnewtask                            \
+      vslscorrnewtask1d vslscorrnewtaskx vslscorrnewtaskx1d

@@ -1,0 +1,7 @@
+CBLAS  = $(LEVEL1) $(LEVELS)
+LEVELS = $(LEVEL2) $(LEVEL3) 
+
+LEVEL1 = sblat1 dblat1 cblat1 zblat1   
+LEVEL2 = sblat2 dblat2 cblat2 zblat2
+LEVEL3 = sblat3 dblat3 cblat3 zblat3
+

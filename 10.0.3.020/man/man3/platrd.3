@@ -1,0 +1,171 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?latrd 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?latrd \- Reduces the first \fInb\fR rows and columns of a symmetric/Hermitian matrix \fIA\fR to real tridiagonal form by an orthogonal/unitary similarity transformation.
+.SH SYNOPSIS
+.PP
+\fBcall pslatrd\fR(\fIuplo\fR, \fIn\fR, \fInb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItau\fR, \fIw\fR, \fIiw\fR, \fIjw\fR, \fIdescw\fR, \fIwork\fR)
+.PP
+\fBcall pdlatrd\fR(\fIuplo\fR, \fIn\fR, \fInb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItau\fR, \fIw\fR, \fIiw\fR, \fIjw\fR, \fIdescw\fR, \fIwork\fR)
+.PP
+\fBcall pclatrd\fR(\fIuplo\fR, \fIn\fR, \fInb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItau\fR, \fIw\fR, \fIiw\fR, \fIjw\fR, \fIdescw\fR, \fIwork\fR)
+.PP
+\fBcall pzlatrd\fR(\fIuplo\fR, \fIn\fR, \fInb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItau\fR, \fIw\fR, \fIiw\fR, \fIjw\fR, \fIdescw\fR, \fIwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+(global) \fBCHARACTER\fR. 
+.IP
+Specifies whether the upper or lower triangular part of the symmetric/Hermitian matrix sub(\fIA\fR) is stored:
+.IP
+= \fB\'U\'\fR: Upper triangular
+.IP
+= \fBL\fR: Lower triangular.
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of rows and columns to be operated on, that is, the order of the distributed submatrix sub(\fIA\fR). \fIn\fR \(>= 0.
+.TP 10
+\fBnb\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of rows and columns to be reduced.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBpslatrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlatrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclatrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlatrd\fR. 
+.IP
+Pointer into the local memory to an array of \fBDIMENSION\fR(\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1)). 
+.IP
+On entry, this array contains the local pieces of the symmetric/Hermitian distributed matrix sub(\fIA\fR).
+.IP
+If \fIuplo\fR = \fBU\fR, the leading \fIn\fR-by-\fIn\fR upper triangular part of sub(\fIA\fR) contains the upper triangular part of the matrix, and its strictly lower triangular part is not referenced.
+.IP
+If \fIuplo\fR = \fBL\fR, the leading \fIn\fR-by-\fIn\fR lower triangular part of sub(\fIA\fR) contains the lower triangular part of the matrix, and its strictly upper triangular part is not referenced.
+.TP 10
+\fBia\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The row index in the global array \fIA\fR indicating the first row of sub(\fIA\fR).
+.TP 10
+\fBja\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The column index in the global array \fIA\fR indicating the first column of sub(\fIA\fR).
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array of \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBiw\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The row index in the global array \fIW\fR indicating the first row of sub(\fIW\fR).
+.TP 10
+\fBjw\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The column index in the global array \fIW\fR indicating the first column of sub(\fIW\fR).
+.TP 10
+\fBdescw\fR
+.NL
+(global and local) \fBINTEGER\fR array of \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix \fIW\fR.
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpslatrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlatrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclatrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlatrd\fR. 
+.IP
+Workspace array of \fBDIMENSION\fR (\fInb\(ula\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+(local) 
+.IP
+On exit, if \fIuplo\fR = \fB\'U\'\fR, the last \fInb\fR columns have been reduced to tridiagonal form, with the diagonal elements overwriting the diagonal elements of sub(\fIA\fR); the elements above the diagonal with the array \fItau\fR represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors;
+.IP
+if \fIuplo\fR = \fB\'L\'\fR, the first \fInb\fR columns have been reduced to tridiagonal form, with the diagonal elements overwriting the diagonal elements of sub(\fIA\fR); the elements below the diagonal with the array \fItau\fR represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors.
+.TP 10
+\fBd\fR
+.NL
+(local) 
+.IP
+\fBREAL\fR for \fBpslatrd/pclatrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlatrd/pzlatrd\fR. 
+.IP
+Array, \fBDIMENSION\fR\fI LOCc\fR(\fIja\fR+\fIn\fR-1). 
+.IP
+The diagonal elements of the tridiagonal matrix \fIT\fR: \fId\fR(i) = \fIa\fR(i,i). \fId\fR is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBe\fR
+.NL
+(local) 
+.IP
+\fBREAL\fR for \fBpslatrd/pclatrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlatrd/pzlatrd\fR. 
+.IP
+Array, \fBDIMENSION \fR\fILOCc\fR(\fIja\fR+\fIn\fR-1) if \fIuplo\fR = \fB\'U\'\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-2) otherwise. 
+.IP
+The off-diagonal elements of the tridiagonal matrix \fIT\fR:
+.IP
+\fIe\fR(\fIi\fR) = \fIa\fR(\fIi\fR, \fIi\fR + 1) if \fIuplo\fR = \fB\'U\'\fR, 
+.IP
+\fIe\fR(\fIi\fR) = \fIa\fR(\fIi\fR + 1, \fIi\fR) if \fIuplo\fR = \fBL\fR.
+.IP
+\fIe\fR is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBtau\fR
+.NL
+(local) 
+.IP
+\fBREAL\fR for \fBpslatrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlatrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclatrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlatrd\fR. 
+.IP
+Array, \fBDIMENSION\fR\fI LOCc\fR(\fIja\fR+\fIn\fR-1). This array contains the scalar factors \fItau\fR of the elementary reflectors. \fItau\fR is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBw\fR
+.NL
+(local) 
+.IP
+\fBREAL\fR for \fBpslatrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlatrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclatrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlatrd\fR. 
+.IP
+Pointer into the local memory to an array of \fBDIMENSION\fR (\fIlld\(ulw\fR, \fInb\(ulw\fR). This array contains the local pieces of the \fIn\fR-by-\fInb\(ulw\fR matrix \fIw\fR required to update the unreduced part of sub(\fIA\fR).

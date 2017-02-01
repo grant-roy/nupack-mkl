@@ -1,0 +1,103 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?geqrf 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?geqrf \- Computes the QR factorization of a general m-by-n matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgeqrf\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall dgeqrf\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall cgeqrf\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall zgeqrf\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall geqrf\fR(\fIa\fR[, \fItau\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows in the matrix \fIA\fR (\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns in \fIA\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsgeqrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgeqrf\fR
+.IP
+\fBCOMPLEX\fR for \fBcgeqrf\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgeqrf\fR. 
+.IP
+Arrays: \fIa\fR(\fIlda\fR,*) contains the matrix \fIA\fR. The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIm\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. The size of the \fIwork\fR array (\fIlwork\fR\(>=\fIn\fR). 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+Overwritten by the factorization data as follows:
+.IP
+If \fIm\fR\(>=\fIn\fR, the elements below the diagonal are overwritten by the details of the unitary matrix \fIQ\fR, and the upper triangle is overwritten by the corresponding elements of the upper triangular matrix \fIR\fR.
+.IP
+If \fIm\fR < \fIn\fR, the strictly lower triangular part is overwritten by the details of the unitary matrix \fIQ\fR, and the remaining elements are overwritten by the corresponding elements of the \fIm\fR-by-\fIn\fR upper trapezoidal matrix \fIR\fR.
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBsgeqrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgeqrf\fR
+.IP
+\fBCOMPLEX\fR for \fBcgeqrf\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgeqrf\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max (1, min(\fIm\fR, \fIn\fR)). Contains additional information on the matrix \fIQ\fR.
+.TP 10
+\fBwork\fR(1)
+.NL
+If \fIinfo\fR = 0, on exit \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. Use this \fIlwork\fR for subsequent runs.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fIgeqrf\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIm,n\fR).
+.TP 10
+\fBtau\fR
+.NL
+Holds the vector of length min(\fIm,n\fR)

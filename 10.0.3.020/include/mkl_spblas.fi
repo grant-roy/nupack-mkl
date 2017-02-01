@@ -1,0 +1,581 @@
+!*******************************************************************************
+!                              INTEL CONFIDENTIAL
+!   Copyright(C) 2005-2008 Intel Corporation. All Rights Reserved.
+!   The source code contained  or  described herein and all documents related to
+!   the source code ("Material") are owned by Intel Corporation or its suppliers
+!   or licensors.  Title to the  Material remains with  Intel Corporation or its
+!   suppliers and licensors. The Material contains trade secrets and proprietary
+!   and  confidential  information of  Intel or its suppliers and licensors. The
+!   Material  is  protected  by  worldwide  copyright  and trade secret laws and
+!   treaty  provisions. No part of the Material may be used, copied, reproduced,
+!   modified, published, uploaded, posted, transmitted, distributed or disclosed
+!   in any way without Intel's prior express written permission.
+!   No license  under any  patent, copyright, trade secret or other intellectual
+!   property right is granted to or conferred upon you by disclosure or delivery
+!   of the Materials,  either expressly, by implication, inducement, estoppel or
+!   otherwise.  Any  license  under  such  intellectual property  rights must be
+!   express and approved by Intel in writing.
+!
+!*******************************************************************************
+!  Content:
+!    Intel(R) Math Kernel Library (MKL) interface for Sparse BLAS level 2,3 routines
+!*******************************************************************************
+
+!DEC$IF .NOT. DEFINED (MKL_SPBLAS_HEADER)
+
+!DEC$DEFINE MKL_SPBLAS_HEADER
+      INTERFACE
+      subroutine mkl_scsrgemv( transa, m,                               &
+     &a, ia, ja,  x, y)
+      character         transa
+      integer           m
+      integer 		    ia(*), ja(*)
+      real*4            a(*)
+      real*4            y(*), x(*)
+      END
+      END INTERFACE
+
+
+      INTERFACE
+      subroutine  mkl_dcoomv( transa, m, k, alpha, matdescra,           &
+     &val, indx, jndx, nnz,  x, beta, y)
+      character          transa
+      character          matdescra(*)
+      integer            m, k, nnz
+      double precision   alpha, beta
+      integer            indx(*), jndx(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine  mkl_dcoosv( transa, m, alpha, matdescra,              &
+     &val, indx, jndx, nnz,  x,  y)
+      character          transa
+      character          matdescra(*)
+      integer            m,  nnz
+      double precision   alpha
+      integer            indx(*), jndx(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine  mkl_dcoogemv( transa, m,                              &
+     &val, rowind, colind, nnz,  x, y)
+      character          transa
+      integer            m, nnz
+      integer            rowind(*), colind(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine  mkl_cspblas_dcoogemv( transa, m,                      &
+     &val, rowind, colind, nnz,  x, y)
+      character          transa
+      integer            m, nnz
+      integer            rowind(*), colind(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine  mkl_dcoosymv(uplo, m,                                 &
+     &val, rowind, colind, nnz,  x, y)
+      character          uplo
+      integer            m, nnz
+      integer            rowind(*), colind(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine  mkl_cspblas_dcoosymv(uplo, m,                         &
+     &val, rowind, colind, nnz,  x, y)
+      character          uplo
+      integer            m, nnz
+      integer            rowind(*), colind(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine  mkl_dcootrsv(uplo, transa, diag, m,                   &
+     &val, rowind, colind, nnz,  x, y)
+      character          uplo, transa, diag
+      integer            m, nnz
+      integer            rowind(*), colind(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine  mkl_cspblas_dcootrsv(uplo, transa, diag, m,           &
+     &val, rowind, colind, nnz,  x, y)
+      character          uplo, transa, diag
+      integer            m, nnz
+      integer            rowind(*), colind(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcscmv( transa, m, k, alpha, matdescra,            &
+     &val, indx, pntrb, pntre,  x, beta, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m,  k
+      double precision   alpha, beta
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcscsv( transa, m, alpha, matdescra,               &
+     &val, indx, pntrb, pntre,  x, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m
+      double precision   alpha
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcsrmv( transa, m, k, alpha, matdescra,            &
+     &val, indx, pntrb, pntre,  x, beta, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m,  k
+      double precision   alpha, beta
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcsrgemv( transa, m,                               &
+     &a, ia, ja,  x, y)
+      character          transa
+      integer            m
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_cspblas_dcsrgemv( transa, m,                       &
+     &a, ia, ja,  x, y)
+      character          transa
+      integer            m
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcsrsymv( uplo, m,                                 &
+     &a, ia, ja,  x, y)
+      character          uplo
+      integer            m
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_cspblas_dcsrsymv( uplo, m,                         &
+     &a, ia, ja,  x, y)
+      character          uplo
+      integer            m
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcsrsv( transa, m, alpha, matdescra,               &
+     &val, indx, pntrb, pntre,  x, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m
+      double precision   alpha
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcsrtrsv( uplo, transa, diag, m,                   &
+     &a, ia, ja,  x, y)
+      character          uplo, transa, diag
+      integer            m
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_cspblas_dcsrtrsv( uplo, transa, diag, m,           &
+     &a, ia, ja,  x, y)
+      character          uplo, transa, diag
+      integer            m
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dbsrmv( transa, m, k, lb, alpha, matdescra,        &
+     &val, indx, pntrb, pntre,  x, beta, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m,  k, lb
+      double precision   alpha, beta
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dbsrgemv( transa, m, lb,                           &
+     &a, ia, ja,  x, y)
+      character          transa
+      integer            m, lb
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_cspblas_dbsrgemv( transa, m, lb,                   &
+     &a, ia, ja,  x, y)
+      character          transa
+      integer            m, lb
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dbsrsymv( uplo, m, lb,                             &
+     &a, ia, ja,  x, y)
+      character          uplo
+      integer            m, lb
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      subroutine mkl_cspblas_dbsrsymv( uplo, m, lb,                     &
+     &a, ia, ja,  x, y)
+      character          uplo
+      integer            m, lb
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dbsrsv( transa, m, lb, alpha, matdescra,           &
+     &val, indx, pntrb, pntre,  x, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, lb
+      double precision   alpha
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dbsrtrsv( uplo, transa, diag, m, lb,               &
+     &a, ia, ja,  x, y)
+      character          uplo, transa, diag
+      integer            m, lb
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_cspblas_dbsrtrsv( uplo, transa, diag, m, lb,       &
+     &a, ia, ja,  x, y)
+      character          uplo, transa, diag
+      integer            m, lb
+      integer 		 ia(*), ja(*)
+      double precision   a(*)
+      double precision   y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_ddiamv( transa, m, k, alpha, matdescra,            &
+     &val, lda, idiag, ndiag,  x, beta, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m,  k, lda, ndiag
+      integer 		 idiag(*)
+      double precision   val(lda, *)
+      double precision   alpha, beta
+      double precision 	 y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_ddiagemv( transa, m,                               &
+     &val, lda, idiag, ndiag,  x, y)
+      character          transa
+      integer            m, lda, ndiag
+      integer 		 idiag(*)
+      double precision   val(lda, *)
+      double precision 	 y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_ddiasymv( uplo, m,                                 &
+     &val, lda, idiag, ndiag,  x, y)
+      character          uplo
+      integer            m, lda, ndiag
+      integer 		 idiag(*)
+      double precision   val(lda, *)
+      double precision 	 y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_ddiasv( transa, m, alpha, matdescra,               &
+     &val, lda, idiag, ndiag,  x, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m,  lda, ndiag
+      integer 		 idiag(*)
+      double precision   val(lda, *)
+      double precision   alpha
+      double precision 	 y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_ddiatrsv( uplo, transa, diag, m,                   &
+     &val, lda, idiag, ndiag,  x, y)
+      character          uplo, transa, diag
+      integer            m, lda, ndiag
+      integer 		 idiag(*)
+      double precision   val(lda, *)
+      double precision 	 y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dskymv(transa, m, k, alpha, matdescra,             &
+     &val, pntr, x,  beta, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m,  k
+      integer 		 pntr(*)
+      double precision   val(*)
+      double precision   alpha, beta
+      double precision 	 y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dskysv(transa, m, alpha, matdescra,                &
+     &val, pntr, x, y)
+      character          transa
+      character 	 matdescra(*)
+      integer            m
+      integer 		 pntr(*)
+      double precision   val(*)
+      double precision   alpha
+      double precision 	 y(*), x(*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine  mkl_dcoomm( transa, m, n, k, alpha, matdescra,        &
+     &val, indx, jndx, nnz,  b, ldb, beta, c, ldc)
+      character          transa
+      character          matdescra(*)
+      integer            m, k, nnz
+      double precision   alpha, beta
+      integer            indx(*), jndx(*)
+      double precision   val(*)
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine  mkl_dcoosm( transa, m, n, alpha, matdescra,           &
+     &val, indx, jndx, nnz,  b, ldb, c, ldc)
+      character          transa
+      character          matdescra(*)
+      integer            m, nnz
+      double precision   alpha
+      integer            indx(*), jndx(*)
+      double precision   val(*)
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcscmm( transa, m, n, k, alpha, matdescra,         &
+     &val, indx, pntrb, pntre, b, ldb, beta, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, n, k, ldb, ldc
+      double precision   alpha, beta
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcscsm( transa, m, n, alpha, matdescra,            &
+     &val, indx, pntrb, pntre, b, ldb, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, n, ldb, ldc
+      double precision   alpha
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcsrmm( transa, m, n, k, alpha, matdescra,         &
+     &val, indx, pntrb, pntre, b, ldb, beta, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, n, k, ldb, ldc
+      double precision   alpha, beta
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dcsrsm( transa, m, n, alpha, matdescra,            &
+     &val, indx, pntrb, pntre, b, ldb, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, n, ldb, ldc
+      double precision   alpha
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_ddiamm( transa, m, n, k, alpha, matdescra,         &
+     &val, lda, idiag, ndiag, b, ldb, beta, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m,  k, n, lda, ndiag, ldb, ldc
+      integer 		 idiag(*)
+      double precision   val(lda, *)
+      double precision   alpha, beta
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_ddiasm( transa, m, n, alpha, matdescra,            &
+     &val, lda, idiag, ndiag, b, ldb, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, n, lda, ndiag, ldb, ldc
+      integer 		 idiag(*)
+      double precision   val(lda, *)
+      double precision   alpha
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dskymm(transa, m, n, k, alpha, matdescra,          &
+     &val, pntr, b, ldb, beta, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, n, k, ldb, ldc
+      integer 		 pntr(*)
+      double precision   val(*)
+      double precision   alpha, beta
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dskysm(transa, m, n, alpha, matdescra,             &
+     &val, pntr, b, ldb, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, n, ldb, ldc
+      integer 		 pntr(*)
+      double precision   val(*)
+      double precision   alpha
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dbsrmm( transa, m, n, k, lb, alpha, matdescra,     &
+     &val, indx, pntrb, pntre, b, ldb, beta, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, n, k, ldb, ldc, lb
+      double precision   alpha, beta
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+      INTERFACE
+      subroutine mkl_dbsrsm( transa, m, n, lb, alpha, matdescra,        &
+     &val, indx, pntrb, pntre, b, ldb, c, ldc)
+      character          transa
+      character 	 matdescra(*)
+      integer            m, n, ldb, ldc, lb
+      double precision   alpha
+      integer 		 indx(*), pntrb(*), pntre(*)
+      double precision   val(*)
+      double precision 	 b(ldb,*), c(ldc,*)
+      END
+      END INTERFACE
+
+!DEC$ENDIF

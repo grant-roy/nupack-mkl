@@ -1,0 +1,25 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH blacs\(ulsetup 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+blacs\(ulsetup \- Allocates virtual machine and spawns processes. 
+.SH SYNOPSIS
+.PP
+\fBcall blacs\(ulsetup\fR( \fImypnum\fR, \fInprocs\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnprocs\fR
+.NL
+\fBINTEGER\fR.  On the process spawned from the keyboard rather than from \fBpvmspawn\fR, this parameter indicates the number of processes to create when building the virtual machine.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBmypnum\fR
+.NL
+\fBINTEGER\fR.  An integer between 0 and (\fBnprocs\fR - 1) that uniquely identifies each process. 
+.TP 10
+\fBnprocs\fR
+.NL
+\fBINTEGER\fR. For all processes other than spawned from the keyboard,  this parameter means the number of processes available for BLACS use.

@@ -1,0 +1,4 @@
+CDFT  =  dm_complex_2d_double_ex1 \
+	 dm_complex_2d_double_ex2 \
+	 dm_complex_2d_single_ex1 \
+	 dm_complex_2d_single_ex2

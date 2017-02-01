@@ -1,0 +1,63 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasorte 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasorte \- Sorts eigenpairs by real and complex data types.
+.SH SYNOPSIS
+.PP
+\fBcall slasorte\fR(\fIs\fR, \fIlds\fR, \fIj\fR, \fIout\fR, \fIinfo\fR)
+.PP
+\fBcall dlasorte\fR(\fIs\fR, \fIlds\fR, \fIj\fR, \fIout\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBs\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+\fBREAL\fR for \fBslasorte\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasorte\fR
+.IP
+Array, \fBDIMENSION\fR (\fIlds\fR). 
+.IP
+On entry, a matrix already in Schur form.
+.TP 10
+\fBlds\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the leading dimension of the array \fIs\fR; unchanged on exit.
+.TP 10
+\fBj\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the order of the matrix \fIS\fR; unchanged on exit.
+.TP 10
+\fBout\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+\fBREAL\fR for \fBslasorte\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasorte\fR
+.IP
+Array, \fBDIMENSION\fR (2*\fIj\fR). The work buffer required by the routine.
+.TP 10
+\fBinfo\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+Set, if the input matrix had an odd number of real eigenvalues and things could not be paired or if the input matrix \fIS\fR was not originally in Schur form. 0 indicates successful completion.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBs\fR
+.NL
+On exit, the diagonal blocks of \fIS\fR have been rewritten to pair the eigenvalues. The resulting matrix is no longer similar to the input.
+.TP 10
+\fBout\fR
+.NL
+Work buffer.

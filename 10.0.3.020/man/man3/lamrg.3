@@ -1,0 +1,41 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lamrg 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lamrg \- Creates a permutation list to merge the entries of two independently sorted sets into a single set sorted in acsending order. 
+.SH SYNOPSIS
+.PP
+\fBcall slamrg\fR( \fIn1\fR, \fIn2\fR, \fIa\fR, \fIstrd1\fR, \fIstrd2\fR, \fIindex\fR)
+.PP
+\fBcall dlamrg\fR( \fIn1\fR, \fIn2\fR, \fIa\fR, \fIstrd1\fR, \fIstrd2\fR, \fIindex\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn1\fR, \fBn2\fR
+.NL
+\fBINTEGER\fR. These arguments contain the respective lengths of the two sorted lists to be merged.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBslamrg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamrg\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIn1\fR+\fIn2\fR). 
+.IP
+The first \fIn1\fR elements of \fIa\fR contain a list of numbers which are sorted in either ascending or descending order. Likewise for the final \fIn2\fR elements.
+.TP 10
+\fBstrd1\fR, \fBstrd2\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+These are the strides to be taken through the array \fIa\fR. Allowable strides are 1 and -1. They indicate whether a subset of \fIa\fR is sorted in ascending (\fIstrdx\fR = 1) or descending (\fIstrdx\fR = -1) order.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBindex\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn1\fR+\fIn2\fR). 
+.IP
+On exit, this array will contain a permutation such that if \fIb\fR(\fIi\fR) = \fIa\fR(\fIindex\fR(\fIi\fR)) for \fIi\fR=1, \fIn1\fR+\fIn\fR2, then \fIb\fR will be sorted in ascending order.

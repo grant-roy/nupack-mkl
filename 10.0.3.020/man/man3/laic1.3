@@ -1,0 +1,83 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laic1 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laic1 \- Applies one step of incremental condition estimation.
+.SH SYNOPSIS
+.PP
+\fBcall slaic1\fR( \fIjob\fR, \fIj\fR, \fIx\fR, \fIsest\fR, \fIw\fR, \fIgamma\fR, \fIsestpr\fR, \fIs\fR, \fIc\fR)
+.PP
+\fBcall dlaic1\fR( \fIjob\fR, \fIj\fR, \fIx\fR, \fIsest\fR, \fIw\fR, \fIgamma\fR, \fIsestpr\fR, \fIs\fR, \fIc\fR)
+.PP
+\fBcall claic1\fR( \fIjob\fR, \fIj\fR, \fIx\fR, \fIsest\fR, \fIw\fR, \fIgamma\fR, \fIsestpr\fR, \fIs\fR, \fIc\fR)
+.PP
+\fBcall zlaic1\fR( \fIjob\fR, \fIj\fR, \fIx\fR, \fIsest\fR, \fIw\fR, \fIgamma\fR, \fIsestpr\fR, \fIs\fR, \fIc\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjob\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIjob\fR =1, an estimate for the largest singular value is computed; 
+.IP
+If \fIjob\fR =2, an estimate for the smallest singular value is computed;
+.TP 10
+\fBj\fR
+.NL
+\fBINTEGER\fR. Length of \fIx\fR and \fIw\fR.
+.TP 10
+\fBx\fR, \fBw\fR
+.NL
+\fBREAL\fR for \fBslaic1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaic1\fR
+.IP
+\fBCOMPLEX\fR for \fBclaic1\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaic1\fR.
+.IP
+Arrays, dimension (\fIj\fR) each. Contain vectors \fIx\fR and \fIw\fR, respectively.
+.TP 10
+\fBsest\fR
+.NL
+\fBREAL\fR for \fBslaic1\fR/\fBclaic1\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaic1\fR/\fBzlaic1\fR. 
+.IP
+Estimated singular value of \fIj\fR-by-\fIj\fR matrix \fIL\fR.
+.TP 10
+\fBgamma\fR
+.NL
+\fBREAL\fR for \fBslaic1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaic1\fR
+.IP
+\fBCOMPLEX\fR for \fBclaic1\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaic1\fR.
+.IP
+The diagonal element \fIgamma\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBsestpr\fR
+.NL
+\fBREAL\fR for \fBslaic1\fR/\fBclaic1\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaic1\fR/\fBzlaic1\fR. 
+.IP
+Estimated singular value of (\fIj\fR+1)-by-(\fIj\fR+1) matrix \fILhat\fR.
+.TP 10
+\fBs\fR, \fBc\fR
+.NL
+\fBREAL\fR for \fBslaic1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaic1\fR
+.IP
+\fBCOMPLEX\fR for \fBclaic1\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaic1\fR.
+.IP
+Sine and cosine needed in forming \fIxhat\fR.

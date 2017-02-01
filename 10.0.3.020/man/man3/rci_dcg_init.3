@@ -1,0 +1,52 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dcg\(ulinit 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dcg\(ulinit \- Initializes the solver.
+.SH SYNOPSIS
+.PP
+\fBdcg\(ulinit\fR(\fIn\fR, \fIx\fR, \fIb\fR, \fIRCI\(ulrequest\fR, \fIipar\fR, \fIdpar\fR, \fItmp\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Contains the size of the problem, and the sizes of arrays \fBx\fR and \fBb\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size \fBn\fR. Contains the initial approximation to the solution vector. Normally it is equal to 0 or to \fBb\fR.
+.TP 10
+\fBb\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size \fBn\fR. Contains the right-hand side vector.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBRCI\(ulrequest\fR
+.NL
+\fBINTEGER\fR. Informs about result of work of theroutine.
+.TP 10
+\fBipar\fR
+.NL
+\fBINTEGER\fR array of size \fB128\fR. Refer to the CG Common Parameters.
+.TP 10
+\fBdpar\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size \fB128\fR. Refer to the CG Common Parameters.
+.TP 10
+\fBtmp\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size (\fBn\fR,4). Refer to the CG Common Parameters.
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBRCI\(ulrequest\fR\fB= 0\fR
+.NL
+The routine completes the task normally.
+.TP 10
+\fBRCI\(ulrequest\fR\fB= -10000\fR
+.NL
+The routine fails to complete the task.

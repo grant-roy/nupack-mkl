@@ -1,0 +1,115 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH PoissonV 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+PoissonV \- Generates Poisson distributed random values with varying mean.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvirngpoissonv\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIlambda\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBviRngPoissonV\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIlambda\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBmethod\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Generation method. The specific value is as follows: 
+.br
+\fBVSL\(ulMETHOD\(ulIPOISSONV\(ulPOISNORM\fR
+.br
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE (VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Descriptor of the stream state structure.
+.br
+\h\'2\'C:\h\'7\'Pointer to the stream state structure
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Number of random values to be generated
+.PP
+.SB Name
+.br
+\h\'1\'\fBlambda\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBdouble*\fR
+.br
+.SB Description
+.br
+\h\'1\'Array of \fIn\fR distribution parameters.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBr\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(OUT)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint*\fR
+.br
+.SB Description
+.br
+\h\'1\'Vector of \fIn\fR Poisson distributed random values
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK\fR, \fBVSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+\fBstream\fR is a \fBNULL\fR pointer.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulSTREAM\fR
+.NL
+\fIstream\fR is not a valid random stream.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulUPDATE\fR
+.NL
+Callback function for an abstract BRNG returns an invalid number of updated entries in a buffer, that is, < 0 or > \fBnmax\fR.
+.TP 10
+\fBVSL\(ulERROR\(ulNO\(ulNUMBERS\fR
+.NL
+Callback function for an abstract BRNG returns 0 as the number of updated entries in a buffer.

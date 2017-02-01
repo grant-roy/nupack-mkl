@@ -1,0 +1,123 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lazq4 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lazq4 \- Computes an approximation to the smallest eigenvalue using values of d from the previous transform. 
+.SH SYNOPSIS
+.PP
+\fBcall slazq4\fR( \fIi0\fR, \fIn0\fR, \fIz\fR, \fIpp\fR, \fIn0in\fR, \fIdmin\fR, \fIdmin1\fR, \fIdmin2\fR, \fIdn\fR, \fIdn1\fR, \fIdn2\fR, \fItau\fR, \fIttype, g\fR)
+.PP
+\fBcall dlazq4\fR( \fIi0\fR, \fIn0\fR, \fIz\fR, \fIpp\fR, \fIn0in\fR, \fIdmin\fR, \fIdmin1\fR, \fIdmin2\fR, \fIdn\fR, \fIdn1\fR, \fIdn2\fR, \fItau\fR, \fIttype, g\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBi0\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+First index.
+.TP 10
+\fBn0\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Last index.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslazq4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq4\fR.
+.IP
+Array, \fBDIMENSION\fR (4*\fIn\fR).
+.IP
+\fBz \fRholds the \fIqd\fR array.
+.TP 10
+\fBpp\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+\fIpp\fR=0 for ping, \fIpp\fR=1 for pong.
+.TP 10
+\fBn0in\fR
+.NL
+\fBINTEGER\fR. The value of \fIn0\fR at start of \fBeigtest\fR.
+.TP 10
+\fBdmin\fR
+.NL
+\fBREAL\fR for \fBslazq4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq4\fR.
+.IP
+Minimum value of \fId\fR.
+.TP 10
+\fBdmin1\fR
+.NL
+\fBREAL\fR for \fBslazq4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq4\fR.
+.IP
+Minimum value of \fId\fR, excluding \fId\fR(\fIn0\fR).
+.TP 10
+\fBdmin2\fR
+.NL
+\fBREAL\fR for \fBslazq4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq4\fR.
+.IP
+Minimum value of \fId\fR, excluding \fId\fR(\fIn0\fR)
+.IP
+and \fId\fR(\fIn0\fR-1).
+.TP 10
+\fBdn\fR
+.NL
+\fBREAL\fR for \fBslazq4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq4\fR.
+.IP
+Contains \fId\fR(\fIn\fR).
+.TP 10
+\fBdn1\fR
+.NL
+\fBREAL\fR for \fBslazq4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq4\fR.
+.IP
+Contains \fId\fR(\fIn\fR-1).
+.TP 10
+\fBdn2\fR
+.NL
+\fBREAL\fR for \fBslazq4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq4\fR.
+.IP
+Contains \fId\fR(\fIn\fR-2).
+.TP 10
+\fBg\fR
+.NL
+\fBREAL\fR for \fBslazq4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq4\fR.
+.IP
+Shift coefficient.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBslazq4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq4\fR.
+.IP
+Shift value.
+.TP 10
+\fBttype\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Shift type.
+.TP 10
+\fBg\fR
+.NL
+Shift coefficient.

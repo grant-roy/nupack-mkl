@@ -1,0 +1,53 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?labad 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?labad \- Returns the square root of the underflow and overflow thresholds if the exponent-range is very large.
+.SH SYNOPSIS
+.PP
+\fBcall pslabad\fR(\fIictxt\fR, \fIsmall\fR, \fIlarge\fR)
+.PP
+\fBcall pdlabad\fR(\fIictxt\fR, \fIsmall\fR, \fIlarge\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBictxt\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The BLACS context handle in which the computation takes place.
+.TP 10
+\fBsmall\fR
+.NL
+(local). 
+.IP
+\fBREAL PRECISION\fR for \fBpslabad\fR. 
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlabad\fR. 
+.IP
+On entry, the underflow threshold as computed by \fBp?lamch\fR.
+.TP 10
+\fBlarge\fR
+.NL
+(local). 
+.IP
+\fBREAL PRECISION\fR for \fBpslabad\fR. 
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlabad\fR. 
+.IP
+On entry, the overflow threshold as computed by \fBp?lamch\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBsmall\fR
+.NL
+(local). 
+.IP
+On exit, if \fIlog10(large)\fR is sufficiently large, the square root of \fIsmall\fR, otherwise unchanged.
+.TP 10
+\fBlarge\fR
+.NL
+(local). 
+.IP
+On exit, if \fIlog10(large)\fR is sufficiently large, the square  root of \fIlarge\fR, otherwise unchanged.

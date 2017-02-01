@@ -1,0 +1,187 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?labrd 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?labrd \- Reduces the first \fInb\fR rows and columns of a general rectangular matrix A to real bidiagonal form by an orthogonal/unitary transformation, and returns auxiliary matrices that are needed to apply the transformation to the unreduced part of A.
+.SH SYNOPSIS
+.PP
+\fBcall pslabrd\fR(\fIm\fR, \fIn\fR, \fInb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItauq\fR, \fItaup\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIy\fR, \fIiy\fR, \fIjy\fR, \fIdescy\fR, \fIwork\fR)
+.PP
+\fBcall pdlabrd\fR(\fIm\fR, \fIn\fR, \fInb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItauq\fR, \fItaup\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIy\fR, \fIiy\fR, \fIjy\fR, \fIdescy\fR, \fIwork\fR)
+.PP
+\fBcall pclabrd\fR(\fIm\fR, \fIn\fR, \fInb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItauq\fR, \fItaup\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIy\fR, \fIiy\fR, \fIjy\fR, \fIdescy\fR, \fIwork\fR)
+.PP
+\fBcall pzlabrd\fR(\fIm\fR, \fIn\fR, \fInb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItauq\fR, \fItaup\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIy\fR, \fIiy\fR, \fIjy\fR, \fIdescy\fR, \fIwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+(global). \fBINTEGER\fR. 
+.IP
+The number of rows to be operated on, that is, the number of rows of the distributed submatrix sub(\fIA\fR).  (\fIm\fR\(>= 0).
+.TP 10
+\fBn\fR
+.NL
+(global).\fBINTEGER\fR. The number of columns to be operated on, that is, the number of columns of the distributed submatrix sub(\fIA\fR). (\fIn \fR\(>= 0).
+.TP 10
+\fBnb\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of leading rows and columns of sub(\fIA\fR) to be          reduced.
+.TP 10
+\fBa\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslabrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlabrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclabrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlabrd\fR. 
+.IP
+Pointer into the local memory to an array of \fBDIMENSION\fR(\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1)). 
+.IP
+On entry, this array contains the local pieces of the general distributed matrix  sub(\fIA\fR).
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix sub(\fIA\fR), respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix A.
+.TP 10
+\fBix\fR, \fBjx\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIx\fR indicating the first row and the first column of the submatrix sub(\fIX\fR), respectively.
+.TP 10
+\fBdescx\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix X.
+.TP 10
+\fBiy\fR, \fBjy\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIy\fR indicating the first row and the first column of the submatrix sub(\fIY\fR), respectively.
+.TP 10
+\fBdescy\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix Y.
+.TP 10
+\fBwork\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslabrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlabrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclabrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlabrd\fR
+.IP
+Workspace array, \fBDIMENSION\fR(\fIlwork\fR)
+.IP
+\fIlwork \fR\(>=\fI nb\(ula\fR + \fInq\fR, 
+.IP
+with  \fInq\fR = \fBnumroc\fR(\fIn\fR+\fBmod\fR(\fIia\fR-1, \fInb\(uly\fR), \fInb\(uly\fR, \fImycol\fR, \fIiacol\fR, \fInpcol\fR)
+.IP
+\fIiacol\fR = \fBindxg2p\fR (\fIja\fR, \fInb\(ula\fR, \fImycol\fR, \fIcsrc\(ula\fR, \fInpcol\fR)
+.IP
+\fBindxg2p\fR and \fBnumroc\fR are ScaLAPACK tool functions; \fImyrow\fR, \fImycol\fR, \fInprow\fR, and \fInpcol\fR can be determined by calling the subroutine \fBblacs\(ulgridinfo\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+(local) 
+.IP
+On exit, the first \fInb\fR rows and columns of the matrix are overwritten; the rest of the distributed matrix sub(\fIA\fR) is unchanged. 
+.IP
+If \fIm \fR\(>=\fI n\fR, elements on and below the diagonal in the first \fInb\fR columns, with the array \fItauq\fR, represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors;and elements above the diagonal in the first \fInb\fR rows, with the  array \fItaup\fR, represent the orthogonal/unitary matrix \fIP\fR as a product of elementary reflectors. 
+.IP
+If \fIm\fR < \fIn\fR, elements below the diagonal in the first \fInb\fR columns, with the array \fItauq\fR, represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors, and elements on and above the diagonal in the first \fInb\fR rows, with the array \fItaup\fR, represent the orthogonal/unitary matrix \fIP\fR as a product of elementary reflectors.
+.TP 10
+\fBd\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslabrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlabrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclabrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlabrd\fR
+.IP
+Array, \fBDIMENSION \fR\fILOCr\fR(\fIia\fR+min(\fIm,n\fR)-1) if \fI m \fR\(>=\fI n\fR; \fILOCc\fR(\fIja\fR+min(\fIm,n\fR)-1) otherwise. The distributed diagonal elements of the bidiagonal distributed matrix \fIB\fR: 
+.IP
+\fId\fR(\fIi\fR) = \fIA\fR(\fIia\fR+\fIi\fR-1, \fIja\fR+\fIi\fR-1).  
+.IP
+\fId\fR is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBe\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslabrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlabrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclabrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlabrd\fR
+.IP
+Array, \fBDIMENSION\fR\fI LOCr\fR(\fIia\fR+min(\fIm,n\fR)-1) if \fIm \fR\(>= \fIn\fR; \fILOCc\fR(\fIja\fR+min(\fIm,n\fR)-2) otherwise. The distributed off-diagonal elements of the bidiagonal distributed matrix \fIB\fR: 
+.IP
+if \fIm \fR\(>=\fI n\fR,  \fIE\fR(\fIi\fR) = \fIA\fR(\fIia\fR+\fIi\fR-1, \fIja\fR+\fIi\fR) for \fIi\fR = 1, 2, ..., \fIn\fR-1; 
+.IP
+if \fIm\fR<\fIn\fR, \fIE\fR(\fIi\fR) = \fIA\fR(\fIia\fR+\fIi\fR, \fIja\fR+\fIi\fR-1) for \fIi\fR = 1, 2, ..., \fIm\fR-1. 
+.IP
+\fIe\fR is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBtauq\fR, \fBtaup\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslabrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlabrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclabrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlabrd\fR
+.IP
+\fB\fRArray \fBDIMENSION\fR\fI LOCc\fR(\fIja\fR+min(\fIm\fR, \fIn\fR)-1) for \fItauq\fR, \fBDIMENSION\fR\fI LOCr\fR(\fIia\fR+min(\fIm\fR, \fIn\fR)-1) for \fItaup\fR. The scalar factors of the elementary reflectors which represent the orthogonal/unitary matrix \fIQ\fR for \fItauq\fR, \fIP\fR for \fItaup\fR. \fItauq\fR and \fItaup\fR are tied to the distributed matrix \fIA\fR.  
+.TP 10
+\fBx\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpslabrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlabrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclabrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlabrd\fR
+.IP
+\fB\fRPointer into the local memory to an array of \fBDIMENSION\fR (\fIlld\(ulx\fR, \fInb\fR). On exit, the local pieces of the distributed \fIm\fR-by-\fInb\fR matrix \fIX\fR(\fIix\fR:\fIix\fR+\fIm\fR-1, \fIjx\fR:\fIjx\fR+\fInb\fR-1) required to update the unreduced part of sub(\fIA\fR).
+.TP 10
+\fBy\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslabrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlabrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpclabrd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlabrd\fR
+.IP
+\fB\fRPointer into the local memory to an array of \fBDIMENSION\fR (\fIlld\(uly\fR, \fInb\fR).  On exit, the local pieces of the distributed \fIn\fR-by-\fInb\fR matrix \fIY\fR(\fIiy\fR:\fIiy\fR+\fIn\fR-1, \fIjy\fR:\fIjy\fR+\fInb\fR-1) required to update the unreduced part of sub(\fIA\fR).

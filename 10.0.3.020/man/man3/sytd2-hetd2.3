@@ -1,0 +1,109 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?sytd2/?hetd2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?sytd2/?hetd2 \- Reduces a symmetric/Hermitian matrix to real symmetric tridiagonal form by an orthogonal/unitary similarity transformation(unblocked algorithm).
+.SH SYNOPSIS
+.PP
+\fBcall ssytd2\fR( \fIuplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fId\fR, \fIe\fR, \fItau\fR, \fIinfo\fR)
+.PP
+\fBcall dsytd2\fR( \fIuplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fId\fR, \fIe\fR, \fItau\fR, \fIinfo\fR)
+.PP
+\fBcall chetd2\fR( \fIuplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fId\fR, \fIe\fR, \fItau\fR, \fIinfo\fR)
+.PP
+\fBcall zhetd2\fR( \fIuplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fId\fR, \fIe\fR, \fItau\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR.
+.IP
+Specifies whether the upper or lower triangular part of the symmetric/Hermitian matrix \fIA\fR is stored:
+.IP
+= \fB\'U\'\fR:  upper triangular
+.IP
+= \fB\'L\'\fR:  lower triangular
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR. \fIn\fR\(>= 0.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBssytd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsytd2\fR
+.IP
+\fBCOMPLEX\fR for \fBchetd2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzhetd2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR, \fIn\fR). 
+.IP
+On entry, the symmetric/Hermitian matrix \fIA\fR. 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the leading \fIn\fR-by-\fIn\fR upper triangular part of \fIa\fR contains the upper triangular part of the matrix \fIA\fR, and the strictly lower triangular part of \fIa\fR is not referenced. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, the leading \fIn\fR-by-\fIn\fR lower triangular part of \fIa\fR contains the lower triangular part of the matrix \fIA\fR, and the strictly upper triangular part of \fIa\fR is not referenced.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIa\fR. \fIlda\fR\(>= max(1,\fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, if \fIuplo\fR = \fB\'U\'\fR, the diagonal and first superdiagonal of \fIa\fR are overwritten by the corresponding elements of the tridiagonal matrix \fIT\fR, and the elements above the first superdiagonal, with the array \fItau\fR, represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors; 
+.IP
+if \fIuplo\fR = \fB\'L\'\fR, the diagonal and first subdiagonal of \fIa\fR are overwritten by the corresponding elements of the tridiagonal matrix \fIT\fR, and the elements below the first subdiagonal, with the array \fItau\fR, represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors. 
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBssytd2\fR/\fBchetd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsytd2\fR/\fBzhetd2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The diagonal elements of the tridiagonal matrix \fIT\fR:
+.IP
+\fId\fR(\fIi\fR) = \fIa\fR(\fIi\fR,\fIi\fR).
+.TP 10
+\fBe\fR
+.NL
+\fBREAL\fR for \fBssytd2\fR/\fBchetd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsytd2\fR/\fBzhetd2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). 
+.IP
+The off-diagonal elements of the tridiagonal matrix \fIT\fR:
+.IP
+\fIe\fR(\fIi\fR) = \fIa\fR(\fIi\fR,\fIi\fR+1) if \fIuplo\fR = \fB\'U\'\fR, 
+.IP
+\fIe\fR(\fIi\fR) = \fIa\fR(\fIi\fR+1,\fIi\fR) if \fIuplo\fR = \fB\'L\'\fR.
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBssytd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsytd2\fR
+.IP
+\fBCOMPLEX\fR for \fBchetd2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzhetd2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The first \fIn\fR-1 elements contain scalar factors of the elementary reflectors. \fItau\fR(\fIn\fR) is used as workspace.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0:  successful exit
+.IP
+< 0:  if \fIinfo\fR = -\fIi\fR, the \fIi\fR-th argument had an illegal value.

@@ -1,0 +1,117 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larz 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larz \- Applies an elementary reflector (as returned by \fB?tzrzf\fR) to a general matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slarz\fR( \fIside\fR, \fIm\fR, \fIn\fR, \fIl\fR, \fIv\fR, \fIincv\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR)
+.PP
+\fBcall dlarz\fR( \fIside\fR, \fIm\fR, \fIn\fR, \fIl\fR, \fIv\fR, \fIincv\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR)
+.PP
+\fBcall clarz\fR( \fIside\fR, \fIm\fR, \fIn\fR, \fIl\fR, \fIv\fR, \fIincv\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR)
+.PP
+\fBcall zlarz\fR( \fIside\fR, \fIm\fR, \fIn\fR, \fIl\fR, \fIv\fR, \fIincv\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBside\fR
+.NL
+\fBCHARACTER*1\fR. 
+.IP
+If \fIside\fR = \fB\'L\'\fR: form \fIH\fR*\fIC\fR
+.IP
+If \fIside\fR = \fB\'R\'\fR: form \fIC\fR*\fIH\fR
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIC\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIC\fR.
+.TP 10
+\fBl\fR
+.NL
+\fBINTEGER\fR. The number of entries of the vector \fIv\fR containing the meaningful part of the Householder vectors. 
+.IP
+If \fIside\fR = \fB\'L\'\fR, \fIm\fR\(>=\fIL\fR\(>= 0, 
+.IP
+if \fIside\fR = \fB\'R\'\fR, \fIn\fR\(>=\fIL\fR\(>= 0.
+.TP 10
+\fBv\fR
+.NL
+\fBREAL\fR for \fBslarz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarz\fR
+.IP
+\fBCOMPLEX\fR for \fBclarz\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarz\fR
+.IP
+Array, \fBDIMENSION\fR (1+(\fIl\fR-1)*abs(\fIincv\fR)). 
+.IP
+The vector \fIv\fR in the representation of \fIH\fR as returned by \fB?tzrzf\fR. 
+.IP
+\fIv\fR is not used if \fItau\fR = 0.
+.TP 10
+\fBincv\fR
+.NL
+\fBINTEGER\fR. The increment between elements of \fIv\fR. 
+.IP
+\fIincv\fR\(!= 0.
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBslarz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarz\fR
+.IP
+\fBCOMPLEX\fR for \fBclarz\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarz\fR
+.IP
+The value \fItau\fR in the representation of \fIH\fR.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBslarz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarz\fR
+.IP
+\fBCOMPLEX\fR for \fBclarz\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarz\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldc\fR,\fIn\fR). 
+.IP
+On entry, the \fIm\fR-by-\fIn\fR matrix \fIC\fR. 
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIc\fR. 
+.IP
+\fIldc\fR\(>= max(1,\fIm\fR).
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslarz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarz\fR
+.IP
+\fBCOMPLEX\fR for \fBclarz\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarz\fR
+.IP
+Workspace array, \fBDIMENSION\fR
+.IP
+(\fIn\fR) if \fIside\fR = \fB\'L\'\fR or 
+.IP
+(\fIm\fR) if \fIside\fR = \fB\'R\'\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+On exit, \fIC\fR is overwritten by the matrix \fIH\fR*\fIC\fR if \fIside\fR = \fB\'L\'\fR, or \fIC\fR*\fIH\fR if \fIside\fR = \fB\'R\'\fR.

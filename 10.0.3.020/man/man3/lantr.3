@@ -1,0 +1,107 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lantr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lantr \- Returns the value of the 1-norm, or the Frobenius norm, or the  infinity norm, or the  element of  largest absolute value of a trapezoidal or triangular matrix.
+.SH SYNOPSIS
+.PP
+\fIval\fR= \fBslantr\fR( \fInorm\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBdlantr\fR( \fInorm\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBclantr\fR( \fInorm\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBzlantr\fR( \fInorm\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnorm\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the vaule to be returned by the routine:
+.IP
+= \fB\'M\'\fR or \fB\'m\': \fR\fIval\fR = \fBmax\fR(\fBabs\fR(\fIA\fR(ij))), largest absolute value  of the matrix \fIA\fR.
+.IP
+= \fB\'1\'\fR or \fB\'O\'\fR or \fB\'o\': \fR\fIval\fR = \fBnorm1\fR(\fIA\fR), 1-norm of the matrix \fIA\fR (maximum column sum),
+.IP
+= \fB\'I\'\fR or \fB\'i\': \fR\fIval\fR = \fBnormI\fR(\fIA\fR), infinity norm of the matrix \fIA\fR (maximum row sum),
+.IP
+= \fB\'F\'\fR, \fB\'f\'\fR, \fB\'E\'\fR  or \fB\'e\': \fR\fIval\fR = \fBnormF\fR(\fIA\fR), Frobenius norm of the matrix \fIA\fR (square root of sum of squares).
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR.
+.IP
+Specifies whether the matrix \fIA\fR is upper or lower trapezoidal.
+.IP
+= \fB\'U\'\fR:  Upper trapezoidal
+.IP
+= \fB\'L\'\fR:  Lower trapezoidal. 
+.IP
+Note that \fIA\fR is triangular instead of trapezoidal if \fIm\fR = \fIn\fR.
+.TP 10
+\fBdiag\fR
+.NL
+\fBCHARACTER*1\fR. 
+.IP
+Specifies whether or not the matrix \fIA\fR has unit diagonal.
+.IP
+= \fB\'N\'\fR:  Non-unit diagonal
+.IP
+= \fB\'U\'\fR:  Unit diagonal.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIA\fR. \fIm\fR\(>= 0, and if \fIuplo\fR = \fB\'U\'\fR, \fIm\fR \(<= \fIn\fR. 
+.IP
+When \fIm\fR = 0, \fB?lantr\fR is set to zero.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIA\fR. \fIn\fR\(>= 0, and if \fIuplo\fR = \fB\'L\'\fR, \fIn\fR \(<= \fIm\fR. 
+.IP
+When \fIn\fR = 0, \fB?lantr\fR is set to zero.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBslantr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlantr\fR
+.IP
+\fBCOMPLEX\fR for \fBclantr\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlantr\fR
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR,\fIn\fR). 
+.IP
+The trapezoidal matrix \fIA\fR (\fIA\fR is triangular if \fIm\fR = \fIn\fR). 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the leading \fIm\fR-by-\fIn\fR upper trapezoidal part of the array \fIa\fR contains the upper trapezoidal matrix, and the strictly lower triangular part of \fIA\fR is not referenced. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, the leading \fIm\fR-by-\fIn\fR lower trapezoidal part of the array \fIa\fR contains the lower trapezoidal matrix, and the strictly upper triangular part of \fIA\fR is not referenced. Note that when \fIdiag\fR = \fB\'U\'\fR, the diagonal elements of \fIA\fR are not referenced and are assumed to be one.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIa\fR. 
+.IP
+\fIlda\fR\(>= max(\fIm\fR,1).
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslantr\fR/\fBclantrp\fR. 
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlantr\fR/\fBzlantr\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR(max(1,\fIlwork\fR)), where 
+.IP
+\fIlwork\fR\(>=\fIm\fR when \fInorm\fR = \fB\'I\'\fR ; otherwise, \fIwork\fR is not referenced. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBval\fR
+.NL
+\fBREAL\fR for \fBslantr\fR/\fBclantrp\fR. 
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlantr\fR/\fBzlantr\fR. 
+.IP
+Value returned by the function.

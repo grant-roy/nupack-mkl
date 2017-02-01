@@ -1,0 +1,45 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dtrnlsp\(ulsolve 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dtrnlsp\(ulsolve \- Solves a nonlinear least  squares problem using the Trust-Region algorithm.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIres\fR= \fBdtrnlsp\(ulsolve\fR(\fIhandle\fR, \fIfvec\fR, \fIfjac\fR, \fIRCI\(ulRequest\fR)
+.PP
+.B /* C */
+.PP
+\fIres\fR= \fBdtrnlsp\(ulsolve\fR(\fI&handle\fR, \fIfvec\fR, \fIfjac\fR, \fI&RCI\(ulRequest\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fB\(ulTRNSP\(ulHANDLE\(ult\fR type in C/C++ and \fBINTEGER*8\fR in FORTRAN.
+.TP 10
+\fBfvec\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array of  size \fIm\fR. Contains the function values at \fBX\fR, where \fIfvec\fR(\fIi\fR) = (\fIy\fR(\fIi\fR)  - \fIf\fR(\fIi\fR) (\fIx\fR)).
+.TP 10
+\fBfjac\fR
+.NL
+\fBDOUBLE PRECISION\fR.  Array of size (\fIm\fR,\fIn\fR). Contains the Jacobi matrix of the function.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBfvec\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array of  size \fIm\fR. Contains the updated function values at \fBX\fR
+.TP 10
+\fBRCI\(ulRequest\fR
+.NL
+\fBINTEGER\fR. Informs about the task completion. When equal to 0, the task is completed succefully. 
+.TP 10
+\fBres\fR
+.NL
+\fBINTEGER\fR. Informs about the task completion. 
+.IP
+\fBres\fR = \fBTR\(ulSUCCESS\fR means the routine completed the task normally.

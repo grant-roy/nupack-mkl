@@ -1,0 +1,115 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?geqlf 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?geqlf \- Computes the \fIQL\fR factorization of a general matrix.
+.SH SYNOPSIS
+.PP
+\fBcall psgeqlf\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdgeqlf\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcgeqlf\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzgeqlf\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. The number of rows in the submatrix sub(\fIQ\fR); (\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The number of columns in the submatrix sub(\fIQ\fR) (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgeqlf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgeqlf\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgeqlf\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgeqlf\fR
+.IP
+Pointer into the local memory to an array of local dimension (\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1)). Contains the local pieces of the distributed matrix sub(\fIA\fR) to be factored.
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix \fIA\fR((\fIia\fR:\fIia\fR+\fIm\fR-1, \fIia\fR:\fIia\fR+\fIn\fR-1), respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgeqlf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgeqlf\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgeqlf\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgeqlf\fR
+.IP
+Workspace array of dimension of \fIlwork\fR.
+.TP 10
+\fBlwork\fR
+.NL
+(local or global) \fBINTEGER\fR, dimension of \fIwork\fR, must be at least \fIlwork\fR\(>=\fInb\(ula\fR*(\fImp\fR0 + \fInq\fR0 + \fInb\(ula\fR), where
+.IP
+\fIiroff\fR = \fBmod\fR(\fIia\fR-1, \fImb\(ula\fR), 
+.IP
+\fIicoff\fR = \fBmod\fR(\fIja\fR-1, \fInb\(ula\fR), 
+.IP
+\fIiarow\fR = \fBindxg2p\fR(\fIia\fR, \fImb\(ula\fR, \fBMYROW\fR, \fIrsrc\(ula\fR, \fBNPROW\fR), 
+.IP
+\fIiacol\fR = \fBindxg2p\fR(\fIja\fR, \fInb\(ula\fR, \fBMYCOL\fR, \fIcsrc\(ula\fR, \fBNPCOL\fR), 
+.IP
+\fImp\fR0 = \fBnumroc\fR(\fIm\fR+\fIiroff\fR, \fImb\(ula\fR, \fBMYROW\fR, \fIiarow\fR, \fBNPROW\fR), 
+.IP
+\fInq\fR0 = \fBnumroc\fR(\fIn\fR+\fIicoff\fR, \fInb\(ula\fR, \fBMYCOL\fR, \fIiacol\fR, \fBNPCOL\fR)
+.IP
+\fBnumroc\fR and \fBindxg2p\fR are ScaLAPACK tool functions; \fBMYROW\fR, \fBMYCOL\fR, \fBNPROW\fR and \fBNPCOL\fR can be determined by calling the subroutine \fBblacs\(ulgridinfo\fR. 
+.IP
+If \fIlwork\fR = -1, then \fIlwork\fR is global input and a workspace query is assumed; the routine only calculates the minimum and optimal size for all work arrays. Each of these values is returned in the first entry of the corresponding work array, and no error message is issued  by \fBpxerbla\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, if \fIm\fR\(>=\fIn\fR, the lower triangle of the distributed submatrix \fIA\fR(\fIia\fR+\fIm\fR-\fIn\fR:\fIia\fR+\fIm\fR-1, \fIja\fR:\fIja\fR+n-1) contains the \fIn\fR-by-\fIn\fR lower triangular matrix \fIL\fR; if \fIm\fR\(<=\fIn\fR, the elements on and below the (\fIn\fR-\fIm\fR)-th superdiagonal contain the \fIm\fR-by-\fIn\fR lower trapezoidal matrix \fIL\fR; the remaining elements, with the array \fItau\fR, represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors.
+.TP 10
+\fBtau\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgeqlf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgeqlf\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgeqlf\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgeqlf\fR
+.IP
+Array, \fBDIMENSION\fR\fILOCc\fR(\fIja\fR+\fIn\fR-1)). 
+.IP
+Contains the scalar factors of elementary reflectors. \fItau\fR is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBwork\fR(1)
+.NL
+On exit, \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance.
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+= 0: the execution is successful.
+.IP
+< 0: if the \fIi\fR-th argument is an array and the \fIj\fR-entry had an illegal value, then \fIinfo\fR = - (\fIi\fR* 100+\fIj\fR), if the \fIi\fR-th argument is a scalar and had an illegal value, then \fIinfo\fR = -\fIi\fR. 

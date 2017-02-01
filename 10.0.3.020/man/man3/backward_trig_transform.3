@@ -1,0 +1,88 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?\(ulbackward\(ultrig\(ultransform 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+\- Computes the backward Trigonometric Transform of type specified by the parameter.
+.SH SYNOPSIS
+.PP
+\fBvoid d\(ulbackward\(ultrig\(ultransform \fR(\fBdouble \fR\fIf[], \fR\fBDFTI\(ulDESCRIPTOR\(ulHANDLE \fR\fI*handle, \fR\fBint \fR\fIipar[], \fR\fBdouble \fR\fIdpar[], \fR\fBint \fR\fI*stat\fR)\fB;\fR
+.PP
+\fBvoid s\(ulbackward\(ultrig\(ultransform \fR(\fBfloat \fR\fIf[], \fR\fBDFTI\(ulDESCRIPTOR\(ulHANDLE \fR\fI*handle, \fR\fBint \fR\fIipar[], \fR\fBfloat \fR\fIspar[], \fR\fBint \fR\fI*stat\fR)\fB;\fR
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBf\fR
+.NL
+\fBdouble\fR for \fBd\(ulbackward\(ultrig\(ultransform\fR,
+.IP
+\fBfloat\fR for \fBs\(ulbackward\(ultrig\(ultransform\fR,
+.IP
+array of size \fBn\fR for staggered2 transforms and of size \fBn\fR+1 for all other transforms, where \fBn\fR is the size of the problem. On input, contains data vector to be transformed. Note that the following values should be 0.0 up to rounding errors: 
+.IP
+.RS
+.IP \(bu
+\fBf\fR[0] and \fBf\fR[\fBn\fR] for sine transforms 
+.IP \(bu
+\fBf\fR[\fBn\fR] for staggered cosine transforms 
+.IP \(bu
+\fBf\fR[0] for staggered sine transforms. 
+.RE
+.IP
+Otherwise, the routine will produce a warning, and the result of the computations for sine transforms may be wrong. The above restrictions meet the requirements of the , which the TT interface is primarily designed for.
+.TP 10
+\fBhandle\fR
+.NL
+\fBDFTI\(ulDESCRIPTOR\(ulHANDLE*\fR. The data structure used by Intel MKL FFT interface (for details, refer to FFT Functions). 
+.TP 10
+\fBipar\fR
+.NL
+\fBint\fR array of size 128. Contains integer data needed for Trigonometric Transform computations. 
+.TP 10
+\fBdpar\fR
+.NL
+\fBdouble\fR array of size 5\fBn\fR/2+2. Contains double-precision data needed for Trigonometric Transform computations. 
+.TP 10
+\fBspar\fR
+.NL
+\fBfloat\fR array of size 5\fBn\fR/2+2. Contains single-precision data needed for Trigonometric Transform computations. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBf\fR
+.NL
+Contains the transformed vector on output. 
+.TP 10
+\fBipar\fR
+.NL
+Contains integer data needed for Trigonometric Transform computations. On output, \fBipar[6]\fR is updated with the \fBstat\fR value. 
+.TP 10
+\fBstat\fR
+.NL
+\fBint*\fR. Contains the routine completion status, which is also written to \fBipar[6]\fR. 
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBstat\fR= 0
+.NL
+The routine completed the task normally. 
+.TP 10
+\fBstat\fR= -100
+.NL
+The routine stopped for any of the following reasons:
+.RS
+.IP \(bu
+An error in the user\'s data was encountered.
+.IP \(bu
+Data in \fBipar\fR, \fBdpar\fR or \fBspar\fR parameters became incorrect and/or inconsistent as a result of modifications.
+.RE
+
+.TP 10
+\fBstat\fR= -1000
+.NL
+The routine stopped because of an FFT interface error. 
+.TP 10
+\fBstat\fR= -10000
+.NL
+The routine stopped because its commit step failed to complete or the parameter \fBipar[0]\fR was altered by mistake. 

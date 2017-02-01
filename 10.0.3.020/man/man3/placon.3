@@ -1,0 +1,99 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lacon 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lacon \- Estimates the 1-norm of a square matrix, using the reverse communication for evaluating matrix-vector products.
+.SH SYNOPSIS
+.PP
+\fBcall pslacon\fR(\fIn\fR, \fIv\fR, \fIiv\fR, \fIjv\fR, \fIdescv\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIisgn\fR, \fIest\fR, \fIkase\fR)
+.PP
+\fBcall pdlacon\fR(\fIn\fR, \fIv\fR, \fIiv\fR, \fIjv\fR, \fIdescv\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIisgn\fR, \fIest\fR, \fIkase\fR)
+.PP
+\fBcall pclacon\fR(\fIn\fR, \fIv\fR, \fIiv\fR, \fIjv\fR, \fIdescv\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIisgn\fR, \fIest\fR, \fIkase\fR)
+.PP
+\fBcall pzlacon\fR(\fIn\fR, \fIv\fR, \fIiv\fR, \fIjv\fR, \fIdescv\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIisgn\fR, \fIest\fR, \fIkase\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+(global).\fBINTEGER\fR. The length of the distributed vectors \fIv\fR and \fIx. n \fR\(>= 0.
+.TP 10
+\fBv\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslacon\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlacon\fR
+.IP
+\fBCOMPLEX\fR for \fBpclacon\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlacon.\fR
+.IP
+\fB\fRPointer into the local memory to an array of \fBDIMENSION \fR\fILOCr\fR(\fIn\fR+mod(\fIiv\fR-1, \fImb\(ulv\fR)). On the final return, \fIv\fR = \fIa\fR*\fIw\fR, where \fIest\fR = norm(\fIv\fR)/norm(\fIw\fR) (\fIw\fR is not returned).
+.TP 10
+\fBiv\fR, \fBjv\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIv\fR indicating the first row and the first column of the submatrix \fIV\fR, respectively.
+.TP 10
+\fBdescv\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix V.
+.TP 10
+\fBx\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslacon\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlacon\fR
+.IP
+\fBCOMPLEX\fR for \fBpclacon\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlacon.\fR
+.IP
+\fB\fRPointer into the local memory to an array of \fBDIMENSION \fR\fILOCr\fR(\fIn\fR+mod(\fIix\fR-1, \fImb\(ulx\fR)).
+.TP 10
+\fBix\fR, \fBjx\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIx\fR indicating the first row and the first column of the submatrix \fIX\fR, respectively.
+.TP 10
+\fBdescx\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix X.
+.TP 10
+\fBisgn\fR
+.NL
+(local). \fBINTEGER\fR.
+.IP
+Array, \fBDIMENSION\fR\fI LOCr\fR(\fIn\fR+mod(\fIix\fR-1, \fImb\(ulx\fR)). \fIisgn\fR is aligned with \fIx\fR and \fIv\fR.
+.TP 10
+\fBkase\fR
+.NL
+(local). \fBINTEGER\fR.
+.IP
+On the initial call to \fBp?lacon\fR, \fIkase\fR should be 0.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+(local). 
+.IP
+On an intermediate return, X should be overwritten by \fIA\fR*\fIX\fR, if \fIkase\fR=1, \fIA\'\fR *\fIX\fR, if \fIkase\fR=2,
+.IP
+\fBp?lacon\fR must be re-called with all the other parameters unchanged.
+.TP 10
+\fBest\fR
+.NL
+(global). \fBREAL\fR for single precision flavors 
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors
+.TP 10
+\fBkase\fR
+.NL
+(local) 
+.IP
+\fBINTEGER\fR. On an intermediate return, \fIkase\fR is 1 or 2, indicating whether \fIX\fR should be overwritten by \fIA\fR*\fIX,\fR  or \fIA\'\fR*\fIX\fR. On the final return from \fBp?lacon\fR, \fIkase\fR is again 0.

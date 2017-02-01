@@ -1,0 +1,235 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasd7 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasd7 \- Merges the two sets of singular values together into a single sorted set. Then it tries to deflate the size of the problem. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasd7\fR( \fIicompq\fR, \fInl\fR, \fInr\fR, \fIsqre\fR, \fIk\fR, \fId\fR, \fIz\fR, \fIzw\fR, \fIvf\fR, \fIvfw\fR, \fIvl\fR, \fIvlw\fR, \fIalpha\fR, \fIbeta\fR, \fIdsigma\fR, \fIidx\fR, \fIidxp\fR, \fIidxq\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIldgcol\fR, \fIgivnum\fR, \fIldgnum\fR, \fIc\fR, \fIs\fR, \fIinfo\fR)
+.PP
+\fBcall dlasd7\fR( \fIicompq\fR, \fInl\fR, \fInr\fR, \fIsqre\fR, \fIk\fR, \fId\fR, \fIz\fR, \fIzw\fR, \fIvf\fR, \fIvfw\fR, \fIvl\fR, \fIvlw\fR, \fIalpha\fR, \fIbeta\fR, \fIdsigma\fR, \fIidx\fR, \fIidxp\fR, \fIidxq\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIldgcol\fR, \fIgivnum\fR, \fIldgnum\fR, \fIc\fR, \fIs\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicompq\fR
+.NL
+\fBINTEGER\fR. Specifies whether singular vectors are to be computed in compact form, as follows:
+.IP
+= 0: Compute singular values only.
+.IP
+= 1: Compute singular vectors of upper bidiagonal matrix in compact form.
+.TP 10
+\fBnl\fR
+.NL
+\fBINTEGER\fR. The row dimension of the upper block.
+.IP
+\fInl\fR\(>= 1.
+.TP 10
+\fBnr\fR
+.NL
+\fBINTEGER\fR. The row dimension of the lower block. 
+.IP
+\fInr\fR\(>= 1.
+.TP 10
+\fBsqre\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0: the lower block is an \fInr\fR-by-\fInr\fR square matrix.
+.IP
+= 1: the lower block is an \fInr\fR-by-(\fInr\fR+1) rectangular matrix. The bidiagonal matrix has \fIn\fR = \fInl\fR + \fInr\fR + 1 rows and \fIm\fR = \fIn\fR + \fIsqre\fR\(>=\fIn\fR columns.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On entry \fId\fR contains the singular values of the two submatrices  to be combined.
+.TP 10
+\fBzw\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIm\fR ).
+.IP
+Workspace for \fBz\fR.
+.TP 10
+\fBvf\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIm\fR ). On entry, \fIvf\fR(1:\fInl\fR+1) contains the first components of all right singular vectors of the upper block; and \fIvf\fR(\fInl\fR+2:\fIm\fR) contains the first components of all right singular vectors of the lower block.
+.TP 10
+\fBvfw\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIm\fR ).
+.IP
+Workspace for \fBvf\fR.
+.TP 10
+\fBvl\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIm\fR ).
+.IP
+On entry, \fIvl\fR(1:\fInl\fR+1) contains the  last components of all right singular vectors of the upper block; and \fIvl\fR(\fInl\fR+2:\fIm\fR) contains the last components of all right singular vectors of the lower block.
+.TP 10
+\fBVLW\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIm\fR ).
+.IP
+Workspace for \fBVL\fR.
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR. 
+.IP
+Contains the diagonal element associated with the added row.
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR
+.IP
+Contains the off-diagonal element associated with the added row.
+.TP 10
+\fBidx\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (\fIn\fR). This will contain the permutation used to sort the contents of \fId\fR into ascending order.
+.TP 10
+\fBidxp\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (\fIn\fR). This will contain the permutation used to place deflated values of \fId\fR at the end of the array. 
+.TP 10
+\fBidxq\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+This contains the permutation which separately sorts the two sub-problems in \fId\fR into ascending order. Note that entries in the first half of this permutation must first be moved one position backward; and entries in the second half must first have \fInl\fR+1 added to their values.
+.TP 10
+\fBldgcol\fR
+.NL
+\fBINTEGER\fR.The leading dimension of the output array \fIgivcol\fR, must be at least \fIn\fR.
+.TP 10
+\fBldgnum\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIgivnum\fR, must be at least \fIn\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. Contains the dimension of the non-deflated matrix, this is the order of the related secular equation. 
+.IP
+1 \(<= \fIk\fR \(<= \fIn\fR.
+.TP 10
+\fBd\fR
+.NL
+On exit, \fId\fR contains the trailing (\fIn\fR-\fIk\fR) updated singular values (those which were deflated) sorted into increasing order.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIm\fR).
+.IP
+On exit, \fIZ\fR contains the updating row vector in the secular equation.
+.TP 10
+\fBvf\fR
+.NL
+On exit, \fIvf\fR contains the first components of all right singular vectors of the bidiagonal matrix.
+.TP 10
+\fBvl\fR
+.NL
+On exit, \fIvl\fR contains the last components of all right singular vectors of the bidiagonal matrix.
+.TP 10
+\fBdsigma\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). Contains a copy of the diagonal elements (\fIk\fR-1 singular values and one zero) in the secular equation.
+.TP 10
+\fBidxp\fR
+.NL
+On output, \fIidxp\fR(2: \fIk\fR) points to the nondeflated \fId\fR-values and \fIidxp\fR( \fIk\fR+1:\fIn\fR) points to the deflated singular values.
+.TP 10
+\fBperm\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The permutations (from deflation and sorting) to be applied to each singular block. Not referenced if \fIicompq\fR = 0.
+.TP 10
+\fBgivptr\fR
+.NL
+\fBINTEGER\fR.
+.IP
+The number of Givens rotations which took place in this subproblem. Not referenced if \fIicompq\fR = 0.
+.TP 10
+\fBgivcol\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR ( \fIldgcol\fR, 2 ). Each pair of numbers indicates a pair of columns to take place in a Givens rotation. Not referenced if \fIicompq\fR = 0.
+.TP 10
+\fBgivnum\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIldgnum\fR, 2 ). Each number indicates the \fIC\fR or \fIS\fR value to be used in the corresponding Givens rotation. Not referenced if \fIicompq\fR = 0.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR.
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR.
+.IP
+If \fIsqre\fR =0, then \fIc\fR contains garbage, and if \fIsqre\fR = 1, then \fIc\fR contains \fIC\fR-value of a Givens  rotation related to the right null space.
+.TP 10
+\fBS\fR
+.NL
+\fBREAL\fR for \fBslasd7\fR.
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd7\fR.
+.IP
+If \fIsqre\fR =0, then \fIs\fR contains garbage, and if \fIsqre\fR = 1, then \fIs\fR contains \fIS\fR-value of a Givens  rotation related to the right null space.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0:  successful exit.
+.IP
+< 0:  if \fIinfo\fR = -\fIi\fR, the \fIi\fR-th argument had an illegal value.

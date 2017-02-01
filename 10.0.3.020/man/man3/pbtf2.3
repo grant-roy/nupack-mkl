@@ -1,0 +1,75 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?pbtf2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?pbtf2 \- Computes the Cholesky factorization of a symmetric/ Hermitian positive-definite band matrix (unblocked algorithm).
+.SH SYNOPSIS
+.PP
+\fBcall spbtf2\fR( \fIuplo\fR, \fIn\fR, \fIkd\fR, \fIab\fR, \fIldab\fR, \fIinfo\fR)
+.PP
+\fBcall dpbtf2\fR( \fIuplo\fR, \fIn\fR, \fIkd\fR, \fIab\fR, \fIldab\fR, \fIinfo\fR)
+.PP
+\fBcall cpbtf2\fR( \fIuplo\fR, \fIn\fR, \fIkd\fR, \fIab\fR, \fIldab\fR, \fIinfo\fR)
+.PP
+\fBcall zpbtf2\fR( \fIuplo\fR, \fIn\fR, \fIkd\fR, \fIab\fR, \fIldab\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR.
+.IP
+Specifies whether the upper or lower triangular part of the symmetric/Hermitian matrix \fIA\fR is stored:
+.IP
+= \fB\'U\'\fR:  upper triangular
+.IP
+= \fB\'L\'\fR:  lower triangular
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR. \fIn\fR\(>= 0.
+.TP 10
+\fBkd\fR
+.NL
+\fBINTEGER\fR. The number of super-diagonals of the matrix \fIA\fR if \fIuplo\fR = \'U\' , or the number of sub-diagonals if \fIuplo\fR = \fB\'L\'\fR. 
+.IP
+\fIkd\fR\(>= 0. 
+.TP 10
+\fBab\fR
+.NL
+\fBREAL\fR for \fBspbtf2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdpbtf2\fR
+.IP
+\fBCOMPLEX\fR for \fBcpbtf2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzpbtf2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldab\fR, \fIn\fR). 
+.IP
+On entry, the upper or lower triangle of the symmetric/ Hermitian band matrix \fIA\fR, stored in the first \fIkd\fR+1 rows of the array. The \fIj\fR-th column of \fIA\fR is stored in the \fIj\fR-th column of the array \fIab\fR as follows:
+.IP
+if \fIuplo\fR = \fB\'U\'\fR, \fIab\fR(\fIkd\fR+1+\fIi\fR\fI-j\fR,\fIj\fR) = \fIA\fR(\fIi\fR, \fIj\fR for max(1, \fIj\fR-\fIkd\fR) \(<= \fIi\fR \(<= \fIj\fR;
+.IP
+if \fIuplo\fR = \fB\'L\'\fR, \fIab\fR(1+\fIi\fR\fI-j\fR,\fIj\fR) = \fIA\fR(\fIi\fR, \fIj\fR for \fIj\fR \(<= \fIi\fR \(<= min(\fIn\fR, \fIj\fR+\fIkd\fR).
+.TP 10
+\fBldab\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIab\fR. \fIldab\fR\(>=\fIkd\fR+1.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBab\fR
+.NL
+On exit, If \fIinfo\fR = 0, the triangular factor \fIU\fR or \fIL\fR from the Cholesky factorization  \fIA\fR=\fIU\fR**\fIT\fR*\fIU\fR  (\fIA\fR=\fIU\fR**\fIH\fR*\fIU\fR), or \fIA\fR=  \fIL\fR*\fIL\fR**\fIT\fR (\fIA\fR = \fIL\fR*\fIL\fR**\fIH\fR) of the band matrix \fIA\fR, in the same storage format as \fIA\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0: successful exit
+.IP
+< 0: if \fIinfo\fR = -\fIk\fR, the \fIk-\fRth argument had an illegal value
+.IP
+> 0: if \fIinfo\fR = \fIk\fR, the leading minor of order \fIk\fR is not positive definite, and the factorization could not be completed.

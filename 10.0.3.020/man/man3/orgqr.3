@@ -1,0 +1,91 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?orgqr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?orgqr \- Generates the real orthogonal matrix Q of the QR factorization formed by \fB?geqrf\fR.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sorgqr\fR(\fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall dorgqr\fR(\fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall orgqr\fR(\fIa\fR, \fItau\fR[,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The order of the orthogonal matrix \fIQ\fR (\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of \fIQ\fR to be computed 
+.IP
+(0 \(<=\fIn\fR\(<=\fIm\fR). 
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. The number of elementary reflectors whose product defines the matrix \fIQ\fR (0 \(<=\fIk\fR\(<=\fIn\fR). 
+.TP 10
+\fBa\fR, \fBtau\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsorgqr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdorgqr\fR
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) and \fItau\fR(*) are the arrays returned by \fBsgeqrf\fR / \fBdgeqrf\fR or \fBsgeqpf\fR / \fBdgeqpf\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR). 
+.IP
+The dimension of \fItau\fR must be at least max(1, \fIk\fR).
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR). 
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIm\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. The size of the \fIwork\fR array (\fIlwork\fR\(>=\fIn\fR). 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+Overwritten by \fIn\fR leading columns of the \fIm\fR-by-\fIm\fR orthogonal matrix \fIQ\fR.
+.TP 10
+\fBwork\fR(1)
+.NL
+If \fIinfo\fR = 0, on exit \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. Use this \fIlwork\fR for subsequent runs.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBorgqr\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIm,n\fR).
+.TP 10
+\fBtau\fR
+.NL
+Holds the vector of length (\fIk\fR)

@@ -1,0 +1,48 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH free\(ultrig\(ultransform 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+\- Cleans the memory allocated for the data structure used by the FFT interface.
+.SH SYNOPSIS
+.PP
+\fBvoid free\(ultrig\(ultransform \fR(\fBDFTI\(ulDESCRIPTOR\(ulHANDLE \fR\fI*handle, \fR\fBint \fR\fIipar[], \fR\fBint \fR\fI*stat\fR)\fB;\fR
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBipar\fR
+.NL
+\fBint\fR array of size 128. Contains integer data needed for Trigonometric Transform computations. 
+.TP 10
+\fBhandle\fR
+.NL
+\fBDFTI\(ulDESCRIPTOR\(ulHANDLE*\fR. The data structure used by Intel MKL FFT interface (for details, refer to FFT Functions). 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+The data structure used by Intel MKL FFT interface. Memory allocated for the structure is released on output. 
+.TP 10
+\fBipar\fR
+.NL
+Contains integer data needed for Trigonometric Transform computations. On output, \fBipar[6]\fR is updated with the \fBstat\fR value. 
+.TP 10
+\fBstat\fR
+.NL
+\fBint*\fR. Contains the routine completion status, which is also written to \fBipar[6]\fR. 
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBstat\fR= 0
+.NL
+The routine completed the task normally. 
+.TP 10
+\fBstat\fR= -1000
+.NL
+The routine stopped because of an FFT interface error. 
+.TP 10
+\fBstat\fR= -99999
+.NL
+The routine failed to complete the task. 

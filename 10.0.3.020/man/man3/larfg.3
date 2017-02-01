@@ -1,0 +1,71 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larfg 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larfg \- Generates an elementary reflector (Householder matrix).
+.SH SYNOPSIS
+.PP
+\fBcall slarfg\fR( \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fItau\fR)
+.PP
+\fBcall dlarfg\fR( \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fItau\fR)
+.PP
+\fBcall clarfg\fR( \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fItau\fR)
+.PP
+\fBcall zlarfg\fR( \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fItau\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the elementary reflector.
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL\fR for \fBslarfg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarfg\fR
+.IP
+\fBCOMPLEX\fR for \fBclarfg\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarfg\fR On entry, the value alpha. 
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBslarfg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarfg\fR
+.IP
+\fBCOMPLEX\fR for \fBclarfg\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarfg\fR
+.IP
+Array, \fBDIMENSION\fR (1+(\fIn\fR-2)*abs(\fIincx\fR)). 
+.IP
+On entry, the vector \fIx\fR.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The increment between elements of \fIx\fR. \fIincx\fR > 0.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBalpha\fR
+.NL
+On exit, it is overwritten with the value \fIbeta\fR.
+.TP 10
+\fBx\fR
+.NL
+On exit, it is overwritten with the vector \fIv\fR.
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBslarfg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarfg\fR
+.IP
+\fBCOMPLEX\fR for \fBclarfg\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarfg\fR The value \fItau\fR.

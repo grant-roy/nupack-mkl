@@ -1,0 +1,103 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larfx 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larfx \- Applies an elementary reflector to a general rectangular matrix, with loop unrolling when the reflector has order less than or equal to 10.
+.SH SYNOPSIS
+.PP
+\fBcall slarfx\fR( \fIside\fR, \fIm\fR, \fIn\fR, \fIv\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR)
+.PP
+\fBcall dlarfx\fR( \fIside\fR, \fIm\fR, \fIn\fR, \fIv\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR)
+.PP
+\fBcall clarfx\fR( \fIside\fR, \fIm\fR, \fIn\fR, \fIv\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR)
+.PP
+\fBcall zlarfx\fR( \fIside\fR, \fIm\fR, \fIn\fR, \fIv\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBside\fR
+.NL
+\fBCHARACTER*1\fR. 
+.IP
+If \fIside\fR = \fB\'L\'\fR: form \fIH\fR*\fIC\fR
+.IP
+If \fIside\fR = \fB\'R\'\fR: form \fIC\fR*\fIH\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIC\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIC\fR.
+.TP 10
+\fBv\fR
+.NL
+\fBREAL\fR for \fBslarfx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarfx\fR
+.IP
+\fBCOMPLEX\fR for \fBclarfx\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarfx\fR
+.IP
+Array, \fBDIMENSION\fR
+.IP
+(\fIm\fR) if \fIside\fR = \fB\'L\'\fR or 
+.IP
+(\fIn\fR) if \fIside\fR = \fB\'R\'\fR. 
+.IP
+The vector \fIv\fR in the representation of \fIH\fR.
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBslarfx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarfx\fR
+.IP
+\fBCOMPLEX\fR for \fBclarfx\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarfx\fR
+.IP
+The value \fItau\fR in the representation of \fIH\fR.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBslarfx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarfx\fR
+.IP
+\fBCOMPLEX\fR for \fBclarfx\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarfx\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldc\fR,\fIn\fR). On entry, the \fIm\fR-by-\fIn\fR matrix \fBC\fR.
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIc\fR. \fIlda\fR\(>= (1,\fIm\fR).
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslarfx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarfx\fR
+.IP
+\fBCOMPLEX\fR for \fBclarfx\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarfx\fR
+.IP
+Workspace array, \fBDIMENSION\fR
+.IP
+(\fIn\fR) if \fIside\fR = \fB\'L\'\fR or 
+.IP
+(\fIm\fR) if \fIside\fR = \fB\'R\'\fR. 
+.IP
+\fIwork\fR is not referenced if \fIH\fR has order < 11. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+On exit, \fBC\fR is overwritten by the matrix \fIH\fR*\fIC\fR if \fIside\fR = \fB\'L\'\fR, or \fIC\fR*\fIH\fR if \fIside\fR = \fB\'R\'\fR.

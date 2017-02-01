@@ -1,0 +1,69 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?spr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?spr \- Performs the symmetrical rank-1 update of a complex symmetric packed matrix.
+.SH SYNOPSIS
+.PP
+\fBcall cspr\fR( \fIuplo\fR, \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fIap\fR)
+.PP
+\fBcall zspr\fR( \fIuplo\fR, \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fIap\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether the upper or lower triangular part of the matrix \fIa\fR is supplied in the packed array \fIap\fR, as follows:
+.IP
+If \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, the upper triangular part of the matrix \fIa\fR is supplied in the array \fIap\fR. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, the lower triangular part of the matrix \fIa\fR is supplied in the array \fIap\fR .
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.
+.IP
+Specifies the order of the matrix \fIa\fR.
+.IP
+The value of \fIn\fR must be at least zero.
+.TP 10
+\fBalpha\fR
+.NL
+\fBCOMPLEX\fR for \fBcspr\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzspr\fR
+.IP
+Specifies the scalar \fIalpha\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBCOMPLEX\fR for \fBcspr\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzspr\fR
+.IP
+Array, \fBDIMENSION\fR at least \fB(1\fR + (\fIn\fR - \fB1)*abs\fR(\fIincx\fR\fB))\fR. Before entry, the incremented array \fIx\fR must contain the \fIn\fR-element vector \fIx\fR.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. Specifies the increment for the elements of \fIx\fR. The value of \fIincx\fR must not be zero.
+.TP 10
+\fBap\fR
+.NL
+\fBCOMPLEX\fR for \fBcspr\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzspr\fR
+.IP
+Array, \fBDIMENSION\fR at least \fB(\fR(\fIn\fR\fB*\fR(\fIn\fR + \fB1))/2)\fR. Before entry, with \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, the array \fIap\fR must contain the upper triangular part of the symmetric matrix packed sequentially, column-by-column, so that \fIap\fR(1) contains \fIA\fR\fB(1,1)\fR, \fIap\fR(2) and \fIap\fR(3) contain \fIA\fR\fB(1,\fR\fB2)\fR and \fIA\fR\fB(2,2)\fR respectively, and so on. 
+.IP
+Before entry, with \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, the array \fIap\fR must contain the lower triangular part of the symmetric matrix packed sequentially, column-by-column, so that \fIap\fR(1) contains \fIa\fR\fB(1,1)\fR, \fIap\fR(2) and \fIap\fR(3) contain \fIa\fR\fB(2,1)\fR and \fIa\fR\fB(3,1)\fR respectively, and so on. 
+.IP
+Note that the imaginary parts of the diagonal elements need not be set, they are assumed to be zero, and on exit they are set to zero.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBap\fR
+.NL
+With \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, overwritten by the upper triangular part of the updated matrix.
+.IP
+With \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, overwritten by the lower triangular part of the updated matrix.

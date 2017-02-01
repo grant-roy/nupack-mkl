@@ -1,0 +1,75 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gesc2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gesc2 \- Solves a system of linear equations using the LU factorization with complete pivoting computed by \fB?getc2\fR.
+.SH SYNOPSIS
+.PP
+\fBcall sgesc2\fR( \fIn\fR, \fIa\fR, \fIlda\fR, \fIrhs\fR, \fIipiv\fR, \fIjpiv\fR, \fIscale\fR)
+.PP
+\fBcall dgesc2\fR( \fIn\fR, \fIa\fR, \fIlda\fR, \fIrhs\fR, \fIipiv\fR, \fIjpiv\fR, \fIscale\fR)
+.PP
+\fBcall cgesc2\fR( \fIn\fR, \fIa\fR, \fIlda\fR, \fIrhs\fR, \fIipiv\fR, \fIjpiv\fR, \fIscale\fR)
+.PP
+\fBcall zgesc2\fR( \fIn\fR, \fIa\fR, \fIlda\fR, \fIrhs\fR, \fIipiv\fR, \fIjpiv\fR, \fIscale\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR. 
+.TP 10
+\fBa\fR, \fBrhs\fR
+.NL
+\fBREAL\fR for \fBsgesc2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgesc2\fR
+.IP
+\fBCOMPLEX\fR for \fBcgesc2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzgesc2\fR.
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) contains the \fILU\fR part of the factorization of the \fIn\fR-by-\fIn\fR matrix \fIA\fR computed by \fB?getc2\fR: 
+.IP
+\fIA\fR = \fIP\fR\fI*L*\fR\fIU*\fR\fIQ\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR);
+.IP
+\fIrhs\fR(\fIn\fR) contains on entry the right hand side vector for the system of equations.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBipiv\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1,\fIn\fR). 
+.IP
+The pivot indices: for 1 \(<= \fBi\fR \(<= \fIn\fR, row \fBi\fR of the matrix has been interchanged with row \fIipiv\fR\fB(i)\fR. 
+.TP 10
+\fBjpiv\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1,\fIn\fR). 
+.IP
+The pivot indices: for 1 \(<= \fBj\fR \(<= \fIn\fR, column \fBj\fR of the matrix has been interchanged with column \fIjpiv\fR\fB(j)\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBrhs\fR
+.NL
+On exit, overwritten with the solution vector \fIX\fR.
+.TP 10
+\fBscale\fR
+.NL
+\fBREAL\fR for  \fBsgesc2\fR/\fBcgesc2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgesc2\fR/\fBzgesc2\fR
+.IP
+Contains the scale factor. \fIscale\fR is chosen in the range 0 \(<= \fIscale\fR \(<= 1 to prevent overflow in the solution.

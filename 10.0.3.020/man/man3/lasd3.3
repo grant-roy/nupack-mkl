@@ -1,0 +1,171 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasd3 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasd3 \- Finds all square roots of the roots of the secular equation, as defined by the values in D and Z, and then updates the singular vectors by matrix multiplication. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasd3\fR( \fInl\fR, \fInr\fR, \fIsqre\fR, \fIk\fR, \fId\fR, \fIq\fR, \fIldq\fR, \fIdsigma\fR, \fIu\fR, \fIldu\fR, \fIu2\fR, \fIldu2\fR, \fIvt\fR, \fIldvt\fR, \fIvt2\fR, \fIldvt2\fR, \fIidxc\fR, \fIctot\fR, \fIz\fR, \fIinfo\fR)
+.PP
+\fBcall dlasd3\fR( \fInl\fR, \fInr\fR, \fIsqre\fR, \fIk\fR, \fId\fR, \fIq\fR, \fIldq\fR, \fIdsigma\fR, \fIu\fR, \fIldu\fR, \fIu2\fR, \fIldu2\fR, \fIvt\fR, \fIldvt\fR, \fIvt2\fR, \fIldvt2\fR, \fIidxc\fR, \fIctot\fR, \fIz\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnl\fR
+.NL
+\fBINTEGER\fR. The row dimension of the upper block. 
+.IP
+\fInl\fR\(>= 1.
+.TP 10
+\fBnr\fR
+.NL
+\fBINTEGER\fR. The row dimension of the lower block. 
+.IP
+\fInr\fR\(>= 1.
+.TP 10
+\fBsqre\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIsqre\fR = 0): the lower block is an \fInr\fR-by-\fInr\fR square matrix. 
+.IP
+If \fIsqre\fR = 1): the lower block is an \fInr\fR-by-(\fIn\fR\fIr\fR+1) rectangular matrix. The bidiagonal matrix has \fIn\fR = \fInl\fR + \fInr\fR + 1 rows and \fIm\fR = \fIn\fR + \fIsqre\fR\(>=\fIn\fR columns.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR.The size of the secular equation, 1 \(<= \fIk\fR \(<= \fIn\fR.
+.TP 10
+\fBq\fR
+.NL
+\fBREAL\fR for \fBslasd3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd3\fR
+.IP
+Workspace array, \fBDIMENSION\fR at least (\fIldq\fR, \fIk\fR). 
+.TP 10
+\fBldq\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIQ\fR. 
+.IP
+\fIldq\fR\(>=\fIk\fR.
+.TP 10
+\fBdsigma\fR
+.NL
+\fBREAL\fR for \fBslasd3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd3\fR
+.IP
+Array, \fBDIMENSION\fR (\fIk\fR). The first \fIk\fR elements of this array contain the old roots of the deflated updating problem. These are the poles of the secular equation.
+.TP 10
+\fBldu\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIu\fR. 
+.IP
+\fIldu\fR\(>=\fIn\fR.
+.TP 10
+\fBu2\fR
+.NL
+\fBREAL\fR for \fBslasd3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd3\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldu2\fR, \fIn\fR). 
+.IP
+The first \fIk\fR columns of this matrix contain the non-deflated left singular vectors for the split problem.
+.TP 10
+\fBldu2\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIu2\fR. 
+.IP
+\fIldu2\fR\(>=\fIn\fR.
+.TP 10
+\fBldvt\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIvt\fR. 
+.IP
+\fIldvt\fR\(>=\fIn\fR.
+.TP 10
+\fBvt2\fR
+.NL
+\fBREAL\fR for \fBslasd3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd3\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldvt2\fR, \fIn\fR). 
+.IP
+The first \fIk\fR columns of \fIvt2\fR\' contain the non-deflated right singular vectors for the split problem.
+.TP 10
+\fBldvt2\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIvt2\fR. 
+.IP
+\fIldvt2\fR\(>=\fIn\fR.
+.TP 10
+\fBidxc\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The permutation used to arrange the columns of \fBu\fR (and rows of \fIvt\fR) into three groups:  the first group contains non-zero entries only at and above (or before) \fInl\fR +1; the second contains non-zero entries only at and below (or after) \fInl\fR+2; and the third is dense. The first column of \fIu\fR and the row of \fIvt\fR are treated separately, however. The rows of the singular vectors found by \fB?lasd4\fR must be likewise permuted before the matrix multiplies can take place.
+.TP 10
+\fBctot\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (4). A count of the total number of the various types of columns in \fIu\fR (or rows in \fIvt\fR), as described in \fIidxc\fR. 
+.IP
+The fourth column type is any column which has been deflated.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslasd3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd3\fR
+.IP
+Array, \fBDIMENSION\fR (\fIk\fR). The first \fIk\fR elements of this array contain the components of the deflation-adjusted updating row vector.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasd3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd3\fR
+.IP
+Array, \fBDIMENSION\fR (\fIk\fR). On exit the square roots of the roots of the secular equation, in ascending order.
+.TP 10
+\fBu\fR
+.NL
+\fBREAL\fR for \fBslasd3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd3\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldu\fR, \fIn\fR). 
+.IP
+The last \fIn\fR - \fIk\fR columns of this matrix contain the deflated left singular vectors.
+.TP 10
+\fBvt\fR
+.NL
+\fBREAL\fR for \fBslasd3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd3\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldvt\fR, \fIm\fR). 
+.IP
+The last \fIm\fR - \fIk\fR columns of \fIvt\fR\' contain the deflated right singular vectors.
+.TP 10
+\fBvt2\fR
+.NL
+Destroyed on exit.
+.TP 10
+\fBz\fR
+.NL
+Destroyed on exit.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0):  successful exit. 
+.IP
+If \fIinfo\fR = -\fIi\fR < 0, the \fIi\fR-th argument had an illegal value. 
+.IP
+If \fIinfo\fR = 1, an singular value did not converge.

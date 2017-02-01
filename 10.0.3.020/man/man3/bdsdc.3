@@ -1,0 +1,167 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?bdsdc 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?bdsdc \- Computes the singular value decomposition of a real bidiagonal matrix using a divide and conquer method.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sbdsdc\fR(\fIuplo\fR, \fIcompq\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIq\fR, \fIiq\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dbdsdc\fR(\fIuplo\fR, \fIcompq\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIq\fR, \fIiq\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall bdsdc\fR(\fId\fR, \fIe\fR[,\fIu\fR] [,\fIvt\fR] [,\fIq\fR] [,\fIiq\fR] [,\fIuplo\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, \fIB\fR is an upper bidiagonal matrix. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, \fIB\fR is a lower bidiagonal matrix.
+.TP 10
+\fBcompq\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'P\'\fR, or \fB\'I\'\fR.
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, compute singular values only.
+.IP
+If \fIcompq\fR = \fB\'P\'\fR, compute singular values and compute singular vectors in compact form.
+.IP
+If \fIcompq\fR = \fB\'I\'\fR, compute singular values and singular vectors.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIB\fR (\fIn \fR\(>= 0). 
+.TP 10
+\fBd\fR, \fBe\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsbdsdc\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdbdsdc\fR. 
+.IP
+Arrays:
+.IP
+\fId(*)\fR contains the \fIn\fR diagonal elements of the bidiagonal matrix \fIB\fR. 
+.IP
+The dimension of \fId\fR must be at least max(1, \fIn\fR).
+.IP
+\fIe\fR(*) contains the off-diagonal elements of the bidiagonal matrix \fIB\fR. 
+.IP
+The dimension of \fIe\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR(*) is a workspace array. 
+.IP
+The dimension of \fIwork\fR must be at least: 
+.IP
+max(1, 4*\fIn\fR), if \fIcompq\fR = \fB\'N\'\fR;
+.IP
+max(1, 6*\fIn\fR), if \fIcompq\fR = \fB\'P\'\fR;
+.IP
+max(1, 3*\fIn\fR**2+4*\fIn\fR), if \fIcompq\fR = \fB\'I\'\fR.
+.TP 10
+\fBldu\fR
+.NL
+\fBINTEGER\fR. The first dimension of the output array \fIu\fR; \fIldu\fR\(>= 1. 
+.IP
+If singular vectors are desired, then \fIldu\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldvt\fR
+.NL
+\fBINTEGER\fR. The first dimension of the output array \fIvt\fR; \fIldvt\fR\(>= 1. 
+.IP
+If singular vectors are desired, then \fIldvt\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace array, dimension at least max(1, 8*\fIn\fR). 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+If \fIinfo\fR = 0, overwritten by the singular values of \fIB\fR. 
+.TP 10
+\fBe\fR
+.NL
+On exit, \fIe\fR is overwritten. 
+.TP 10
+\fBu\fR, \fBvt\fR, \fBq\fR
+.NL
+\fBREAL\fR for \fBsbdsdc\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdbdsdc\fR. 
+.IP
+Arrays: \fIu\fR(\fIldu\fR\fB,*)\fR, \fIvt\fR(\fIldvt\fR\fB,*)\fR, \fIq\fR(*). 
+.IP
+If \fIcompq\fR = \fB\'I\'\fR, then on exit \fIu\fR contains the left singular vectors of the bidiagonal matrix \fIB\fR, unless \fIinfo\fR\(!= 0 (\fIsee\fR\fIinfo\fR). For other values of \fIcompq\fR, \fIu\fR is not referenced. 
+.IP
+The second dimension of \fIu\fR must be at least max(1,\fIn\fR).
+.IP
+if \fIcompq\fR = \fB\'I\'\fR, then on exit \fIvt\fR contains the right singular vectors of the bidiagonal matrix \fIB\fR, unless \fIinfo\fR\(!= 0 (\fIsee\fR\fIinfo\fR). For other values of \fIcompq\fR, \fIvt\fR is not referenced. The second dimension of \fIvt\fR must be at least max(1,\fIn\fR).
+.IP
+If \fIcompq\fR = \fB\'P\'\fR, then on exit, if \fIinfo\fR = 0, \fIq\fR and \fIiq\fR contain the left and right singular vectors in a compact form. Specifically, \fIq\fR contains all the \fBREAL\fR (for \fBsbdsdc\fR) or \fBDOUBLE PRECISION\fR (for \fBdbdsdc\fR) data for singular vectors. For other values of \fIcompq\fR, \fIq\fR is not referenced. 
+.TP 10
+\fBiq\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array: \fIiq\fR(*). 
+.IP
+If \fIcompq\fR = \fB\'P\'\fR, then on exit, if \fIinfo\fR = 0, \fIq\fR and \fIiq\fR contain the left and right singular vectors in a compact form. Specifically, \fIiq\fR contains all the \fBINTEGER\fR data for singular vectors. For other values of \fIcompq\fR, \fIiq\fR is not referenced. 
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value. 
+.IP
+If \fIinfo\fR = \fIi\fR, the algorithm failed to compute a singular value. The update process of divide and conquer failed.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBbdsdc\fR interface are the following:
+.TP 10
+\fBd\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBe\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBu\fR
+.NL
+Holds the matrix \fIU\fR of size (\fIn,n\fR).
+.TP 10
+\fBvt\fR
+.NL
+Holds the matrix \fIVT\fR of size (\fIn,n\fR).
+.TP 10
+\fBq\fR
+.NL
+Holds the vector of length (\fIldq\fR), where
+.IP
+\fIldq\fR\(>= \fIn\fR*(11 + 2*\fIsmlsiz\fR + 8*\fIint\fR(\fIlog\fR\(ul2(\fIn\fR/(\fIsmlsiz\fR + 1)))) and \fIsmlsiz\fR is returned by \fIilaenv\fR and is equal to the maximum size of the subproblems at the bottom of the computation tree (usually about 25).
+.TP 10
+\fBcompq\fR
+.NL
+Restored based on the presence of arguments \fIu\fR, \fIvt\fR, \fIq\fR, and \fIiq\fR as follows: 
+.IP
+\fIcompq\fR = \fB\'N\'\fR, if none of \fIu\fR, \fIvt\fR, \fIq\fR, and \fIiq\fR are present, 
+.IP
+\fIcompq\fR = \fB\'I\'\fR, if both \fIu\fR and \fIvt\fR are present. Arguments \fIu\fR and \fIvt\fR must either be both present or both omitted, 
+.IP
+\fIcompq\fR = \fB\'P\'\fR, if both \fIq\fR and \fIiq\fR are present. Arguments \fIq\fR and \fIiq\fR must either be both present or both omitted.
+.IP
+Note that there will be an error condition if all of \fIu\fR, \fIvt\fR, \fIq\fR, and \fIiq\fR arguments are present simultaneously.

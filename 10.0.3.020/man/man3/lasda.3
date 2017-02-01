@@ -1,0 +1,221 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasda 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasda \- Computes the singular value decomposition (SVD) of a real upper bidiagonal matrix with diagonal \fId\fR and off-diagonal \fIe\fR. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasda\fR( \fIicompq\fR, \fIsmlsiz\fR, \fIn\fR, \fIsqre\fR, \fId\fR, \fIe\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIk\fR, \fIdifl\fR, \fIdifr\fR, \fIz\fR, \fIpoles\fR, \fIgivptr\fR, \fIgivcol\fR, \fIldgcol\fR, \fIperm\fR, \fIgivnum\fR, \fIc\fR, \fIs\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlasda\fR( \fIicompq\fR, \fIsmlsiz\fR, \fIn\fR, \fIsqre\fR, \fId\fR, \fIe\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIk\fR, \fIdifl\fR, \fIdifr\fR, \fIz\fR, \fIpoles\fR, \fIgivptr\fR, \fIgivcol\fR, \fIldgcol\fR, \fIperm\fR, \fIgivnum\fR, \fIc\fR, \fIs\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicompq\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Specifies whether singular vectors are to be computed in compact form, as follows:
+.IP
+= 0: Compute singular values only.
+.IP
+= 1: Compute singular vectors of upper bidiagonal matrix in compact form.
+.TP 10
+\fBsmlsiz\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The maximum size of the subproblems at the bottom of the computation tree.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The row dimension of the upper bidiagonal matrix. This is also the dimension of the main diagonal array \fId\fR.
+.TP 10
+\fBsqre\fR
+.NL
+\fBINTEGER\fR. Specifies the column dimension of the bidiagonal matrix. 
+.IP
+If \fIsqre\fR = 0: the bidiagonal matrix has column dimension \fIm\fR = \fIn\fR
+.IP
+If \fIsqre\fR = 1: the bidiagonal matrix has column dimension \fIm\fR = \fIn\fR + 1.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On entry, \fId\fR contains the main diagonal of the bidiagonal matrix. 
+.TP 10
+\fBe\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIm\fR - 1 ). Contains the subdiagonal entries of the bidiagonal matrix. On exit, \fIe\fR is destroyed.
+.TP 10
+\fBldu\fR
+.NL
+\fBINTEGER\fR. The leading dimension of arrays \fIu\fR, \fIvt\fR, \fIdifl\fR, \fIdifr\fR, \fIpoles\fR, \fIgivnum\fR, and \fIz\fR. \fIldu\fR\(>=\fIn\fR. 
+.TP 10
+\fBldgcol\fR
+.NL
+\fBINTEGER\fR. The leading dimension of arrays \fIgivcol\fR and \fIperm\fR. \fIldgcol\fR\(>=\fIn\fR. 
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (6\fIn\fR+(\fIsmlsiz\fR+1)**2).
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fIDimension\fR must be at least (7\fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+On exit \fId\fR, if \fIinfo\fR = 0, contains the singular values of the bidiagonal matrix.
+.TP 10
+\fBu\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldu\fR, \fIsmlsiz\fR) if \fIicompq\fR =1. 
+.IP
+Not referenced  if \fIicompq\fR = 0. 
+.IP
+If \fIicompq\fR = 1, on exit, \fIu\fR contains the left singular vector matrices of all subproblems at the bottom level.
+.TP 10
+\fBvt\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIldu\fR, \fIsmlsiz\fR+1 ) if \fIicompq\fR = 1, and not referenced  if \fIicompq\fR = 0. If \fIicompq\fR = 1, on exit, \fIvt\fR\' contains the right  singular vector matrices of all subproblems at the bottom level.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR) if \fIicompq\fR = 1  and
+.IP
+\fBDIMENSION\fR (1)     if \fIicompq\fR = 0. 
+.IP
+If \fIicompq\fR = 1, on exit, \fIk\fR(\fIi\fR) is the dimension of the \fIi\fR-th   secular equation on the computation tree.
+.TP 10
+\fBdifl\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIldu\fR, \fInlvl\fR ), 
+.IP
+where \fInlvl\fR = floor(log2(\fIn\fR/\fIsmlsiz\fR)).
+.TP 10
+\fBdifr\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR.
+.IP
+Array, 
+.IP
+\fBDIMENSION\fR ( \fIldu\fR, 2 \fInlvl\fR ) if \fIicompq\fR = 1 and 
+.IP
+\fBDIMENSION\fR (\fIn\fR) if \fIicompq\fR = 0. 
+.IP
+If \fIicompq\fR = 1, on exit, \fIdifl\fR(1:\fIn\fR, \fIi\fR) and \fIdifr\fR(1:\fIn\fR,2\fIi\fR -1) record distances between singular values on the \fIi\fR-th level and singular values on the (\fIi\fR -1)-th level, and \fIdifr\fR(1:\fIn\fR, 2i ) contains the normalizing factors for the right singular vector matrix. See \fB?lasd8\fR for details.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR.
+.IP
+Array, 
+.IP
+\fBDIMENSION\fR ( \fIldu\fR, \fInlvl\fR ) if \fIicompq\fR = 1 and 
+.IP
+\fBDIMENSION\fR (\fIn\fR) if \fIicompq\fR = 0. The first \fIk\fR elements of \fIz\fR(1, \fIi\fR) contain the components of the deflation-adjusted updating row vector for subproblems on the \fIi\fR-th level.
+.TP 10
+\fBpoles\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR
+.IP
+Array, \fBDIMENSION\fR(\fIldu\fR, 2*\fInlvl\fR)
+.IP
+if \fIicompq\fR = 1, and not referenced if \fIicompq\fR = 0. If \fIicompq\fR = 1, on exit, \fIpoles\fR(1, 2\fIi\fR - 1) and \fIpoles\fR(1, 2\fIi\fR) contain  the new and old singular values  involved in the secular equations on the \fIi\fR-th level.
+.TP 10
+\fBgivptr\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn\fR) if \fIicompq\fR = 1, and not referenced if \fIicompq\fR = 0. If \fIicompq\fR = 1, on exit, \fIgivptr\fR( \fIi\fR ) records the number of Givens rotations performed on the \fIi\fR-th problem on the computation tree.
+.TP 10
+\fBgivcol\fR
+.NL
+\fBINTEGER\fR . 
+.IP
+Array, \fBDIMENSION\fR(\fIldgcol\fR, 2*\fInlvl\fR) if \fIicompq\fR = 1, and not referenced if \fIicompq\fR = 0. If \fIicompq\fR = 1, on exit, for each \fIi\fR, \fIgivcol\fR(1, 2 \fIi\fR - 1) and \fIgivcol\fR(1, 2 \fIi\fR) record the locations of Givens rotations performed on the \fIi\fR-th level on the computation tree.
+.TP 10
+\fBperm\fR
+.NL
+\fBINTEGER\fR . Array, \fBDIMENSION\fR ( \fIldgcol\fR, \fInlvl\fR ) if \fIicompq\fR = 1, and not referenced if \fIicompq\fR = 0. If \fIicompq\fR = 1, on exit, \fIperm\fR (1, \fIi\fR) records permutations done on the \fIi\fR-th level of the computation tree.
+.TP 10
+\fBgivnum\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR.
+.IP
+Array \fBDIMENSION\fR ( \fIldu\fR, 2*\fInlvl\fR ) if \fIicompq\fR = 1, and not referenced if \fIicompq\fR = 0. If \fIicompq\fR = 1, on exit, for each \fIi\fR, \fIgivnum\fR(1, 2 \fIi\fR - 1) and \fIgivnum\fR(1, 2 \fIi\fR) record the \fIC\fR- and \fIS\fR-values of Givens rotations performed on the \fIi\fR-th level on the computation tree.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR.
+.IP
+Array, 
+.IP
+\fBDIMENSION\fR (\fIn\fR) if \fIicompq\fR = 1, and 
+.IP
+\fBDIMENSION\fR (1) if \fIicompq\fR = 0. 
+.IP
+If \fIicompq\fR = 1 and the \fIi\fR-th subproblem is not square, on exit, \fIc\fR(\fIi\fR) contains the \fIC\fR-value of a Givens rotation related to the right null space of the \fIi\fR-th subproblem.
+.TP 10
+\fBs\fR
+.NL
+\fBREAL\fR for \fBslasda\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasda\fR.
+.IP
+Array, 
+.IP
+\fBDIMENSION\fR (\fIn\fR) \fIicompq\fR = 1, and 
+.IP
+\fBDIMENSION\fR  (1) if \fIicompq\fR = 0. 
+.IP
+If \fIicompq\fR = 1 and the \fIi\fR-th subproblem is not square, on exit, \fIs\fR(\fIi\fR) contains the \fIS\fR-value of a Givens rotation related to the right null space of the \fIi\fR-th subproblem.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0:  successful exit.
+.IP
+< 0:  if \fIinfo\fR = -\fIi\fR, the \fIi\fR-th argument had an illegal value 
+.IP
+> 0:  If \fIinfo\fR = 1, an singular value did not converge

@@ -1,0 +1,31 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lamc3 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lamc3 \- Called from \fB?lamc1\fR-\fB?lamc5\fR. Intended to force \fIa\fR and \fIb\fR to be stored prior to doing the addition of \fIa\fR and \fIb\fR.
+.SH SYNOPSIS
+.PP
+\fIval\fR= \fBslamc3\fR( \fIa\fR, \fIb\fR)
+.PP
+\fIval\fR= \fBdlamc3\fR( \fIa\fR, \fIb\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR
+.NL
+\fBREAL\fR for \fBslamc3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamc3\fR
+.IP
+The values \fIa\fR and \fIb\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBval\fR
+.NL
+\fBREAL\fR for \fBslamc3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamc3\fR
+.IP
+The result of adding values \fIa\fR and \fIb\fR.

@@ -1,0 +1,63 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH djacobi 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+djacobi \- Computes the Jacobi matrix of the user\'s objective function using the cenral difference.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIres\fR= \fBdjacobi\fR(\fIfcn\fR, \fIn\fR, \fIm\fR, \fIfjac\fR, \fIx\fR, \fIjac\(uleps\fR)
+.PP
+.B /* C */
+.PP
+\fIres\fR= \fBdjacobi\fR(\fIfcn\fR, \fI&n\fR, \fI&m\fR, \fIfjac\fR, \fIx\fR, \fI&jac\(uleps\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBfcn\fR
+.NL
+User-supplied subroutine to evaluate the function that defines the least  squares problem. Call \fBfcn\fR (\fBm\fR, \fBn\fR, \fBx\fR, \fBf\fR) with the following parameters:
+.IP
+\fBm\fR - \fBINTEGER\fR. Input parameter. Length of \fBf\fR
+.IP
+\fBn\fR - \fBINTEGER\fR. Input parameter. Length of \fBx\fR.
+.IP
+\fBx\fR - \fBDOUBLE PRECISION\fR. Input parameter. Array of size \fBn\fR. Vector, at which the function is evaluated. The \fBfcn\fRfunction should not change this parameter.
+.IP
+\fBf\fR - \fBDOUBLE PRECISION\fR. Output parameter. Array of size \fBm\fR; contains the function values at \fBx\fR.
+.IP
+Declare \fBfcn\fR as \fBEXTERNAL\fR in the calling program.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Length of \fIX\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Length of \fIF\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array of size \fBn\fR. Vector at which the function is evaluated.
+.TP 10
+\fBeps\fR
+.NL
+\fBDOUBLE PRECISION\fR. Precision of the Jacobi matrix calculation.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array of size (\fIm\fR,\fIn\fR). Contains the Jacobi matrix of the function.
+.TP 10
+\fBres\fR
+.NL
+\fBINTEGER\fR. Informs about the task completion. 
+.IP
+\fBres\fR = \fBTR\(ulSUCCESS\fR indicatesthat the routine has completed the task normally.
+.IP
+\fBres\fR = \fBTR\(ulINVALID\(ulOPTION\fR indicatesan error in the input parameters.
+.IP
+\fBres\fR = \fBTR\(ulOUT\(ulOF\(ulMEMORY\fR indicatesa memory error.

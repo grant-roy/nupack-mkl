@@ -1,0 +1,87 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH GetValueDM 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+GetValueDM \- Gets the value of one particular configuration parameter.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiGetValueDM\fR(\fIhandle\fR, \fIparam\fR, \fIvalue\fR)
+.PP
+.B /* C/C++ */
+.PP
+\fBstatus\fR = \fBDftiGetValueDM\fR(\fIhandle\fR, \fIparam\fR, \fI&value\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+The descriptor handle. Must be valid, that is, created in a call to \fBDftiCreateDescriptorDM\fR. 
+.TP 10
+\fBparam\fR
+.NL
+Name of a parameter to be retrieved from the descriptor. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBvalue\fR\fI\fR
+.NL
+Value of the parameter.
+.SH RETURN VALUES
+.PP
+.PP
+The function returns DFTI\(ulNO\(ulERROR when completes successfully. If the function fails, it returns a value of another  error class constant (for the list of constants, refer to Error Codes).
+.PP
+
+.br
+! Fortran Interface
+.br
+INTERFACE DftiGetValueDM
+.br
+   INTEGER(4) FUNCTION DftiGetValueDM(h, p, v)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      INTEGER(4) :: p, v
+.br
+   END FUNCTION
+.br
+   INTEGER(4) FUNCTION DftiGetValueDMar(h, p, v)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      INTEGER(4) :: p, v(*)
+.br
+   END FUNCTION
+.br
+   INTEGER(4) FUNCTION DftiGetValueDMd(h, p, v)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      INTEGER(4) :: p
+.br
+      REAL(8) :: v
+.br
+   END FUNCTION
+.br
+   INTEGER(4) FUNCTION DftiGetValueDMs(h, p, v)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      INTEGER(4) :: p
+.br
+      REAL(4) :: v
+.br
+   END FUNCTION
+.br
+END INTERFACE
+.br
+   
+.br
+/* C/C++ prototype */
+.br
+long DftiGetValueDM(DFTI\(ulDESCRIPTOR\(ulDM\(ulHANDLE handle, int param,...);
+.br
+   

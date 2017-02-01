@@ -1,0 +1,110 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?rotmg 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?rotmg \- Computes the parameters for a modified Givens rotation.
+.SH SYNOPSIS
+.PP
+.PP
+\fBcall srotmg\fR(\fId1\fR, \fId2\fR, \fIx1\fR, \fIy1\fR, \fIparam\fR)
+.PP
+\fBcall drotmg\fR(\fId1\fR, \fId2\fR, \fIx1\fR, \fIy1\fR, \fIparam\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall rotmg\fR(\fIx1\fR, \fIy1\fR, \fIparam\fR[, \fId1\fR] [\fId2\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBd1\fR
+.NL
+\fBREAL\fR for \fBsrotmg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotmg\fR
+.IP
+Provides the scaling factor for the \fIx\fR-coordinate of the input vector.
+.TP 10
+\fBd2\fR
+.NL
+\fBREAL\fR for \fBsrotmg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotmg\fR
+.IP
+Provides the scaling factor for the \fIy\fR-coordinate of the input vector.
+.TP 10
+\fBx1\fR
+.NL
+\fBREAL\fR for \fBsrotmg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotmg\fR
+.IP
+Provides the  \fIx\fR-coordinate of the input vector.
+.TP 10
+\fBy1\fR
+.NL
+\fBREAL\fR for \fBsrotmg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotmg\fR
+.IP
+Provides the \fIy\fR-coordinate of the input vector.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd1\fR
+.NL
+\fBREAL\fR for \fBsrotmg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotmg\fR
+.IP
+Provides the first diagonal element of the updated matrix.
+.TP 10
+\fBd2\fR
+.NL
+\fBREAL\fR for \fBsrotmg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotmg\fR
+.IP
+Provides the second diagonal element of the updated matrix.
+.TP 10
+\fBx1\fR
+.NL
+\fBREAL\fR for \fBsrotmg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotmg\fR
+.IP
+Provides the  \fIx\fR-coordinate of the rotated vector before scaling.
+.TP 10
+\fBparam\fR
+.NL
+\fBREAL\fR for \fBsrotmg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotmg\fR
+.IP
+Array, \fBDIMENSION\fR 5.
+.IP
+The elements of the \fIparam\fR array are:
+.IP
+\fIparam(1)\fR contains a switch, \fIflag\fR. \fIparam(2-5)\fR contain \fIh11\fR, \fIh21\fR, \fIh12\fR, and \fIh22\fR, respectively, the components of the array \fIH\fR.
+.IP
+
+.IP
+
+.IP
+
+.IP
+In the last three cases, the matrix entries of 1., -1., and 0. are assumed based on the value of \fIflag\fR and are not required to be set in the \fIparam\fR vector.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their FORTRAN 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBrotmg\fR interface are the following:
+.TP 10
+\fBd1\fR
+.NL
+The default value is 1.
+.TP 10
+\fBd2\fR
+.NL
+The default value is 1.

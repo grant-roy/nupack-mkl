@@ -1,0 +1,34 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH mkl\(uldomain\(ulget\(ulmax\(ulthreads 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+mkl\(uldomain\(ulget\(ulmax\(ulthreads \- Inquires about the number of threads targeted for parallelism in different domains.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall integer mkl\(uldomain\(ulget\(ulmax\(ulthreads\fR( \fImask\fR)
+.PP
+.B /* C */
+.PP
+\fBint mkl\(uldomain\(ulget\(ulmax\(ulthreads\fR( \fBint \fR\fImask\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBmask\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'The name of the targeted domain
+.SH RETURN VALUES
+.PP
+.PP
+Returns the hint at the number of threads for the given domain.

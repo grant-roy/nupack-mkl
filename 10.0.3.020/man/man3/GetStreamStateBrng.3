@@ -1,0 +1,58 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH GetStreamStateBrng 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+GetStreamStateBrng \- Returns index of a basic generator used for generation of a given random stream.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBbrng\fR = \fBvslgetstreamstatebrng\fR( \fIstream\fR)
+.PP
+.B /* C */
+.PP
+\fBbrng\fR = \fBvslGetStreamStateBrng\fR( \fIstream\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulSTREAM\(ulSTATE)\fR, \fBTINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Descriptor of the stream state
+.br
+\h\'2\'C:\h\'7\'Pointer to the stream state structure
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBbrng\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Index of the basic generator assigned for the generation of \fIstream\fR ; negative in case of an error
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+\fBstream\fR is a \fBNULL\fR pointer.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulSTREAM\fR
+.NL
+\fIstream\fR is not a valid random stream.

@@ -1,0 +1,87 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lag2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lag2 \- Computes the eigenvalues of a 2-by-2 generalized eigenvalue problem, with scaling as necessary to avoid over-/underflow.
+.SH SYNOPSIS
+.PP
+\fBcall slag2\fR( \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIsafmin\fR, \fIscale1\fR, \fIscale2\fR, \fIwr1\fR, \fIwr2\fR, \fIwi\fR)
+.PP
+\fBcall dlag2\fR( \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIsafmin\fR, \fIscale1\fR, \fIscale2\fR, \fIwr1\fR, \fIwr2\fR, \fIwi\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR
+.NL
+\fBREAL\fR for \fBslag2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlag2\fR
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,2) contains, on entry, the 2 x 2 matrix \fIA\fR. It is assumed that its 1-norm is less than 1/\fIsafmin\fR. Entries less than \fBsqrt\fR(\fIsafmin\fR)*norm(\fIA\fR) are subject to being treated as zero.
+.IP
+\fIb\fR(\fIldb\fR,2) contains, on entry, the 2 x 2 upper triangular matrix \fIB\fR. It is assumed that the one-norm of \fIB\fR is less than 1/\fIsafmin\fR. The diagonals should be at least \fBsqrt\fR(\fIsafmin\fR) times the largest element of \fIB\fR (in absolute value); if a diagonal is smaller than that, then +/- \fBsqrt\fR(\fIsafmin\fR) will be used instead of that diagonal.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; \fIlda\fR\(>= 2.
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIb\fR; \fIldb\fR\(>= 2.
+.TP 10
+\fBsafmin\fR
+.NL
+\fBREAL\fR for \fBslag2\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlag2\fR.
+.IP
+The smallest positive number such that 1/\fIsafmin\fR does not overflow. (This should always be \fB?lamch\fR(\'S\') - it is an argument in order to avoid having to call \fB?lamch\fR frequently.)
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBscale1\fR
+.NL
+\fBREAL\fR for \fBslag2\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlag2\fR.
+.IP
+A scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the first eigenvalue. If the eigenvalues are complex, then the eigenvalues are (\fBwr1\fR +/-  \fBwi\fR\fIi\fR)/\fIscale1\fR (which may lie outside the exponent range of the machine), \fIscale1\fR=\fIscale2\fR, and \fIscale1\fR will always be positive. 
+.IP
+If the eigenvalues are real, then the first (real) eigenvalue is \fIwr1\fR/\fIscale1\fR, but this may overflow or underflow, and in fact, \fIscale1\fR may be zero or less than the underflow threshhold if the exact eigenvalue is sufficiently large.
+.TP 10
+\fBscale2\fR
+.NL
+\fBREAL\fR for \fBslag2\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlag2\fR.
+.IP
+A scaling factor used to avoid over-/underflow in the eigenvalue equation which defines the second eigenvalue. If the eigenvalues are complex, then \fIscale2\fR=\fIscale1\fR. If the eigenvalues are real, then the second (real) eigenvalue is \fIwr2\fR/\fIscale2\fR, but this may overflow or underflow, and in fact, \fIscale2\fR may be zero or less than the underflow threshold if the exact eigenvalue is sufficiently large.
+.TP 10
+\fBwr1\fR
+.NL
+\fBREAL\fR for \fBslag2\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlag2\fR.
+.IP
+If the eigenvalue is real, then \fIwr1\fR is \fIscale1\fR times the eigenvalue closest to the (2,2) element of \fIA*\fRinv(\fIB\fR). 
+.IP
+If the eigenvalue is complex, then \fIwr1\fR=\fIwr2\fR is \fIscale1\fR times the real part of the eigenvalues.
+.TP 10
+\fBwr2\fR
+.NL
+\fBREAL\fR for \fBslag2\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlag2\fR.
+.IP
+If the eigenvalue is real, then \fIwr2\fR is \fIscale2\fR times the other eigenvalue. If the eigenvalue is complex, then \fIwr1\fR=\fIwr2\fR is \fIscale1\fR times the real part of the eigenvalues.
+.TP 10
+\fBwi\fR
+.NL
+\fBREAL\fR for \fBslag2\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlag2\fR.
+.IP
+If the eigenvalue is real, then \fIwi\fR is zero. If the eigenvalue is complex, then \fIwi\fR is \fIscale1\fR times the imaginary part of the eigenvalues. \fIwi\fR will always be non-negative.

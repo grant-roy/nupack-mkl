@@ -1,0 +1,104 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?laevswp 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?laevswp \- Moves the eigenvectors from where they are computed to ScaLAPACK standard block cyclic array.
+.SH SYNOPSIS
+.PP
+\fBcall pslaevswp\fR(\fIn\fR, \fIzin\fR, \fIldzi\fR, \fIz\fR, \fIiz\fR, \fIjz\fR, \fIdescz\fR, \fInvs\fR, \fIkey\fR, \fIrwork\fR, \fIlrwork\fR)
+.PP
+\fBcall pdlaevswp\fR(\fIn\fR, \fIzin\fR, \fIldzi\fR, \fIz\fR, \fIiz\fR, \fIjz\fR, \fIdescz\fR, \fInvs\fR, \fIkey\fR, \fIrwork\fR, \fIlrwork\fR)
+.PP
+\fBcall pclaevswp\fR(\fIn\fR, \fIzin\fR, \fIldzi\fR, \fIz\fR, \fIiz\fR, \fIjz\fR, \fIdescz\fR, \fInvs\fR, \fIkey\fR, \fIrwork\fR, \fIlrwork\fR)
+.PP
+\fBcall pzlaevswp\fR(\fIn\fR, \fIzin\fR, \fIldzi\fR, \fIz\fR, \fIiz\fR, \fIjz\fR, \fIdescz\fR, \fInvs\fR, \fIkey\fR, \fIrwork\fR, \fIlrwork\fR)
+.SH INPUT PARAMETERS
+.PP
+\fInp\fR = the number of rows local to a given process.
+.PP
+\fInq\fR = the number of columns local to a given process.
+.TP 10
+\fBn\fR
+.NL
+(global). \fBINTEGER\fR. 
+.IP
+The order of the matrix \fIA\fR. \fIn \fR\(>= 0.
+.TP 10
+\fBzin\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslaevswp\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlaevswp\fR
+.IP
+\fBCOMPLEX\fR for \fBpclaevswp\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlaevswp\fR. Array, \fBDIMENSION\fR (\fIldzi\fR, \fInvs\fR(\fIiam\fR) ). The eigenvectors on input. Each eigenvector resides entirely in one process. Each process holds a contiguous set of \fInvs\fR(\fIiam\fR) eigenvectors. The first eigenvector which the process holds is:  sum for \fIi\fR=[0, \fIiam\fR-1) of \fInvs\fR(\fIi\fR)\fI.\fR
+.TP 10
+\fBldzi\fR
+.NL
+(local) 
+.IP
+\fBINTEGER\fR.The leading dimension of the \fIzin\fR array.
+.TP 10
+\fBiz\fR, \fBjz\fR
+.NL
+(global) \fBINTEGER\fR.The row and column indices in the global array \fIZ\fR indicating the first row and the first column of the submatrix \fIZ\fR, respectively.
+.TP 10
+\fBdescz\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix Z.
+.TP 10
+\fBnvs\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR( \fInprocs\fR+1) 
+.IP
+\fInvs\fR(\fIi\fR) = number of processes number of eigenvectors held by processes [0, \fIi\fR-1) \fI\fR
+.IP
+\fInvs\fR(1) = number of eigen vectors held by[0, 1 -1) = 0\fI\fR
+.IP
+\fInvs\fR(\fInprocs\fR+1)= number of eigen vectors held by [0, \fInprocs\fR)= total number of eigenvectors.
+.TP 10
+\fBkey\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). Indicates the actual index (after sorting) for each of the    eigenvectors.
+.TP 10
+\fBrwork\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslaevswp\fR
+.IP
+\fBDOUBLE PRECISION\fRfor \fBpdlaevswp\fR
+.IP
+\fBCOMPLEX\fR for \fBpclaevswp\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlaevswp\fR. Array, \fBDIMENSION\fR (\fIlrwork\fR).
+.TP 10
+\fBlrwork\fR
+.NL
+(local) 
+.IP
+\fBINTEGER\fR. Dimension of \fIwork.\fR
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBz\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslaevswp\fR
+.IP
+\fBDOUBLE PRECISION \fRfor \fBpdlaevswp\fR
+.IP
+\fBCOMPLEX\fR for \fBpclaevswp\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlaevswp\fR. 
+.IP
+Array, global \fBDIMENSION\fR (\fIn\fR, \fIn\fR), local \fBDIMENSION\fR (\fIdescz\fR(\fIdlen\(ul\fR), \fInq\fR). The eigenvectors on output.  The eigenvectors are distributed in a block cyclic manner in both dimensions, with a block size of \fInb\fR.

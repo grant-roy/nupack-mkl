@@ -1,0 +1,127 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lahqr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lahqr \- Computes the Schur decomposition and/or eigenvalues of a matrix already in Hessenberg form.
+.SH SYNOPSIS
+.PP
+\fBcall pslahqr\fR(\fIwantt\fR, \fIwantz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIa\fR, \fIdesca\fR, \fIwr\fR, \fIwi\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIdescz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIilwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdlahqr\fR(\fIwantt\fR, \fIwantz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIa\fR, \fIdesca\fR, \fIwr\fR, \fIwi\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIdescz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIilwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBwantt\fR
+.NL
+(global) \fBLOGICAL\fR
+.IP
+If \fIwantt\fR = \fB.TRUE.\fR, the full Schur form \fBT\fR is required;
+.IP
+If \fIwantt\fR = \fB.FALSE.\fR, only eigenvalues are required.
+.TP 10
+\fBwantz\fR
+.NL
+(global) \fBLOGICAL\fR. 
+.IP
+If \fIwantz\fR = \fB.TRUE.\fR, the matrix of Schur vectors \fIz\fR is required;  
+.IP
+If \fIwantz\fR = \fB.FALSE.\fR, Schur vectors are not required. 
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The order of the Hessenberg matrix \fIA\fR (and \fIz\fR if \fIwantz\fR). (\fIn\fR\(>=0).
+.TP 10
+\fBilo\fR, \fBihi\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+It is assumed that \fIA\fR is already upper quasi-triangular in rows and columns \fIihi\fR+1:\fIn\fR, and that \fIA\fR(\fIilo\fR, \fIilo\fR-1) = 0 (unless \fIilo\fR = 1). \fBp?lahqr\fR works primarily with the Hessenberg submatrix in rows and columns \fIilo\fR to \fIihi\fR, but applies transformations to all of \fIh\fR if \fIwantt\fR is \fB.TRUE.\fR. 1\(<=\fIilo\fR\(<=max(1,\fIihi\fR);\fI ihi\fR \(<= \fIn\fR. 
+.TP 10
+\fBa\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBpslahqr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlahqr\fR
+.IP
+Array,\fB DIMENSION\fR(\fIdesca\fR(\fIlld\(ul\fR),*). On entry, the upper Hessenberg matrix \fIA\fR.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR). The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBiloz\fR, \fBihiz\fR
+.NL
+(global) \fBINTEGER\fR.  Specify the rows of \fIz\fR to which transformations must be applied if \fIwantz\fR is \fB.TRUE.\fR. 1\(<=\fIiloz\fR\(<=\fIilo\fR; \fIihi\fR\(<=\fIihiz\fR\(<=\fIn\fR.
+.TP 10
+\fBz\fR
+.NL
+(global ) \fBREAL\fR for \fBpslahqr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlahqr\fR
+.IP
+Array. If \fIwantz\fR is \fB.TRUE.\fR, on entry \fIz\fR must contain the current matrix \fIZ\fR of transformations accumulated by \fBpdhseqr\fR.  If \fIwantz\fR is \fB.FALSE.\fR, \fIz\fR is not referenced.  
+.TP 10
+\fBdescz\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix Z.
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpslahqr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlahqr\fR
+.IP
+Workspace array with dimension \fIlwork\fR.
+.TP 10
+\fBlwork\fR
+.NL
+(local) \fBINTEGER\fR. The dimension of \fIwork\fR.  \fIlwork\fR is assumed big enough so that \fIlwork\fR\(>=3*\fIn\fR + \fBmax\fR(2*\fBmax\fR(\fIdescz\fR(\fIlld\(ul\fR),\fIdesca\fR(\fIlld\(ul\fR)) + 2*\fILOCq\fR(\fIn\fR), 7*\fBceil\fR(\fIn\fR/\fIhbl\fR)/\fIlcm\fR(\fBNPROW\fR,\fBNPCOL\fR))). 
+.IP
+If \fIlwork\fR = -1, then \fIwork\fR(1)gets set to the above number and the code returns immediately.
+.TP 10
+\fBiwork\fR
+.NL
+(global and local) \fBINTEGER\fR array of size \fIilwork\fR.
+.TP 10
+\fBilwork\fR
+.NL
+(local) \fBINTEGER\fR This holds some of the \fIiblk\fR integer arrays.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, if \fIwantt\fR is \fB.TRUE.\fR, \fIA\fR is upper quasi-triangular in rows and columns \fIilo\fR:\fIihi\fR, with any 2-by-2 or larger diagonal blocks not yet in standard form. If \fIwantt\fR is \fB.FALSE.\fR, the contents of \fIA\fR are unspecified on exit.  
+.TP 10
+\fIwork\fR(1)
+.NL
+On exit \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. 
+.TP 10
+\fBwr\fR, \fBwi\fR
+.NL
+(global replicated output)
+.IP
+\fBREAL\fR for \fBpslahqr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlahqr\fR
+.IP
+Arrays,\fB DIMENSION\fR(\fIn\fR) each. The real and imaginary parts, respectively, of the computed eigenvalues \fIilo\fR to \fIihi\fR are stored in the corresponding elements of \fIwr\fR and \fIwi\fR. If two eigenvalues are computed as a complex conjugate pair, they are stored in consecutive elements of \fIwr\fR and \fIwi\fR, say the \fIi\fR-th and (\fIi\fR+1)-th, with \fIwi\fR(\fIi\fR)> 0 and \fIwi\fR(\fIi\fR+1) < 0. If \fIwantt\fR is \fB.TRUE.\fR , the eigenvalues are stored in the same order as on the diagonal of the Schur form returned in \fIA\fR. \fIA\fR may be returned with larger diagonal blocks until the next release. 
+.TP 10
+\fBz\fR
+.NL
+On exit \fIz\fR has been updated; transformations are applied only to the submatrix \fIz\fR(\fIiloz\fR:\fIihiz\fR, \fIilo\fR:\fIihi\fR).
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+= 0: the execution is successful.
+.IP
+< 0: parameter number \fI-info\fR incorrect or inconsistent 
+.IP
+> 0: \fBp?lahqr\fR failed to compute all the eigenvalues \fIilo\fR to \fIihi\fR in a total of 30*(\fIihi\fR-\fIilo\fR+1) iterations; if \fIinfo\fR = \fIi\fR, elements \fIi\fR+1:\fIihi\fR of \fIwr\fR and \fIwi\fR contain those eigenvalues which have been successfully computed.  

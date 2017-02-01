@@ -1,0 +1,75 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH Trunc 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+Trunc \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall vstrunc\fR( \fIn\fR, \fIa\fR, \fIy\fR)
+.PP
+\fBcall vdtrunc\fR( \fIn\fR, \fIa\fR, \fIy\fR)
+.PP
+.B /* C */
+.PP
+\fBvsTrunc\fR( \fIn\fR, \fIa\fR, \fIy\fR);
+.PP
+\fBvdTrunc\fR( \fIn\fR, \fIa\fR, \fIy\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies the number of elements to be calculated.
+.PP
+.SB Name
+.br
+\h\'1\'\fIa\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvstrunc\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdtrunc\fR
+.br
+\h\'2\'C:\h\'7\'\fBconst float*\fR for \fBvsTrunc\fR
+.br
+\h\'11\'\fBconst double*\fR for \fBvdTrunc\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Array, specifies the input vector \fBa\fR.
+.br
+\h\'2\'C:\h\'7\'Pointer to an array that contains the input vector \fBa\fR.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fIy\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR for \fBvstrunc\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR for \fBvdtrunc\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat*\fR for \fBvsTrunc\fR
+.br
+\h\'11\'\fBdouble*\fR for \fBvdTrunc\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Array, specifies the output vector \fBy\fR.
+.br
+\h\'2\'C:\h\'7\'Pointer to an array that contains the output vector \fBy\fR.

@@ -1,0 +1,30 @@
+BLAS = $(L1) $(L2) $(L3)
+#--------------------------------------------------------------------------
+L1 = $(S1) $(D1) $(C1) $(Z1)
+L2 = $(S2) $(D2) $(C2) $(Z2)
+L3 = $(S3) $(D3) $(C3) $(Z3)
+#--------------------------------------------------------------------------
+S1 =  sasum saxpyi saxpy scopy  sswap isamax isamin  snrm2  sdot \
+      sdoti   srot srotg srotm srotmg  sscal  sroti
+D1 =  dasum daxpyi daxpy dcopy  dswap idamax idamin  dnrm2  ddot \
+      ddoti   drot drotg drotm drotmg  dscal  droti
+C1 = scasum caxpyi caxpy ccopy  cswap icamax icamin scnrm2 cdotc \
+     cdotci  csrot crotg cdotu cdotui  cscal csscal
+Z1 = dzasum zaxpyi zaxpy zcopy  zswap izamax izamin dznrm2 zdotc \
+     zdotci  zdrot zrotg zdotu zdotui  zscal zdscal
+#--------------------------------------------------------------------------
+S2 =  sgbmv  sgemv  sger         ssbmv  ssymv   ssyr  ssyr2 sspmv \
+       sspr  sspr2 stbmv stbsv  stpmv  stpsv  strmv  strsv
+D2 =  dgbmv  dgemv  dger         dsbmv  dsymv   dsyr  dsyr2 dspmv \
+       dspr  dspr2 dtbmv dtbsv  dtpmv  dtpsv  dtrmv  dtrsv
+C2 =  cgbmv  cgemv cgerc cgeru  chbmv  chemv   cher  cher2 chpmv \
+       chpr  chpr2 ctbmv ctbsv  ctpmv  ctpsv  ctrmv  ctrsv
+Z2 =  zgbmv  zgemv zgerc zgeru  zhbmv  zhemv   zher  zher2 zhpmv \
+       zhpr  zhpr2 ztbmv ztbsv  ztpmv  ztpsv  ztrmv  ztrsv
+#--------------------------------------------------------------------------
+S3 =  sgemm ssyrk ssyr2k sgthr sgthrz  ssctr  ssymm  strmm strsm
+D3 =  dgemm dsyrk dsyr2k dgthr dgthrz  dsctr  dsymm  dtrmm dtrsm
+C3 =  cgemm csyrk csyr2k cgthr cgthrz  csctr  csymm  ctrmm ctrsm \
+      chemm cherk cher2k cgemm3m
+Z3 =  zgemm zsyrk zsyr2k zgthr zgthrz  zsctr  zsymm  ztrmm ztrsm \
+      zhemm zherk zher2k zgemm3m

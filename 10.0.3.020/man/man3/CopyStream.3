@@ -1,0 +1,66 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH CopyStream 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+CopyStream \- Creates a copy of a random stream.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslcopystream\fR( \fInewstream\fR, \fIsrcstream\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslCopyStream\fR( \fI&newstream\fR, \fIsrcstream\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBsrcstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Descriptor of the stream to be copied
+.br
+\h\'2\'C:\h\'7\'Pointer to the stream state structure to be copied
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBnewstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(OUT)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr*\fR
+.br
+.SB Description
+.br
+\h\'1\'Copied stream descriptor
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK, VSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+\fBsrcstream\fR parameter is a \fBNULL\fR pointer.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulSTREAM\fR
+.NL
+\fBsrcstream\fR is not a valid random stream.
+.TP 10
+\fBVSL\(ulERROR\(ulMEM\(ulFAILURE\fR
+.NL
+System cannot allocate memory for \fBnewstream\fR.

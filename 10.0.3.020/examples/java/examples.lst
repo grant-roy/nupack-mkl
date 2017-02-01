@@ -1,0 +1,47 @@
+CBLAS = \
+    sgemm dgemm cgemm zgemm sgemv dgemv cgemv zgemv \
+    sdot ddot cdotc_sub zdotc_sub cdotu_sub zdotu_sub
+
+ESSL = \
+    sconf scorf scond scord sdcon sdcor ddcon ddcor \
+    sddcon sddcor
+
+DFTI = \
+    dfti_s1i dfti_d1i dfti_c1i dfti_z1i \
+    dfti_s1  dfti_d1  dfti_c1  dfti_z1  \
+    dfti_s2i dfti_d2i dfti_c2i dfti_z2i \
+    dfti_s2  dfti_d2  dfti_c2  dfti_z2
+
+VSL = \
+    vdrngbeta vdrngcauchy vdrngexponential vdrnggamma \
+    vdrnggaussian vdrnggaussianmv vdrnggumbel vdrnglaplace \
+    vdrnglognormal vdrngrayleigh vdrnguniform vdrngweibull \
+    vsrngbeta vsrngcauchy vsrngexponential vsrnggamma \
+    vsrnggaussian vsrnggaussianmv vsrnggumbel vsrnglaplace \
+    vsrnglognormal vsrngrayleigh vsrnguniform vsrngweibull \
+    virngbernoulli virngbinomial virnggeometric virnghypergeometric \
+    virngnegbinomial virngpoisson virngpoissonv virnguniform virnguniformbits \
+    vslcopystream vslcopystreamstate vslgetnumregbrngs vslgetstreamstatebrng \
+    vslleapfrogstream vslnewstreamex vslskipaheadstream
+
+VML = \
+    vcacos vcacosh vcasin vcasinh vcatan vcatanh vccos vccosh \
+    vcexp vcln vclog10 vcpow vcpowx vcsin vcsinh vcsqrt vctan vctanh \
+    vdacos vdacosh vdasin vdasinh vdatan vdatan2 vdatanh vdcbrt vdceil \
+    vdcos vdcosh vddiv vderf vderfc vderfinv vdexp vdfloor vdhypot vdinv \
+    vdinvcbrt vdinvsqrt vdln vdlog10 vdmodf vdnearbyint vdpacki vdpackm \
+    vdpackv vdpow vdpowx vdrint vdround vdsin vdsincos vdsinh vdsqrt \
+    vdtan vdtanh vdtrunc vdunpacki vdunpackm vdunpackv \
+    vsacos vsacosh vsasin vsasinh vsatan vsatan2 vsatanh vscbrt vsceil \
+    vscos vscosh  vsdiv vserf vserfc vserfinv vsexp vsfloor vshypot vsinv \
+    vsinvcbrt vsinvsqrt vsln vslog10 vsmodf vsnearbyint vspacki vspackm \
+    vspackv vspow vspowx vsrint vsround vssin vssincos vssinh vssqrt \
+    vstan vstanh vstrunc vsunpacki vsunpackm vsunpackv \
+    vzacos vzacosh vzasin vzasinh vzatan vzatanh vzcos vzcosh \
+    vzexp vzln vzlog10 vzpow vzpowx vzsin vzsinh vzsqrt vztan vztanh
+
+LAPACK = \
+    sgesv dgesv cgesv zgesv \
+    ssyev dsyev \
+    sgeev dgeev cgeev zgeev \
+    sgesvd dgesvd cgesvd zgesvd

@@ -1,0 +1,73 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasd5 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasd5 \- Computes the square root of the \fIi\fR-th eigenvalue of a positive symmetric rank-one modification of a 2-by-2 diagonal matrix.Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasd5\fR( \fIi\fR, \fId\fR, \fIz\fR, \fIdelta\fR, \fIrho\fR, \fIdsigma\fR, \fIwork\fR)
+.PP
+\fBcall dlasd5\fR( \fIi\fR, \fId\fR, \fIz\fR, \fIdelta\fR, \fIrho\fR, \fIdsigma\fR, \fIwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBi\fR
+.NL
+\fIINTEGER\fR.The index of the eigenvalue to be computed. \fIi\fR = 1 or \fIi\fR = 2.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasd5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd5\fR
+.IP
+Array, \fBdimension\fR (2 ). 
+.IP
+The original eigenvalues, 0 \(<= \fId\fR(1) < \fId\fR(2).
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslasd5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd5\fR
+.IP
+Array, \fBdimension\fR ( 2 ). 
+.IP
+The components of the updating vector.
+.TP 10
+\fBrho\fR
+.NL
+\fBREAL\fR for \fBslasd5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd5\fR
+.IP
+The scalar in the symmetric updating formula.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslasd5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd5\fR. 
+.IP
+Workspace array, \fBdimension\fR ( 2 ). Contains (\fId\fR(\fIj\fR) + \fIsigma\(uli\fR) in its \fIj\fR-th component.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBdelta\fR
+.NL
+\fBREAL\fR for \fBslasd5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd5\fR. 
+.IP
+Array, \fBdimension\fR ( 2 ). 
+.IP
+Contains (\fId\fR(\fIj\fR) - \fIsigma\(uli\fR) in its \fIj\fR-th component. The vector \fIdelta\fR contains the information necessary to construct the eigenvectors.
+.TP 10
+\fBdsigma\fR
+.NL
+\fBREAL\fR for \fBslasd5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd5\fR.
+.IP
+The computed \fIsigma\(uli\fR , the \fIi\fR-th updated eigenvalue.

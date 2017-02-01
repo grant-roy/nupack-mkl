@@ -1,0 +1,215 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?tgsyl 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?tgsyl \- Solves the generalized Sylvester equation.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall stgsyl\fR(\fItrans\fR, \fIijob\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIc\fR, \fIldc\fR, \fId\fR, \fIldd\fR, \fIe\fR, \fIlde\fR, \fIf\fR, \fIldf\fR, \fIscale\fR, \fIdif\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dtgsyl\fR(\fItrans\fR, \fIijob\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIc\fR, \fIldc\fR, \fId\fR, \fIldd\fR, \fIe\fR, \fIlde\fR, \fIf\fR, \fIldf\fR, \fIscale\fR, \fIdif\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall ctgsyl\fR(\fItrans\fR, \fIijob\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIc\fR, \fIldc\fR, \fId\fR, \fIldd\fR, \fIe\fR, \fIlde\fR, \fIf\fR, \fIldf\fR, \fIscale\fR, \fIdif\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall ztgsyl\fR(\fItrans\fR, \fIijob\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIc\fR, \fIldc\fR, \fId\fR, \fIldd\fR, \fIe\fR, \fIlde\fR, \fIf\fR, \fIldf\fR, \fIscale\fR, \fIdif\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall tgsyl\fR(\fIa\fR, \fIb\fR, \fIc\fR, \fId\fR, \fIe\fR, \fIf\fR[,\fIijob\fR] [,\fItrans\fR] [,\fIscale\fR] [,\fIdif\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBtrans\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'T\'\fR, or \fB\'C\'\fR. 
+.IP
+If \fItrans\fR = \fB\'N\'\fR, solve the generalized Sylvester equation. 
+.IP
+If \fItrans\fR = \fB\'T\'\fR, solve the \'transposed\' system (for real flavors only). 
+.IP
+If \fItrans\fR = \fB\'C\'\fR, solve the \' conjugate transposed\' system (for complex flavors only).
+.TP 10
+\fBijob\fR
+.NL
+\fBINTEGER\fR. Specifies what kind of functionality to be performed:
+.IP
+If \fIijob\fR =0 , solve the generalized Sylvester equation only;
+.IP
+If \fIijob\fR =1, perform the functionality of \fIijob\fR =0 and \fIijob\fR =3;
+.IP
+If \fIijob\fR =2, perform the functionality of \fIijob\fR =0 and \fIijob\fR =4;
+.IP
+If \fIijob\fR =3, only an estimate of Dif[(\fIA\fR, \fID\fR), (\fIB\fR, \fIE\fR)] is computed (look ahead strategy is used);
+.IP
+If \fIijob\fR =4, only an estimate of Dif[(\fIA\fR, \fID\fR), (\fIB\fR,\fIE\fR)] is computed (?gecon on sub-systems is used). If \fItrans\fR = \fB\'T\'\fR or \fB\'C\'\fR, \fIijob\fR is not referenced.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The order of the matrices \fIA\fR and \fID\fR, and the row dimension of the matrices \fIC\fR, \fIF\fR, \fIR\fR and \fIL\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrices \fIB\fR and \fIE\fR, and the column dimension of the matrices \fIC\fR, \fIF\fR, \fIR\fR and \fIL\fR.
+.TP 10
+\fBa\fR, \fBb\fR, \fBc\fR, \fBd\fR, \fBe\fR, \fBf\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBstgsyl\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdtgsyl\fR
+.IP
+\fBCOMPLEX\fR for \fBctgsyl\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBztgsyl\fR.
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) contains the upper quasi-triangular (for real flavors) or upper triangular (for complex flavors) matrix \fIA\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIm\fR).
+.IP
+\fIb\fR(\fIldb\fR,*) contains the upper quasi-triangular (for real flavors) or upper triangular (for complex flavors) matrix \fIB\fR. The second dimension of \fIb\fR must be at least max(1, \fIn\fR).
+.IP
+\fIc\fR (\fIldc\fR,*) contains the right-hand-side of the first matrix equation in the generalized Sylvester equation (as defined by \fItrans\fR) 
+.IP
+The second dimension of \fIc\fR must be at least max(1, \fIn\fR).
+.IP
+\fId\fR (\fIldd\fR,*) contains the upper triangular matrix \fID\fR. 
+.IP
+The second dimension of \fId\fR must be at least max(1, \fIm\fR).
+.IP
+\fIe\fR (\fIlde\fR,*) contains the upper triangular matrix \fIE\fR. 
+.IP
+The second dimension of \fIe\fR must be at least max(1, \fIn\fR).
+.IP
+\fIf\fR (\fIldf\fR,*) contains the right-hand-side of the second matrix equation in the generalized Sylvester equation (as defined by \fItrans\fR) 
+.IP
+The second dimension of \fIf\fR must be at least max(1, \fIn\fR).\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIm\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIb\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIc\fR; at least max(1, \fIm\fR).
+.TP 10
+\fBldd\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fId\fR; at least max(1, \fIm\fR).
+.TP 10
+\fBlde\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIe\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBldf\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIf\fR; at least max(1, \fIm\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR. \fIlwork\fR\(>= 1. 
+.IP
+If \fIijob\fR = 1 or 2 and \fItrans\fR = \fB\'N\'\fR, \fIlwork\fR\(>= max(1, 2*\fIm\fR*\fIn\fR). 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR. 
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace array, \fBDIMENSION\fR at least (\fIm\fR+\fIn\fR+6) for real flavors, and at least (\fIm\fR+\fIn\fR+2) for complex flavors. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+If \fIijob\fR=0, 1, or 2, overwritten by the solution \fIR\fR. 
+.IP
+If \fIijob\fR=3 or 4 and \fItrans\fR = \fB\'N\'\fR, \fIc\fR holds \fIR\fR, the solution achieved during the computation of the Dif-estimate.
+.TP 10
+\fBf\fR
+.NL
+If \fIijob\fR=0, 1, or 2, overwritten by the solution \fIL\fR. 
+.IP
+If \fIijob\fR=3 or 4 and \fItrans\fR = \fB\'N\'\fR, \fIf\fR holds \fIL\fR, the solution achieved during the computation of the Dif-estimate.
+.TP 10
+\fBdif\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+On exit, \fIdif\fR is the reciprocal of a lower bound of the reciprocal of the Dif-function, that is, \fIdif\fR is an upper bound of Dif[(\fIA\fR, \fID\fR), (\fIB\fR, \fIE\fR)] = sigma\(ulmin(\fIZ\fR), where \fIZ\fR as in (2). 
+.IP
+If \fIijob\fR = 0, or \fItrans\fR = \fB\'T\'\fR (for real flavors), or \fItrans\fR = \fB\'C\'\fR (for complex flavors), \fIdif\fR is not touched.
+.TP 10
+\fBscale\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+On exit, \fIscale\fR is the scaling factor in the generalized Sylvester equation. 
+.IP
+If 0 < \fIscale\fR < 1, \fIc\fR and \fIf\fR hold the solutions \fIR\fR and \fIL\fR, respectively, to a slightly perturbed system but the input matrices \fIA\fR, \fIB\fR, \fID\fR and \fIE\fR have not been changed. 
+.IP
+If \fIscale\fR = 0, \fIc\fR and \fIf\fR hold the solutions \fIR\fR and \fIL\fR, respectively, to the homogeneous system with \fIC\fR = \fIF\fR = 0. Normally, \fIscale\fR = 1.
+.TP 10
+\fBwork\fR(1)
+.NL
+If \fIinfo\fR = 0, \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. Use this \fIlwork\fR for subsequent runs.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value. 
+.IP
+If \fIinfo\fR > 0, (\fIA\fR, \fID\fR) and (\fIB\fR, \fIE\fR) have common or close eigenvalues.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBtgsyl\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIm,m\fR).
+.TP 10
+\fBb\fR
+.NL
+Holds the matrix \fIB\fR of size (\fIn,n\fR).
+.TP 10
+\fBc\fR
+.NL
+Holds the matrix \fIC\fR of size (\fIm,n\fR).
+.TP 10
+\fBd\fR
+.NL
+Holds the matrix \fID\fR of size (\fIm,m\fR).
+.TP 10
+\fBe\fR
+.NL
+Holds the matrix \fIE\fR of size (\fIn,n\fR).
+.TP 10
+\fBf\fR
+.NL
+Holds the matrix \fIF\fR of size (\fIm,n\fR).
+.TP 10
+\fBijob\fR
+.NL
+Must be 0, 1, 2, 3, or 4. The default value is 0.
+.TP 10
+\fBtrans\fR
+.NL
+Must be \fB\'N\'\fR or \fB\'T\'\fR. The default value is \fB\'N\'\fR.

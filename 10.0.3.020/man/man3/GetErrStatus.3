@@ -1,0 +1,30 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH GetErrStatus 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+GetErrStatus \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIerr\fR= \fBvmlgeterrstatus\fR( )
+.PP
+.B /* C */
+.PP
+\fIerr\fR= \fBvmlGetErrStatus\fR( \fIvoid\fR);
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBerr\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies the VML error status.

@@ -1,0 +1,132 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH mkl\(uldcscmv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+mkl\(uldcscmv \- Computes matrix - vector product for a sparse matrix in the CSC format.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall mkl\(uldcscmv\fR(\fItransa\fR, \fIm\fR, \fIk\fR, \fIalpha\fR, \fImatdescra\fR, \fIval\fR, \fIindx\fR, \fIpntrb\fR, \fIpntre\fR, \fIx\fR, \fIbeta\fR, \fIy\fR)
+.PP
+.B /* C */
+.PP
+\fBmkl\(uldcscmv\fR(\fI&transa\fR, \fI&m\fR, \fI&k\fR, \fI&alpha\fR, \fImatdescra\fR, \fIval\fR, \fIindx\fR, \fIpntrb\fR, \fIpntre\fR, \fIx\fR, \fI&beta\fR, \fIy\fR);
+.SH INPUT PARAMETERS
+.PP
+Parameter descriptions are common for all implemented interfaces with the exception of data types that refer here to the Fortran 77 standard types. Data types specific to the different interfaces are described in the section \fB``Interfaces''\fR below.
+.TP 10
+\fBtransa\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the operation.
+.IP
+If \fItransa\fR = \fB\'N\'\fR or \fB\'n\'\fR, then  \fIy\fR := \fIalpha\fR*\fIA\fR*\fIx\fR + \fIbeta\fR*\fIy\fR
+.IP
+If \fItransa\fR = \fB\'T\'\fR or \fB\'t\'\fR or \fB\'C\'\fR or \fB\'c\'\fR, then  \fIy\fR := \fIalpha\fR*\fIA\'\fR*\fIx\fR + \fIbeta\fR*\fIy\fR,
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Number of rows of the matrix \fIA\fR.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. Number of columns of the matrix \fIA\fR.
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL*8\fR. Specifies the scalar \fIalpha\fR. 
+.TP 10
+\fBmatdescra\fR
+.NL
+\fBCHARACTER\fR. Array of six elements, specifies properties of the matrix used for operation. Only first four array elements are used, their possible values are given in the ``Possible Values of the Parameter \fImatdescra\fR (\fIdescra\fR)''.
+.TP 10
+\fBval\fR
+.NL
+\fBREAL*8\fR. Array containing non-zero elements of the matrix \fIA\fR. 
+.IP
+For one-based indexing itslength is \fBpntre\fR(\fIk\fR) - \fIpntrb\fR(1).
+.IP
+For zero-based indexing its length is \fIpntre\fR(\fBm\fR-1) - \fIpntrb\fR(0).
+.IP
+Refer to \fIvalues\fR array description in  CSC Format for more details.
+.TP 10
+\fBindx\fR
+.NL
+\fBINTEGER\fR. Array containing the row indices for each non-zero element of the matrix \fIA\fR. Its length is equal to length of the \fIval\fR array.
+.IP
+Refer to \fIrows\fR array description in CSC Format for more details.
+.TP 10
+\fBpntrb\fR
+.NL
+\fBINTEGER\fR. Array of length \fIk\fR.
+.IP
+For one-based indexing this array contains column indices, such that \fIpntrb\fR(\fIi\fR) - \fIpntrb\fR(1)+1 is the first index of column \fIi\fR in the arrays \fIval\fR and \fIindx\fR.
+.IP
+For zero-based indexing this array contains column indices, such that \fIpntrb\fR(\fIi\fR) - \fIpntrb\fR(0) is the first index of column \fIi\fR in the arrays \fIval\fR and \fIindx\fR.
+.IP
+Refer to \fIpointerb\fR array description in CSC Format for more details.
+.TP 10
+\fBpntre\fR
+.NL
+\fBINTEGER\fR. Array of length \fIk\fR. 
+.IP
+For one-based indexing this array contains column indices, such that \fIpntre\fR(\fIi\fR) - \fIpntrb\fR(1) is the last index of column \fIi\fR in the arrays \fIval\fR and \fIindx\fR.
+.IP
+For zero-based indexing this array contains column indices, such that \fIpntre\fR(\fIi\fR) - \fIpntrb\fR(1)-1 is the last index of column \fIi\fR in the arrays \fIval\fR and \fIindx\fR.
+.IP
+Refer to \fIpointerE\fR array description in CSC Format for more details.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL*8\fR.
+.IP
+Array, \fBDIMENSION\fR at least \fIk\fR if \fItransa\fR = \fB\'N\'\fR or \fB\'n\'\fR and at least \fIm\fR otherwise. On entry, the array \fIx\fR must contain the vector \fIx\fR. 
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL*8\fR. Specifies the scalar \fIbeta\fR. 
+.TP 10
+\fBy\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR at least \fIm\fR if \fItransa\fR = \fB\'N\'\fR or \fB\'n\'\fR and at least \fIk\fR otherwise. On entry, the array \fIy\fR must contain the vector \fIy\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBy\fR
+.NL
+Overwritten by the updated vector \fIy\fR.
+.SH INTERFACES
+.PP
+
+.PP
+\fBFortran 77:\fR
+.br
+SUBROUTINE mkl\(uldcscmv(transa, m, k, alpha, matdescra, val, indx,
+.br
+pntrb, pntre, x, beta, y)
+.br
+CHARACTER*1   transa
+.br
+CHARACTER     matdescra(*)
+.br
+INTEGER       m, k, ldb, ldc
+.br
+INTEGER       indx(*), pntrb(m), pntre(m)
+.br
+REAL*8        alpha, beta
+.br
+REAL*8        val(*), x(*), y(*)
+.PP
+\fBC:\fR
+.br
+.PP
+.br
+void mkl\(uldcscmv(char \fI*transa\fR, int \fI*m\fR, int \fI*k\fR, double \fI*alpha\fR,
+.br
+.br
+char \fI*matdescra\fR, double \fI*val\fR, int \fI*indx\fR, int \fI*pntrb\fR,
+.br
+int \fI*pntre\fR, double \fI*x\fR, double \fI*beta\fR, double \fI*y\fR);

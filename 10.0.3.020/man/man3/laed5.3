@@ -1,0 +1,57 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laed5 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laed5 \- Used by \fBsstedc\fR/\fBdstedc\fR. Solves the 2-by-2 secular equation.
+.SH SYNOPSIS
+.PP
+\fBcall slaed5\fR( \fIi\fR, \fId\fR, \fIz\fR, \fIdelta\fR, \fIrho\fR, \fIdlam\fR)
+.PP
+\fBcall dlaed5\fR( \fIi\fR, \fId\fR, \fIz\fR, \fIdelta\fR, \fIrho\fR, \fIdlam\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBi\fR
+.NL
+\fBINTEGER\fR. The index of the eigenvalue to be computed; 
+.IP
+1 \(<=   i \(<= 2.
+.TP 10
+\fBd\fR, \fBz\fR
+.NL
+\fBREAL\fR for \fBslaed5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed5\fR
+.IP
+Arrays, dimension (2) each. The array \fId\fR contains the original eigenvalues. It is assumed that \fId\fR(1) < \fId\fR(2).
+.IP
+The array \fIz\fR contains the components of the updating vector.
+.TP 10
+\fBrho\fR
+.NL
+\fBREAL\fR for \fBslaed5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed5\fR
+.IP
+The scalar in the symmetric updating formula.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBdelta\fR
+.NL
+\fBREAL\fR for \fBslaed5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed5\fR
+.IP
+Array, dimension (2). 
+.IP
+The vector \fIdelta\fR contains the information necessary to construct the eigenvectors.
+.TP 10
+\fBdlam\fR
+.NL
+\fBREAL\fR for \fBslaed5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed5\fR
+.IP
+The computed \fIlambda\(uli\fR, the \fIi\fR-th updated eigenvalue.

@@ -1,0 +1,165 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?stevd 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?stevd \- Computes all eigenvalues and (optionally) all eigenvectors of a real symmetric tridiagonal matrix using divide and conquer algorithm.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sstevd\fR(\fIjob\fRz, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall dstevd\fR(\fIjob\fRz, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall stevd\fR(\fId\fR, \fIe\fR[,\fIz\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobz\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then only eigenvalues are computed. 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, then eigenvalues and eigenvectors are computed.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIT\fR (\fIn \fR\(>= 0). 
+.TP 10
+\fBd\fR, \fBe\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsstevd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdstevd\fR. 
+.IP
+Arrays: 
+.IP
+\fId\fR(*) contains the \fIn\fR diagonal elements of the tridiagonal matrix \fIT\fR. 
+.IP
+The dimension of \fId\fR must be at least max(1, \fIn\fR).
+.IP
+\fIe\fR(*) contains the \fIn\fR-1 off-diagonal elements of \fIT\fR. 
+.IP
+The dimension of \fIe\fR must be at least max(1, \fIn\fR-1). The \fIn-\fRth element of this array is used as workspace.
+.IP
+\fIwork\fR(*) is a workspace array. 
+.IP
+The dimension of \fIwork\fR must be at least \fIlwork\fR.
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIz\fR. Constraints:
+.IP
+\fIldz\fR\(>= 1 if \fIjob\fR = \fB\'N\'\fR;
+.IP
+\fIldz\fR < max(1, \fIn\fR) if \fIjob\fR = \fB\'V\'\fR.
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR. 
+.IP
+Constraints: 
+.IP
+if \fIjobz\fR = \fB\'N\'\fR or \fIn \fR\(<= 1, then \fIlwork \fR\(>= 1; 
+.IP
+if \fIjobz\fR = \fB\'V\'\fR and \fIn\fR > 1, then \fIlwork \fR\(>=\fIn\fR**2 + 4*\fIn\fR + 1. 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the required sizes of the \fIwork\fR and \fIiwork\fR arrays, returns these values as the first entries of the \fIwork\fR and \fIiwork\fR arrays, and no error message related to \fIlwork\fR or \fIliwork\fR is issued by \fBxerbla\fR. 
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace array, its dimension max(1, \fBliwork\fR).
+.TP 10
+\fBliwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIiwork\fR. 
+.IP
+Constraints: 
+.IP
+if \fIjobz\fR = \fB\'N\'\fR or \fIn \fR\(<= 1, then \fIliwork \fR\(>= 1; 
+.IP
+if \fIjobz\fR = \fB\'V\'\fR and \fIn\fR > 1, then \fIliwork \fR\(>= 5\fI*n\fR+3.
+.IP
+If \fIliwork\fR = -1, then a workspace query is assumed; the routine only calculates the required sizes of the \fIwork\fR and \fIiwork\fR arrays, returns these values as the first entries of the \fIwork\fR and \fIiwork\fR arrays, and no error message related to \fIlwork\fR or \fIliwork\fR is issued by \fBxerbla\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+On exit, if \fIinfo\fR = 0, contains the eigenvalues of the matrix \fIT\fR in ascending order. 
+.IP
+See also \fIinfo\fR.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBsstevd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdstevd\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldz\fR, *). 
+.IP
+The second dimension of \fIz\fR must be:
+.IP
+at least 1 if \fIjobz\fR = \fB\'N\'\fR;
+.IP
+at least max(1, \fIn\fR) if \fIjobz\fR = \fB\'V\'\fR.
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, then this array is overwritten by the orthogonal matrix \fIZ\fR which contains the eigenvectors of \fIT\fR. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then \fIz\fR is not referenced.
+.TP 10
+\fBe\fR
+.NL
+On exit, this array is overwritten with intermediate results.
+.TP 10
+\fBwork\fR(1)
+.NL
+On exit, if \fIlwork\fR > 0, then \fIwork\fR(1) returns the required minimal size of \fIlwork\fR.
+.TP 10
+\fBiwork\fR(1)
+.NL
+On exit, if \fIliwork\fR > 0, then \fIiwork\fR(1) returns the required minimal size of \fIliwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fIi\fR, then the algorithm failed to converge; \fIi\fR indicates the number of elements of an intermediate tridiagonal form which did not converge to zero. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBstevd\fR interface are the following:
+.TP 10
+\fBd\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBe\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBz\fR
+.NL
+Holds the matrix \fIZ\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBjobz\fR
+.NL
+Restored based on the presence of the argument \fIz\fR as follows: 
+.IP
+\fIjobz\fR = \fB\'V\'\fR, if \fIz\fR is present, 
+.IP
+\fIjobz\fR = \fB\'N\'\fR, if \fIz\fR is omitted.

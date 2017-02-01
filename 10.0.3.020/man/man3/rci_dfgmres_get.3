@@ -1,0 +1,60 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dfgmres\(ulget 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dfgmres\(ulget \- Retrieves the number of the current iteration and updates the solution.
+.SH SYNOPSIS
+.PP
+\fBdfgmres\(ulget\fR(\fIn\fR, \fIx\fR, \fIb\fR, \fIRCI\(ulrequest\fR, \fIipar\fR, \fIdpar\fR, \fItmp\fR, \fIitercount\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Contains the size of the problem, and the sizes of the arrays \fBx\fR and \fBb\fR.
+.TP 10
+\fBipar\fR
+.NL
+\fBINTEGER\fR array of size \fB128\fR. Refer to the FGMRES Common Parameters.
+.TP 10
+\fBdpar\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size \fB128\fR. Refer to the FGMRES Common Parameters.
+.TP 10
+\fBtmp\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size ((2*\fBipar\fR(15)+1)*\fBn\fR+\fBipar\fR(15)*\fBipar\fR(15)+9)/2 + 1). Refer to the FGMRES Common Parameters.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size \fBn\fR. If \fBipar\fR\fB(13)\fR= 0, it contains the updated approximation to the solution according to the computations done in \fBdfgmres\fR routine. Otherwise, it is not changed.
+.TP 10
+\fBb\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size \fBn\fR. If \fBipar\fR\fB(13)\fR> 0, it contains the updated approximation to the solution according to the computations done in \fBdfgmres\fR routine. Otherwise, it is not changed.
+.TP 10
+\fBRCI\(ulrequest\fR
+.NL
+\fBINTEGER\fR. Informs about result of work of theroutine.
+.TP 10
+\fBitercount\fR
+.NL
+\fBINTEGER\fR argument. Contains the value of the current iteration number.
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBRCI\(ulrequest\fR= 0
+.NL
+The routine completes task normally.
+.TP 10
+\fBRCI\(ulrequest\fR= -12
+.NL
+The routine is interrupted because errors are found in the method parameters. Normally this happens if the parameters \fBipar\fR and \fBdpar\fR are altered by mistake outside the routine.
+.TP 10
+\fBRCI\(ulrequest\fR= -10000
+.NL
+The routine fails to complete the task.

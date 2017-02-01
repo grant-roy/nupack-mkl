@@ -1,0 +1,90 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ilaenv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+ilaenv \- Environmental enquiry function which returns values for tuning algorithmic performance.
+.SH SYNOPSIS
+.PP
+\fIvalue\fR= \fBilaenv\fR( \fIispec\fR, \fIname\fR, \fIopts\fR, \fIn1\fR, \fIn2\fR, \fIn3\fR, \fIn4\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBispec\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Specifies the parameter to be returned as the value of \fBilaenv\fR:
+.IP
+= 1: the optimal blocksize; if this value is 1, an unblocked algorithm will give the best performance.
+.IP
+= 2: the minimum block size for which the block routine should be used; if the usable block size is less than this value, an unblocked routine should be used.
+.IP
+= 3: the crossover point (in a block routine, for \fIn\fR less than this value, an unblocked routine should be used)
+.IP
+= 4: the number of shifts, used in the nonsymmetric eigenvalue routines (deprecated)
+.IP
+= 5: the minimum column dimension for blocking to be used; rectangular blocks must have dimension at least \fIk\fR-by-\fIm\fR, where \fBk\fR is given by \fBilaenv\fR(\fB2\fR,...) and \fBm\fR by \fBilaenv\fR(\fB5\fR,...)
+.IP
+= 6: the crossover point for the SVD (when reducing an \fIm\fR-by-\fIn\fR matrix to bidiagonal form, if max(\fBm,n\fR)/min(\fBm,n\fR) exceeds this value, a \fIQR\fR factorization is used first to reduce the matrix to a triangular form.)
+.IP
+= 7: the number of processors
+.IP
+= 8: the crossover point for the multishift \fIQR\fR and \fIQZ\fR methods for nonsymmetric eigenvalue problems (deprecated).
+.IP
+= 9: maximum size of the subproblems at the bottom of the computation tree in the divide-and-conquer algorithm (used by \fB?gelsd\fR and \fB?gesdd\fR)
+.IP
+=10: ieee NaN arithmetic can be trusted not to trap
+.IP
+=11: infinity arithmetic can be trusted not to trap
+.IP
+12 \(<=  \fIispec\fR \(<= 16:  \fB?hseqr\fR or one of its subroutines, see \fBiparmq\fR for detailed explanation.
+.TP 10
+\fBname\fR
+.NL
+\fBCHARACTER*(*)\fR. The name of the calling subroutine, in either upper case or lower case. 
+.TP 10
+\fBopts\fR
+.NL
+\fBCHARACTER*(*)\fR. The character options to the subroutine \fIname\fR, concatenated into a single character string. For example, \fIuplo\fR = \fB\'U\'\fR, \fItrans\fR = \fB\'T\'\fR, and \fIdiag\fR = \fB\'N\'\fR for a triangular routine would be specified as \fIopts\fR = \fB\'UTN\'\fR.
+.TP 10
+\fBn1\fR, \fBn2\fR, \fBn3\fR, \fBn4\fR
+.NL
+\fBINTEGER\fR. Problem dimensions for the subroutine \fIname\fR;  these may not all be required.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBvalue\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIvalue\fR\(>= 0: the value of the parameter specified by \fIispec\fR;
+.IP
+If \fIvalue\fR = \fB-k\fR\fI\fR < 0: the \fBk\fR-th argument had an illegal value.
+.PP
+Below is an example of \fBilaenv\fR usage in C language:#include 
+.br
+#include "mkl.h"
+.br
+.br
+int main(void)
+.br
+{
+.br
+int size = 1000;
+.br
+int ispec = 1;
+.br
+int dummy = -1;
+.br
+int blockSize1 = ilaenv(&ispec, "dsytrd", "U", &size, &dummy, &dummy, &dummy);
+.br
+int blockSize2 = ilaenv(&ispec, "dormtr", "LUN", &size, &size, &dummy, &dummy);
+.br
+printf("DSYTRD blocksize = %d\n", blockSize1);
+.br
+printf("DORMTR blocksize = %d\n", blockSize2);
+.br
+return 0;
+.br
+}

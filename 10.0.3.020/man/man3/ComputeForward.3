@@ -1,0 +1,111 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ComputeForward 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+ComputeForward \- Computes the forward FFT.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiComputeForward\fR( \fIDesc\(ulHandle\fR, \fIX\(ulinout\fR)
+.PP
+\fBStatus\fR = \fBDftiComputeForward\fR( \fIDesc\(ulHandle\fR, \fIX\(ulin\fR, \fIX\(ulout\fR)
+.PP
+.B /* C */
+.PP
+\fBstatus\fR = \fBDftiComputeForward\fR( \fIdesc\(ulhandle\fR, \fIx\(ulinout\fR);
+.PP
+\fBstatus\fR = \fBDftiComputeForward\fR( \fIdesc\(ulhandle\fR, \fIx\(ulin\fR, \fIx\(ulout\fR);
+.PP
+
+.br
+//Fortran interface.
+.br
+INTERFACE DftiComputeFoward
+.br
+//Note that the body provided here is to illustrate the different
+.br
+//argument list and types of dummy arguments. The interface
+.br
+//does not guarantee what the actual function names are.
+.br
+//Users can only rely on the function name following the
+.br
+//keyword INTERFACE
+.br
+// One argument single precision complex
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul4\(ulC( Desc\(ulHandle, X )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul4\(ulC
+.br
+TYPE(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+COMPLEX, INTENT(INOUT) :: X(*)
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul4\(ulC
+.br
+// One argument double precision complex
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul4\(ulZ( Desc\(ulHandle, X )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul4\(ulZ
+.br
+TYPE(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+COMPLEX (Kind((0D0,0D0))), INTENT(INOUT) :: X(*)
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul4\(ulZ
+.br
+// One argument single precision real
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul4\(ulR( Desc\(ulHandle, X )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul4\(ulR
+.br
+TYPE(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+REAL, INTENT(INOUT) :: X(*)
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul4\(ulR
+.br
+// One argument double precision real
+.br
+...
+.br
+// Two argument single precision complex
+.br
+...
+.br
+...
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul4\(ulCC( Desc\(ulHandle, X\(ulIn, Y\(ulOut )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul4\(ulCC
+.br
+TYPE(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+COMPLEX, INTENT(IN) :: X\(ulIn(*)
+.br
+COMPLEX, INTENT(OUT) :: Y\(ulOut(*)
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul4\(ulCC
+.br
+END INTERFACE DftiComputeFoward 
+.br
+   
+.br
+/* C prototype */
+.br
+long DftiComputeForward( DFTI\(ulDESCRIPTOR\(ulHANDLE,
+.br
+            void *,
+.br
+       ... );
+.br
+   
+.PP
+The implementations of the FFT interface expect the data be treated as data stored linearly in memory with a regular "stride" pattern. The function expects the starting address of the first element. Hence we use the assume-size declaration in Fortran.
+.PP
+The descriptor by itself contains sufficient information to determine exactly how many arguments and of what type should be present. The implementation could use this information to check against possible input inconsistency.

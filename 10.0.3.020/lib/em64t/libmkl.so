@@ -1,0 +1,1 @@
+GROUP (libmkl_intel_lp64.so libmkl_intel_thread.so libmkl_core.so)

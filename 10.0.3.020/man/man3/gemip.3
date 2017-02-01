@@ -1,0 +1,118 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gemip 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gemip \- Performs midpoint-inverse preconditioning of an interval linear system.
+.SH SYNOPSIS
+.PP
+\fBcall \fR\fBsigemip\fR(\fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBdigemip\fR(\fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBcrgemip\fR(\fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBzrgemip\fR(\fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBccgemip\fR(\fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBzcgemip\fR(\fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR.
+.TP 10
+\fBnrhs\fR
+.NL
+\fBINTEGER\fR. The number of right-hand sides (\fInrhs \fR\(>= 0).
+.TP 10
+\fBa\fR, \fBb\fR
+.NL
+\fBS\(ulINTERVAL\fR for \fBsigemip\fR.
+.IP
+\fBD\(ulINTERVAL\fR for \fBdigemip\fR.
+.IP
+\fBCR\(ulINTERVAL\fR for \fBcrgemip\fR.
+.IP
+\fBZR\(ulINTERVAL\fR for \fBzrgemip\fR.
+.IP
+\fBCC\(ulINTERVAL\fR for \fBccgemip\fR.
+.IP
+\fBZC\(ulINTERVAL\fR for \fBzcgemip\fR.
+.IP
+Arrays: \fIa\fR (\fIlda\fR,*), \fIb\fR (\fIldb\fR,*).
+.IP
+The array \fIa\fR contains the matrix \fIA\fR.
+.IP
+The array \fIb\fR contains the matrix \fIB\fR, whose columns are the right-hand sides for the systems of equations.
+.IP
+The second dimension of \fIa\fR must be at least max(1,\fIn\fR) and the second dimension of \fIb\fR must be at least max(1,\fInrhs\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR, \fIlda\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of b, \fIldb\fR\(>= max(1, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+Overwritten by the preconditioned matrix \fIA\fR.
+.TP 10
+\fBb\fR
+.NL
+Overwritten by the preconditioned matrix \fIB\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR \(>= 0, the execution is not successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter has an illegal value.
+.PP
+The following piece of Fortran code presents an example of how you can perform preconditioning of the interval linear system 
+.PP
+and then solve it by using the interval Gauss method:
+.PP
+---------------------------------------------------------------------------------------------- 
+.br
+. . . . . .
+.br
+.br
+USE INTERVAL\(ulARITHMETIC
+.br
+. . . . . .
+.br
+TYPE(D\(ulINTERVAL)          :: A(2,2), B(2,2)
+.br
+INTEGER          :: N = 2, NRHS = 2, LDA = 2, LDB = 2, INFO
+.br
+CHARACTER(1)          :: TRANS = \'n\'
+.br
+. . . . . .
+.br
+A(1,1) = DINTERVAL(2.,4.);     A(1,2) = DINTERVAL(-2.,1.)
+.br
+A(2,1) = DINTERVAL(-1.,2.);    A(2,2) = DINTERVAL(2.,4.)
+.br
+B(1,1) = DINTERVAL(0.,2.);     B(2,1) = DINTERVAL(0.,2.)
+.br
+B(1,2) = DINTERVAL(-2.,2.);    B(2,2) = DINTERVAL(-2.,2.)
+.br
+. . . . . .
+.br
+CALL DIGEMIP( N, NRHS, A, LDA, B, LDB, INFO )
+.br
+CALL DIGEGAS( TRANS, N, NRHS, A, LDA, B, LDB, INFO )
+.PP
+----------------------------------------------------------------------------------------------
+.PP
+For more code examples on using this routine, see  .

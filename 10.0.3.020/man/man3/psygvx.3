@@ -1,0 +1,375 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?sygvx 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?sygvx \- Computes selected eigenvalues and, optionally, eigenvectors of a real generalized symmetric definite eigenproblem.
+.SH SYNOPSIS
+.PP
+\fBcall pssygvx\fR(\fIibtype\fR, \fIjobz\fR, \fIrange\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIabstol\fR, \fIm\fR, \fInz\fR, \fIw\fR, \fIorfac\fR, \fIz\fR, \fIiz\fR, \fIjz\fR, \fIdescz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIifail\fR, \fIiclustr\fR, \fIgap\fR, \fIinfo\fR)
+.PP
+\fBcall pdsygvx\fR(\fIibtype\fR, \fIjobz\fR, \fIrange\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIabstol\fR, \fIm\fR, \fInz\fR, \fIw\fR, \fIorfac\fR, \fIz\fR, \fIiz\fR, \fIjz\fR, \fIdescz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIifail\fR, \fIiclustr\fR, \fIgap\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBibtype\fR
+.NL
+(global) \fBINTEGER\fR. Must be 1 or 2 or 3. 
+.IP
+Specifies the problem type to be solved: 
+.IP
+If \fIibtype\fR = 1, the problem type is  sub(\fIA\fR)*\fIx\fR = \fIlambda\fR*sub(\fIB\fR)\fI*x\fR; 
+.IP
+If \fIibtype\fR = 2, the problem type is sub(\fIA\fR)*sub(\fIB\fR)\fI*x\fR = \fIlambda\fR\fI*x\fR; 
+.IP
+If \fIibtype\fR = 3, the problem type is sub(\fIB\fR)*sub(\fIA\fR)\fI*x\fR = \fIlambda\fR*\fIx\fR.
+.TP 10
+\fBjobz\fR
+.NL
+(global). \fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobz\fR =\fB\'N\'\fR, then compute eigenvalues only. 
+.IP
+If \fIjobz\fR =\fB\'V\'\fR, then compute eigenvalues and eigenvectors.
+.TP 10
+\fBrange\fR
+.NL
+(global). \fBCHARACTER*1\fR. Must be \fB\'A\'\fR or \fB\'V\'\fR or \fB\'I\'\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR, the routine computes all eigenvalues. 
+.IP
+If \fIrange\fR = \fB\'V\'\fR, the routine computes eigenvalues in the interval: [\fIvl\fR, \fIvu\fR]
+.IP
+If \fIrange\fR = \fB\'I\'\fR, the routine computes eigenvalues with indices \fIil\fR through \fIiu\fR.
+.TP 10
+\fBuplo\fR
+.NL
+(global). \fBCHARACTER*1\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR. 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, arrays \fIa\fR and \fIb\fR store the upper triangles of sub(\fIA\fR) and sub (\fIB\fR);
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, arrays \fIa\fR and \fIb\fR store the lower triangles of sub(\fIA\fR) and sub (\fIB\fR).
+.TP 10
+\fBn\fR
+.NL
+(global). \fBINTEGER\fR. The order of the matrices sub(\fIA\fR) and sub (\fIB\fR), \fIn\fR\(>= 0. 
+.TP 10
+\fBa\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpssygvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsygvx\fR. 
+.IP
+Pointer into the local memory to an array of dimension (\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1)). On entry, this array contains the local pieces of the \fIn\fR-by-\fIn\fR symmetric distributed matrix sub(\fIA\fR). 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the leading \fIn\fR-by-\fIn\fR upper triangular part of sub(\fIA\fR) contains the upper triangular part of the matrix. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, the leading \fIn\fR-by-\fIn\fR lower triangular part of sub(\fIA\fR) contains the lower triangular part of the matrix. 
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix \fIA\fR, respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR. If \fIdesca\fR(\fIctxt\(ul\fR) is incorrect, \fBp?sygvx\fR cannot guarantee correct error reporting.
+.TP 10
+\fBb\fR
+.NL
+(local). \fBREAL\fR for \fBpssygvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsygvx\fR. 
+.IP
+Pointer into the local memory to an array of dimension (\fIlld\(ulb\fR, \fILOCc\fR(\fIjb\fR+\fIn\fR-1)). On entry, this array contains the local pieces of the \fIn\fR-by-\fIn\fR symmetric distributed matrix sub(\fIB\fR). 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the leading \fIn\fR-by-\fIn\fR upper triangular part of sub(\fIB\fR) contains the upper triangular part of the matrix. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, the leading \fIn\fR-by-\fIn\fR lower triangular part of sub(\fIA\fR) contains the lower triangular part of the matrix.
+.TP 10
+\fBib\fR, \fBjb\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIb\fR indicating the first row and the first column of the submatrix \fIB\fR, respectively.
+.TP 10
+\fBdescb\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIB\fR. \fIdescb\fR(\fIctxt\(ul\fR) must be equal to \fIdesca\fR(\fIctxt\(ul\fR).
+.TP 10
+\fBvl\fR, \fBvu\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBpssygvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsygvx\fR. 
+.IP
+If \fIrange\fR = \fB\'V\'\fR, the lower and upper bounds of the interval to be searched for eigenvalues. 
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'I\'\fR, \fIvl\fR and \fIvu\fR are not referenced.
+.TP 10
+\fBil\fR, \fBiu\fR
+.NL
+(global)
+.IP
+\fBINTEGER\fR. 
+.IP
+If \fIrange\fR = \fB\'I\'\fR, the indices in ascending order of the smallest and largest eigenvalues to be returned. Constraint: \fIil\fR \(>= 1, min(\fIil\fR, \fIn\fR)\(<= \fIiu\fR \(<= \fIn\fR
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'V\'\fR, \fIil\fR and \fIiu\fR are not referenced.
+.TP 10
+\fBabstol\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBpssygvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsygvx\fR. 
+.IP
+If \fIjobz\fR=\fB\'V\'\fR, setting \fIabstol\fR to \fBp?lamch\fR(\fIcontext\fR, \fB\'U\'\fR) yields the most orthogonal eigenvectors. 
+.IP
+The absolute error tolerance for the eigenvalues. An approximate eigenvalue is accepted as converged when it is determined to lie in an interval [\fIa\fR,\fIb\fR] of width less than or equal to 
+.IP
+\fIabstol\fR + \fIeps\fR*\fBmax\fR(|\fIa\fR|,|\fIb\fR|), 
+.IP
+where \fIeps\fR is the machine precision. If \fIabstol\fR is less than or equal to zero, then \fIeps\fR*norm(\fBT\fR) will be used in its place, where norm(\fBT\fR) is the 1-norm of the tridiagonal matrix obtained by reducing \fIA\fR to tridiagonal form. 
+.IP
+Eigenvalues will be computed most accurately when \fIabstol\fR is set to twice the underflow threshold 2*\fBp?lamch\fR(\'S\') not zero. If this routine returns with ((\fBmod\fR(\fIinfo\fR,2).\fIne\fR.0).\fIor\fR.*(\fImod\fR(\fIinfo\fR/8,2).\fIne\fR.0)), indicating that some eigenvalues or eigenvectors did not converge, try setting \fIabstol\fR to 2*\fBp?lamch\fR(\'S\'). 
+.TP 10
+\fBorfac\fR
+.NL
+(global). 
+.IP
+\fBREAL\fR for \fBpssygvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsygvx\fR. 
+.IP
+Specifies which eigenvectors should be reorthogonalized. Eigenvectors that correspond to eigenvalues which are within \fItol\fR=\fIorfac\fR*norm(\fIA\fR) of each other are to be reorthogonalized. However, if the workspace is insufficient (see \fIlwork\fR), \fItol\fR may be decreased until all eigenvectors to be reorthogonalized can be stored in one process. No reorthogonalization will be done if \fIorfac\fR equals zero. A default value of 1.0e-3 is used if \fIorfac\fR is negative. \fIorfac\fR should be identical on all processes. 
+.TP 10
+\fBiz\fR, \fBjz\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIz\fR indicating the first row and the first column of the submatrix \fIZ\fR, respectively.
+.TP 10
+\fBdescz\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIZ\fR.\fIdescz\fR(\fIctxt\(ul\fR) must equal \fIdesca\fR(\fIctxt\(ul\fR).
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpssygvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsygvx\fR. 
+.IP
+Workspace array, dimension (\fIlwork\fR)
+.TP 10
+\fBlwork\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+Dimension of the array \fBwork\fR. See below for definitions of variables used to define \fIlwork\fR. 
+.IP
+If no eigenvectors are requested (\fIjobz\fR = \fB\'N\'\fR), then \fIlwork\fR \(>= 5*\fIn\fR + \fBmax\fR(5*\fInn\fR, \fBNB\fR*(\fInp\fR0 + 1)). 
+.IP
+If eigenvectors are requested (\fIjobz\fR = \fB\'V\'\fR), then the amount of workspace required to guarantee that all eigenvectors are computed is: 
+.IP
+\fIlwork\fR \(>= 5*\fIn\fR + \fBmax\fR(5*\fInn\fR, \fInp\fR0*\fImq\fR0 + 2*\fInb\fR*\fInb\fR) + \fBiceil\fR(\fIneig\fR, \fBNPROW\fR*\fBNPCOL\fR)*\fInn.\fR
+.IP
+The computed eigenvectors may not be orthogonal if the minimal workspace is supplied and \fIorfac\fR is too small. If you want to guarantee orthogonality at the cost of potentially poor performance you should add the following to \fIlwork\fR:
+.IP
+(\fIclustersize\fR-1)*\fIn\fR,
+.IP
+where \fIclustersize\fR is the number of eigenvalues in the largest cluster, where a cluster is defined as a set of close eigenvalues: 
+.IP
+{\fIw\fR(\fIk\fR),..., \fIw\fR(\fIk\fR+\fIclustersize\fR-1)|\fIw\fR(\fIj\fR+1) \(<= \fIw\fR(\fIj\fR) + \fIorfac\fR*2*norm(\fIA\fR)}
+.IP
+Variable definitions: 
+.IP
+\fIneig\fR = number of eigenvectors requested, 
+.IP
+\fInb\fR = \fIdesca\fR(\fImb\(ul\fR) = \fIdesca\fR(\fInb\(ul\fR) = \fIdescz\fR(\fImb\(ul\fR) = \fIdescz\fR(\fInb\(ul\fR), 
+.IP
+\fInn\fR = \fBmax\fR(\fIn\fR, \fInb\fR, 2), 
+.IP
+\fIdesca\fR(\fIrsrc\(ul\fR) = \fIdesca\fR(\fInb\(ul\fR) = \fIdescz\fR(\fIrsrc\(ul\fR) = \fIdescz\fR(\fIcsrc\(ul\fR) = 0, 
+.IP
+\fInp\fR0 = \fBnumroc\fR(\fInn\fR, \fInb\fR, 0, 0, \fBNPROW\fR), 
+.IP
+\fImq\fR0 = \fBnumroc\fR(\fBmax\fR(\fIneig\fR, \fInb\fR, 2), \fInb\fR, 0, 0, \fBNPCOL\fR) 
+.IP
+\fBiceil\fR(\fIx\fR, \fIy\fR) is a ScaLAPACK function returning ceiling(\fIx\fR/\fIy\fR) 
+.IP
+If \fIlwork\fR is too small to guarantee orthogonality, \fBp?syevx\fR attempts to maintain orthogonality in the clusters with the smallest spacing between the eigenvalues. 
+.IP
+If \fIlwork\fR is too small to compute all the eigenvectors requested, no computation is performed and \fIinfo\fR= -23 is returned. 
+.IP
+Note that when \fIrange\fR=\fB\'V\'\fR, number of requested eigenvectors are not known until the eigenvalues are computed. In this case and if  \fIlwork\fR is large enough to compute the eigenvalues, \fBp?sygvx\fR computes the eigenvalues and as many eigenvectors as possible.
+.IP
+Greater performance can be achieved if adequate workspace is provided. In some situations, performance can decrease as the provided workspace increases above the workspace amount shown below: 
+.IP
+\fIlwork\fR \(>= \fBmax\fR(\fIlwork\fR, 5*\fIn\fR + \fInsytrd\(ullwopt\fR, \fInsygst\(ullwopt\fR), where
+.IP
+\fIlwork\fR, as defined previously, depends upon the number of eigenvectors requested, and 
+.IP
+\fInsytrd\(ullwopt\fR = \fIn\fR + 2*(\fIanb\fR+1)*(4*\fInps\fR+2) + (\fInps\fR+3)*\fInps\fR
+.IP
+\fInsygst\(ullwopt\fR = 2*\fInp\fR0*\fInb\fR + \fInq\fR0*\fInb\fR + \fInb\fR*\fInb\fR
+.IP
+\fIanb\fR = \fBpjlaenv\fR(\fIdesca\fR(\fIctxt\(ul\fR), 3, \fBp?syttrd\fR \', \fB\'L\'\fR, 0, 0, 0, 0)
+.IP
+\fIsqnpc\fR = \fBint\fR(\fIsqrt\fR(\fIdble\fR(\fBNPROW\fR * \fBNPCOL\fR)))
+.IP
+\fInps\fR = \fBmax\fR(\fBnumroc\fR(\fIn\fR, 1, 0, 0, \fIsqnpc\fR), 2*\fIanb\fR)
+.IP
+\fBNB\fR = \fIdesca\fR(\fImb\(ul\fR)
+.IP
+\fInp\fR0 =\fB numroc\fR(\fIn\fR, \fInb\fR, 0, 0, \fBNPROW\fR)
+.IP
+\fInq\fR0 = \fBnumroc\fR(\fIn\fR, \fInb\fR, 0, 0, \fBNPCOL\fR)
+.IP
+\fBnumroc\fR is a ScaLAPACK tool functions; 
+.IP
+\fBpjlaenv\fR is a ScaLAPACK environmental inquiry function 
+.IP
+\fBMYROW\fR, \fBMYCOL\fR, \fBNPROW\fR and \fBNPCOL\fR can be determined by calling the subroutine \fBblacs\(ulgridinfo\fR. 
+.IP
+For large \fBn\fR, no extra workspace is needed, however the biggest boost in performance comes for small \fBn\fR, so it is wise to provide the extra workspace (typically less than a Megabyte per process).
+.IP
+If \fIclustersize\fR \(>= \fIn\fR/\fIsqrt\fR(\fBNPROW\fR*\fBNPCOL\fR), then providing enough space to compute all the eigenvectors orthogonally will cause serious degradation in performance. At the limit (that is, \fIclustersize\fR = \fIn\fR-1) \fBp?stein\fR will perform no better than \fB?stein\fR on a single processor. 
+.IP
+For \fIclustersize\fR = \fIn\fR/\fIsqrt\fR(\fBNPROW\fR*\fBNPCOL\fR) reorthogonalizing all eigenvectors will increase the total execution time by a factor of 2 or more. 
+.IP
+For \fIclustersize\fR>\fIn\fR/\fIsqrt\fR(\fBNPROW\fR*\fBNPCOL\fR) execution time will grow as the square of the cluster size, all other factors remaining equal and assuming enough workspace. Less workspace means less reorthogonalization but faster execution. 
+.IP
+If \fIlwork\fR = -1, then \fIlwork\fR is global input and a workspace query is assumed; the routine only calculates the size required for optimal performance for all work arrays. Each of these values is returned in the first entry of the corresponding work arrays, and no error message is issued by \fBpxerbla\fR.
+.TP 10
+\fBiwork\fR
+.NL
+(local) \fBINTEGER\fR. Workspace array.
+.TP 10
+\fBliwork\fR
+.NL
+(local) \fBINTEGER\fR, dimension of \fIiwork\fR. 
+.IP
+\fIliwork\fR \(>= 6*\fInnp\fR
+.IP
+Where:
+.IP
+\fInnp\fR = \fBmax\fR(\fIn\fR, \fBNPROW\fR*\fBNPCOL\fR + 1, 4)
+.IP
+If \fIliwork\fR = -1, then \fIliwork\fR is global input and a workspace query is assumed; the routine only calculates the minimum and optimal size for all work arrays. Each of these values is returned in the first entry of the corresponding work array, and no error message is issued by \fBpxerbla\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, and if \fIinfo\fR = 0, sub(\fIA\fR) contains the distributed matrix \fIZ\fR of eigenvectors. The eigenvectors are normalized as follows: 
+.IP
+for \fIibtype\fR = 1 or 2, \fI Z\fR**\fIT\fR*sub(\fIB\fR)*\fIZ\fR = \fIi\fR; 
+.IP
+for \fIibtype\fR = 3,    \fI Z\fR**\fIT\fR*inv(sub(\fIB\fR))*\fIZ\fR = \fIi\fR. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then on exit the upper triangle (if \fIuplo\fR=\fB\'U\'\fR) or the lower triangle (if \fIuplo\fR=\fB\'L\'\fR) of sub(\fIA\fR), including the diagonal, is destroyed.
+.TP 10
+\fBb\fR
+.NL
+On exit, if \fIinfo\fR \(<= \fIn\fR, the part of sub(\fIB\fR) containing the matrix is overwritten by the triangular factor \fIU\fR or \fIL\fR from the Cholesky factorization sub(\fIB\fR) = \fIU\fR**\fIT\fR\fI*U\fR or sub(\fIB\fR) = \fIL*L\fR**\fIT\fR.
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. The total number of eigenvalues found, 0 \(<= \fIm\fR \(<= \fIn\fR. 
+.TP 10
+\fBnz\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+Total number of eigenvectors computed. 0 \(<= \fInz\fR \(<= \fIm\fR. The number of columns of \fIz\fR that are filled. 
+.IP
+If \fIjobz\fR \(!= \fB\'V\'\fR, \fInz\fR is not referenced. 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, \fInz\fR = \fIm\fR unless the user supplies insufficient space and \fBp?sygvx\fR is not able to detect this before beginning computation. To get all the eigenvectors requested, the user must supply both sufficient space to hold the eigenvectors in \fIz\fR (\fIm\fR.\fIle\fR.\fIdescz\fR(\fIn\(ul\fR)) and sufficient workspace to compute them. (See \fIlwork\fR below.) \fBp?sygvx\fR is always able to detect insufficient space without computation unless \fIrange\fR.\fIeq\fR.\fB\'V\'\fR. 
+.TP 10
+\fBw\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBpssygvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsygvx\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On normal exit, the first \fIm\fR entries contain the selected eigenvalues in ascending order.
+.TP 10
+\fBz\fR
+.NL
+(local). \fB\fR
+.IP
+\fBREAL\fR for \fBpssygvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsygvx\fR. 
+.IP
+global dimension (\fIn\fR, \fIn\fR), local dimension (\fIlld\(ulz\fR, \fILOCc\fR(\fIjz\fR+\fIn\fR-1)). 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, then on normal exit the first \fIm\fR columns of \fIz\fR contain the orthonormal eigenvectors of the matrix corresponding to the selected eigenvalues. If an eigenvector fails to converge, then that column of \fIz\fR contains the latest approximation to the eigenvector, and the index of the eigenvector is returned in \fIifail\fR. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then \fIz\fR is not referenced.
+.TP 10
+\fBwork\fR
+.NL
+If \fIjobz\fR=\fB\'N\'\fR\fIwork\fR(1) = optimal amount of workspace required to compute eigenvalues efficiently 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR\fIwork\fR(1) = optimal amount of workspace required to compute eigenvalues and eigenvectors efficiently with no guarantee on orthogonality. 
+.IP
+If \fIrange\fR=\fB\'V\'\fR, it is assumed that all eigenvectors may be required. 
+.TP 10
+\fBifail\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+\fIifail\fR provides additional information when \fIinfo\fR.\fIne\fR.0
+.IP
+If (\fImod\fR(\fIinfo\fR/16,2).\fIne\fR.0) then \fIifail\fR(1) indicates the order of the smallest minor which is not positive definite. If (\fImod\fR(\fIinfo\fR,2).\fIne\fR.0) on exit, then \fIifail\fR contains the indices of the eigenvectors that failed to converge.
+.IP
+If neither of the above error conditions hold and \fIjobz\fR = \fB\'V\'\fR, then the first \fIm\fR elements of \fIifail\fR are set to zero.
+.TP 10
+\fBiclustr\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR(2*\fBNPROW\fR*\fBNPCOL\fR). This array contains indices of eigenvectors corresponding to a cluster of eigenvalues that could not be reorthogonalized due to insufficient workspace (see \fIlwork\fR, \fIorfac\fR and \fIinfo\fR). Eigenvectors corresponding to clusters of eigenvalues indexed \fIiclustr\fR(2*\fIi\fR-1) to \fIiclustr\fR(2*\fIi\fR), could not be reorthogonalized due to lack of workspace. Hence the eigenvectors corresponding to these clusters may not be orthogonal. \fIiclustr\fR() is a zero terminated array. 
+.IP
+(\fIiclustr\fR(2*\fIk\fR).\fIne\fR.0.\fIand\fR. \fIiclustr\fR(2*\fIk\fR+1).\fIeq\fR.0) if and only if \fIk\fR is the number of clusters \fIiclustr\fR is not referenced if \fIjobz\fR = \fB\'N\'\fR.
+.TP 10
+\fBgap\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBpssygvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsygvx\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fBNPROW\fR*\fBNPCOL\fR). This array contains the gap between eigenvalues whose eigenvectors could not be reorthogonalized. The output values in this array correspond to the clusters indicated by the array \fIiclustr\fR. As a result, the dot product between eigenvectors corresponding to the \fIi\fR-th cluster may be as high as (\fIC\fR*\fIn\fR)/\fIgap\fR(\fIi\fR), where \fIC\fR is a small constant.
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR 
+.IP
+If \fIinfo\fR> 0: 
+.IP
+If (\fBmod\fR(\fIinfo\fR,2).\fIne\fR.0), then one or more eigenvectors failed to converge. Their indices are stored in \fIifail\fR. 
+.IP
+If (\fBmod\fR(\fIinfo\fR,2,2).\fIne\fR.0), then eigenvectors corresponding to one or more clusters of eigenvalues could not be reorthogonalized because of insufficient workspace. The indices of the clusters are stored in the array \fIiclustr\fR. 
+.IP
+If (\fBmod\fR(\fIinfo\fR/4,2).\fIne\fR.0), then space limit prevented \fBp?sygvx\fR from computing all of the eigenvectors between \fIvl\fR and \fIvu\fR. The number of eigenvectors computed is returned in \fInz\fR. 
+.IP
+If (\fBmod\fR(\fIinfo\fR/8,2).\fIne\fR.0), then \fBp?stebz\fR failed to compute eigenvalues. 
+.IP
+If (\fBmod\fR(\fIinfo\fR/16,2).\fIne\fR.0), then \fIB\fR was not positive definite. \fIifail(1\fR) indicates the order of the smallest minor which is not positive definite. 

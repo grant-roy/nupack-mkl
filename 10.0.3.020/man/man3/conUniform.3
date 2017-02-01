@@ -1,0 +1,150 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH Uniform 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+Uniform \- Generates random numbers with uniform distribution.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvsrnguniform\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIa\fR, \fIb\fR)
+.PP
+\fIstatus\fR= \fBvdrnguniform\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIa\fR, \fIb\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvsRngUniform\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIa\fR, \fIb\fR);
+.PP
+\fIstatus\fR= \fBvdRngUniform\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIa\fR, \fIb\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBmethod\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Generation method; the specific values are as follows: \fBVSL\(ulMETHOD\(ulSUNIFORM\(ulSTD\fR
+.br
+\fBVSL\(ulMETHOD\(ulDUNIFORM\(ulSTD\fR
+.br
+\fBVSL\(ulMETHOD\(ulSUNIFORM\(ulSTD\(ulACCURATE\fR
+.br
+\fBVSL\(ulMETHOD\(ulDUNIFORM\(ulSTD\(ulACCURATE\fR
+.br
+\h\'1\'Standard method.
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE (VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Descriptor of the stream state structure.
+.br
+\h\'2\'C:\h\'7\'Pointer to the stream state structure
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Number of random values to be generated
+.PP
+.SB Name
+.br
+\h\'1\'\fBa\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvsrnguniform\fR
+.br
+\h\'1\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdrnguniform\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat\fR for \fBvsRngUniform\fR
+.br
+\h\'11\'\fBdouble\fR for \fBvdRngUniform\fR
+.br
+.SB Description
+.br
+\h\'1\'Left bound \fBa\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBb\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvsrnguniform\fR
+.br
+\h\'1\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdrnguniform\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat\fR for \fBvsRngUniform\fR
+.br
+\h\'11\'\fBdouble\fR for \fBvdRngUniform\fR
+.br
+.SB Description
+.br
+\h\'1\'Right bound \fBb\fR
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBr\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(OUT)\fR for \fBvsrnguniform\fR
+.br
+\h\'1\'\fBDOUBLE PRECISION\fR, \fBINTENT(OUT)\fR for \fBvdrnguniform\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat*\fR for \fBvsRngUniform\fR
+.br
+\h\'11\'\fBdouble*\fR for \fBvdRngUniform\fR
+.br
+.SB Description
+.br
+\h\'1\'Vector of \fBn\fR random numbers uniformly distributed over the interval [\fIa\fR,\fIb\fR]
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK\fR, \fBVSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+\fBstream\fR is a \fBNULL\fR pointer.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulSTREAM\fR
+.NL
+\fIstream\fR is not a valid random stream.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulUPDATE\fR
+.NL
+Callback function for an abstract BRNG returns an invalid number of updated entries in a buffer, that is, < 0 or > \fBnmax\fR.
+.TP 10
+\fBVSL\(ulERROR\(ulNO\(ulNUMBERS\fR
+.NL
+Callback function for an abstract BRNG returns 0 as the number of updated entries in a buffer.

@@ -1,0 +1,181 @@
+.\" Copyright (c) 2002 \- 2007 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lazq3 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lazq3 \- Checks for deflation, computes a shift and calls \fIdqds\fR. 
+.SH SYNOPSIS
+.PP
+\fBcall slazq3\fR( \fIi0\fR, \fIn0\fR, \fIz\fR, \fIpp\fR, \fIdmin\fR, \fIsigma\fR, \fIdesig\fR, \fIqmax\fR, \fInfail\fR, \fIiter\fR, \fIndiv\fR, \fIieee\fR, \fIttype\fR, \fIdmin1\fR, \fIdmin2\fR, \fIdn\fR, \fIdn1\fR, \fIdn2\fR, \fItau\fR)
+.PP
+\fBcall dlazq3\fR( \fIi0\fR, \fIn0\fR, \fIz\fR, \fIpp\fR, \fIdmin\fR, \fIsigma\fR, \fIdesig\fR, \fIqmax\fR, \fInfail\fR, \fIiter\fR, \fIndiv\fR, \fIieee\fR, \fIttype\fR, \fIdmin1\fR, \fIdmin2\fR, \fIdn\fR, \fIdn1\fR, \fIdn2\fR, \fItau\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fIi0\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+First index.
+.TP 10
+\fIn0\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Last index.
+.TP 10
+\fIz\fR
+.NL
+\fBREAL\fR for \fBslasq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasq3\fR.
+.IP
+Array, \fBDIMENSION\fR (4*\fIn\fR). \fIz\fR holds the \fIqd\fR array.
+.TP 10
+\fIpp\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+\fIpp\fR=0 for ping, \fIpp\fR=1 for pong.
+.TP 10
+\fIdesig\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Lower order part of \fIsigma\fR.
+.TP 10
+\fIqmax\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Maximum value of \fIq\fR.
+.TP 10
+\fIieee\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Flag for IEEE or non-IEEE arithmetic (passed to the routine).
+.TP 10
+\fBttype\fR
+.NL
+\fBINTEGER\fR. Shift type.
+.TP 10
+\fIdmin1\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Minimum value of \fId\fR, excluding \fId\fR(\fIn0\fR). Should be 0 on entry at the first iteration and should not be modified further.
+.TP 10
+\fIdmin2\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Minimum value of \fId\fR, excluding \fId\fR(\fIn0\fR) and \fId\fR(\fIn0\fR-1). Should be 0 on entry at the first iteration and should not be modified further.
+.TP 10
+\fIdn\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Contains \fId\fR(\fIn\fR). Should be 0 on entry at the first iteration and should not be modified further.
+.TP 10
+\fIdn1\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Contains \fId\fR(\fIn\fR-1). Should be 0 on entry at the first iteration and should not be modified further.
+.TP 10
+\fIdn2\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Contains \fId\fR(\fIn\fR-2). Should be 0 on entry at the first iteration and should not be modified further.
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Shift value
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fIdmin\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Minimum value of \fId\fR.
+.TP 10
+\fIsigma\fR
+.NL
+\fBREAL\fR for \fBslazq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlazq3\fR.
+.IP
+Sum of shifts used in current segment.
+.TP 10
+\fIdesig\fR
+.NL
+Lower order part of \fIsigma\fR.
+.TP 10
+\fInfail\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Number of times shift was too big.
+.TP 10
+\fIiter\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Number of iterations.
+.TP 10
+\fIndiv\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Number of divisions.
+.TP 10
+\fIttype\fR
+.NL
+Shift type.
+.TP 10
+\fIdmin1\fR
+.NL
+Minimum value of \fId\fR, excluding \fId\fR(\fIn0\fR).
+.TP 10
+\fIdmin2\fR
+.NL
+Minimum value of \fId\fR, excluding \fId\fR(\fIn0\fR) and \fId\fR(\fIn0\fR-1).
+.TP 10
+\fIdn\fR
+.NL
+\fId\fR(\fIn\fR).
+.TP 10
+\fIdn1\fR
+.NL
+\fId\fR(\fIn\fR-1).
+.TP 10
+\fIdn2\fR
+.NL
+\fId\fR(\fIn\fR-2).
+.TP 10
+\fItau\fR
+.NL
+Shift value.

@@ -1,0 +1,185 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laed8 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laed8 \- Used by \fB?stedc\fR. Merges eigenvalues and deflates secular equation. Used when the original matrix is dense.
+.SH SYNOPSIS
+.PP
+\fBcall slaed8\fR( \fIicompq\fR, \fIk\fR, \fIn\fR, \fIqsiz\fR, \fId\fR, \fIq\fR, \fIldq\fR, \fIindxq\fR, \fIrho\fR, \fIcutpnt\fR, \fIz\fR, \fIdlamda\fR, \fIq2\fR, \fIldq2\fR, \fIw\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIgivnum\fR, \fIindxp\fR, \fIindx\fR, \fIinfo\fR)
+.PP
+\fBcall dlaed8\fR( \fIicompq\fR, \fIk\fR, \fIn\fR, \fIqsiz\fR, \fId\fR, \fIq\fR, \fIldq\fR, \fIindxq\fR, \fIrho\fR, \fIcutpnt\fR, \fIz\fR, \fIdlamda\fR, \fIq2\fR, \fIldq2\fR, \fIw\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIgivnum\fR, \fIindxp\fR, \fIindx\fR, \fIinfo\fR)
+.PP
+\fBcall claed8\fR( \fIk\fR, \fIn\fR, \fIqsiz\fR, \fIq\fR, \fIldq\fR, \fId\fR, \fIrho\fR, \fIcutpnt\fR, \fIz\fR, \fIdlamda\fR, \fIq2\fR, \fIldq2\fR, \fIw\fR, \fIindxp\fR, \fIindx\fR, \fIindxq\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIgivnum\fR, \fIinfo\fR)
+.PP
+\fBcall zlaed8\fR( \fIk\fR, \fIn\fR, \fIqsiz\fR, \fIq\fR, \fIldq\fR, \fId\fR, \fIrho\fR, \fIcutpnt\fR, \fIz\fR, \fIdlamda\fR, \fIq2\fR, \fIldq2\fR, \fIw\fR, \fIindxp\fR, \fIindx\fR, \fIindxq\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIgivnum\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicompq\fR
+.NL
+\fBINTEGER\fR. Used with real flavors only.
+.IP
+If \fIicompq\fR = 0, compute eigenvalues only. 
+.IP
+If \fIicompq\fR = 1, compute eigenvectors of original dense symmetric matrix also. 
+.IP
+On entry, the array \fIq\fR must contain the orthogonal matrix used to reduce the original matrix to tridiagonal form.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The dimension of the symmetric tridiagonal matrix (\fIn\fR\(>= 0). 
+.TP 10
+\fBcutpnt\fR
+.NL
+\fBINTEGER\fR. The location of the last eigenvalue in the leading sub-matrix.  min(1,\fIn\fR) \(<= \fIcutpnt\fR \(<= \fIn\fR .
+.TP 10
+\fBqsiz\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the orthogonal/unitary matrix used to reduce the full matrix to tridiagonal form; \fIqsiz\fR\(>=\fIn\fR  (for real flavors, \fIqsiz\fR\(>=\fIn\fR if \fIicompq\fR = 1).
+.TP 10
+\fBd\fR, \fBz\fR
+.NL
+\fBREAL\fR for \fBslaed8\fR/\fBclaed8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed8\fR/\fBzlaed8\fR.
+.IP
+Arrays, dimension at least max(1, \fIn\fR) each. The array \fId\fR(*) contains the eigenvalues of the two submatrices to be combined. 
+.IP
+On entry, \fIz\fR(*) contains the updating vector (the last row of the first sub-eigenvector matrix and the first row of the second sub-eigenvector matrix). The contents of \fIz\fR are destroyed by the updating process.
+.TP 10
+\fBq\fR
+.NL
+\fBREAL\fR for \fBslaed8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed8\fR
+.IP
+\fBCOMPLEX\fR for \fBclaed8\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaed8\fR.
+.IP
+Array 
+.IP
+\fIq\fR(\fIldq\fR, *). The second dimension of \fIq\fR must be at least max(1, \fIn\fR). On entry, \fIq\fR contains the eigenvectors of the partially solved system which has been previously updated in matrix multiplies with other partially solved eigensystems. 
+.IP
+For real flavors, If \fIicompq\fR = 0, \fIq\fR is not referenced.
+.TP 10
+\fBldq\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIq\fR; \fIldq\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldq2\fR
+.NL
+\fBINTEGER\fR. The first dimension of the output array \fIq2\fR; \fIldq2\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBindxq\fR
+.NL
+\fBINTEGER\fR. Array, dimension (\fIn\fR).
+.IP
+The permutation that separately sorts the two sub-problems in \fId\fR into ascending order. Note that elements in the second half of this permutation must first have \fIcutpnt\fR added to their values in order to be accurate.
+.TP 10
+\fBrho\fR
+.NL
+\fBREAL\fR for \fBslaed8\fR/\fBclaed8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed8\fR/\fBzlaed8\fR.
+.IP
+On entry, the off-diagonal element associated with the rank-1 cut which originally split the two submatrices which are now being recombined.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. The number of non-deflated eigenvalues, and the order of the related secular equation.
+.TP 10
+\fBd\fR
+.NL
+On exit, contains the trailing (\fIn\fR-\fIk\fR) updated eigenvalues (those which were deflated) sorted into increasing order.
+.TP 10
+\fBz\fR
+.NL
+On exit, the updating process destroys the contents of \fIz\fR.
+.TP 10
+\fBq\fR
+.NL
+On exit, \fIq\fR contains the trailing (\fIn\fR-\fIk\fR) updated eigenvectors (those which were deflated) in its last (\fIn\fR-\fIk\fR) columns.
+.TP 10
+\fBindxq\fR
+.NL
+\fBINTEGER\fR. Array, dimension (\fIn\fR).
+.IP
+The permutation of merged eigenvalues set.
+.TP 10
+\fBrho\fR
+.NL
+On exit, \fIrho\fR has been modified to the value required by \fB?laed3\fR.
+.TP 10
+\fBdlamda\fR, \fBw\fR
+.NL
+\fBREAL\fR for \fBslaed8\fR/\fBclaed8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed8\fR/\fBzlaed8\fR.
+.IP
+Arrays, dimension (\fIn\fR) each. The array \fIdlamda\fR(*) contains a copy of the first \fIk\fR eigenvalues which will be used by \fB?laed3\fR to form the secular equation.
+.IP
+The array \fIw\fR(*) will hold the first \fIk\fR values of the final deflation-altered \fIz\fR-vector and will be passed to \fB?laed3\fR.
+.TP 10
+\fBq2\fR
+.NL
+\fBREAL\fR for \fBslaed8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed8\fR
+.IP
+\fBCOMPLEX\fR for \fBclaed8\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaed8\fR.
+.IP
+Array 
+.IP
+\fIq2\fR(\fIldq2\fR, *). The second dimension of \fIq2\fR must be at least max(1, \fIn\fR). 
+.IP
+Contains a copy of the first \fIk\fR eigenvectors which will be used by \fBslaed7\fR/\fBdlaed7\fR in a matrix multiply (\fBsgemm\fR/\fBdgemm\fR) to update the new eigenvectors. For real flavors, If \fIicompq\fR = 0, \fIq2\fR is not referenced.
+.TP 10
+\fBindxp\fR, \fBindx\fR
+.NL
+\fBINTEGER\fR. Workspace arrays, dimension (\fIn\fR) each.
+.IP
+The array \fIindxp\fR(*) will contain the permutation used to place deflated values of \fId\fR at the end of the array. On output, \fIindxp\fR(1:\fIk\fR) points to the nondeflated \fId\fR-values and \fIindxp\fR(\fIk\fR+1:\fIn\fR) points to the deflated eigenvalues.
+.IP
+The array \fIindx\fR(*) will contain the permutation used to sort the contents of \fId\fR into ascending order. 
+.TP 10
+\fBperm\fR
+.NL
+\fBINTEGER\fR. Array, dimension (\fIn\fR ).
+.IP
+Contains the permutations (from deflation and sorting) to be applied to each eigenblock.
+.TP 10
+\fBgivptr\fR
+.NL
+\fBINTEGER\fR. Contains the number of Givens rotations which took place in this subproblem.
+.TP 10
+\fBgivcol\fR
+.NL
+\fBINTEGER\fR. Array, dimension (2, \fIn\fR ).
+.IP
+Each pair of numbers indicates a pair of columns to take place in a Givens rotation.
+.TP 10
+\fBgivnum\fR
+.NL
+\fBREAL\fR for \fBslaed8\fR/\fBclaed8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed8\fR/\fBzlaed8\fR.
+.IP
+Array, dimension (2, \fIn\fR). 
+.IP
+Each number indicates the \fIS\fR value to be used in the corresponding Givens rotation.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value.

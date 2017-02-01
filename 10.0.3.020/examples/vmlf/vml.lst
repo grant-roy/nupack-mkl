@@ -1,0 +1,24 @@
+VML =                                                                          \
+      vssin vdsin vscos vdcos vstan vdtan vssincos vdsincos                    \
+      vsexp vdexp vsln vdln vslog10 vdlog10 vspow vdpow vssqrt vdsqrt          \
+      vspowx vdpowx vscbrt vdcbrt vsinvsqrt vdinvsqrt                          \
+      vsinvcbrt vdinvcbrt vsinv vdinv vsdiv vddiv vserf vderf                  \
+      vssinh vdsinh vscosh vdcosh vstanh vdtanh vserfc vderfc                  \
+      vsasinh vdasinh vsacosh vdacosh vsatanh vdatanh                          \
+      vsasin vdasin vsacos vdacos vsatan vdatan vsatan2 vdatan2                \
+      vshypot vdhypot vserfinv vderfinv                                        \
+      vsfloor vdfloor vsceil vdceil vstrunc vdtrunc vsround vdround            \
+      vsrint vdrint vsnearbyint vdnearbyint vsmodf vdmodf                      \
+      vspacki vdpacki vspackv vdpackv vspackm vdpackm                          \
+      vsunpacki vdunpacki vsunpackv vdunpackv vsunpackm vdunpackm              \
+      vssub vsadd vsmul vsabs vssqr vslog1p vspow3o2 vspow2o3 vsexpm1          \
+      vdsub vdadd vdmul vdabs vdsqr vdlog1p vdpow3o2 vdpow2o3 vdexpm1          \
+      vcsin vzsin vccos vzcos vctan vztan                                      \
+      vcexp vzexp vcln vzln vclog10 vzlog10 vcpow vzpow vcsqrt vzsqrt          \
+      vcpowx vzpowx                                                            \
+      vcsinh vzsinh vccosh vzcosh vctanh vztanh                                \
+      vcasinh vzasinh vcacosh vzacosh vcatanh vzatanh                          \
+      vcasin vzasin vcacos vzacos vcatan vzatan                                \
+      vcsub vcadd vcmul vcabs vcdiv vcconj vcmulbyconj vccis                   \
+      vzsub vzadd vzmul vzabs vzdiv vzconj vzmulbyconj vzcis                   \
+      mode errstatus callback

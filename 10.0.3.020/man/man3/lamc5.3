@@ -1,0 +1,43 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lamc5 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lamc5 \- Called from \fB?lamc2\fR. Attempts to compute the largest machine floating-point number, without overflow.
+.SH SYNOPSIS
+.PP
+\fBcall slamc5\fR( \fIbeta\fR, \fIp\fR, \fIemin\fR, \fIieee\fR, \fIemax\fR, \fIrmax\fR)
+.PP
+\fBcall dlamc5\fR( \fIbeta\fR, \fIp\fR, \fIemin\fR, \fIieee\fR, \fIemax\fR, \fIrmax\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBbeta\fR
+.NL
+\fBINTEGER\fR. The base of floating-point arithmetic.
+.TP 10
+\fBp\fR
+.NL
+\fBINTEGER\fR. The number of base \fIbeta\fR digits in the mantissa of a floating-point value.
+.TP 10
+\fBemin\fR
+.NL
+\fBINTEGER\fR. The minimum exponent before (gradual) underflow.
+.TP 10
+\fBieee\fR
+.NL
+\fBLOGICAL\fR. A logical flag specifying whether or not the arithmetic  system is thought to comply with the IEEE standard.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBemax\fR
+.NL
+\fBINTEGER\fR. The largest exponent before overflow.
+.TP 10
+\fBrmax\fR
+.NL
+\fBREAL\fR for \fBslamc5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamc5\fR
+.IP
+The largest machine floating-point number.

@@ -1,0 +1,137 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?orgr2/p?ungr2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?orgr2/p?ungr2 \- Generates all or part of the orthogonal/unitary matrix Q from an RQ factorization determined by \fBp?gerqf\fR (unblocked algorithm).
+.SH SYNOPSIS
+.PP
+\fBcall psorgr2\fR(\fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIwork\fR, \fIl\fR\fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdorgr2\fR(\fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIwork\fR, \fIl\fR\fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcungr2\fR(\fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIwork\fR, \fIl\fR\fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzungr2\fR(\fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIwork\fR, \fIl\fR\fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of rows to be operated on, that is, the number of rows of the distributed submatrix \fIQ\fR. \fIm\fR \(>= 0.
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of columns to be operated on, that is, the number of columns of the distributed submatrix \fIQ\fR.\fI n\fR \(>=\fI m \fR\(>= 0.
+.TP 10
+\fBk\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of elementary reflectors whose product defines the matrix \fIQ\fR. \fIm\fR \(>=\fI k\fR \(>= 0.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBpsorgr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdorgr2\fR
+.IP
+\fBCOMPLEX\fR for \fBpcungr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzungr2\fR. 
+.IP
+Pointer into the local memory to an array, \fBDIMENSION\fR(\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1). 
+.IP
+On entry, the \fIi\fR-th row must contain the vector that defines the elementary reflector \fIH\fR(\fIi\fR), \fIia\fR+\fIm-k\fR \(<=\fI i\fR \(<= \fIia\fR+\fIm\fR-1, as returned by \fBp?gerqf\fR in the \fIk\fR rows of its \fIdistributed matrix\fRargument \fIA\fR(\fIia\fR+\fIm-k\fR:\fIia\fR+\fIm\fR-1, \fIja\fR:*).
+.TP 10
+\fBia\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The row index in the global array \fIA\fR indicating the first row of sub(\fIA\fR).
+.TP 10
+\fBja\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The column index in the global array \fIA\fR indicating the first column of sub(\fIA\fR).
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array of \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix \fIA\fR. 
+.TP 10
+\fBtau\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsorgr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdorgr2\fR
+.IP
+\fBCOMPLEX\fR for \fBpcungr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzungr2\fR. 
+.IP
+Array, \fBDIMENSION \fR\fILOCr\fR(\fIja\fR+\fIm\fR-1). This array contains the scalar factors \fItau\fR(\fIi\fR) of the elementary reflectors \fIH\fR(\fIi\fR), as returned by \fBp?gerqf\fR. This array is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsorgr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdorgr2\fR
+.IP
+\fBCOMPLEX\fR for \fBpcungr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzungr2\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (\fIlwork\fR).
+.TP 10
+\fBlwork\fR
+.NL
+(local or global) \fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR. 
+.IP
+\fIlwork\fR is local input and must be at least \fIlwork\fR \(>=\fI nqa\fR0 + max(1, \fImpa\fR0 ), where \fIiroffa\fR =  mod( \fIia\fR-1, \fImb\(ula\fR ), \fIicoffa\fR = mod( \fIja\fR-1, \fInb\(ula\fR ),
+.IP
+\fIiarow\fR = \fBindxg2p\fR( \fIia\fR, \fImb\(ula\fR, \fImyrow\fR, \fIrsrc\fR\(ula, \fInprow\fR ),
+.IP
+\fIiacol\fR = \fBindxg2p\fR( \fIja\fR, \fInb\(ula\fR, \fImycol\fR, \fIcsrc\(ula\fR, \fInpcol\fR ),
+.IP
+\fImpa\fR0 = \fBnumroc\fR( \fIm\fR+\fIiroffa\fR, \fImb\(ula\fR, \fImyrow\fR, \fIiarow\fR, \fInprow\fR ),
+.IP
+\fInqa\fR0 = \fBnumroc\fR( \fIn\fR+\fIicoffa\fR, \fInb\(ula\fR, \fImycol\fR, \fIiacol\fR, \fInpcol\fR ). 
+.IP
+\fBindxg2p\fR and \fBnumroc\fR are ScaLAPACK tool functions; \fImyrow\fR, \fImycol\fR, \fInprow,\fR and \fInpcol\fR can be determined by calling the subroutine \fBblacs\(ulgridinfo\fR. 
+.IP
+If \fIlwork\fR = -1, then \fIlwork\fR is global input and a workspace query is assumed; the routine only calculates the minimum and optimal size for all work arrays. Each of these values is returned in the first entry of the corresponding work array, and no error message is issued by \fBpxerbla\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, this array contains the local pieces of the \fIm\fR-by-\fIn\fR distributed matrix \fIQ\fR.
+.TP 10
+\fBwork\fR
+.NL
+On exit, \fIwork\fR(1) returns the minimal and optimal \fIlwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+(local) \fBINTEGER\fR.
+.IP
+= 0: successful exit 
+.IP
+< 0: if the \fIi\fR-th argument is an array and the \fIj\fR-entry had an illegal value,
+.IP
+then \fIinfo\fR = - (\fIi\fR*100+\fIj\fR),
+.IP
+if the \fIi\fR-th argument is a scalar and had an illegal value,
+.IP
+then \fIinfo\fR = -\fIi\fR.

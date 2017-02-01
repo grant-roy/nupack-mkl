@@ -1,0 +1,47 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH CommitDescriptor 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+CommitDescriptor \- Performs all initialization for the actual FFT computation.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiCommitDescriptor\fR( \fIDesc\(ulHandle\fR)
+.PP
+.B /* C */
+.PP
+\fBstatus\fR = \fBDftiCommitDescriptor\fR( \fIdesc\(ulhandle\fR);
+.PP
+
+.br
+! Fortran interface
+.br
+INTERFACE DftiCommitDescriptor
+.br
+!Note that the body provided here is to illustrate the different
+.br
+!argument list and types of dummy arguments. The interface
+.br
+!does not guarantee what the actual function names are.
+.br
+!Users can only rely on the function name following the
+.br
+!keyword INTERFACE
+.br
+FUNCTION some\(ulactual function\(ul1 ( Desc\(ulHandle )
+.br
+INTEGER :: some\(ulactual function\(ul1
+.br
+TYPE(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+END FUNCTION some\(ulactual function\(ul1
+.br
+END INTERFACE DftiCommitDescriptor 
+.br
+   
+.br
+/* C prototype */
+.br
+long DftiCommitDescriptor( DFTI\(ulDESCRIPTOR\(ulHANDLE );

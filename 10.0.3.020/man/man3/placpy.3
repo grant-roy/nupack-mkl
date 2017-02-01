@@ -1,0 +1,93 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lacpy 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lacpy \- Copies all or part of one two-dimensional array to another.
+.SH SYNOPSIS
+.PP
+\fBcall pslacpy\fR(\fIuplo\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR)
+.PP
+\fBcall pdlacpy\fR(\fIuplo\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR)
+.PP
+\fBcall pclacpy\fR(\fIuplo\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR)
+.PP
+\fBcall pzlacpy\fR(\fIuplo\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+(global). \fBCHARACTER\fR. Specifies the part of the distributed matrix sub(\fIA\fR) to be copied: 
+.IP
+= \fB\'U\'\fR:   Upper triangular part; the strictly lower triangular part of sub(\fIA\fR) is not referenced; 
+.IP
+= \fB\'L\'\fR:   Lower triangular part; the strictly upper triangular part of sub(\fIA\fR) is not referenced. 
+.IP
+Otherwise: all of the matrix sub(\fIA\fR) is copied.
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of rows to be operated on, that is, the number of rows of the distributed submatrix sub(\fIA\fR).  (\fIm \fR\(>=0).
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of columns to be operated on, that is, the number of columns of the distributed submatrix sub(\fIA\fR). (\fIn\fR\(>=0).
+.TP 10
+\fBa\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslacpy\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlacpy\fR
+.IP
+\fBCOMPLEX\fR for \fBpclacpy\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlacpy\fR. 
+.IP
+Pointer into the local memory to an array of \fBDIMENSION\fR(\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1)). 
+.IP
+On entry, this array contains the local pieces of the distributed matrix  sub(\fIA\fR).
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix sub(\fIA\fR), respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix A.
+.TP 10
+\fBib\fR, \fBjb\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIB\fR indicating the first row and the first column of sub(\fIB\fR) respectively.
+.TP 10
+\fBdescb\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix A.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBb\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslacpy\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlacpy\fR
+.IP
+\fBCOMPLEX\fR for \fBpclacpy\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlacpy\fR. 
+.IP
+Pointer into the local memory to an array of \fBDIMENSION\fR (\fIlld\(ulb\fR, \fILOCc\fR(\fIjb\fR+\fIn\fR-1) ). This array  contains on exit the local pieces of the distributed matrix sub( B ) set as follows:
+.IP
+if \fIuplo\fR = \fB\'U\'\fR, \fIB\fR(\fIib\fR+\fIi\fR-1, \fIjb\fR+\fIj\fR-1) = \fIA\fR(\fIia\fR+\fIi\fR-1, \fIja\fR+\fIj\fR-1), 1\(<=\fIi\fR\(<=\fIj\fR, 1\(<=\fIj\fR\(<=\fIn\fR;
+.IP
+if \fIuplo\fR = \fB\'L\'\fR, \fIB\fR(\fIib\fR+\fIi\fR-1, \fIjb\fR+\fIj\fR-1) = \fIA\fR(\fIia\fR+\fIi\fR-1, \fIja\fR+\fIj\fR-1),\fIj\fR\(<=\fIi\fR\(<=\fIm\fR, 1\(<=\fIj\fR\(<=\fIn\fR;
+.IP
+otherwise, \fIB\fR(\fIib\fR+\fIi\fR-1, \fIjb\fR+\fIj\fR-1) = \fIA\fR(\fIia\fR+\fIi\fR-1, \fIja\fR+\fIj\fR-1), 1\(<=\fIi\fR\(<=\fIm\fR, 1\(<=\fIj\fR\(<=\fIn\fR.

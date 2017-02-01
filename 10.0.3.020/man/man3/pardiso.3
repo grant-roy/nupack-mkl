@@ -1,0 +1,512 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH pardiso 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+pardiso \- Calculates the solution of a set of sparse linear equations with multiple right-hand sides.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall pardiso\fR (\fIpt\fR, \fImaxfct\fR, \fImnum\fR, \fItype\fR, \fIphase\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIperm\fR, \fInrhs\fR, \fIiparm\fR, \fImsglvl\fR, \fIb\fR, \fIx\fR, \fIerror\fR)
+.PP
+.B /* C */
+.PP
+\fBpardiso\fR (\fIpt\fR, \fI&maxfct\fR, \fI&mnum\fR, \fI&mtype\fR, \fI&phase\fR, \fI&n\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIperm\fR, \fI&nrhs\fR, \fIiparm\fR, \fI&msglvl\fR, \fIb\fR, \fIx\fR, \fI&error\fR);
+.PP
+(An underscore may or may not be required after ``\fBpardiso\fR'' depending on the OS and compiler conventions for that OS).
+.PP
+.B Interface
+.br
+.PP
+\fBSUBROUTINE\fR \fBpardiso\fR (\fIpt\fR, \fImaxfct\fR, \fImnum\fR, \fImtype\fR, \fIphase\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIperm\fR, \fInrhs\fR, \fIiparm\fR, \fImsglvl\fR, \fIb\fR, \fIx\fR, \fIerror\fR)
+.PP
+\fBINTEGER *4\fR\fI pt (64)\fR
+.PP
+\fBINTEGER *4\fR\fI maxfct\fR, \fImnum\fR, \fImtype\fR, \fIphase\fR, \fIn\fR, \fInrhs\fR, \fIerror\fR, \fIia(*)\fR, \fIja(*)\fR, \fIperm(*)\fR, \fIiparm(*)\fR
+.PP
+\fBREAL *8\fR\fI a(*)\fR, \fIb(n,nrhs)\fR, \fIx(n,nrhs)\fR
+.PP
+Note that the above interface is given for the 32-bit architectures. For 64-bit architectures, the argument \fBpt(64)\fR must be defined as \fBINTEGER*8\fR type.
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBpt\fR
+.NL
+\fBINTEGER\fR*4 for 32 -bit operating systems;
+.IP
+\fBINTEGER\fR*8 for 64 -bit operating systems 
+.IP
+Array, \fBDIMENSION\fR (64) 
+.IP
+On entry, solver internal data address pointer. These addresses are passed to the solver and all related internal memory management is organized through this pointer
+.TP 10
+.BR
+.B NOTE:
+\fBpt\fR is an integer array with 64 entries. It is very important that the pointer is initialized with zero at the first call of \fBPARDISO\fR. After that first call you should never modify the pointer, as a serious memory leak can occur. The integer length should be 4-byte on 32-bit operating systems and 8-byte on 64-bit operating systems.
+.TP 10
+\fBmaxfct\fR
+.NL
+\fBINTEGER\fR
+.IP
+Maximal number of factors with identical nonzero sparsity structure that the user would like to keep at the same time in memory. It is possible to store several different factorizations with the same nonzero structure at the same time in the internal data management of the solver. In most of the applications this value is equal to 1.
+.IP
+\fBPARDISO\fR can process several matrices with identical matrix sparsity pattern and store the factors of these matrices at the same time. Matrices with a different sparsity structure can be kept in memory with different memory address pointers \fBpt\fR.
+.TP 10
+\fBmnum\fR
+.NL
+\fBINTEGER\fR
+.IP
+Actual matrix for the solution phase. With this scalar you can define the matrix that you would like to factorize. The value must be: 1 \(<=\fBmnum\fR\(<=\fBmaxfct\fR. 
+.IP
+In most applications this value is equal to 1. 
+.TP 10
+\fBmtype\fR
+.NL
+\fBINTEGER\fR
+.IP
+This scalar value defines the matrix type. The PARDISO solver supports the following matrices: 
+.sp
+\fB = 1 \fRreal and structurally symmetric matrix
+.sp
+\fB= 2 \fRreal and symmetric positive definite matrix
+.sp
+\fB= -2 \fRreal and symmetric indefinite matrix
+.sp
+\fB= 3 \fRcomplex and structurally symmetric matrix
+.sp
+\fB= 4 \fRcomplex and Hermitian positive definite matrix
+.sp
+\fB= -4 \fRcomplex and Hermitian indefinite matrix
+.sp
+\fB= 6 \fRcomplex and symmetric matrix
+.sp
+\fB= 11 \fRreal and unsymmetric matrix
+.sp
+\fB= 13 \fRcomplex and unsymmetric matrix
+.IP
+This parameter influences the pivoting method.
+.TP 10
+\fBphase\fR
+.NL
+\fBINTEGER\fR
+.IP
+Controls the execution of the solver. It is a two-digit integer \fIij\fR (10\fII\fR + \fIj\fR, 1\(<=\fI I\fR \(<=3, \fII\fR<\fIj \fR\(<=3 for normal execution modes). The \fII\fR digit indicates the starting phase of execution, and \fIj\fR indicates the ending phase. \fBPARDISO\fR has the following phases of execution:
+.RS
+.IP \(bu bullet
+Phase 1: Fill-reduction analysis and symbolic factorization
+.IP \(bu
+Phase 2: Numerical factorization
+.IP \(bu
+Phase 3: Forward and Backward solve including iterative refinements
+.IP \(bu
+Termination and Memory Release Phase (\fBphase\fR\(<= 0)
+.RE
+.IP
+If a previous call to the routine has computed information from previous phases, execution may start at any phase. The \fBphase\fR parameter can have the following values:
+.sp
+.B \fBphase\fR
+.B Solver Execution Steps
+.sp
+11 Analysis
+.sp
+12 Analysis, numerical factorization
+.sp
+13 Analysis, numerical factorization, solve, iterative refinement
+.sp
+22 Numerical factorization
+.sp
+23 Numerical factorization, solve, iterative refinement
+.sp
+33 Solve, iterative refinement
+.sp
+0 Release internal memory for \fIL\fR and \fIU\fR matrix number \fBmnum\fR
+.sp
+-1 Release all internal memory for all matrices
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR
+.IP
+Number of equations in the sparse linear systems of equations \fIA\fR*\fIX\fR = \fIB\fR. Constraint: \fBn\fR > 0.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL/COMPLEX\fR
+.IP
+Array. Contains the nonzero values of the coefficient matrix \fIA\fR corresponding to the indices in \fBja\fR. The size of \fBa\fR is the same as that of \fIja\fR and the coefficient matrix can be either real or complex. The matrix must be stored in compressed sparse row format with increasing values of \fBja\fR for each row. Refer to \fBvalues\fR array description in Sparse Matrix Storage Format for more details.
+.TP 10
+.BR
+.B NOTE:
+The nonzeros of each row of the matrix \fIA\fR must be stored in increasing order. For symmetric or structural symmetric matrices, it is also important that the diagonal elements are available and stored in the matrix. If the matrix is symmetric, the array \fIa\fR is only accessed in the factorization phase, in the triangular solution and iterative refinement phase. Unsymmetric matrices are accessed in all phases of the solution process.
+.TP 10
+\fBia\fR
+.NL
+\fBINTEGER\fR
+.IP
+Array, dimension (\fBn\fR+1). For \fBI\fR\(<=\fBn\fR, \fBia\fR(\fBI\fR) points to the first column index of row \fII\fR in the array \fIja\fR in compressed sparse row format. That is, \fBia\fR(\fBI\fR) gives the index of the element in array \fIa\fR that contains the first non-zero element from row \fII\fR of \fIA\fR. The last element \fBia\fR(\fBn\fR+1) is taken to be equal to the number of non-zeros in \fIA\fR, plus one. Refer to \fIrowIndex\fR array description in Sparse Matrix Storage Format for more details. The array \fIia\fR is also accessed in all phases of the solution process. Note that the row and columns numbers start from 1.
+.TP 10
+\fBja\fR
+.NL
+\fBINTEGER\fR
+.IP
+Array. \fBja\fR(*) contains column indices of the sparse matrix \fIA\fR stored in compressed sparse row format. The indices in each row must be sorted in increasing order. The array \fIja\fR is also accessed in all phases of the solution process. For symmetric and structurally symmetric matrices it is assumed that zero diagonal elements are also stored in the list of nonzeros in \fIa\fR and \fIja\fR. For symmetric matrices, the solver needs only the upper triangular part of the system as is shown for \fIcolumns\fR array in Sparse Matrix Storage Format.
+.TP 10
+\fBperm\fR
+.NL
+\fBINTEGER\fR
+.IP
+Array, dimension (\fBn\fR). Holds the permutation vector of size \fIn\fR. The array \fIperm\fR is defined as follows. Let \fIA\fR be the original matrix and \fIB\fR = \fIP\fR*\fIA\fR*\fIP\fR**\fIT\fR be the permuted matrix. Row (column) \fII\fR of \fIA\fR is the \fIperm\fR(\fII\fR) row (column) of \fIB\fR. The numbering of the array must start with 1 and must describe a permutation.
+.IP
+On entry, you can apply your own fill-in reducing ordering to the solver. The permutation vector \fIperm \fRis only accessed if \fIiparm\fR\fI(5)\fR = 1.
+.TP 10
+\fBnrhs\fR
+.NL
+\fBINTEGER\fR
+.IP
+Number of right-hand sides that need to be solved for.
+.TP 10
+\fBiparm\fR
+.NL
+\fBINTEGER\fR
+.IP
+Array, dimension (64). This array is used to pass various parameters to PARDISO and to return some useful information after execution of the solver. If \fBiparm\fR(1) = 0, PARDISO fills \fBiparm\fR(1), and \fBiparm\fR(4) through \fBiparm\fR(64)with default values and uses them. Note that there is no default value for \fBiparm\fR(3) and the user should supply this value,  whether \fBiparm\fR(1) is 0 or 1.
+.IP
+Individual components of the \fIiparm \fRarray are described below (some of them are described in the Output Parameters section).
+.IP
+\fBiparm\fR(1)- use default values.
+.IP
+If \fBiparm\fR(1) = 0, \fBiparm\fR(2) and \fBiparm\fR(4) through \fBiparm\fR(64) are filled with default values, otherwise the user has to supply all values in \fIiparm \fRfrom \fBiparm\fR(2) to \fBiparm\fR(64).
+.IP
+\fBiparm\fR(2) - fill-in reducing ordering.
+.IP
+\fBiparm\fR(2) controls the fill-in reducing ordering for the input matrix. If \fBiparm\fR(2) is 0, the minimum degree algorithm is applied , if \fBiparm\fR(2) is 2, the solver uses the nested dissection algorithm from the METIS package . The default value of \fBiparm\fR(2) is 2.
+.IP
+\fBiparm\fR(3)- number of processors.
+.IP
+\fBiparm\fR(3) must contain the number of processors that are available for the parallel execution. The number must be equal to the MKL environment variable \fBMKL\(ulNUM\(ulTHREADS\fR.
+.TP 10
+.BR
+.B CAUTION:
+User is supposed to control the parallel execution of the solver by explicitly setting MKL\(ulNUM\(ulTHREADS. If less processors are available than specified, the execution may slow down instead of speeding up.
+.IP
+There is no default value for \fBiparm\fR(3).
+.IP
+\fBiparm\fR(4) - preconditioned CGS.
+.IP
+This parameter controls preconditioned CGS  for unsymmetric or structural symmetric matrices and Conjugate-Gradients for symmetric matrices. \fBiparm\fR(4) has the form 
+.br
+\fBiparm\fR(4)= 10*\fIL\fR+\fIK\fR 
+.br
+.IP
+The \fIK\fR and \fIL\fR values  have the meanings as follow.
+.sp
+.B Value of \fIK\fR
+.B Description
+.sp
+0 The factorization is always computed as required by \fBphase\fR.
+.sp
+1 CGS iteration replaces the computation of \fILU\fR. The preconditioner is \fILU\fR that was computed at a previous step (the first step or last step with a failure) in a sequence of solutions needed for identical sparsity patterns.
+.sp
+2 CG iteration for symmetric matrices replaces the computation of \fILU\fR. The preconditioner is \fILU\fR that was computed at a previous step (the first step or last step with a failure) in a sequence of solutions needed for identical sparsity patterns.
+.IP
+Value \fIL\fR:
+.IP
+The value \fIL\fR controls the stopping criterion of the Krylow-Subspace iteration:
+.IP
+eps(\fICGS\fR) = \fI10\fR**\fI-L\fR is used in the stopping criterion 
+.br
+||\fIdx\fR(\fII\fR)|| / ||\fIdx\fR(\fI1\fR)|| < eps(\fICGS\fR)
+.br
+with ||\fIdx\fR(\fII\fR)|| = ||inv(\fIL\fR*\fIU\fR)*\fIr\fR(\fII\fR)|| and \fIr\fR(\fII\fR) is the residuum at iteration \fII\fR of the preconditioned Krylow-Subspace iteration.
+.IP
+Strategy: A maximum number of 150 iterations is fixed by expecting that the iteration will converge before consuming half the factorization time. Intermediate convergence rates and residuum excursions are checked and can terminate the iteration process. If \fBphase\fR =23, then the factorization for a given \fIA\fR is automatically recomputed in these cases where the Krylow-Subspace iteration failed, and the corresponding direct solution is returned. Otherwise the solution from the preconditioned Krylow-Subspace iteration is returned. Using \fBphase\fR =33 results in an error message (\fBerror\fR =4) if the stopping criteria for the Krylow-Subspace iteration can not be reached. More information on the failure can be obtained from \fBiparm\fR(20).
+.IP
+The default is \fBiparm\fR(4)=0, and other values are only recommended for an advanced user. \fBiparm\fR(4) must be greater or equal to zero.
+.IP
+Examples:
+.sp
+.B \fBiparm\fR(4)
+.B Description
+.sp
+31 \fILU\fR-preconditioned CGS iteration with a stopping criterion of 1.0E-3 for unsymmetric matrices 
+.sp
+61 \fILU\fR-preconditioned CGS iteration with a stopping criterion of 1.0E-6 for unsymmetric matrices 
+.sp
+62 \fILU\fR-preconditioned CGS iteration with a stopping criterion of 1.0E-6 for symmetric matrices 
+.IP
+\fBiparm\fR(5)- user permutation.
+.IP
+This parameter controls whether the user supplied fill-in reducing permutation is used instead of the integrated multiple-minimum degree or nested dissection algorithms.
+.IP
+This option may be useful for testing reordering algorithms or adapting the code to special applications problems (for instance, to move zero diagonal elements to the end \fIP\fR*\fIA\fR*\fIP\fR**\fIT\fR). For definition of the permutation, see description of the \fBperm\fR parameter.
+.IP
+The default value of \fBiparm\fR(5) is 0.
+.IP
+\fBiparm\fR(6)- write solution on x.
+.IP
+If \fBiparm\fR(6)is 0 (which is the default), then the array \fIx\fR contains the solution and the value of \fIb\fR is not changed. If \fBiparm\fR(6) is 1, then the solver will store the solution on the right hand side \fIb\fR.
+.IP
+Note that the array \fIx\fR is always used. The default value of \fBiparm\fR(6) is 0.
+.IP
+\fBiparm\fR(8)
+.IP
+On entry to the solve and iterative refinement step, \fBiparm\fR(8)should be set to the maximum number of iterative refinement steps that the solver will perform. The solver will not perform more than the absolute value of \fBiparm\fR(8)steps of iterative refinement and will stop the process if a satisfactory level of accuracy of the solution in terms of backward error has been achieved. 
+.IP
+Note that if \fBiparm\fR(8)< 0, the accumulation of the residuum is using extended precision real and complex data types. Perturbed pivots result in iterative refinement (independent of \fBiparm\fR(8)=0) and the iteration number executed is reported on \fBiparm\fR(7).
+.IP
+The solver will automatically perform two steps of iterative refinements when perturbed pivots have been obtained during the numerical factorization and \fBiparm\fR(8) was equal to zero.
+.IP
+The number of performed iterative refinement steps is reported on \fBiparm\fR(8).
+.IP
+The default value for \fBiparm\fR(8) is 0.
+.IP
+\fBiparm\fR(9)
+.IP
+This parameter is reserved for future use. Its value must be set to 0.
+.IP
+\fBiparm\fR(10)- pivoting perturbation.
+.IP
+This parameter instructs PARDISO how to handle small pivots or zero pivots for unsymmetric matrices (\fBmtype\fR =11 or \fBmtype\fR =13) and symmetric matrices (\fBmtype\fR =-2, \fBmtype\fR =-4, or \fImtype\fR =6). For these matrices the solver uses a complete supernode pivoting approach. When the factorization algorithm reaches a point where it cannot factorize the supernodes with this pivoting strategy, it uses a pivoting perturbation strategy similar to , . 
+.IP
+The magnitude of the potential pivot is tested against a constant threshold of 
+.br
+alpha = eps*||\fIA2\fR||(inf), 
+.br
+where eps = 10**(-\fBiparm\fR(10)),  \fIA2\fR = \fIP\fR*\fIP\fR(MPS)*\fID\fR((r))*\fIA\fR*\fID\fR(c)*\fBP\fR, and ||\fIA2\fR||(inf) is the infinity norm of the scaled and permuted matrix \fIA\fR. Any tiny pivots encountered during elimination are set to the sign (\fIl\fR(II))*eps*||\fIA2\fR||(inf) - this trades off some numerical stability for the ability to keep pivots from getting too small. Small pivots are therefore perturbed with eps = 10**(-\fBiparm\fR(10)). 
+.IP
+The default value of \fBiparm\fR(10) is 13 and therefore eps = 1.0E-13 for unsymmetric matrices (\fImtype\fR =11 or \fImtype\fR =13). 
+.IP
+The default value of \fBiparm\fR(10) is 8, and therefore eps = 1.0E-8 for symmetric indefinite matrices (\fImtype\fR =-2, \fBmtype\fR =-4, or \fBmtype\fR =6). 
+.IP
+\fBiparm\fR(11)- scaling vectors.
+.IP
+PARDISO uses a maximum weight matching algorithm to permute large elements on the diagonal and to scale the matrix so that the diagonal elements are equal to 1 and the absolute values of the off-diagonal entries are less or equal to 1. This scaling method is applied only to unsymmetric matrices (\fBmtype\fR =11 or \fBmtype\fR =13). The scaling can also be used for symmetric indefinite matrices (\fBmtype\fR =-2, \fBmtype\fR =-4, or \fBmtype\fR =6) when the symmetric weighted matchings are applied (\fBiparm\fR(13)= 1).
+.IP
+Use \fBiparm\fR(11) = 1 (scaling) and \fBiparm\fR(13) = 1 (matching) for highly indefinite symmetric matrices, for example, from interior point optimizations or saddle point problems. Note that in the analysis phase (\fBphase\fR\fB=11\fR)you must provide  the numerical values of the matrix \fIA\fR in case of scaling and symmetric weighted matching.
+.IP
+The default value of \fBiparm\fR(11) is 1 for unsymmetric matrices (\fBmtype\fR =11 or \fBmtype\fR =13). The default value of \fBiparm\fR(11) is 0 for symmetric indefinite matrices (\fBmtype\fR =-2, \fBmtype\fR =-4, or \fBmtype\fR =6).
+.IP
+\fBiparm\fR(12)
+.IP
+This parameter is reserved for future use. Its value must be set to 0.
+.IP
+\fBiparm\fR(13) - improved accuracy using (non-)symmetric weighted matchings.
+.IP
+PARDISO can use a maximum weighted matching algorithm to permute large elements close the diagonal. This strategy adds an additional level of reliability to our factorization methods and can be seen as a complement to the alternative idea of using more complete pivoting techniques during the numerical factorization.
+.IP
+It is recommended to use \fBiparm\fR(11)=1 (scalings) and \fBiparm\fR(13)=1 (matchings) for highly indefinite symmetric matrices, for example from interior point optimizations or saddle point problems. It is also very important to note that in the analysis phase (\fBphase \fR=11)you must provide  the numerical values of the matrix \fIA\fR in the case of scalings and symmetric weighted matchings.
+.IP
+The default value of \fBiparm\fR(13) is 1 for unsymmetric matrices (\fBmtype\fR =11 or \fBmtype\fR =13). The default value of \fBiparm\fR(13) is 0 for symmetric matrices (\fBmtype\fR =-2, \fBmtype\fR =-4, or \fBmtype\fR =6).
+.IP
+\fBiparm\fR(18)
+.IP
+The solver will report the numbers of nonzeros on the factors if \fBiparm\fR(18)< 0 on entry.
+.IP
+The default value of \fBiparm\fR(18) is -1.
+.IP
+\fBiparm\fR(19)- MFlops of factorization.
+.IP
+If \fBiparm\fR(19)< 0 on entry, the solver will report MFlop (1.0E6) that are necessary to factor the matrix \fIA\fR. This will increase the reordering time.
+.IP
+The default value of \fBiparm\fR(19) is 0.
+.IP
+\fBiparm\fR(21) - pivoting for symmetric indefinite matrices
+.IP
+\fBiparm\fR(21)controls the pivoting method for sparse symmetric indefinite matrices. If \fBiparm\fR(21) is 0, then 1x1 diagonal pivoting is used. If \fBiparm\fR(21) is 1, then 1x1 and 2x2 Bunch and Kaufman pivoting will be used in the factorization process. If \fBiparm\fR(21) is 2, a very robust preprocessing method based on symmetric weighted matchings and 1x1 and 2x2 Bunch and Kaufman pivoting will be used in the factorization process. The default value of \fBiparm\fR(21) is 1. Bunch and Kaufman pivoting is available for matrices: \fBmtype\fR=-2, \fBmtype\fR=-4, or \fBmtype\fR=6.
+.IP
+\fBiparm\fR(60)
+.IP
+\fBiparm\fR(60) controls what version of PARDISO - out-of-core (OOC) version or in-core version - is used. The OOC PARDISO can solve very large problems by holding the matrix factors in files on the disk. Because of that the amount of main memory required by OOC PARDISO is significantly reduced.
+.TP 10
+.BR
+.IP
+If \fBiparm\fR(60) is set to 0, then the in-core PARDISO is used. If \fBiparm\fR(60) is set to 2 - the OOC PARDISO is used. If \fBiparm\fR(60) is set to 1 - the in-core PARDISO is used if the total memory (in MBytes) needed for storing the matrix factors is less than the value of the environment variable \fBMKL\(ulPARDISO\(ulOOC\(ulMAX\(ulCORE\(ulSIZE\fR (its default value is 2000), and OOC PARDISO is used otherwise.
+.IP
+The default value of \fBiparm\fR(60) is 0.
+.IP
+Note that if \fBiparm\fR(60) is equal to 1 or 2, and the total peak memory needed for strong local arrays is less than \fBMKL\(ulPARDISO\(ulOOC\(ulMAX\(ulCORE\(ulSIZE\fR, the program stops with error -9. In this case, increase of \fBMKL\(ulPARDISO\(ulOOC\(ulMAX\(ulCORE\(ulSIZE\fR is recommended.
+.IP
+OOC parameters can be set in the configuration file. You can set the path to this file and its name via environmental variable \fBMKL\(ulPARDISO\(ulOOC\(ulCFG\(ulPATH\fR and \fBMKL\(ulPARDISO\(ulOOC\(ulCFG\(ulFILE\(ulNAME\fR.
+.IP
+Path and name are as follows:
+.IP
+
+.IP
+
+.IP
+By default, the name of the file is \fBpardiso\(ulooc.cfg\fR and it is placed to the current directory.
+.IP
+All temporary data files can be deleted or stored when the calculations are completed in accordance with the value of the environmental variable \fBMKL\(ulPARDISO\(ulOOC\(ulKEEP\(ulFILE\fR. If it is set to 1 (default value) - all files are deleted, if it is set to 0 - all files are stored.
+.IP
+By default, the OOC PARDISO uses the current directory for storing data, and all work arrays associated with the matrix factors are stored in files named \fBooc\(ultemp\fR with different extensions. These default values can be changed by using the environmental variable \fBMKL\(ulPARDISO\(ulOOC\(ulPATH\fR.
+.IP
+To set the environmental variables \fBMKL\(ulPARDISO\(ulOOC\(ulMAX\(ulCORE\(ulSIZE\fR, \fBMKL\(ulPARDISO\(ulOOC\(ulKEEP\(ulFILE\fR, and \fBMKL\(ulPARDISO\(ulOOC\(ulPATH\fR, the configuration file should be created with the following lines:
+.IP
+MKL\(ulPARDISO\(ulOOC\(ulPATH = 
+.IP
+MKL\(ulPARDISO\(ulOOC\(ulMAX\(ulCORE\(ulSIZE = N
+.IP
+MKL\(ulPARDISO\(ulOOC\(ulKEEP\(ulFILE = 0 (or 1)
+.IP
+where 
+.IP
+Alternatively the environment variables can be set via command line:
+.IP
+export MKL\(ulPARDISO\(ulOOC\(ulPATH = 
+.IP
+export MKL\(ulPARDISO\(ulOOC\(ulMAX\(ulCORE\(ulSIZE = N
+.IP
+export MKL\(ulPARDISO\(ulOOC\(ulKEEP\(ulFILE = 0 (or 1)
+.IP
+for Linux* OS, and
+.IP
+set MKL\(ulPARDISO\(ulOOC\(ulPATH = 
+.IP
+set MKL\(ulPARDISO\(ulOOC\(ulMAX\(ulCORE\(ulSIZE = N
+.IP
+set MKL\(ulPARDISO\(ulOOC\(ulKEEP\(ulFILE = 0 (or 1)
+.IP
+for Windows* OS.
+.TP 10
+.BR
+.B NOTE:
+The values specified in a command line have higher priorities - it means that if variable is changed in the configuration file and in the command line, OOC PARDISO uses only value defined in the command line. Setting OOC parameters via command line is recommended.
+.TP 10
+\fBmsglvl\fR
+.NL
+\fBINTEGER\fR
+.IP
+Message level information. If \fBmsglvl\fR = 0 then \fBPARDISO\fR generates no output, if \fBmsglvl\fR = 1 the solver prints statistical information to the screen.
+.TP 10
+\fBb\fR
+.NL
+\fBREAL/COMPLEX\fR
+.IP
+Array, dimension (\fBn,nrhs\fR). On entry, contains the right hand side vector/matrix \fIB\fR. Note that \fIb\fR is only accessed in the solution phase.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBpt\fR
+.NL
+This parameter contains internal address pointers. 
+.TP 10
+\fBiparm\fR
+.NL
+On output, some \fBiparm\fR values will report useful information, for example, numbers of nonzeros in the factors, and so on. 
+.IP
+\fBiparm\fR(7)- number of performed iterative refinement steps.
+.IP
+The number of iterative refinement steps that are actually performed during the solve step.
+.IP
+\fBiparm\fR(14)- number of perturbed pivots.
+.IP
+After factorization, \fBiparm\fR(14) contains the number of perturbed pivots during the elimination process for \fBmtype\fR =11, \fBmtype\fR =13, \fBmtype\fR =-2, \fBmtype\fR =-4, or \fBmtype\fR =-6.
+.IP
+\fBiparm\fR(15) - peak memory symbolic factorization.
+.IP
+The parameter \fBiparm\fR(15) provides the user with the total peak memory in KBytes that the solver needed during the analysis and symbolic factorization phase. This value is only computed in phase 1.
+.IP
+\fBiparm\fR(16) - permanent memory symbolic factorization.
+.IP
+The parameter \fBiparm\fR(16) provides the user with the permanent memory in KBytes that the solver needed from the analysis and symbolic factorization phase in the factorization and solve phases. This value is only computed in phase 1.
+.IP
+\fBiparm\fR(17) - memory numerical factorization and solution.
+.IP
+The parameter \fBiparm\fR(17) provides the user with the total double precision memory consumption (KBytes) of the solver for the factorization and solve phases. This value is only computed in phase 2.
+.IP
+Note that the total peak memory solver consumption is \fBmax\fR(\fBiparm\fR(15), \fBiparm\fR(16)+\fBiparm\fR(17))
+.IP
+\fBiparm\fR(18) - number of nonzeros in factors.
+.IP
+The solver will report the numbers of nonzeros on the factors if \fBiparm\fR(18) < 0 on entry.
+.IP
+\fBiparm\fR(19) - MFlops of factorization.
+.IP
+Number of operations in MFlop (1.0E6 operations) that are necessary to factor the matrix \fIA\fR are returned to the user if \fBiparm\fR(19) < 0 on entry.
+.IP
+\fBiparm\fR(20) - CG/CGS diagnostics.
+.IP
+The value is used to give CG/CGS diagnostics (for example, the number of iterations and cause of failure):
+.IP
+If \fBiparm\fR(\fB20\fR)> 0, CGS succeeded, and the number of iterations executed are reported in \fBiparm\fR(20).
+.IP
+If \fBiparm\fR(\fB20\fR)< 0, iterations executed, but CG/CGS failed. The error report details in \fBiparm\fR(20) are of the form: \fBiparm\fR(20)= - it\(ulcgs*10 - cgs\(ulerror.
+.IP
+If \fBphase\fR is 23, then the factors \fIL\fR, \fIU\fR are recomputed for the matrix \fIA\fR and the error flag \fBerror\fR is zero in case of a successful factorization. If \fBphase\fR is 33, then \fBerror\fR = -4 signals the failure.
+.IP
+Description of cgs\(ulerror is given in the table below:
+.sp
+.B cgs\(ulerror
+.B Description
+.sp
+1 - fluctuations of the residuum are too large 
+.sp
+2 - ||dx(max\(ulit\(ulcgs/2)|| too large (slow convergence)
+.sp
+3 -  stopping criterion not reached at max\(ulit\(ulcgs
+.sp
+4 - perturbed pivots caused iterative refinement
+.sp
+5 - factorization is too fast for this matrix. It is better to use the factorization method with \fBiparm\fR(4)=0
+.IP
+\fBiparm\fR(22)- inertia: number of positive eigenvalues.
+.IP
+The parameter \fBiparm\fR(22) reports the number of positive eigenvalues for symmetric indefinite matrices.
+.IP
+\fBiparm\fR(23)- inertia: number of negative eigenvalues.
+.IP
+The parameter \fBiparm\fR(23) reports the number of negative eigenvalues for symmetric indefinite matrices.
+.IP
+\fBiparm\fR(24) to \fBiparm\fR(59)
+.IP
+These parameters are reserved for future use. Their values must be set to 0.
+.IP
+\fBiparm\fR(61) - the total peak memory in MBytes that the solver used during the analysis and symbolic factorization phases if the in-core PARDISO is used. \fBiparm\fR(61) is similar to \fBiparm\fR(15), but \fBiparm\fR(15) returns  the value of the  total peak memory if the OOC PARDISO is used.
+.IP
+\fBiparm\fR(62) - the total double precision memory consumption in MBytes that the solver used during the analysis and symbolic factorization phase in the factorization and solver phases if the in-core PARDISO is used. \fBiparm\fR(62) is similar to \fBiparm\fR(16), but \fBiparm\fR(16) returns  the value of thememory consumption if the OOC PARDISO is used.
+.IP
+\fBiparm\fR(63) - the total double precision memory consumption in MBytes that the solver used for  factorization and solution phases if the in-core PARDISO is used.   Value of \fBiparm\fR(63) is similar to \fBiparm\fR(17), but \fBiparm\fR(17) returns  the value of  the memory consumption if the OOC PARDISO is used.
+.TP 10
+\fBb\fR
+.NL
+On output, the array is replaced with the solution if \fBiparm\fR(6) = 1.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL/COMPLEX\fR
+.IP
+Array, dimension (\fBn,nrhs\fR). On output, contains solution if \fBiparm\fR(6)=0. Note that \fIx\fR is only accessed in the solution phase.
+.TP 10
+\fBerror\fR
+.NL
+\fBINTEGER\fR
+.IP
+The error indicator according to the below table:
+.sp
+.B \fIerror\fR
+.B Information
+.sp
+0 no error
+.sp
+-1 input inconsistent
+.sp
+-2 not enough memory
+.sp
+-3 reordering problem
+.sp
+-4 zero pivot, numerical factorization or iterative refinement problem
+.sp
+-5 unclassified (internal) error
+.sp
+-6 preordering failed (matrix types 11, 13 only)
+.sp
+-7 diagonal matrix problem
+.sp
+-8 32-bit integer overflow problem
+.sp
+-9 not enough memory for OOC
+.sp
+-10 problems with opening OOC temporary files
+.sp
+-11 read/write problems with the OOC data file

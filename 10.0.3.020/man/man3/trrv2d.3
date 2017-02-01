@@ -1,0 +1,45 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?trrv2d 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?trrv2d \- Receives a message from the process into the trapezoidal matrix.
+.SH SYNOPSIS
+.PP
+\fBcall itrrv2d\fR( \fIicontxt\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrsrc\fR, \fIcsrc\fR)
+.PP
+\fBcall strrv2d\fR( \fIicontxt\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrsrc\fR, \fIcsrc\fR)
+.PP
+\fBcall dtrrv2d\fR( \fIicontxt\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrsrc\fR, \fIcsrc\fR)
+.PP
+\fBcall ctrrv2d\fR( \fIicontxt\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrsrc\fR, \fIcsrc\fR)
+.PP
+\fBcall ztrrv2d\fR( \fIicontxt\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrsrc\fR, \fIcsrc\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle that indicates the context.
+.TP 10
+\fBuplo\fR, \fBdiag\fR, \fBm\fR, \fBn\fR,  \fBlda\fR
+.NL
+Describe the matrix to be sent. See Matrix Shapes for details.
+.TP 10
+\fBrsrc\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The process row coordinate of the source of  the message. 
+.TP 10
+\fBcsrc\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The process column coordinate of the source of  the message.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+An array of dimension (\fBlda\fR,\fBn\fR) to receive the incoming message into.

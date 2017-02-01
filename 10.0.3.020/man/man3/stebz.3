@@ -1,0 +1,207 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?stebz 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?stebz \- Computes selected eigenvalues of a real symmetric tridiagonal matrix by bisection.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sstebz\fR (\fIrange\fR, \fIorder\fR, \fIn\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIabstol\fR, \fId\fR, \fIe\fR, \fIm\fR, \fInsplit\fR, \fIw\fR, \fIiblock\fR, \fIisplit\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dstebz\fR (\fIrange\fR, \fIorder\fR, \fIn\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIabstol\fR, \fId\fR, \fIe\fR, \fIm\fR, \fInsplit\fR, \fIw\fR, \fIiblock\fR, \fIisplit\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall stebz\fR(\fId\fR, \fIe\fR, \fIm\fR, \fInsplit\fR, \fIw\fR, \fIiblock\fR, \fIisplit\fR[, \fIorder\fR] [,\fIvl\fR] [,\fIvu\fR] [,\fIil\fR] [,\fIiu\fR] [,\fIabstol\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBrange\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'A\'\fR or \fB\'V\'\fR or \fB\'I\'\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR, the routine computes all eigenvalues. 
+.IP
+If \fIrange\fR = \fB\'V\'\fR, the routine computes eigenvalues \fIlambda\fR(\fIi\fR) in the half-open interval: \fIvl\fR < \fIlambda\fR(\fIi\fR) \(<=\fIvu\fR. 
+.IP
+If \fIrange\fR = \fB\'I\'\fR, the routine computes eigenvalues with indices \fIil\fR to \fIiu\fR.
+.TP 10
+\fBorder\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'B\'\fR or \fB\'E\'\fR.
+.IP
+If \fIorder\fR = \fB\'B\'\fR, the eigenvalues are to be ordered from smallest to largest within each split-off block. 
+.IP
+If \fIorder\fR = \fB\'E\'\fR, the eigenvalues for the entire matrix are to be ordered from smallest to largest.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIT\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBvl\fR, \fBvu\fR
+.NL
+\fBREAL\fR for \fBsstebz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdstebz\fR. 
+.IP
+If \fIrange\fR = \fB\'V\'\fR, the routine computes eigenvalues \fIlambda\fR(\fIi\fR) in the half-open interval: 
+.IP
+\fIvl\fR < \fIlambda\fR(\fIi\fR) \(<=\fIvu\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'I\'\fR, \fIvl\fR and \fIvu\fR are not referenced.
+.TP 10
+\fBil\fR, \fBiu\fR
+.NL
+\fBINTEGER\fR. Constraint: 1 \(<=\fIil\fR\(<=\fIiu\fR\(<=\fIn\fR. 
+.IP
+If \fIrange\fR = \fB\'I\'\fR, the routine computes eigenvalues \fIlambda\fR(\fIi\fR) such that \fIil\fR\(<=\fIi\fR\(<=\fIiu\fR (assuming that the eigenvalues \fIlambda\fR(\fIi\fR) are in ascending order).
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'V\'\fR, \fIil\fR and \fIiu\fR are not referenced.
+.TP 10
+\fBabstol\fR
+.NL
+\fBREAL\fR for \fBsstebz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdstebz\fR. 
+.IP
+The absolute tolerance to which each eigenvalue is required. An eigenvalue (or cluster) is considered to have converged if it lies in an interval of width \fIabstol\fR. 
+.IP
+If \fIabstol\fR\(<= 0.0, then the tolerance is taken as eps*|\fIT\fR|, where eps is the machine precision, and |\fIT\fR| is the 1-norm of the matrix \fIT\fR.
+.TP 10
+\fBd\fR, \fBe\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsstebz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdstebz\fR. 
+.IP
+Arrays: 
+.IP
+\fId\fR(*) contains the diagonal elements of \fIT\fR. 
+.IP
+The dimension of \fId\fR must be at least max(1, \fIn\fR).
+.IP
+\fIe\fR(*) contains the off-diagonal elements of \fIT\fR. 
+.IP
+The dimension of \fIe\fR must be at least max(1, \fIn\fR-1).
+.IP
+\fIwork\fR(*) is a workspace array. 
+.IP
+The dimension of \fIwork\fR must be at least max(1, 4\fIn\fR).
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, 3\fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The actual number of eigenvalues found.
+.TP 10
+\fBnsplit\fR
+.NL
+\fBINTEGER\fR. The number of diagonal blocks detected in \fIT\fR.
+.TP 10
+\fBw\fR
+.NL
+\fBREAL\fR for \fBsstebz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdstebz\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). The computed eigenvalues, stored in \fIw\fR(1) to \fIw\fR(\fIm\fR).
+.TP 10
+\fBiblock\fR, \fBisplit\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Arrays, \fBDIMENSION\fR at least max(1, \fIn\fR). 
+.IP
+A positive value \fIiblock\fR(\fIi\fR) is the block number of the eigenvalue stored in \fIw\fR(\fIi\fR) (see also \fIinfo\fR).
+.IP
+The leading \fInsplit\fR elements of \fIisplit\fR contain points at which \fIT\fR splits into blocks \fIT\fR(\fIi\fR) as follows: the block \fIT\fR\fI1\fR contains rows/columns 1 to \fIisplit\fR(1); the block \fIT\fR contains rows/columns \fIisplit\fR(1)+1 to \fIisplit\fR(2), and so on. 
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = 1, for \fIrange\fR = \fB\'A\'\fR or \fB\'V\'\fR, the algorithm failed to compute some of the required eigenvalues to the desired accuracy; \fIiblock\fR(\fIi\fR)
+.IP
+If \fIinfo\fR = 2, for \fIrange\fR = \fB\'I\'\fR, the algorithm failed to compute some of the required eigenvalues. Try calling the routine again with \fIrange\fR = \fB\'A\'\fR. 
+.IP
+If \fIinfo\fR = 3: 
+.IP
+for \fIrange\fR = \fB\'A\'\fR or \fB\'V\'\fR, same as \fIinfo\fR = 1;
+.IP
+for \fIrange\fR = \fB\'I\'\fR, same as \fIinfo\fR = 2. 
+.IP
+If \fIinfo\fR = 4, no eigenvalues have been computed. The floating-point arithmetic on the computer is not behaving as expected. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBstebz\fR interface are the following:
+.TP 10
+\fBd\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBe\fR
+.NL
+Holds the vector of length (\fIn-\fR1).
+.TP 10
+\fBw\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBiblock\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBisplit\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBorder\fR
+.NL
+Must be \fB\'B\'\fR or \fB\'E\'\fR. The default value is \fB\'B\'\fR.
+.TP 10
+\fBvl\fR
+.NL
+Default value for this argument is \fIvl\fR = - \fBHUGE\fR (\fIvl\fR) where \fBHUGE\fR(\fIa\fR) means the largest machine number of the same precision as argument \fIa\fR.
+.TP 10
+\fBvu\fR
+.NL
+Default value for this argument is \fIvu\fR = \fBHUGE\fR (\fIvl\fR).
+.TP 10
+\fBil\fR
+.NL
+Default value for this argument is \fIil\fR = 1.
+.TP 10
+\fBiu\fR
+.NL
+Default value for this argument is \fIiu\fR = \fIn\fR.
+.TP 10
+\fBabstol\fR
+.NL
+Default value for this argument is \fIabstol\fR = \fB0.0\(ulWP\fR.
+.TP 10
+\fBrange\fR
+.NL
+Restored based on the presence of arguments \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR as follows: 
+.IP
+\fIrange\fR = \fB\'V\'\fR, if one of or both \fIvl\fR and \fIvu\fR are present, 
+.IP
+\fIrange\fR = \fB\'I\'\fR, if one of or both \fIil\fR and \fIiu\fR are present, 
+.IP
+\fIrange\fR = \fB\'A\'\fR, if none of \fIvl\fR, \fIvu\fR, \fIil\fR, 
+.IP
+\fIiu\fR is present, Note that there will be an error condition if one of or both \fIvl\fR and \fIvu\fR are present and at the same time one of or both \fIil\fR and \fIiu\fR are present.

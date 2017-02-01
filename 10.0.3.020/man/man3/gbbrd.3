@@ -1,0 +1,209 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gbbrd 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gbbrd \- Reduces a general band matrix to bidiagonal form.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgbbrd\fR(\fIvect\fR, \fIm\fR, \fIn\fR, \fIncc\fR, \fIkl\fR, \fIku\fR, \fIab\fR, \fIldab\fR, \fId\fR, \fIe\fR, \fIq\fR, \fIldq\fR, \fIpt\fR, \fIldpt\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dgbbrd\fR(\fIvect\fR, \fIm\fR, \fIn\fR, \fIncc\fR, \fIkl\fR, \fIku\fR, \fIab\fR, \fIldab\fR, \fId\fR, \fIe\fR, \fIq\fR, \fIldq\fR, \fIpt\fR, \fIldpt\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall cgbbrd\fR(\fIvect\fR, \fIm\fR, \fIn\fR, \fIncc\fR, \fIkl\fR, \fIku\fR, \fIab\fR, \fIldab\fR, \fId\fR, \fIe\fR, \fIq\fR, \fIldq\fR, \fIpt\fR, \fIldpt\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+\fBcall zgbbrd\fR(\fIvect\fR, \fIm\fR, \fIn\fR, \fIncc\fR, \fIkl\fR, \fIku\fR, \fIab\fR, \fIldab\fR, \fId\fR, \fIe\fR, \fIq\fR, \fIldq\fR, \fIpt\fR, \fIldpt\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall gbbrd\fR(\fIa\fR[, \fIc\fR] [,\fId\fR] [,\fIe\fR] [,\fIq\fR] [,\fIpt\fR] [,\fIkl\fR] [,\fIm\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBvect\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'Q\'\fR or \fB\'P\'\fR or \fB\'B\'\fR. 
+.IP
+If \fIvect\fR = \fB\'N\'\fR, neither \fIQ\fR nor \fIP\fR**\fIH\fR is generated. 
+.IP
+If \fIvect\fR = \fB\'Q\'\fR, the routine generates the matrix \fIQ\fR. 
+.IP
+If \fIvect\fR = \fB\'P\'\fR, the routine generates the matrix \fIP\fR**\fIH\fR. 
+.IP
+If \fIvect\fR = \fB\'B\'\fR, the routine generates both \fIQ\fR and \fIP\fR**\fIH\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows in the matrix \fIA\fR (\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns in \fIA\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBncc\fR
+.NL
+\fBINTEGER\fR. The number of columns in \fIC\fR (\fIncc\fR\(>= 0). 
+.TP 10
+\fBkl\fR
+.NL
+\fBINTEGER\fR. The number of sub-diagonals within the band of \fIA\fR (\fIkl\fR\(>= 0). 
+.TP 10
+\fBku\fR
+.NL
+\fBINTEGER\fR. The number of super-diagonals within the band of \fIA\fR (\fIku\fR\(>= 0). 
+.TP 10
+\fBab\fR, \fBc\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsgbbrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgbbrd COMPLEX\fR for \fBcgbbrd DOUBLE COMPLEX\fR for \fBzgbbrd\fR.
+.IP
+Arrays: 
+.IP
+\fIab\fR(\fIldab\fR,*) contains the matrix \fIA\fR in band storage (see Matrix Storage Schemes). 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIc\fR(\fIldc\fR,*) contains an \fIm\fR-by-\fIncc\fR matrix \fIC\fR. 
+.IP
+If \fIncc\fR = 0, the array \fIc\fR is not referenced. 
+.IP
+The second dimension of \fIc\fR must be at least max(1, \fIncc\fR).
+.IP
+\fIwork\fR(*) is a workspace array. 
+.IP
+The dimension of \fIwork\fR must be at least 2*max(\fIm\fR, \fIn\fR) for real flavors, or max(\fIm\fR, \fIn\fR) for complex flavors.
+.TP 10
+\fBldab\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIab\fR (\fIldab\fR\(>=\fIkl\fR + \fIku\fR + 1).
+.TP 10
+\fBldq\fR
+.NL
+\fBINTEGER\fR. The first dimension of the output array \fIq\fR. 
+.IP
+\fIldq\fR\(>= max(1, \fIm\fR) if \fIvect\fR = \fB\'Q\'\fR or \fB\'B\'\fR, \fIldq\fR\(>= 1 otherwise.
+.TP 10
+\fBldpt\fR
+.NL
+\fBINTEGER\fR. The first dimension of the output array \fIpt\fR. 
+.IP
+\fIldpt\fR\(>= max(1, \fIn\fR) if \fIvect\fR = \fB\'P\'\fR or \fB\'B\'\fR, \fIldpt\fR\(>= 1 otherwise.
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIc\fR. 
+.IP
+\fIldc\fR\(>= max(1, \fIm\fR) if \fIncc\fR > 0; \fIldc\fR\(>= 1 if \fIncc\fR = 0.
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBcgbbrd DOUBLE PRECISION\fR for \fBzgbbrd\fR.
+.IP
+A workspace array, \fBDIMENSION\fR at least max(\fIm\fR, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBab\fR
+.NL
+Overwritten by values generated during the reduction.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, min(\fIm\fR, \fIn\fR)). Contains the diagonal elements of the matrix \fIB\fR.
+.TP 10
+\fBe\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, min(\fBm\fR, \fBn\fR) - 1). 
+.IP
+Contains the off-diagonal elements of \fIB\fR.
+.TP 10
+\fBq\fR, \fBpt\fR
+.NL
+\fBREAL\fR for \fBsgebrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgebrd\fR
+.IP
+\fBCOMPLEX\fR for \fBcgebrd\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgebrd\fR. 
+.IP
+Arrays:
+.IP
+\fIq\fR(\fIldq\fR\fB,*)\fR contains the output \fIm\fR-by-\fIm\fR matrix \fIQ\fR. 
+.IP
+The second dimension of \fIq\fR must be at least max(1, \fIm\fR).
+.IP
+\fIp\fR(\fIldpt\fR\fB,*)\fR contains the output \fIn\fR-by-\fIn\fR matrix \fIP\fR**\fIT\fR. 
+.IP
+The second dimension of \fIpt\fR must be at least max(1, \fIn\fR).
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBgbbrd\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Stands for argument \fIab\fR in Fortan 77 interface . Holds the array \fIA\fR of size (\fIkl+ku+1,n\fR).
+.TP 10
+\fBc\fR
+.NL
+Holds the matrix \fIC\fR of size (\fIm,ncc\fR).
+.TP 10
+\fBd\fR
+.NL
+Holds the vector of length min(\fIm,n\fR).
+.TP 10
+\fBe\fR
+.NL
+Holds the vector of length min(\fIm,n\fR)-1.
+.TP 10
+\fBq\fR
+.NL
+Holds the matrix \fIQ\fR of size (\fIm,m\fR).
+.TP 10
+\fBpt\fR
+.NL
+Holds the matrix \fIPT\fR of size (\fIn,n\fR).
+.TP 10
+\fBm\fR
+.NL
+If omitted, assumed \fIm\fR = \fIn\fR.
+.TP 10
+\fBkl\fR
+.NL
+If omitted, assumed \fIkl\fR = \fIku\fR.
+.TP 10
+\fBku\fR
+.NL
+Restored as \fIku = lda-kl-1\fR.
+.TP 10
+\fBvect\fR
+.NL
+Restored based on the presence of arguments \fIq\fR and \fBpt\fR as follows: 
+.IP
+\fIvect\fR = \fB\'B\'\fR, if both \fIq\fR and \fIpt\fR are present, 
+.IP
+\fIvect\fR = \fB\'Q\'\fR, if \fIq\fR is present and \fIpt\fR omitted, \fIvect\fR = \fB\'P\'\fR, 
+.IP
+if \fIq\fR is omitted and \fIpt\fR present, \fIvect\fR = \fB\'N\'\fR, if both \fIq\fR and \fIpt\fR are omitted.

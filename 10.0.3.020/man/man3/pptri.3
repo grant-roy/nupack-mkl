@@ -1,0 +1,83 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?pptri 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?pptri \- Computes the inverse of a packed symmetric (Hermitian) positive-definite matrix
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall spptri\fR( \fIuplo\fR, \fIn\fR, \fIap\fR, \fIinfo\fR)
+.PP
+\fBcall dpptri\fR( \fIuplo\fR, \fIn\fR, \fIap\fR, \fIinfo\fR)
+.PP
+\fBcall cpptri\fR( \fIuplo\fR, \fIn\fR, \fIap\fR, \fIinfo\fR)
+.PP
+\fBcall zpptri\fR( \fIuplo\fR, \fIn\fR, \fIap\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall pptri\fR( \fIa\fR[,\fIuplo\fR] [,\fIinfo\fR] )
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR.  Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+Indicates whether \fI\fRthe upper or lower triangular factor is stored in \fBap\fR: 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, then the upper triangular factor is stored. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, then the lower triangular factor is stored.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR; \fIn\fR\(>= 0.
+.TP 10
+\fBap\fR
+.NL
+\fBREAL\fR for \fBspptri\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdpptri\fR
+.IP
+\fBCOMPLEX\fR for \fBcpptri\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzpptri\fR.
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR(\fIn\fR+1)/2).
+.IP
+Contains the factorization of the packed matrix \fIA\fR, as returned by \fB?pptrf\fR.
+.IP
+The dimension \fIap\fR must be at least max(1,\fIn\fR(\fIn\fR+1)/2).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBap\fR
+.NL
+Overwritten by the packed \fIn\fR-by-\fIn\fR matrix inv(\fIA\fR).
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.IP
+If \fIinfo\fR = \fIi\fR, the \fIi\fR-th diagonal element of the Cholesky factor (and therefore the factor itself) is zero, and the inversion could not be completed.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77  counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBpptri\fR interface are as follows:
+.TP 10
+\fBa\fR
+.NL
+Stands for argument \fIap\fR in Fortan 77 interface. Holds the array \fIA\fR of size (\fIn\fR*(\fIn\fR+1)/2).
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.

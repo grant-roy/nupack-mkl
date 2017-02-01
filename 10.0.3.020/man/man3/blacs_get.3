@@ -1,0 +1,40 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH blacs\(ulget 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+blacs\(ulget \- Gets values that BLACS use for internal defaults. 
+.SH SYNOPSIS
+.PP
+\fBcall blacs\(ulget\fR( \fIicontxt\fR, \fIwhat\fR, \fIval\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  On values of  \fBwhat\fR that are tied to a particular context, this parameter is the integer handle indicating the context. Otherwise, ignored.
+.TP 10
+\fBwhat\fR
+.NL
+\fBINTEGER\fR. Indicates what BLACS internal(s) should be returned in \fIval\fR. Present options are:
+.RS
+.IP \(bu
+\fBwhat\fR = 0 : Handle indicating default system context
+.IP \(bu
+\fBwhat\fR = 1 : The BLACS message ID range
+.IP \(bu
+\fBwhat\fR = 2 : The BLACS debug level the library was compiled with
+.IP \(bu
+\fBwhat\fR = 10 : Handle indicating the system context used to define the BLACS context whose handle is \fBicontxt\fR
+.IP \(bu
+\fBwhat\fR = 11 : Number of rings multiring topology is presently using
+.IP \(bu
+\fBwhat\fR = 12 : Number of branches general tree topology is presently using.
+.RE
+
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBval\fR
+.NL
+\fBINTEGER\fR.  The value of the BLACS internal. 

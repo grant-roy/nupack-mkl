@@ -1,0 +1,411 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?ggesx 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?ggesx \- Computes the generalized eigenvalues, Schur form, and, optionally, the left and/or right matrices of Schur vectors.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sggesx\fR (\fIjobvsl\fR, \fIjobvsr\fR, \fIsort\fR, \fIselctg\fR, \fIsense\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIsdim\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIvsl\fR, \fIldvsl\fR, \fIvsr\fR, \fIldvsr\fR, \fIrconde\fR, \fIrcondv\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+\fBcall dggesx\fR (\fIjobvsl\fR, \fIjobvsr\fR, \fIsort\fR, \fIselctg\fR, \fIsense\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIsdim\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIvsl\fR, \fIldvsl\fR, \fIvsr\fR, \fIldvsr\fR, \fIrconde\fR, \fIrcondv\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+\fBcall cggesx\fR (\fIjobvsl\fR, \fIjobvsr\fR, \fIsort\fR, \fIselctg\fR, \fIsense\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIsdim\fR, \fIalpha\fR, \fIbeta\fR, \fIvsl\fR, \fIldvsl\fR, \fIvsr\fR, \fIldvsr\fR, \fIrconde\fR, \fIrcondv\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIiwork\fR, \fIliwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+\fBcall zggesx\fR (\fIjobvsl\fR, \fIjobvsr\fR, \fIsort\fR, \fIselctg\fR, \fIsense\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIsdim\fR, \fIalpha\fR, \fIbeta\fR, \fIvsl\fR, \fIldvsl\fR, \fIvsr\fR, \fIldvsr\fR, \fIrconde\fR, \fIrcondv\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIiwork\fR, \fIliwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall ggesx\fR(\fIa\fR, \fIb\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR[,\fIvsl\fR] [,\fIvsr\fR] [,\fIselect\fR] [,\fIsdim\fR] [,\fIrconde\fR] [, \fIrcondv\fR] [,\fIinfo\fR])
+.PP
+\fBcall ggesx\fR(\fIa\fR, \fIb\fR, \fIalpha\fR, \fIbeta\fR[, \fIvsl\fR] [,\fIvsr\fR] [,\fIselect\fR] [,\fIsdim\fR] [,\fIrconde\fR] [,\fIrcondv\fR] [, \fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobvsl\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobvsl\fR = \fB\'N\'\fR, then the left Schur vectors are not computed. 
+.IP
+If \fIjobvsl\fR = \fB\'V\'\fR, then the left Schur vectors are computed.
+.TP 10
+\fBjobvsr\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobvsr\fR = \fB\'N\'\fR, then the right Schur vectors are not computed. 
+.IP
+If \fIjobvsr\fR = \fB\'V\'\fR, then the right Schur vectors are computed.
+.TP 10
+\fBsort\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'S\'\fR. Specifies whether or not to order the eigenvalues on the diagonal of the generalized Schur form.
+.IP
+If \fIsort\fR = \fB\'N\'\fR, then eigenvalues are not ordered. 
+.IP
+If \fIsort\fR = \fB\'S\'\fR, eigenvalues are ordered (see \fIselctg\fR).
+.TP 10
+\fBselctg\fR
+.NL
+\fBLOGICAL FUNCTION\fR of three \fBREAL\fR arguments for real flavors.
+.IP
+\fBLOGICAL FUNCTION\fR of two \fBCOMPLEX\fR arguments for complex flavors.
+.IP
+\fIselctg\fR must be declared \fBEXTERNAL\fR in the calling subroutine. 
+.IP
+If \fIsort\fR = \fB\'S\'\fR, \fIselctg\fR is used to select eigenvalues to sort to the top left of the Schur form. 
+.IP
+If \fIsort\fR = \fB\'N\'\fR, \fIselctg\fR is not referenced.
+.IP
+\fIFor real flavors\fR:
+.IP
+An eigenvalue (\fIalphar\fR(j) + \fIalphai\fR(j))/\fIbeta\fR(j) is selected if \fIselctg\fR(\fIalphar\fR(j), \fIalphai\fR(j), \fIbeta\fR(j)) is true; that is, if either one of a complex conjugate pair of eigenvalues is selected, then both complex eigenvalues are selected. 
+.IP
+Note that in the ill-conditioned case, a selected complex eigenvalue may no longer satisfy \fIselctg\fR(\fIalphar\fR(j), \fIalphai\fR(j), \fIbeta\fR(j)) = \fB.TRUE.\fR after ordering. In this case \fIinfo\fR is set to \fIn\fR+2.
+.IP
+\fIFor complex flavors\fR:
+.IP
+An eigenvalue \fIalpha\fR(j) / \fIbeta\fR(j) is selected if \fIselctg\fR(\fIalpha\fR(j), \fIbeta\fR(j)) is true. 
+.IP
+Note that a selected complex eigenvalue may no longer satisfy \fIselctg\fR(\fIalpha\fR(j), \fIbeta\fR(j)) = \fB.TRUE.\fR after ordering, since ordering may change the value of complex eigenvalues (especially if the eigenvalue is ill-conditioned); in this case \fIinfo\fR is set to \fIn\fR+2 (see \fIinfo\fR below).
+.TP 10
+\fBsense\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'E\'\fR, \fB\'V\'\fR, or \fB\'B\'\fR. Determines which reciprocal condition number are computed.
+.IP
+If \fIsense\fR = \fB\'N\'\fR, none are computed; 
+.IP
+If \fIsense\fR = \fB\'E\'\fR, computed for average of selected eigenvalues only; 
+.IP
+If \fIsense\fR = \fB\'V\'\fR, computed for selected deflating subspaces only; 
+.IP
+If \fIsense\fR = \fB\'B\'\fR, computed for both. 
+.IP
+If \fIsense\fR is \fB\'E\'\fR, \fB\'V\'\fR, or \fB\'B\'\fR, then \fIsort\fR must equal \fB\'S\'\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrices \fIA\fR, \fIB\fR, \fIvsl\fR, and \fIvsr\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR, \fBb\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsggesx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggesx\fR
+.IP
+\fBCOMPLEX\fR for \fBcggesx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggesx\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) is an array containing the \fBn\fR-by-\fIn\fR matrix \fIA\fR (first of the pair of matrices). 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIb\fR(\fIldb\fR,*) is an array containing the \fIn\fR-by-\fIn\fR matrix \fIB\fR (second of the pair of matrices). 
+.IP
+The second dimension of \fIb\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIa\fR. 
+.IP
+Must be at least max(1, \fIn\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIb\fR. 
+.IP
+Must be at least max(1, \fIn\fR).
+.TP 10
+\fBldvsl\fR, \fBldvsr\fR
+.NL
+\fBINTEGER\fR. The first dimensions of the output matrices \fIvsl\fR and \fIvsr\fR, respectively. Constraints:
+.IP
+\fIldvsl\fR\(>= 1. If \fIjobvsl\fR = \fB\'V\'\fR, \fIldvsl\fR\(>= max(1, \fIn\fR).
+.IP
+\fIldvsr\fR\(>= 1. If \fIjobvsr\fR = \fB\'V\'\fR, \fIldvsr\fR\(>= max(1, \fIn\fR). 
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR.
+.IP
+\fIFor real flavors\fR:
+.IP
+If \fBn\fR=0 then \fBlwork\fR\(>=1.
+.IP
+If \fBn\fR>0 and \fIsense\fR = \fB\'N\'\fR, then  \fIlwork\fR\(>= max(8*\fIn\fR, 6*\fIn\fR+16). 
+.IP
+If \fBn\fR>0 and \fIsense\fR = \fB\'E\'\fR, \fB\'V\'\fR, or \fB\'B\'\fR, then  \fIlwork\fR\(>= max(8*\fIn\fR, 6*\fIn\fR+16, 2*\fBsdim\fR*(\fIn\fR-\fBsdim\fR)); 
+.IP
+\fIFor complex flavors:\fR
+.IP
+If \fBn\fR=0 then \fBlwork\fR\(>=1.
+.IP
+If \fBn\fR>0 and \fIsense\fR = \fB\'N\'\fR, then  \fIlwork\fR\(>= max(1, 2*\fIn\fR);
+.IP
+If \fBn\fR>0 and \fIsense\fR = \fB\'E\'\fR, \fB\'V\'\fR, or \fB\'B\'\fR, then \fIlwork\fR\(>= max(1, 2*\fIn\fR, 2*\fIsdim\fR*(\fIn\fR-\fIsdim\fR)). 
+.IP
+Note that  2*\fBsdim\fR*(\fBn\fR-\fBsdim\fR) \(<= \fBn\fR*\fBn\fR/2.
+.IP
+An error is only returned if \fIlwork\fR< max(8*\fIn\fR, 6*\fIn\fR+16)for real flavors, and \fIlwork\fR< max(1, 2*\fIn\fR) for complex flavors, but if  \fIsense\fR = \fB\'E\'\fR, \fB\'V\'\fR, or \fB\'B\'\fR, this may not be large enough.
+.IP
+If \fBlwork\fR=-1, then a workspace query is assumed; the routine only calculates the bound on the optimal size of the \fBwork\fR array and the minimum size of the \fBiwork\fR array, returns these values as the first entries of the \fBwork\fR and \fBiwork\fR arrays, and no error message related to \fBlwork\fR or \fBliwork\fR is issued by \fBxerbla\fR.
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBcggesx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzggesx\fR
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, 8\fIn\fR). 
+.IP
+This array is used in complex flavors only.
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fRmax(1, \fIliwork\fR). 
+.TP 10
+\fBliwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIiwork\fR.
+.IP
+If \fIsense\fR = \fB\'N\'\fR, or \fBn\fR=0, then \fBliwork\fR\(>=1, 
+.IP
+otherwise \fIliwork\fR\(>= (\fIn\fR+6) for real flavors, and \fIliwork\fR\(>= (\fIn\fR+2) for complex flavors.
+.IP
+If \fBliwork\fR=-1, then a workspace query is assumed; the routine only calculates the bound on the optimal size of the \fBwork\fR array and the minimum size of the \fBiwork\fR array, returns these values as the first entries of the \fBwork\fR and \fBiwork\fR arrays, and no error message related to \fBlwork\fR or \fBliwork\fR is issued by \fBxerbla\fR.
+.TP 10
+\fBbwork\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, \fIn\fR). 
+.IP
+Not referenced if \fIsort\fR = \fB\'N\'\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, this array has been overwritten by its generalized Schur form \fIS\fR. 
+.TP 10
+\fBb\fR
+.NL
+On exit, this array has been overwritten by its generalized Schur form \fIT\fR. 
+.TP 10
+\fBsdim\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIsort\fR = \fB\'N\'\fR, \fIsdim\fR= 0. 
+.IP
+If \fIsort\fR = \fB\'S\'\fR, \fIsdim\fR is equal to the number of eigenvalues (after sorting) for which \fIselctg\fR is true. 
+.IP
+Note that for real flavors complex conjugate pairs for which \fIselctg\fR is true for either eigenvalue count as 2. 
+.TP 10
+\fBalphar\fR, \fBalphai\fR
+.NL
+\fBREAL\fR for \fBsggesx\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggesx\fR. 
+.IP
+Arrays, \fBDIMENSION\fR at least max(1, \fIn\fR) each. Contain values that form generalized eigenvalues in real flavors. 
+.IP
+See \fIbeta\fR.
+.TP 10
+\fBalpha\fR
+.NL
+\fBCOMPLEX\fR for \fBcggesx\fR;
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggesx\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). Contain values that form generalized eigenvalues in complex flavors. See \fIbeta\fR.
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL\fR for \fBsggesx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggesx\fR
+.IP
+\fBCOMPLEX\fR for \fBcggesx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggesx\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR).
+.IP
+\fIFor real flavors\fR:
+.IP
+On exit, (\fIalphar\fR(j) + \fIalphai\fR(j)*i)/\fIbeta\fR(j), j=1,..., \fIn\fR will be the generalized eigenvalues. 
+.IP
+\fIalphar\fR(j) + \fIalphai\fR(j)*i and \fIbeta\fR(j), j=1,..., \fIn\fR are the diagonals of the complex Schur form (\fIS\fR,\fIT\fR) that would result if the 2-by-2 diagonal blocks of the real generalized Schur form of (\fIA\fR,\fIB\fR) were further reduced to triangular form using complex unitary transformations. If \fIalphai\fR(j) is zero, then the j-th eigenvalue is real; if positive, then the j-th and (j+1)-st eigenvalues are a complex conjugate pair, with \fIalphai\fR(j+1) negative.
+.IP
+\fIFor complex flavors:\fR
+.IP
+On exit, \fIalpha\fR(j)/\fIbeta\fR(j), j=1,..., \fIn\fR will be the generalized eigenvalues. \fIalpha\fR(j), j=1,..., \fIn\fR, and \fIbeta\fR(j), j=1,...,\fIn\fR are the diagonals of the complex Schur form (\fIS\fR,\fIT\fR) output by \fBcggesx\fR/\fBzggesx\fR. The \fIbeta\fR(j) will be non-negative real. 
+.TP 10
+\fBvsl\fR, \fBvsr\fR
+.NL
+\fBREAL\fR for \fBsggesx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggesx\fR
+.IP
+\fBCOMPLEX\fR for \fBcggesx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggesx\fR. 
+.IP
+Arrays:
+.IP
+\fIvsl\fR(\fIldvsl\fR,*), the second dimension of \fIvsl\fR must be at least max(1, \fIn\fR). 
+.IP
+If \fIjobvsl\fR = \fB\'V\'\fR, this array will contain the left Schur vectors. 
+.IP
+If \fIjobvsl\fR = \fB\'N\'\fR, \fIvsl\fR is not referenced. 
+.IP
+\fIvsr\fR(\fIldvsr\fR,*), the second dimension of \fIvsr\fR must be at least max(1, \fIn\fR). 
+.IP
+If \fIjobvsr\fR = \fB\'V\'\fR, this array will contain the right Schur vectors. 
+.IP
+If \fIjobvsr\fR = \fB\'N\'\fR, \fIvsr\fR is not referenced. 
+.TP 10
+\fBrconde\fR, \fBrcondv\fR
+.NL
+\fBREAL\fR for single precision flavors 
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Arrays, \fBDIMENSION\fR (2) each
+.IP
+If \fIsense\fR = \fB\'E\'\fR or \fB\'B\'\fR, \fIrconde\fR(1) and \fIrconde\fR(2) contain the reciprocal condition numbers for the average of the selected eigenvalues. 
+.IP
+Not referenced if \fIsense\fR = \fB\'N\'\fR or \fB\'V\'\fR.
+.IP
+If \fIsense\fR = \fB\'V\'\fR or \fB\'B\'\fR, \fIrcondv\fR(1) and \fIrcondv\fR(2) contain the reciprocal condition numbers for the selected deflating subspaces. 
+.IP
+Not referenced if \fIsense\fR = \fB\'N\'\fR or \fB\'E\'\fR.
+.TP 10
+\fBwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIwork(1)\fR returns the required minimal size of \fIlwork\fR.
+.TP 10
+\fBiwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIiwork(1)\fR returns the required minimal size of \fIliwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fRth parameter had an illegal value.
+.IP
+If \fIinfo\fR = \fIi\fR, and
+.IP
+\fIi\fR\(<=\fIn\fR:
+.IP
+the \fIQZ\fR iteration failed. (\fIA\fR, \fIB\fR) is not in Schur form, but \fIalphar\fR(j), \fIalphai\fR(j) (for real flavors), or \fIalpha\fR(j) (for complex flavors), and \fIbeta\fR(j), j=\fIinfo\fR+1,..., \fIn\fR should be correct.
+.IP
+\fIi\fR > \fIn\fR: errors that usually indicate LAPACK problems:
+.IP
+\fIi\fR = \fIn\fR+1: other than \fIQZ\fR iteration failed in \fB?hgeqz\fR;
+.IP
+\fIi\fR = \fIn\fR+2:	after reordering, roundoff changed values of some complex eigenvalues so that leading eigenvalues in the generalized Schur form no longer satisfy \fIselctg\fR = \fB.TRUE.\fR. This could also be caused due to scaling;
+.IP
+\fIi\fR = \fIn\fR+3: reordering failed in \fB?tgsen\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBggesx\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBb\fR
+.NL
+Holds the matrix \fIB\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBalphar\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBalphai\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBalpha\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in complex flavors only.
+.TP 10
+\fBbeta\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBvsl\fR
+.NL
+Holds the matrix \fIVSL\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBvsr\fR
+.NL
+Holds the matrix \fIVSR\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBrconde\fR
+.NL
+Holds the vector of length (2).
+.TP 10
+\fBrcondv\fR
+.NL
+Holds the vector of length (2).
+.TP 10
+\fBjobvsl\fR
+.NL
+Restored based on the presence of the argument \fIvsl\fR as follows: 
+.IP
+\fIjobvsl\fR = \fB\'V\'\fR, if \fIvsl\fR is present, 
+.IP
+\fIjobvsl\fR = \fB\'N\'\fR, if \fIvsl\fR is omitted.
+.TP 10
+\fBjobvsr\fR
+.NL
+Restored based on the presence of the argument \fIvsr\fR as follows: 
+.IP
+\fIjobvsr\fR = \fB\'V\'\fR, if \fIvsr\fR is present, 
+.IP
+\fIjobvsr\fR = \fB\'N\'\fR, if \fIvsr\fR is omitted.
+.TP 10
+\fBsort\fR
+.NL
+Restored based on the presence of the argument \fIselect\fR as follows: 
+.IP
+\fIsort\fR = \fB\'S\'\fR, if \fIselect\fR is present, 
+.IP
+\fIsort\fR = \fB\'N\'\fR, if \fIselect\fR is omitted.
+.TP 10
+\fBsense\fR
+.NL
+Restored based on the presence of arguments \fIrconde\fR and \fBrcondv\fR as follows: 
+.IP
+\fIsense\fR = \fB\'B\'\fR, if both \fIrconde\fR and \fIrcondv\fR are present, 
+.IP
+\fIsense\fR = \fB\'E\'\fR, if \fIrconde\fR is present and \fIrcondv\fR omitted, 
+.IP
+\fIsense\fR = \fB\'V\'\fR, if \fIrconde\fR is omitted and \fIrcondv\fR present, 
+.IP
+\fIsense\fR = \fB\'N\'\fR, if both \fIrconde\fR and \fIrcondv\fR are omitted.
+.PP
+Note that there will be an error condition if \fIrconde\fR or \fIrcondv\fR are present and \fIselect\fR is omitted.

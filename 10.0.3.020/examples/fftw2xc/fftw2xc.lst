@@ -1,0 +1,17 @@
+DFT = \
+real_1d_ex1 real_1d_ex2 real_1d_ex4 real_1d_ex6 real_1d_ex7 real_1d_ex8 \
+real_2d_ex2 real_2d_ex4 real_2d_ex6 real_2d_ex8 real_2d_ex10 real_2d_ex12 \
+real_3d_ex2 real_3d_ex4 real_3d_ex6 real_3d_ex8 real_3d_ex10 real_3d_ex12 \
+real_2d_ex1 real_2d_ex3 real_2d_ex5 real_2d_ex7 \
+real_3d_ex1 real_3d_ex3 real_3d_ex5 real_3d_ex7 \
+\
+complex_1d_ex1 complex_1d_ex2 complex_1d_ex3 complex_1d_ex4 complex_1d_ex5 \
+complex_1d_ex6 complex_1d_ex7 complex_1d_ex8 complex_1d_ex9 complex_1d_ex11 \
+\
+complex_2d_ex1 complex_2d_ex2 complex_2d_ex3 complex_2d_ex4 complex_2d_ex5 \
+complex_2d_ex6 complex_2d_ex7 complex_2d_ex8 complex_2d_ex9 complex_2d_ex10 \
+complex_2d_ex11 complex_2d_ex12 complex_2d_ex13 complex_2d_ex15 \
+\
+complex_3d_ex1 complex_3d_ex2 complex_3d_ex3 complex_3d_ex4 complex_3d_ex5 \
+complex_3d_ex6 complex_3d_ex7 complex_3d_ex8 complex_3d_ex9 complex_3d_ex10 \
+complex_3d_ex11 complex_3d_ex12 complex_3d_ex13 complex_3d_ex15

@@ -1,0 +1,75 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lapll 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lapll \- Measures the linear dependence of two vectors.
+.SH SYNOPSIS
+.PP
+\fBcall slapll\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIY\fR, \fIincy\fR, \fIssmin\fR)
+.PP
+\fBcall dlapll\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIY\fR, \fIincy\fR, \fIssmin\fR)
+.PP
+\fBcall clapll\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIY\fR, \fIincy\fR, \fIssmin\fR)
+.PP
+\fBcall zlapll\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIY\fR, \fIincy\fR, \fIssmin\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The length of the vectors \fIx\fR and \fIy\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBslapll\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlapll\fR
+.IP
+\fBCOMPLEX\fR for \fBclapll\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlapll\fR
+.IP
+Array, \fBDIMENSION\fR(1+(\fIn\fR-1)\fIincx\fR). 
+.IP
+On entry, \fIx\fR contains the \fIn\fR-vector x.
+.TP 10
+\fBy\fR
+.NL
+\fBREAL\fR for \fBslapll\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlapll\fR
+.IP
+\fBCOMPLEX\fR for \fBclapll\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlapll\fR
+.IP
+Array, \fBDIMENSION\fR (1+(\fIn\fR-1)\fIincy\fR). 
+.IP
+On entry, \fIy\fR contains the \fIn\fR-vector y.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. The increment between successive elements of x; \fIincx\fR > 0.
+.TP 10
+\fBincy\fR
+.NL
+\fBINTEGER\fR. The increment between successive elements of y; \fIincy\fR > 0.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+On exit, \fIx\fR is overwritten.
+.TP 10
+\fBy\fR
+.NL
+On exit, \fIy\fR is overwritten.
+.TP 10
+\fBssmin\fR
+.NL
+\fBREAL\fR for \fBslapll\fR/\fBclapll\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlapll\fR/\fBzlapll\fR
+.IP
+The smallest singular value of the \fIn\fR-by-2 matrix \fIA\fR = (\fIx\fR\fIy\fR).

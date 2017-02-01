@@ -1,0 +1,34 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH DeleteStream 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+DeleteStream \- Deletes a random stream.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvsldeletestream\fR( \fIstream\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslDeleteStream\fR( \fI&stream\fR);
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK, VSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+\fBsrcstream\fR parameter is a \fBNULL\fR pointer.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulSTREAM\fR
+.NL
+\fBsrcstream\fR is not a valid random stream.
+.TP 10
+\fBVSL\(ulERROR\(ulMEM\(ulFAILURE\fR
+.NL
+System cannot allocate memory for \fBnewstream\fR.

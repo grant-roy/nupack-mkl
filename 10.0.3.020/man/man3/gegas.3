@@ -1,0 +1,114 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gegas 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gegas \- Solves a system of interval linear equations by interval Gauss method.
+.SH SYNOPSIS
+.PP
+\fBcall \fR\fBsigegas\fR(\fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBdigegas\fR(\fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBcrgegas\fR(\fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBzrgegas\fR(\fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBccgegas\fR(\fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBzcgegas\fR(\fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBtrans\fR
+.NL
+\fBCHARACTER(1)\fR. Must be one of \fB\'N\'\fR, \fB\'T\'\fR, \fB\'C\'\fR, \fB\'n\'\fR, \fB\'t\'\fR, or \fB\'c\'\fR.
+.IP
+Indicates the form of the equations system:
+.IP
+If \fItrans\fR = \fB\'N\'\fR or \fB\'n\'\fR, then \fIA\fR*\fIX\fR\fB = \fR \fIB\fR is solved for \fIX\fR.
+.IP
+If \fItrans\fR = \fB\'T\'\fR or \fB\'t\'\fR, then \fIA\fR**\fIT\fR*\fIX\fR\fB = \fR \fIB\fR is solved for \fIX\fR.
+.IP
+If \fItrans\fR = \fB\fR\fB\'C\'\fR or \fB\'c\'\fR, then \fIA\fR**\fIH\fR*\fIX\fR\fB = \fR \fIB\fR is solved for \fIX\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of \fIA\fR, the number of rows in \fIB\fR(\fBn\fR \(>= 0).
+.TP 10
+\fBnrhs\fR
+.NL
+\fBINTEGER\fR. The number of right-hand sides (\fBnrhs\fR\(>= 0).
+.TP 10
+\fBa\fR, \fBb\fR
+.NL
+\fBREAL\fR for \fBsigegas\fR.
+.IP
+\fBDOUBLE PRECISION\fR for \fBdigegas\fR.
+.IP
+Arrays: \fIa\fR (\fIlda\fR,*), \fIb\fR (\fIldb\fR,* ).
+.IP
+The array \fIa\fR contains the matrix \fIA\fR.
+.IP
+The array \fIb\fR contains the matrix \fIB\fR, whose columns are the right-hand sides for the systems of equations.
+.IP
+The second dimension of \fIa\fR must be at least max(1,\fIn\fR) and the second dimension of \fIb\fR must be at least max(1,\fInrhs\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR, \fIlda \fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIb\fR, \fIldb \fR\(>= max(1, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBb\fR
+.NL
+Overwritten by the solution matrix \fIX\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR \(>= 0, the execution is not successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter has an illegal value.
+.PP
+The following piece of Fortran code presents an example of using the routine \fBdigegas\fR to compute, by an interval Gauss method, an enclosure of the solution set to the interval linear system of equations: 
+.PP
+---------------------------------------------------------------------------------------------- 
+.br
+. . . . . .
+.br
+.br
+USE INTERVAL\(ulARITHMETIC
+.br
+. . . . . .
+.br
+TYPE(D\(ulINTERVAL)         :: A(2,2), B(2)
+.br
+INTEGER         :: N, INFO
+.br
+CHARACTER(1)          :: TRANS = \'n\'
+.br
+. . . . . .
+.br
+N = 2
+.br
+A(1,1) = DINTERVAL(2.,3.);    A(1,2) = DINTERVAL(0.,1.)
+.br
+A(2,1) = DINTERVAL(1.,2.);    A(2,2) = DINTERVAL(2.,3.)
+.br
+B(1,1) = DINTERVAL(0.,120.); B(2,1) = DINTERVAL(60.,240.)
+.br
+. . . . . .
+.br
+CALL DIGEGAS( TRANS, N, 1, A, 2, B, 2, INFO )
+.PP
+----------------------------------------------------------------------------------------------
+.PP
+Note that assigning double-precision intervals to the entries of the matrix \fIA\fR and right-hand side vector \fIB\fR is carried out by \fBDINTERVAL\fR function supplied by \fBINTERVAL\(ulARITHMETIC\fR module.

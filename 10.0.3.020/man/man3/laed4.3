@@ -1,0 +1,67 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laed4 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laed4 \- Used by \fBsstedc\fR/\fBdstedc\fR. Finds a single root of the secular equation.
+.SH SYNOPSIS
+.PP
+\fBcall slaed4\fR( \fIn\fR, \fIi\fR, \fId\fR, \fIz\fR, \fIdelta\fR, \fIrho\fR, \fIdlam\fR, \fIinfo\fR)
+.PP
+\fBcall dlaed4\fR( \fIn\fR, \fIi\fR, \fId\fR, \fIz\fR, \fIdelta\fR, \fIrho\fR, \fIdlam\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The length of all arrays.
+.TP 10
+\fBi\fR
+.NL
+\fBINTEGER\fR. The index of the eigenvalue to be computed; 1 \(<= i \(<= \fIn\fR.
+.TP 10
+\fBd\fR, \fBz\fR
+.NL
+\fBREAL\fR for \fBslaed4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed4\fR
+.IP
+Arrays, dimension (\fIn\fR) each. The array \fId\fR contains the original eigenvalues. It is assumed that they are in order, \fId\fR(i) < \fId\fR(\fIj\fR) for \fIi\fR < \fIj\fR.
+.IP
+The array \fIz\fR contains the components of the updating vector \fIZ\fR.
+.TP 10
+\fBrho\fR
+.NL
+\fBREAL\fR for \fBslaed4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed4\fR
+.IP
+The scalar in the symmetric updating formula.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBdelta\fR
+.NL
+\fBREAL\fR for \fBslaed4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed4\fR
+.IP
+Array, dimension (\fIn\fR). 
+.IP
+If \fIn\fR\(!= 1, \fIdelta\fR contains (\fId\fR(\fIj\fR) - \fIlambda\(uli\fR) in its \fIj\fR-th component. If \fIn\fR = 1, then \fIdelta\fR(1) = 1. The vector \fIdelta\fR contains the information necessary to construct the eigenvectors.
+.TP 10
+\fBdlam\fR
+.NL
+\fBREAL\fR for \fBslaed4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed4\fR
+.IP
+The computed \fIlambda\(uli\fR, the \fIi\fR-th updated eigenvalue.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = 1, the updating process failed.

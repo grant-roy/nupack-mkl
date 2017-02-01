@@ -1,0 +1,109 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gerc 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gerc \- Performs a rank-1 update (conjugated) of a general matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall cgerc\fR(\fIm\fR, \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall zgerc\fR(\fIm\fR, \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIa\fR, \fIlda\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall gerc\fR(\fIa\fR, \fIx\fR, \fIy\fR[,\fIalpha\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Specifies the number of rows of the matrix \fIA\fR.
+.IP
+The value of \fIm\fR must be at least zero.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Specifies the number of columns of the matrix \fIA\fR.
+.IP
+The value of \fIn\fR must be at least zero.
+.TP 10
+\fBalpha\fR
+.NL
+\fBCOMPLEX\fR for \fBcgerc\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgerc\fR
+.IP
+Specifies the scalar \fIalpha\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBCOMPLEX\fR for \fBcgerc\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgerc\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIm\fR - 1)*abs(\fIincx\fR)). Before entry, the incremented array \fIx\fR must contain the \fIm\fR-element vector \fIx\fR.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. Specifies the increment for the elements of \fIx\fR.
+.IP
+The value of \fIincx\fR must not be zero.
+.TP 10
+\fBy\fR
+.NL
+\fBCOMPLEX\fR for \fBcgerc\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgerc\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIn\fR - 1)*abs(\fIincy\fR)). Before entry, the incremented array \fIy\fR  must contain the \fIn\fR-element vector \fIy\fR. 
+.TP 10
+\fBincy\fR
+.NL
+\fBINTEGER\fR. Specifies the increment for the elements of \fIy\fR.
+.IP
+The value of \fIincy\fR  must not be zero.
+.TP 10
+\fBa\fR
+.NL
+\fBCOMPLEX\fR for \fBcgerc\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgerc\fR
+.IP
+Array, \fBDIMENSION\fR(\fIlda\fR, \fIn\fR).
+.IP
+Before entry, the leading \fIm\fR-by-\fIn\fR part of the array \fIa\fR must contain the matrix of coefficients. 
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. Specifies the first dimension of \fIa\fR as declared in the calling (sub)program. The value of \fIlda\fR must be at least max(1, \fIm\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+Overwritten by the updated matrix.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBgerc\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fRof size (\fIm\fR,\fIn\fR).
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fIm\fR).
+.TP 10
+\fBy\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBalpha\fR
+.NL
+The default value is 1.

@@ -1,0 +1,908 @@
+Intel(R) Math Kernel Library 10.0 Update 3 for Linux*  
+Release Notes 
+
+Contents
+ Overview
+ New in Intel(R) MKL 
+ System Requirements
+ Installation Notes
+ Documentation
+ Known Limitations
+ Technical Support and Feedback
+ Related Products and Services 
+ Disclaimer and Legal Information 
+ 
+
+Overview
+ 
+The Intel(R) Math Kernel Library (Intel(R) MKL) provides developers of
+scientific, engineering and financial software with a set of linear
+algebra routines, fast Fourier transforms, and vectorized math and
+random number generation functions, all optimized for the latest
+Intel(R) Pentium(R) 4 processors, Intel(R) Xeon(R) processors with
+Streaming SIMD Extensions 3 (SSE3) and Intel(R) Extended Memory 64
+Technology (Intel(R) EM64T), and Intel(R) Itanium(R) 2
+processors. This software also performs well on non-Intel (x86)
+processors.
+
+Intel(R) MKL provides linear algebra functionality with LAPACK
+(solvers and eigensolvers) plus level 1, 2, and 3 BLAS offering the
+vector, vector-matrix, and matrix-matrix operations needed for complex
+mathematical software.  Users who prefer the FORTRAN 90/95 programming
+language may call LAPACK driver and computational subroutines via
+specially designed interfaces with reduced numbers of arguments.
+Intel(R) MKL provides ScaLAPACK (Scalable LAPACK) and support
+functionality including the Parallel Basic Linear Algebra Subprograms
+(PBLAS).  For solving sparse systems of equations, Intel(R) MKL
+provides direct and iterative sparse solvers as well as a supporting
+set of sparse BLAS (levels 1, 2, and 3).
+
+Intel(R) MKL offers multidimensional fast Fourier transforms (1D, 2D,
+3D) with mixed radix support (not limited to sizes of powers of 2).
+Intel(R) MKL also provides distributed versions of these functions for
+use on clusters.  For the solution of partial differential equations
+(PDE), Intel(R) MKL provides a few preconditioners to help with the
+convergence of our iterative solvers.  Optimization [Trust Region]
+solvers provide efficient routines for solving nonlinear least square
+problems with and without boundary constraints.
+
+Intel(R) MKL also includes a set of vectorized transcendental
+functions (called the Vector Math Library (VML)) offering both greater
+performance and excellent accuracy compared to the libm (scalar)
+functions for most of the processors.  The Vector Statistical Library
+(VSL) offers high performance vectorized random number generators for
+a number of probability distributions as well as convolution and
+correlation routines.  Intel(R) MKL also includes a set of functions
+which act on intervals of floating point numbers. This interval
+arithmetic package includes solvers for interval systems of linear
+equations, interval matrix inversion, as well as functions for testing
+the regularity/singularity of interval matrices.  The BLAS, LAPACK,
+direct sparse solver (DSS), FFT, VML library functions, and
+optimization solvers in Intel(R) MKL are threaded using OpenMP*.  All
+of Intel(R) MKL is thread-safe.
+
+
+ 
+
+New in Intel(R) MKL
+
+
+New in Intel(R) MKL 10.0 Update 3
+
+  * Improved IA-32 version of SGEMM by 1.4 to 1.5 times for Intel(R)
+    Core(TM) microarchitecture.
+
+  * ZGEMM3M was sped up by up to 10 times for Intel(R) Itanium(R)
+    processors and by up to 3 times for Intel(R) Core(TM)2 Quad
+    processors.
+
+  * The performance of factorization routines *GETRF, *POTRF, *GEQRF,
+    SVD (bi-diagonalization routine) and the Symmetric Banded
+    Eigensolver (tridiagonalization routine) have been improved
+    significantly on multi-core.
+
+  * The LP64 interface of DSS/PARDISO now uses 64-bit addressing for
+    internal arrays on 64-bit operating systems. This allows the
+    direct solver to solve larger systems.
+    
+  * In cases where the number of threads is set higher than the number
+    of physical cores available and MKL_DYNAMIC = TRUE (the default
+    value), Intel MKL will now reduce the number of threads used to be
+    equal to the number of physical cores.  For example, on systems
+    with Hyper-Threading Technology where the OS will report the
+    number of logical processors which is larger than the number
+    physical processors, Intel MKL will now only use as many threads
+    as there are physical processors or cores.
+
+  * A hybrid mode has been added to the MP LINPACK benchmark which can
+    improve performance in instances where OpenMP is used on each
+    node.
+  
+  * Intel MKL will now set the number of threads to 1 when the MPI
+    environment cannot be determined to be thread-safe and MKL_DYNAMIC
+    = TRUE (the default value). See the User Guide for further
+    information.
+
+  * Fixed issue in DSYTRD which caused runtime failures when work
+    array not double the recommended size. This affected multiple
+    other LAPACK functions which call DSYTRD.
+
+  * Fixed memory leak that appeared in some double-precision FFT
+    problems involving power of 2 sizes.
+  
+  * Threading runtime libraries (libguide, libiomp) are now fully
+    built with position independent code.
+
+
+
+New in Intel(R) MKL 10.0 Update 2
+
+  * BLAS Performance Improvements on IA32
+  
+    * Improved IA32 version of DGEMM by 40% for Intel(R) Core(TM)
+      microarchitecture
+
+    * ?SYMM functions were improved by 13% for all platforms
+  
+  * New memory support functions: The following functions have been
+    added. See the reference manual for more information.
+  
+    * MKL_MemStat()
+
+    * MKL_malloc()
+
+    * MKL_free()
+
+ 
+
+New in Intel(R) MKL 10.0 Update 1
+
+* Out-of-core (OOC) PARDISO
+
+  * Fixed config file loading problems associated with "The file
+    pardiso_ooc.cfg was not opened" error message.
+
+  * Fixed a bug associated with operation of the solver when
+    iparm(60)=1.
+
+* The Poisson Library Routines described in Chapter 13, "Partial
+  Differential Equations", of the Intel(R) MKL Reference Manual are
+  now included.  These routines were absent in version 10.0
+
+* LAPACK bug fixes:
+
+  * All versions of the *STEDC have been improved to get proper
+    scaling in cases of parallel operation.
+
+  * The Fortran 95 interface to the LAPACK Divide and Conquer
+    Eigenproblem solver functions has been fixed. Previously, various
+    combinations of input parameters would cause segfault.
+
+
+
+ 
+New in Intel(R) MKL 10.0 Intel(R) MKL product changes since Intel(R)
+MKL 9.1
+
+  * Linking model change
+  
+    * In Version 10.0 of Intel(R) MKL we have re-architected Intel(R)
+      MKL and physically separated the interface, threading and
+      computational components of the product. This architecture
+      facilitates the use of multiple library linking combinations to
+      support numerous configurations of interfaces, compilers, and
+      processors in a single package. Multiple layers are provided so
+      that the base Intel(R) MKL package supports numerous
+      configurations of interfaces, compilers, and processors in a
+      single package. This new Intel(R) MKL architecture is intended
+      to provide maximum support for our varied customers’ needs,
+      while minimizing the effort it takes to obtain and utilize the
+      great performance of Intel(R) MKL. For more information, please
+      refer to the “Using Intel(R) MKL Parallelism” section of
+      the Intel(R) MKL User’s Guide
+
+	* Cluster enabled capability available in a single Intel(R)
+          MKL product
+
+		* Previously there were two versions of Intel(R) MKL
+                  (Intel(R) MKL for Linux*, and Intel(R) MKL Cluster
+                  Edition for Linux*).  Starting with Intel(R) MKL
+                  10.0, we merged these two versions and now there is
+                  only one version: Intel(R) MKL for Linux*, which
+                  includes ScaLAPACK, distributed memory FFT’s and all
+                  other capabilities of the former “Cluster
+                  Edition”
+
+Performance improvements since Intel(R) MKL 9.1
+
+  * BLAS
+
+    * DGEMM and SGEMM on Intel(R) Core(TM)2 Quad processors
+
+      * Large square and large outer product sizes were improved by
+        1.04 times on 1 thread and 1.1 times to 1.15 times on 8 threads
+
+      * Other level 3 real functions were improved by 1.02 times to
+        1.04 times on large sizes
+
+  * LAPACK
+
+    * Several linear equation solvers (?spsv/?hpsv/?ppsv, ?pbsv/?gbsv,
+	?gtsv/?ptsv, ?sysv/?hesv) have dramatically improved in
+	performance. Banded
+
+	and packed storage format and multiple right-hand sides cases
+	see
+
+	performance enhanced up to 100 times
+
+    * All symmetric eigensolvers (?syev/?syev, ?syevd/?heevd,
+      syevx/?heevx, ?syevr/?heevr) have significantly improved, since
+      tridiagonalization routines (?sytrd/?hetrd) have sped up to 4
+      times
+
+    * All symmetric eigensolvers in packed storage (?spev/?hpev,
+      ?spevd/?hpevd, ?spevx/?hpevx) have significantly improved, since
+      tridiagonalization routines in packed storage (?sptrd/?hptrd)
+      perform 3 times better than previous version
+
+    * A number of routines which apply orthogonal/unitary
+      transformations (?ormqr/?unmqr, ?ormrq/?unmrq, ?ormql/?unmql,
+      ?ormlq/?unmlq) are up to 2 times faster
+
+  * FFTs
+
+    * Performance of complex 1D FFTs for power-of-two sizes was
+      improved by up to 1.8 times on 1 thread* On systems with
+      Intel(R) EM64T and running in 64-bit mode
+
+      * Complex 2D FFTs were sped up by up to 1.1 times on 1 thread
+        for single and double precision
+
+      * Parallel Complex 2D FFTs were sped up for single precision by
+	up to 1.2 times on 8 threads and for double precision by up to
+	1.3 times
+
+      * Parallel Complex 3D FFTs were sped up by up to 1.15 times for
+	single and double precision
+
+      * Parallel Complex Backward 2D FFTs were sped up for double
+	precision by up to 1.4 times and for single precision up to
+	1.3 times
+
+    * Single complex backward 1D FFT size greater than 2^22 were sped
+      up by up to 2 times on 4 threads and up to 2.4 times on 8
+      threads on Itanium(R) processors
+
+  * VML/VSL
+
+    * Performance of VSL functions is improved on non-Intel processors
+      by approximately 2 times on average
+
+    * Performance of VML vdExp, vdSin, and vdCos functions is improved
+	on non-Intel processors by 1.18 times on average
+
+    * Performance of VSL functions is improved on IA-32 and Intel(R)
+      64 by 1.07 times on average
+
+Other Improvements
+
+  * Change in threading model
+
+  * Previously, when OMP_NUM_THREADS was undefined the number of
+    threads for Intel(R) MKL defaulted to 1. With Intel(R) MKL 10.0,
+    when the environment variable OMP_NUM_THREADS is undefined, your
+    compiler run time library (e.g.  libguide) determines the default
+    number of threads. Intel(R) MKL may create multiple threads
+    depending on problem size and the value of the MKL_DYNAMIC or
+    other threading environment variables
+
+  * To provide additional user control over threading, the following
+    environment variables have been added: MKL_NUM_THREADS,
+    MKL_DOMAIN_NUM_THREADS, and MKL_DYNAMIC as well as the
+    corresponding library routines.  See the User Guide for details
+
+  * Interface changes
+
+    * The C DFTI has changed in the ILP64 variant of the C/C++
+      interface.  The MKL_LONG type is used instead of long type in C
+      DFTI interface, i.e.  MKL_LONG Dfti...(..., MKL_LONG, ...)
+      instead of long Dfti...(..., long, ...).  For example we have
+      difference on Windows where long is 4 byte, MKL_LONG is 8 byte
+      in ILP64 variant. See details in the User’s Guide
+
+  * Out-of-core (OOC) PARDISO for all types of matrices
+
+    * In version 10.0, we have added out-of-core memory support to
+      PARDISO.  While computers have greatly increased memory
+      capacity, there continue to be a large number of problems for
+      which problems sizes are too great to solve with in-memory
+      solutions. For customers who are encountering problem size
+      limitations we encourage you to try our new out-of-core memory
+      PARDISO solution. Opportunities for further performance
+      optimizations have been identified and we plan to release an
+      Intel(R) MKL update in the coming months with significant
+      performance improvements
+
+  * ZGEMM3M and CGEMM3M functions
+
+  	* These complex functions use three block matrix multiplies
+          and five additions as opposed to four block matrix
+          multiplies and four additions to reduce the number of
+          operations. These two functions are extensions to the
+          standard BLAS in Intel(R) MKL using the same syntax as ZGEMM
+          and CGEMM respectively
+
+        * Using [Z/C]GEMM3M instead of [Z/C]GEMM can give up to 1.25
+          times of performance improvement without bit-to-bit
+          correspondence of the results
+
+  * Iterative Sparse Solvers
+
+    * An ILUT pre-conditioner has been added
+
+  * Sparse BLAS
+
+    * Support for sparse 0-based indexing has been added
+
+    * The mkl_scsrgemv, a single precision sparse BLAS matrix vector
+      multiply function, has been added
+
+  * FFTs
+  
+    * The DftiCommitDescriptor function has been optimized by avoiding
+      double data initialization for serial and parallel 1D FFT. This
+      function now runs faster and allocates less memory
+
+  * Vector Math Library (VML)
+
+    * New VML EP (enhanced performance) accuracy mode has been
+      introduced. The EP routines are significantly faster than LA
+      (low accuracy) routines and are accurate to at least 11 and 26
+      bits for single and double precisions respectively. See
+      vmlSetMode function description in the Intel(R) MKL manual for
+      details
+
+    * New VML functions added: v{s,d,c,z}Mul, v{c,z}MulByConj,
+      v{c,z}Div, v{s,d,c,z}Add, v{s,d,c,z}Sub, v{c,z}Conj,
+      v{s,d}Expm1, v{s,d}Log1p, v{s,d}Sqr, v{s,d}Pow3o2, v{s,d}Pow2o3,
+      v{s,d,c,z}Abs, v{c,z}CIS
+
+  * Vector Statistical Library (VSL)
+
+    * Support of 64-bit nskip parameter of vslSkipAheadStream service
+      routine in all versions of the VSL (not only ILP64) introduced
+
+    * Bugs in vslCopyStream, vslCopyStreamState service routines, and
+      VSL QRNG initialization scheme for the case of user-defined
+      parameters were fixed
+
+    * PDE Support
+
+      * Trigonometric Transforms have been extended to support various
+        kinds of DCT/DST transforms. In addition to even size
+        transforms, odd size transforms are supported starting from
+        this release
+
+   * FFTW 3.x Wrappers
+
+     * New FFTW 3.x wrappers have been developed for real-to-real
+       (DCT/DST) transforms
+
+
+System Requirements
+
+ Hardware
+
+To install and use Intel(R) MKL you will need a system with a
+supported processor and
+
+  700 MB of free hard disk space plus an additional 400 MB during
+  installation for download and temporary files (host system only).
+
+Supported processors - The following is a list of processors on
+which Intel(R) MKL is expected to run.
+  
+  * Intel(R) Core(TM) processor family
+  
+  * Intel(R) Xeon(R) processor family
+  
+  * Intel(R) Itanium(R) processor family
+
+  * Intel(R) Pentium(R) 4 processor family
+  
+  * Intel(R) Pentium(R) III processor
+
+  * Intel(R) Pentium(R) processor (300 MHz or faster)
+  
+  * Intel(R) Celeron(R) processor
+
+  * AMD Athlon* and Opteron* processors
+
+
+
+Software
+
+To use Intel(R) MKL you will need a supported compiler and MPI
+implementation.
+
+Following is the list of supported operating systems:
+
+  * Red Hat* EL3 (IA-32/EM64T/Itanium)
+
+  * Red Hat* EL4 (IA-32/EM64T/Itanium)
+
+  * Red Hat* EL5 (IA-32/EM64T/Itanium)
+
+  * Suse* SLES* 9 (IA-32/EM64T/Itanium)
+
+  * Suse* SLES* 10 (IA-32/EM64T/Itanium)
+
+  * SGI ProPack* for Linux 4 (Itanium)
+
+  * SGI ProPack* for Linux 5 (Itanium)
+
+  * Red Hat* Fedora* Core 7 (IA-32/EM64T)
+
+  * Debian* GNU/Linux 4.0 (IA-32/EM64T/Itanium)
+
+  * Ubuntu* 7 (IA-32/EM64T)
+
+  * Asianux* Server 3 (IA-32/EM64T/Itanium)
+
+  * Turbolinux* 11 (IA-32/EM64T/Itanium)
+
+  Note: These Linux* distributions are supported, and Intel(R) MKL
+   should work on many more.  If you have trouble with your
+   distribution, do let us know.
+
+Following is the list of supported C/C++ and Fortran compilers:
+
+  * Intel(R) Fortran Compiler for Linux* version 10.1
+
+  * Intel(R) Fortran Compiler for Linux* version 10.0
+
+  * Intel(R) Fortran Compiler for Linux* version 9.1
+
+  * Intel(R) C++ Compiler for Linux* version 10.1
+
+  * Intel(R) C++ Compiler for Linux* version 10.0
+
+  * Intel(R) C++ Compiler for Linux* version 9.1
+
+  * GNU Compiler Collection (gcc, g77, GNU Fortran 4.2.0 and later)
+
+  * Absoft* Pro Fortran v10.1 for Linux*
+
+Following is the list of MPI implementations that Intel(R) MKL has
+been validated against:
+
+  * Intel(R) MPI Library Version 3.1
+
+  * Intel(R) MPI Library Version 3.0
+
+  * Intel(R) MPI Library Version 2.0
+
+  * SGI* MPT (for IA-64) available at
+    http://www.sgi.com/products/software/mpt/
+
+  * Open MPI 1.1.2, 1.1.5, and 1.2 found at
+
+    http://www.open-mpi.org
+
+  * MPICH version 1.2.x (Myricom*'s designation) available at
+    http://www.myri.com/
+
+  * MPICH version 1.2.x available at
+    http://www-unix.mcs.anl.gov/mpi/mpich
+
+  * MPICH version 2.0 available at
+    http://www-unix.mcs.anl.gov/mpi/mpich
+
+  Note: Usage of MPI linking instructions can be found in the User's
+  Guide in the doc directory.
+
+Note:
+
+  * Parts of Intel(R) MKL have Fortran interfaces, and data
+    structures, while other parts which have C interfaces and C data
+    structures. The User Guide in the doc directory contains advice on
+    how to link to Intel(R) MKL with different compilers
+
+
+Installation Notes
+
+Guidance on the installation of Intel(R) MKL is provided at install
+time.  Links will be provided to a file with step-by-step instructions
+(filename: Install.txt).  This file can also be found in the doc
+directory.
+
+
+Documentation
+
+The Documentation Index (Doc_index.htm in the doc directory) has a
+list of the principal Intel(R) MKL documents. For a complete list, see
+chapter 3 of the User's Guide.
+
+ 
+Known Limitations
+
+Limitations to the sparse solver and optimization solvers in Intel(R)
+MKL 10.0 Update 3:
+
+  * Sparse and optimization solver libraries functions are only
+    provided in static form
+
+Limitations to the FFT functions in Intel(R) MKL 10.0 Update 3:
+  * The function DftiCopyDescriptor is not implemented
+
+  * Mode DFTI_TRANSPOSE is implemented only for the default case
+
+  * Mode DFTI_REAL_STORAGE can have the default value only and is not
+    changeable by the DftiSetValue function (i.e. DFTI_REAL_STORAGE =
+    DFTI_REAL_REAL)
+
+  * The ILP64 version of Intel(R) MKL does not currently support FFTs
+    with any one dimension larger than 2^31-1.  Any 1D FFT larger than
+    2^31-1 or any multi-dimensional FFT with any dimension greater
+    than 2^31-1 will return the "DFTI_1D_LENGTH_EXCEEDS_INT32" error
+    message.  Note that this does not exclude the possibility of
+    performing multi-dimensional FFTs with more than 2^31-1 elements;
+    as long as any one dimension length does not exceed 2^31-1
+
+  * Some limitations exist on arrays sizes for Cluster FFT
+    functions. See mklman.pdf for a detailed description
+
+  * When a dynamically linked application uses Cluster FFT
+    functionality, it is required to put the static Intel(R) MKL
+    interface libraries on the link line as well. For example:
+    -Wl,--start-group $MKL_LIB_PATH/libmkl_intel_lp64.a
+    $MKL_LIB_PATH/libmkl_cdft_core.a -Wl,--end-group
+    $MKL_LIB_PATH/libmkl_blacs_intelmpi20_lp64.a -L$MKL_LIB_PATH
+    -lmkl_intel_thread -lmkl_core -lguide -lpthread
+
+  
+Limitations to the LAPACK functions in Intel(R) MKL 10.0 Update 3:
+
+  * The ILAENV function, which is called from the LAPACK routines to
+    choose problem-dependent parameters for the local environment, can
+    not be replaced by a user's version
+
+  * second() and dsecnd() functions may not provide correct answers
+    in the case where the CPU frequency is not constant.
+
+Limitations to the Vector Math Library (VML) and Vector Statistical
+Library (VSL) functions in Intel(R) MKL 10.0 Update 3
+
+    * Usage of mkl_vml.fi may produce warning about TYPE
+      ERROR_STRUCTURE length
+
+Limitations to the interval arithmetic functions in Intel(R) MKL 10.0
+Update 3:
+
+  * The interval libraries will require the libifcore library from
+    Intel(R) Fortran compiler.
+
+  * Interval arithmetic functions require a processor which supports
+    SSE instructions.
+
+Limitations to the ScaLAPACK functions in Intel(R) MKL 10.0 Update 3:
+
+  * The user can not substitute PJLAENV for their own version. This
+    function is called by ScaLAPACK routines to choose
+    problem-dependent parameters for the local environment.
+
+  * ScaLAPACK libraries are available only in static form
+
+Limitations to the ILP64 version of Intel(R) MKL:
+
+  * The ILP64 version of Intel(R) MKL does not contain the complete
+    functionality of the library.  For a full listing of what is in
+    the ILP64 version refer to the user's guide in the doc directory.
+
+  * g77 can not be used with the ILP64 libraries.
+
+Limitations to the Java examples:
+
+  * The Java examples don’t work with static Intel(R) MKL
+    libraries. Please use the dynamic Intel(R) MKL libraries for
+    running the Java examples
+
+  * The Java examples don’t work if the path to the JDK contains
+    spaces. Please use quotes to set JAVA_HOME in those cases. For
+    example: set JAVA_HOME="C:\Program Files\Java\jdk1.6.0_06"
+
+The DHPL_CALL_CBLAS option is not allowed when building the hybrid 
+version of MP LINPACK. 
+
+Limitations to the Fortran 95 interface to LAPACK:
+
+  * If you are compiling the Fortran 95 interface to LAPACK with the
+    GNU gfortran compiler, you must manually remove the "pure"
+    attribute from all subroutines containing a procedure argument:
+    ?GEES, ?GEESX, ?GGES, ?GGESX (where ? can be S, D, C, or Z).
+
+Limitations to the g77 compiler support:
+
+  * Some Intel(R) MKL functions contain underscore in their names
+    (i.e.  mkl_dcsrsymv, mkl_cspblas_dcsrsymv) and these functions
+    don't support the g77 default naming
+    convention. -fno-second-underscore compilation flag can be used as
+    workaround for this limitation.  E.g.: g77 -fno-second-underscore
+    test.f
+
+On Intel(R) processors with Intel(R) EM64T enabled, user programs
+compiled with the GNU Fortran compiler (version 3.2.3) will likely get
+incorrect results from those functions in Intel(R) MKL that return
+single precision values, if -fno-f2c GNU Fortran compiler flag isn't
+used.  The GNU Fortran compiler by default expects REAL*4 values in
+the first 8 bytes of the return register (just as a double precision
+value would be represented) while the Intel(R) Fortran compiler
+expects REAL*4 values in the first 4 bytes of the return register. The
+behavior of Intel(R) MKL is compatible with that of the Intel Fortran
+compiler. GNU Fortran compiler behavior could be changed to be
+compatible with the Intel Fortran compiler by using the -fno-f2c flag.
+
+
+FFT, VML, VSL, and PDE Support functions can not be called from
+Fortran-77. These components have Fortran-90/95 interface specifics
+(structures, ..) that can not be used with Fortran-77.
+
+We recommend that -Od be used for the 10.0 Intel(R) compilers when
+compiling test source code available with Intel(R) MKL.  Current build
+scripts do not specify this option and default behavior for these
+compilers has changed to provide vectorization.
+
+
+All VSL functions return an error status, i.e., default VSL API is a
+function style now rather than a subroutine style used in earlier
+Intel(R) MKL versions. This means that Fortran users should call VSL
+routines as functions.  For example:
+
+ errstatus = vslrnggaussian(method, stream, n, r, a, sigma)
+
+rather than subroutines:
+
+ call vslrnggaussian(method, stream, n, r, a, sigma)
+
+Nevertheless, Intel(R) MKL provides a subroutine-style interface for
+backward compatibility.  To use subroutine-style interface, manually
+include mkl_vsl_subroutine.fi file instead of mkl_vsl.fi by changing
+the line include 'mkl_vsl.fi' in include\mkl.fi with the line include
+'mkl_vsl_subroutine.fi'. VSL API changes don't affect C/C++ users.
+
+Memory Allocation: In order to achieve better performance, memory
+allocated by Intel(R) MKL is not released. This behavior is by design
+and is a one time occurrence for Intel(R) MKL routines that require
+workspace memory buffers.  Even so, the user should be aware that some
+tools may report this as a memory leak. Should the user wish, memory
+can be released by the user program through use of a function
+(MKL_FreeBuffers()) made available in Intel(R) MKL or memory can be
+released after each call by setting an environment variable
+(MKL_DISABLE_FAST_MM) (see User's Guide in the doc directory for more
+details). Using one of these methods to release memory will not
+necessarily stop programs from reporting memory leaks, and in fact may
+increase the number of such reports should you make multiple calls to
+the library thereby requiring new allocations with each call. Memory
+not released by one of the methods described will be released by the
+system when the program ends. To avoid this restriction disable memory
+management as described above.
+
+
+On Red Hat* Enterprise Linux 3.0, in order to ensure that the correct
+support libraries are linked, the environment variable
+LD_ASSUME_KERNEL must be set: For example: 'export
+LD_ASSUME_KERNEL=2.4.1'
+
+
+Other: GMP and Interval Solver components are located in the solver
+library. For Intel(R) 64 and IA-64 platforms these components support
+only LP64 interface.
+
+
+ 
+
+Technical Support and Feedback
+
+Self Help and User Forums
+
+A rich repository of self-help product information such as tutorials,
+getting started tips, known product issues, product errata,
+compatibility information and answers to frequently asked questions
+can be found at the Intel(R) Software Development Products Technical
+Support site
+(http://www.intel.com/software/products/support/index.htm).  It's a
+great place to find answers quickly or to gain insight in using our
+products effectively.
+
+
+The Intel(R) MKL User Forum
+(http://softwareforums.intel.com/ids/board?board.id=MKL) is the place
+to ask questions of and share information with other users of Intel(R)
+MKL.
+
+
+Submitting Issues
+
+Your feedback is very important to us. To receive technical support
+and product updates for the tools provided in this product you need to
+register at the Intel(R) Registration Center
+(https://registrationcenter.intel.com/).
+
+
+If you have questions or problems getting started with the Intel(R)
+Math Kernel Library please contact support at
+https://registrationcenter.intel.com/support/.
+
+Note: Please notify your support representative prior to submitting
+source code where access needs to be restricted to certain countries
+to determine if this request can be accommodated.
+
+To submit an issue via the Intel(R) Premier Support website, please
+perform the following steps:
+
+  * Ensure that Java* and JavaScript* are enabled in your browser
+
+  * Go to http://premier.intel.com
+
+  * Type in your Login and Password. Both are case-sensitive
+
+  * Click the "Submit Issues" button
+
+  * Click on the "Development Environment" button next to the "Product
+    Type" drop-down list
+  
+  * Click on the "Intel(R) MKL for Linux*" button next to the "Product
+    Name" drop-down list
+ 
+  * Enter the info to the required fields, and Click on the "Submit
+    Issue" link in the left navigation bar
+
+  * Choose "Development Environment (tools,SDV,EAP)" from the "Product
+    Type" drop-down list
+
+  * If this is a software or license-related issue choose "Intel(R)
+    MKL for Linux*" from the "Product Name" drop-down list
+
+  * Enter your question and complete the fields in the windows that
+    follow to successfully submit the issue
+
+
+Please follow these guidelines when forming your problem report or
+product
+
+suggestion:
+
+  * Describe your difficulty or suggestion
+
+    For problem reports please be as specific as possible (e.g.,
+    including compiler and link command line options), so that we may
+    reproduce the problem. Please include a small test case if
+    possible
+
+  * Describe your system configuration information
+
+    Be sure to include specific information that may be applicable to
+    your setup: operating system, name and version number of installed
+    applications, and anything else that may be relevant to helping us
+    address your concern
+
+
+Related Products and Services
+
+Information on Intel(R) software development products is available at
+http://www.intel.com/software/products.  Some of the related products
+include:
+
+
+  * The Intel(R) Software College provides interactive tutorials,
+    documentation, and code samples that teach Intel(R) architecture
+    and software optimization techniques
+
+  * The VTune(TM) Performance Analyzer allows you to evaluate how your
+    application is utilizing the CPU and helps you determine if there
+    are modifications you can make to improve your application's
+    performance
+
+  * The Intel(R) C++ and Fortran Compilers are an important part of
+    making software run at top speeds and fully support the latest
+    Intel IA-32 and Itanium(R) processors
+
+  * The Intel(R) Performance Library Suite provides a set of routines
+    optimized for various Intel(R) processors. The Intel(R) Math
+    Kernel Library, which provides developers of scientific and
+    engineering software with a set of linear algebra, fast Fourier
+    transforms and vector math functions optimized for the latest
+    Intel Pentium and Intel Itanium(R) processors. The Intel(R)
+    Integrated Performance Primitives consists of cross platform tools
+    to build high performance software for several Intel architectures
+    and several operating systems
+
+
+
+Attribution
+
+As referenced in the End User License Agreement, attribution requires,
+at a minimum, prominently displaying the full Intel product name
+(e.g. "Intel(R) Math Kernel Library") and providing a link/URL to the
+Intel(R) MKL homepage (www.intel.com/software/products/mkl) in both
+the product documentation and website.
+
+The original versions of the BLAS from which that part of Intel(R) MKL
+was derived can be obtained from
+http://www.netlib.org/blas/index.html.  The original versions of
+LAPACK from which that part of Intel(R) MKL was derived can be
+obtained from http://www.netlib.org/lapack/index.html.  The authors of
+LAPACK are E. Anderson, Z. Bai, C. Bischof, S.  Blackford, J. Demmel,
+J. Dongarra, J. Du Croz, A. Greenbaum, S. Hammarling, A. McKenney, and
+D. Sorensen.  Our FORTRAN 90/95 interfaces to LAPACK are similar to
+those in the LAPACK95 package at
+http://www.netlib.org/lapack95/index.html.  All interfaces are
+provided for pure procedures.
+
+
+The original versions of ScaLAPACK from which that part of Intel(R)
+MKL was derived can be obtained from
+http://www.netlib.org/scalapack/index.html.  The authors of ScaLAPACK
+are L. S. Blackford, J. Choi, A. Cleary, E. D'Azevedo, J. Demmel,
+I. Dhillon, J. Dongarra, S. Hammarling, G. Henry, A. Petitet,
+K. Stanley, D. Walker, and R. C. Whaley.
+
+
+PARDISO in Intel(R) MKL 10.0 Update 3 is compliant with the 3.2
+release of PARDISO freely distributed by the University of Basel.  It
+can be obtained at http://www.pardiso-project.org.
+
+Some FFT functions in this release of Intel(R) MKL have been generated
+by the SPIRAL software generation system (http://www.spiral.net/)
+under license from Carnegie Mellon University.  Some FFT functions in
+this release of the Intel(R) MKL DFTI have been generated by the UHFFT
+software generation system under license from University of Houston.
+The Authors of SPIRAL are Markus Puschel, Jose Moura, Jeremy Johnson,
+David Padua, Manuela Veloso, Bryan Singer, Jianxin Xiong, Franz
+Franchetti, Aca Gacic, Yevgen Voronenko, Kang Chen, Robert W. Johnson,
+and Nick Rizzolo.
+
+
+
+Disclaimer and Legal Information
+
+INFORMATION IN THIS DOCUMENT IS PROVIDED IN CONNECTION WITH INTEL(R)
+PRODUCTS. NO LICENSE, EXPRESS OR IMPLIED, BY ESTOPPEL OR OTHERWISE, TO
+ANY INTELLECTUAL PROPERTY RIGHTS IS GRANTED BY THIS DOCUMENT. EXCEPT
+AS PROVIDED IN INTEL'S TERMS AND CONDITIONS OF SALE FOR SUCH PRODUCTS,
+INTEL ASSUMES NO LIABILITY WHATSOEVER, AND INTEL DISCLAIMS ANY EXPRESS
+OR IMPLIED WARRANTY, RELATING TO SALE AND/OR USE OF INTEL PRODUCTS
+INCLUDING LIABILITY OR WARRANTIES RELATING TO FITNESS FOR A PARTICULAR
+PURPOSE, MERCHANTABILITY, OR INFRINGEMENT OF ANY PATENT, COPYRIGHT OR
+OTHER INTELLECTUAL PROPERTY RIGHT.
+
+UNLESS OTHERWISE AGREED IN WRITING BY INTEL, THE INTEL PRODUCTS ARE
+NOT DESIGNED NOR INTENDED FOR ANY APPLICATION IN WHICH THE FAILURE OF
+THE INTEL PRODUCT COULD CREATE A SITUATION WHERE PERSONAL INJURY OR
+DEATH MAY OCCUR.
+
+Intel may make changes to specifications and product descriptions at
+any time, without notice. Designers must not rely on the absence or
+characteristics of any features or instructions marked "reserved" or
+"undefined." Intel reserves these for future definition and shall have
+no responsibility whatsoever for conflicts or incompatibilities
+arising from future changes to them. The information here is subject
+to change without notice. Do not finalize a design with this
+information.
+
+The products described in this document may contain design defects or
+errors known as errata which may cause the product to deviate from
+published specifications.  Current characterized errata are available
+on request.
+
+Contact your local Intel sales office or your distributor to obtain
+the latest specifications and before placing your product order.
+
+Copies of documents which have an order number and are referenced in
+this document, or other Intel literature, may be obtained by calling
+1-800-548-4725, or by visiting Intel's Web Site.
+
+Intel processor numbers are not a measure of performance. Processor
+numbers differentiate features within each processor family, not
+across different processor families.  See
+http://www.intel.com/products/processor_number for details.
+
+This document contains information on products in the design phase of
+development.
+
+BunnyPeople, Celeron, Celeron Inside, Centrino, Centrino logo, Core
+Inside, FlashFile, i960, InstantIP, Intel, Intel logo, Intel386,
+Intel486, Intel740, IntelDX2, IntelDX4, IntelSX2, Intel Core, Intel
+Inside, Intel Inside logo, Intel. Leap ahead., Intel.  Leap
+ahead. logo, Intel NetBurst, Intel NetMerge, Intel NetStructure, Intel
+SingleDriver, Intel SpeedStep, Intel StrataFlash, Intel Viiv, Intel
+vPro, Intel XScale, IPLink, Itanium, Itanium Inside, MCS, MMX, Oplus,
+OverDrive, PDCharm, Pentium, Pentium Inside, skoool, Sound Mark, The
+Journey Inside, VTune, Xeon, and Xeon Inside are trademarks of Intel
+Corporation in the U.S. and other countries.
+
+* Other names and brands may be claimed as the property of others.
+
+Copyright (C) 2000-2008, Intel Corporation.  All rights reserved.
+

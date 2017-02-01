@@ -1,0 +1,19 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH xerbla 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+xerbla \- Error handling routine called by BLAS, LAPACK, VML routines.
+.SH SYNOPSIS
+.PP
+\fBcall xerbla\fR( \fIsrname\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBsrname\fR
+.NL
+\fBCHARACTER*6\fR The name of the routine which called \fBxerbla\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. The position of the invalid parameter in the parameter list of the calling routine.

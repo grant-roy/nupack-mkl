@@ -1,0 +1,74 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH NewStream 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+NewStream \- Creates and initializes a random stream.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslnewstream\fR( \fIstream\fR, \fIbrng\fR, \fIseed\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslNewStream\fR( \fI&stream\fR, \fIbrng\fR, \fIseed\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBbrng\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Index of the basic generator to initialize the stream. 
+.PP
+.SB Name
+.br
+\h\'1\'\fBseed\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBunsigned int\fR
+.br
+.SB Description
+.br
+\h\'1\'Initial condition of the stream. In the case of a quasi-random number generator seed parameter is used to set the dimension. If the dimension is greater than the dimension that brng can support or is less than 1, then the dimension is assumed to be equal to 1.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(OUT)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr*\fR
+.br
+.SB Description
+.br
+\h\'1\'Stream state descriptor
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK\fR, \fBVSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulINVALID\(ulBRNG\(ulINDEX\fR
+.NL
+BRNG index is invalid.
+.TP 10
+\fBVSL\(ulERROR\(ulMEM\(ulFAILURE\fR
+.NL
+System cannot allocate memory for \fBstream\fR.

@@ -1,0 +1,249 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?trsna 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?trsna \- Estimates condition numbers for specified eigenvalues and right eigenvectors of an upper (quasi-) triangular matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall strsna\fR(\fIjob\fR, \fIhowmny\fR, \fIselect\fR, \fIn\fR, \fIt\fR, \fIldt\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIs\fR, \fIsep\fR, \fImm\fR, \fIm\fR, \fIwork\fR, \fIldwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dtrsna\fR(\fIjob\fR, \fIhowmny\fR, \fIselect\fR, \fIn\fR, \fIt\fR, \fIldt\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIs\fR, \fIsep\fR, \fImm\fR, \fIm\fR, \fIwork\fR, \fIldwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall ctrsna\fR(\fIjob\fR, \fIhowmny\fR, \fIselect\fR, \fIn\fR, \fIt\fR, \fIldt\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIs\fR, \fIsep\fR, \fImm\fR, \fIm\fR, \fIwork\fR, \fIldwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+\fBcall ztrsna\fR(\fIjob\fR, \fIhowmny\fR, \fIselect\fR, \fIn\fR, \fIt\fR, \fIldt\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIs\fR, \fIsep\fR, \fImm\fR, \fIm\fR, \fIwork\fR, \fIldwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall trsna\fR(\fIt\fR[, \fIs\fR] [,\fIsep\fR] [,\fIvl\fR] [,\fIvr\fR] [,\fIselect\fR] [,\fIm\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjob\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'E\'\fR or \fB\'V\'\fR or \fB\'B\'\fR. 
+.IP
+If \fIjob\fR = \fB\'E\'\fR, then condition numbers for eigenvalues only are computed. 
+.IP
+If \fIjob\fR = \fB\'V\'\fR, then condition numbers for eigenvectors only are computed. 
+.IP
+If \fIjob\fR = \fB\'B\'\fR, then condition numbers for both eigenvalues and eigenvectors are computed.
+.TP 10
+\fBhowmny\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'A\'\fR or \fB\'S\'\fR. 
+.IP
+If \fIhowmny\fR = \fB\'A\'\fR , then the condition numbers for all eigenpairs are computed. 
+.IP
+If \fIhowmny\fR = \fB\'S\'\fR , then condition numbers for selected eigenpairs (as specified by \fIselect\fR) are computed.
+.TP 10
+\fBselect\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max (1, \fIn\fR) if \fIhowmny\fR = \fB\'S\'\fR and at least 1 otherwise. 
+.IP
+Specifies the eigenpairs for which condition numbers are to be computed if \fIhowmny\fR= \fB\'S\'\fR.
+.IP
+\fIFor real flavors\fR:
+.IP
+To select condition numbers for the eigenpair corresponding to the real eigenvalue \fIlambda\fR(\fIj\fR), \fIselect\fR(\fIj\fR) must be set \fB.TRUE.\fR;
+.IP
+to select condition numbers for the eigenpair corresponding to a complex conjugate pair of eigenvalues \fIlambda\fR(\fIj\fR) and \fIlambda\fR(\fIj\fR+1), \fIselect\fR(\fIj\fR) and/or \fIselect\fR(\fIj\fR+1) must be set \fB.TRUE.\fR
+.IP
+\fIFor complex flavors\fR
+.IP
+To select condition numbers for the eigenpair corresponding to the eigenvalue \fIlambda\fR(\fIj\fR), \fIselect\fR(\fIj\fR) must be set \fB.TRUE.\fR\fIselect\fR is not referenced if \fIhowmny\fR = \fB\'A\'\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIT\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBt\fR, \fBvl\fR, \fBvr\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBstrsna\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdtrsna\fR
+.IP
+\fBCOMPLEX\fR for \fBctrsna\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBztrsna\fR. 
+.IP
+Arrays: 
+.IP
+\fIt\fR(\fIldt\fR,*) contains the \fIn\fR-by-\fIn\fR matrix \fIT\fR. 
+.IP
+The second dimension of \fIt\fR must be at least max(1, \fIn\fR).
+.IP
+\fIvl\fR(\fIldvl\fR,*) 
+.IP
+If \fIjob\fR = \fB\'E\'\fR or \fB\'B\'\fR, then \fIvl\fR must contain the left eigenvectors of \fIT\fR (or of any matrix \fIQ*T*Q\fR**\fIH\fR with \fIQ\fR unitary or orthogonal) corresponding to the eigenpairs specified by \fIhowmny\fR and \fIselect\fR. The eigenvectors must be stored in consecutive columns of \fIvl\fR, as returned by  or . 
+.IP
+The second dimension of \fIvl\fR must be at least max(1, \fImm\fR) if \fIjob\fR = \fB\'E\'\fR or \fB\'B\'\fR and at least 1 if \fIjob\fR = \fB\'V\'\fR. 
+.IP
+The array \fIvl\fR is not referenced if \fIjob\fR = \fB\'V\'\fR.
+.IP
+\fIvr\fR(\fIldvr\fR,*) 
+.IP
+If \fIjob\fR = \fB\'E\'\fR or \fB\'B\'\fR, then \fIvr\fR must contain the right eigenvectors of \fIT\fR (or of any matrix \fIQ*T*Q\fR**\fIH\fR with \fIQ\fR unitary or orthogonal) corresponding to the eigenpairs specified by \fIhowmny\fR and \fIselect\fR. The eigenvectors must be stored in consecutive columns of \fIvr\fR, as returned by  or . 
+.IP
+The second dimension of \fIvr\fR must be at least max(1, \fImm\fR) if \fIjob\fR = \fB\'E\'\fR or \fB\'B\'\fR and at least 1 if \fIjob\fR = \fB\'V\'\fR. 
+.IP
+The array \fIvr\fR is not referenced if \fIjob\fR = \fB\'V\'\fR.
+.IP
+\fIwork\fR is a workspace array, its dimension (\fIldwork\fR,\fIn\fR+6). 
+.IP
+The array \fIwork\fR is not referenced if \fIjob\fR = \fB\'E\'\fR.
+.TP 10
+\fBldt\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIt\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBldvl\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIvl\fR. 
+.IP
+If \fIjob\fR = \fB\'E\'\fR or \fB\'B\'\fR, \fIldvl\fR\(>= max(1,\fIn\fR). 
+.IP
+If \fIjob\fR = \fB\'V\'\fR, \fIldvl\fR\(>= 1.
+.TP 10
+\fBldvr\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIvr\fR. 
+.IP
+If \fIjob\fR = \fB\'E\'\fR or \fB\'B\'\fR, \fIldvr\fR\(>= max(1,\fIn\fR). 
+.IP
+If \fIjob\fR = \fB\'R\'\fR, \fIldvr\fR\(>= 1.
+.TP 10
+\fBmm\fR
+.NL
+\fBINTEGER\fR. The number of elements in the arrays \fIs\fR and \fIsep\fR, and the number of columns in \fIvl\fR and \fIvr\fR (if used). Must be at least \fIm\fR (the precise number required). 
+.IP
+If \fIhowmny\fR = \fB\'A\'\fR, \fIm\fR = \fIn\fR; 
+.IP
+if \fIhowmny\fR = \fB\'S\'\fR, \fIfor real flavors\fR\fIm\fR is obtained by counting 1 for each selected real eigenvalue and 2 for each selected complex conjugate pair of eigenvalues.
+.IP
+\fIfor complex flavors\fR\fIm\fR is the number of selected eigenpairs (see \fIselect\fR). Constraint: 
+.IP
+0 \(<=\fIm\fR\(<=\fIn\fR.
+.TP 10
+\fBldwork\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIwork\fR. 
+.IP
+If \fIjob\fR = \fB\'V\'\fR or \fB\'B\'\fR, \fIldwork\fR\(>= max(1,\fIn\fR). 
+.IP
+If \fIjob\fR = \fB\'E\'\fR, \fIldwork\fR\(>= 1.
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBctrsna\fR, \fBztrsna\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max (1, \fIn\fR).
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR for \fBstrsna\fR, \fBdtrsna\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max (1, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBs\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fImm\fR) if \fIjob\fR = \fB\'E\'\fR or \fB\'B\'\fR and at least 1 if \fIjob\fR = \fB\'V\'\fR. 
+.IP
+Contains the reciprocal condition numbers of the selected eigenvalues if \fIjob\fR = \fB\'E\'\fR or \fB\'B\'\fR, stored in consecutive elements of the array. Thus \fIs\fR(\fIj\fR), \fIsep\fR(\fIj\fR) and the \fIj\fR-th columns of \fIvl\fR and \fIvr\fR all correspond to the same eigenpair (but not in general the \fIj\fR th eigenpair unless all eigenpairs have been selected). 
+.IP
+\fIFor real flavors\fR: for a complex conjugate pair of eigenvalues, two consecutive elements of S are set to the same value. The array \fIs\fR is not referenced if \fIjob\fR = \fB\'V\'\fR.
+.TP 10
+\fBsep\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fImm\fR) if \fIjob\fR = \fB\'V\'\fR or \fB\'B\'\fR and at least 1 if \fIjob\fR = \fB\'E\'\fR. Contains the estimated reciprocal condition numbers of the selected right eigenvectors if \fIjob\fR = \fB\'V\'\fR or \fB\'B\'\fR, stored in consecutive elements of the array. 
+.IP
+\fIFor real flavors\fR: for a complex eigenvector, two consecutive elements of \fIsep\fR are set to the same value; if the eigenvalues cannot be reordered to compute \fIsep\fR(\fIj\fR), then \fIsep\fR(\fIj\fR) is set to zero; this can only occur when the true value would be very small anyway. The array \fIsep\fR is not referenced if \fIjob\fR = \fB\'E\'\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+\fIFor complex flavors\fR: the number of selected eigenpairs. 
+.IP
+If \fIhowmny\fR = \fB\'A\'\fR, \fIm\fR is set to \fIn\fR. 
+.IP
+\fIFor real flavors\fR: the number of elements of \fIs\fR and/or \fIsep\fR actually used to store the estimated condition numbers. 
+.IP
+If \fIhowmny\fR = \fB\'A\'\fR, \fIm\fR is set to \fIn\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBtrsna\fR interface are the following:
+.TP 10
+\fBt\fR
+.NL
+Holds the matrix \fIT\fR of size (\fIn,n\fR).
+.TP 10
+\fBs\fR
+.NL
+Holds the vector of length (\fImm\fR).
+.TP 10
+\fBsep\fR
+.NL
+Holds the vector of length (\fImm\fR).
+.TP 10
+\fBvl\fR
+.NL
+Holds the matrix \fIVL\fR of size (\fIn,mm\fR).
+.TP 10
+\fBvr\fR
+.NL
+Holds the matrix \fIVR\fR of size (\fIn,mm\fR).
+.TP 10
+\fBselect\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBjob\fR
+.NL
+Restored based on the presence of arguments \fIs\fR and \fBsep\fR as follows: 
+.IP
+\fIjob\fR = \fB\'B\'\fR, if both \fIs\fR and \fIsep\fR are present, 
+.IP
+\fIjob\fR = \fB\'E\'\fR, if \fIs\fR is present and \fIsep\fR omitted, 
+.IP
+\fIjob\fR = \fB\'V\'\fR, if \fIs\fR is omitted and \fIsep\fR present.
+.IP
+Note an error condition if both \fIs\fR and \fIsep\fR are omitted.
+.TP 10
+\fBhowmny\fR
+.NL
+Restored based on the presence of the argument \fIselect\fR as follows: 
+.IP
+\fIhowmny\fR = \fB\'S\'\fR, if \fIselect\fR is present, 
+.IP
+\fIhowmny\fR = \fB\'A\'\fR, if \fIselect\fR is omitted.
+.PP
+Note that the arguments \fIs\fR, \fIvl\fR, and \fIvr\fR must either be all present or all omitted. 
+.PP
+Otherwise, an error condition is observed.

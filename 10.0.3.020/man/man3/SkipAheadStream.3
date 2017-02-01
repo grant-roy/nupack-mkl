@@ -1,0 +1,65 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH SkipAheadStream 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+SkipAheadStream \- Initializes a stream using the block-splitting method.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslskipaheadstream\fR( \fIstream\fR, \fInskip\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslSkipAheadStream\fR( \fIstream\fR, \fInskip\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Descriptor of the stream to which block-splitting method is applied
+.br
+\h\'2\'C:\h\'7\'Pointer to the stream state structure to which block-splitting method is applied
+.PP
+.SB Name
+.br
+\h\'1\'\fBnskip\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER(KIND=8)\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBlong long\fR
+.br
+.SB Description
+.br
+\h\'1\'Number of skipped elements
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK\fR, \fBVSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+\fBstream\fR is a \fBNULL\fR pointer.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulSTREAM\fR
+.NL
+\fIstream\fR is not a valid random stream.
+.TP 10
+\fBVSL\(ulERROR\(ulSKIPAHEAD\(ulUNSUPPORTED\fR
+.NL
+BRNG does not support Skip-Ahead method.

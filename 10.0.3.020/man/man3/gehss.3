@@ -1,0 +1,69 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gehss 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gehss \- Solves a system of interval linear equations by interval Householder method.
+.SH SYNOPSIS
+.PP
+\fBcall \fR\fBsigehss\fR(\fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.PP
+\fBcall \fR\fBdigehss\fR(\fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBtrans\fR
+.NL
+\fBCHARACTER(1)\fR. Must be one of \fB\'N\'\fR, \fB\'T\'\fR, \fB\'C\'\fR, \fB\'n\'\fR, \fB\'t\'\fR, or \fB\'c\'\fR.
+.IP
+Indicates the form of the equations system:
+.IP
+If \fItrans\fR = \fB\'N\'\fR or \fB\'n\'\fR, then \fIA\fR**\fI\fR*\fIX\fR\fB = \fR \fIB\fR is solved for X.
+.IP
+If \fItrans\fR = \fB\'T\'\fR or \fB\'C\'\fR or \fB\'t\'\fRor \fB\'c\'\fR, then \fIA\fR**\fIT\fR*\fIX\fR\fB = \fR \fIB\fR is solved for \fIX\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of \fIA\fR, the number of rows in \fIB\fR (\fBn\fR \(>= 0).
+.TP 10
+\fBnrhs\fR
+.NL
+\fBINTEGER\fR. The number of right-hand sides (\fBnrhs\fR\(>= 0).
+.TP 10
+\fBa\fR, \fBb\fR
+.NL
+\fBREAL\fR for \fBsigehss\fR.
+.IP
+\fBDOUBLE PRECISION\fR for \fBdigehss\fR.
+.IP
+Arrays: \fIa\fR (\fIlda\fR,*), \fIb\fR (\fIldb\fR,*).
+.IP
+The array \fIa\fR contains the matrix \fIA\fR.
+.IP
+The array \fIb\fR contains the matrix \fIB\fR, whose columns are the right-hand sides for the systems of equations.
+.IP
+The second dimension of \fIa\fR must be at least max(1,\fIn\fR) and the second dimension of \fIb\fR must be at least max(1,\fInrhs\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR, \fIlda \fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of b, \fIldb\fR \(>= max(1, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBb\fR
+.NL
+Overwritten by an enclosure of the solution matrix \fIX\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR \(>= 0, the execution is not successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter has an illegal value.

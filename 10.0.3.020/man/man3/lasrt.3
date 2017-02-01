@@ -1,0 +1,51 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasrt 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasrt \- Sorts numbers in increasing or decreasing order.
+.SH SYNOPSIS
+.PP
+\fBcall slasrt\fR( \fIid\fR, \fIn\fR, \fId\fR, \fIinfo\fR)
+.PP
+\fBcall dlasrt\fR( \fIid\fR, \fIn\fR, \fId\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBid\fR
+.NL
+\fBCHARACTER*1\fR.
+.IP
+= \fB\'I\'\fR: sort \fId\fR in increasing order;
+.IP
+= \fB\'D\'\fR: sort \fId\fR in decreasing order.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The length of the array \fId\fR.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasrt\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasrt\fR. 
+.IP
+On entry, the array to be sorted.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+On exit, \fId\fR has been sorted into increasing order 
+.IP
+(\fId\fR(1) \(<= ... \(<=  \fId\fR(\fIn\fR)) or into decreasing order
+.IP
+(\fId\fR(1) \(>= ... \(>=\fId\fR(\fIn\fR)), depending on \fIid\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0:  successful exit
+.IP
+< 0:  if \fIinfo\fR = -i, the \fIi\fR-th argument had an illegal value.

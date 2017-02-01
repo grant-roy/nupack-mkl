@@ -1,0 +1,89 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larrk 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larrk \- Computes one eigenvalue of a symmetric tridiagonalmatrix \fIT\fR to suitable accuracy.
+.SH SYNOPSIS
+.PP
+\fBcall slarrk\fR( \fIn\fR, \fIiw\fR, \fIgl\fR, \fIgu\fR, \fId\fR, \fIe2\fR, \fIpivmin\fR, \fIreltol\fR, \fIw\fR, \fIwerr\fR, \fIinfo\fR)
+.PP
+\fBcall dlarrk\fR( \fIn\fR, \fIiw\fR, \fIgl\fR, \fIgu\fR, \fId\fR, \fIe2\fR, \fIpivmin\fR, \fIreltol\fR, \fIw\fR, \fIwerr\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIT\fR. (\fIn\fR\(>= 1).
+.TP 10
+\fBiw\fR
+.NL
+\fBINTEGER\fR. The index of the eigenvalue to be returned.
+.TP 10
+\fBgl\fR, \fBgu\fR
+.NL
+\fBREAL\fR for \fBslarrk\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrk\fRAn upper and a lower bound on the eigenvalue.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslarrk\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrk\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+Contains \fBn\fR diagonal elements of the matrix \fIT\fR.
+.TP 10
+\fBe2\fR
+.NL
+\fBREAL\fR for \fBslarrk\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrk\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1).
+.IP
+Contains (\fBn\fR-1) squared off-diagonal elements of the \fIT\fR.
+.TP 10
+\fBpivmin\fR
+.NL
+\fBREAL\fR for \fBslarrk\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrk\fR
+.IP
+The minimum pivot in the Sturm sequence for the matrix  \fIT\fR.
+.TP 10
+\fBreltol\fR
+.NL
+\fBREAL\fR for \fBslarrk\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrk\fR
+.IP
+The minimum relative width of an interval.  When an interval is narrower than \fBreltol\fR times the larger (in magnitude) endpoint, then it is considered to be sufficiently small, that is converged. Note: this should always be at least \fIradix\fR*\fImachine epsilon\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBw\fR
+.NL
+\fBREAL\fR for \fBslarrk\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrk\fR
+.IP
+Contains the eigenvalue approximation.
+.TP 10
+\fBwerr\fR
+.NL
+\fBREAL\fR for \fBslarrk\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrk\fR
+.IP
+Contains the error bound on the corresponding eigenvalue approximation in \fBw\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0:       Eigenvalue converges
+.IP
+= -1:      Eigenvalue does not converge

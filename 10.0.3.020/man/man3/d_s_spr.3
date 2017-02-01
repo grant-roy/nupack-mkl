@@ -1,0 +1,93 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?spr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?spr \- Performs a rank-1 update of a symmetric packed matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sspr\fR(\fIuplo\fR, \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fIap\fR)
+.PP
+\fBcall dspr\fR(\fIuplo\fR, \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fIap\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall spr\fR(\fIa\fR, \fIx\fR[,\fIuplo\fR] [, \fIalpha\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether the upper or lower triangular part of the matrix  \fIA\fR is supplied in the packed array \fBap\fR.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, then the upper triangular part of the matrix  \fIA\fR is supplied in the packed array \fBap\fR .
+.IP
+If \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, then the low triangular part of the matrix  \fIA\fR is supplied in the packed array \fBap\fR .
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Specifies the order of the matrix \fIA\fR. The value of \fIn\fR must be at least zero.
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL\fR for \fBsspr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdspr\fR
+.IP
+Specifies the scalar \fIalpha\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsspr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdspr\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIn\fR - 1)*abs(\fIincx\fR)). Before entry, the incremented array \fIx\fR must contain the \fIn\fR-element vector \fIx\fR.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. Specifies the increment for the elements of \fIx\fR.
+.IP
+The value of \fIincx\fR must not be zero.
+.TP 10
+\fBap\fR
+.NL
+\fBREAL\fR for \fBsspr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdspr\fR
+.IP
+Array, \fBDIMENSION\fR at least ((\fIn\fR*(\fIn\fR + 1))/2). Before entry with \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, the array \fIap\fR must contain the upper triangular part of the symmetric matrix packed sequentially, column-by-column, so that \fIap\fR(1) contains \fIa\fR(1,1), \fIap\fR(2) and \fIap\fR(3) contain \fIa\fR(1,2) and \fIa\fR(2,2) respectively, and so on. 
+.IP
+Before entry with \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, the array \fIap\fR must contain the lower triangular part of the symmetric matrix packed sequentially, column-by-column, so that  \fIap\fR(1) contains \fIa\fR(1,1), \fIap\fR(2) and \fIap\fR(3) contain \fIa\fR(2,1) and \fIa\fR(3,1) respectively, and so on. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBap\fR
+.NL
+With \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, overwritten by the upper triangular part of the updated matrix.
+.IP
+With \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, overwritten by the lower triangular part of the updated matrix.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBspr\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the array \fIa\fR of size (\fIn*(n+1)/2\fR).
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.
+.TP 10
+\fBalpha\fR
+.NL
+The default value is 1.

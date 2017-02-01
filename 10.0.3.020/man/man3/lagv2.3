@@ -1,0 +1,75 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lagv2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lagv2 \- Computes the Generalized Schur factorization of a real 2-by-2 matrix pencil (\fIA\fR,\fIB\fR) where B is upper triangular. 
+.SH SYNOPSIS
+.PP
+\fBcall slagv2\fR( \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIcsl\fR, \fIsnl\fR, \fIcsr\fR, \fIsnr\fR)
+.PP
+\fBcall dlagv2\fR( \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIcsl\fR, \fIsnl\fR, \fIcsr\fR, \fIsnr\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR
+.NL
+\fBREAL\fR for \fBslagv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlagv2\fR
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,\fB2)\fR contains the 2-by-2 matrix \fIA\fR; 
+.IP
+\fIb\fR(\fIldb\fR,\fB2)\fR contains the upper triangular 2-by-2 matrix \fIB\fR. 
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIa\fR; 
+.IP
+\fIlda\fR\(>= 2.
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIb\fR; 
+.IP
+\fIldb\fR\(>= 2.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, \fIa\fR is overwritten by the ``\fIA\fR-part'' of the generalized Schur form.
+.TP 10
+\fBb\fR
+.NL
+On exit, \fIb\fR is overwritten by the ``\fIB\fR-part'' of the generalized Schur form.
+.TP 10
+\fBalphar\fR, \fBalphai\fR, \fBbeta\fR
+.NL
+\fBREAL\fR for \fBslagv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlagv2\fR.
+.IP
+Arrays, dimension (2) each.
+.IP
+(\fIalphar\fR(k) + \fIi\fR*\fIalphai\fR(k))/\fIbeta\fR(k) are the eigenvalues of the pencil (\fIA\fR,\fIB\fR), k=1,2 and \fIi\fR = sqrt(-1). 
+.IP
+Note that \fIbeta\fR(k) may be zero.
+.TP 10
+\fBcsl\fR, \fBsnl\fR
+.NL
+\fBREAL\fR for \fBslagv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlagv2\fR
+.IP
+The cosine and sine of the left rotation matrix, respectively.
+.TP 10
+\fBcsr\fR, \fBsnr\fR
+.NL
+\fBREAL\fR for \fBslagv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlagv2\fR
+.IP
+The cosine and sine of the right rotation matrix, respectively.

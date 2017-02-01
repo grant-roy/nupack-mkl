@@ -1,0 +1,151 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gglse 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gglse \- Solves the linear equality-constrained least squares problem using a generalized RQ factorization.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgglse\fR(\fIm\fR, \fIn\fR, \fIp\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIc\fR, \fId\fR, \fIx\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall dgglse\fR(\fIm\fR, \fIn\fR, \fIp\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIc\fR, \fId\fR, \fIx\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall cgglse\fR(\fIm\fR, \fIn\fR, \fIp\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIc\fR, \fId\fR, \fIx\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall zgglse\fR(\fIm\fR, \fIn\fR, \fIp\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIc\fR, \fId\fR, \fIx\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall gglse\fR(\fIa\fR, \fIb\fR, \fIc\fR, \fId\fR, \fIx\fR[,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIA\fR (\fIm\fR\(>= 0).
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrices \fIA\fR and \fIB\fR (\fIn\fR\(>= 0).
+.TP 10
+\fBp\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIB\fR
+.IP
+(0 \(<=\fIp\fR\(<=\fIn\fR\(<=\fIm\fR+\fIp\fR).
+.TP 10
+\fBa\fR, \fBb\fR, \fBc\fR, \fBd\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsgglse\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgglse\fR
+.IP
+\fBCOMPLEX\fR for \fBcgglse\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgglse\fR.
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) contains the \fIm\fR-by-\fIn\fR matrix \fIA\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIb\fR(\fIldb\fR,*) contains the \fIp\fR-by-\fIn\fR\fI\fRmatrix \fIB\fR. 
+.IP
+The second dimension of \fIb\fR must be at least max(1, \fIn\fR).
+.IP
+\fIc\fR(*\fI\fR), dimension at least max(1, \fIm\fR), contains the right hand side vector for the least squares part of the LSE problem. 
+.IP
+\fId\fR(*\fI\fR), dimension at least max(1, \fIp\fR), contains the right hand side vector for the constrained equation. 
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIm\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIb\fR; at least max(1, \fIp\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. The size of the \fIwork\fR array; 
+.IP
+\fIlwork\fR\(>= max(1, \fIm\fR+\fIn\fR+\fIp\fR). 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsgglse\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgglse\fR
+.IP
+\fBCOMPLEX\fR for \fBcgglse\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgglse\fR.	
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). On exit, contains the solution of the LSE problem.
+.TP 10
+\fBa\fR
+.NL
+On exit, the elements on and above the diagonal of the array contain the min(\fBm\fR,\fBn\fR)-by-\fBn\fR upper trapezoidal matrix \fIT\fR.
+.TP 10
+\fBb\fR
+.NL
+On exit, the upper triangle of the subarray \fBb\fR(1:\fBp\fR, \fBn\fR-\fBp\fR+1:\fBn\fR) contains the \fBp\fR-by-\fBp\fR upper triangular matrix \fIR\fR.
+.TP 10
+\fBd\fR
+.NL
+On exit, \fBd\fR is destroyed.
+.TP 10
+\fBc\fR
+.NL
+On exit, the residual sum-of-squares for the solution is given by the sum of squares of elements \fIn\fR-\fIp\fR+1 to \fIm\fR of vector \fIc\fR.
+.TP 10
+\fBwork\fR(1)
+.NL
+If \fIinfo\fR = 0, on exit, \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. Use this \fIlwork\fR for subsequent runs.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.IP
+If \fIinfo\fR = 1, the upper triangular factor \fIR\fR associated with \fIB\fR in the generalized RQ factorization of the pair (\fIB\fR, \fIA\fR) is singular, so that rank(\fIB\fR) < \fIP\fR; the least squares solution could not be computed.
+.IP
+If \fIinfo\fR = 2, the (\fBn\fR-\fBp\fR)-by-(\fBn\fR-\fBp\fR) part of the upper trapezoidal factor \fIT\fR associated with \fIA\fR in the generalized RQ factorization of the pair (\fIB\fR, \fIA\fR) is singular, so that 
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBgglse\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIm,n\fR).
+.TP 10
+\fBb\fR
+.NL
+Holds the matrix \fIB\fR of size (\fIp,n\fR).
+.TP 10
+\fBc\fR
+.NL
+Holds the vector of length (\fIm\fR).
+.TP 10
+\fBd\fR
+.NL
+Holds the vector of length (\fIp\fR).
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fIn\fR).

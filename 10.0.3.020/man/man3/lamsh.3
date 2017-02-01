@@ -1,0 +1,95 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lamsh 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lamsh \- Sends multiple shifts through a small (single node) matrix to maximize the number of bulges that can be sent through.
+.SH SYNOPSIS
+.PP
+\fBcall slamsh\fR(\fIs\fR, \fIlds\fR, \fInbulge\fR, \fIjblk\fR, \fIh\fR, \fIldh\fR, \fIn\fR, \fIulp\fR)
+.PP
+\fBcall dlamsh\fR(\fIs\fR, \fIlds\fR, \fInbulge\fR, \fIjblk\fR, \fIh\fR, \fIldh\fR, \fIn\fR, \fIulp\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBs\fR
+.NL
+(local) 
+.IP
+\fBINTEGER\fR. \fBREAL\fR for \fBslamsh\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamsh\fR
+.IP
+Array, \fBDIMENSION\fR (\fIlds\fR,*). 
+.IP
+On entry, the matrix of shifts. Only the 2x2 diagonal of \fIs\fR is referenced. It is assumed that \fIs\fR has \fIjblk\fR double shifts (size 2).
+.TP 10
+\fBlds\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the leading dimension of \fIS\fR; unchanged on exit. 1<\fInbulge\fR \(<=\fI jblk \fR\(<= \fIlds\fR/2.
+.TP 10
+\fBnbulge\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the number of bulges to send through \fIh\fR (>1). \fInbulge\fR should be less than the maximum determined (\fIjblk\fR). 1<\fInbulge \fR\(<=\fI jblk\fR \(<=\fI lds\fR/2.
+.TP 10
+\fBjblk\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the leading dimension of \fIS\fR; unchanged on exit.
+.TP 10
+\fBh\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+\fBREAL\fR for \fBslamsh\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamsh\fR
+.IP
+Array, \fBDIMENSION\fR (\fIlds\fR, \fIn\fR). 
+.IP
+On entry, the local matrix to apply the shifts on.
+.IP
+\fIh\fR should be aligned so that the starting row is 2.
+.TP 10
+\fBldh\fR
+.NL
+(local) 
+.IP
+\fBINTEGER\fR. 
+.IP
+On entry, the leading dimension of \fIH\fR; unchanged on exit.
+.TP 10
+\fBn\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the size of \fIH\fR. If all the bulges are expected to go through, \fIn\fR should be at least 4\fInbulge\fR+2. Otherwise, \fInbulge\fR may be reduced by this routine.
+.TP 10
+\fBulp\fR
+.NL
+(local) 
+.IP
+\fBREAL\fR for \fBslamsh\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamsh\fR
+.IP
+On entry, machine precision. Unchanged on exit.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBs\fR
+.NL
+On exit, the data is rearranged in the best order for applying.
+.TP 10
+\fBnbulge\fR
+.NL
+On exit, the maximum number of bulges that can be sent through.
+.TP 10
+\fBh\fR
+.NL
+On exit, the data is destroyed.

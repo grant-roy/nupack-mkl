@@ -1,0 +1,70 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?sdot 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?sdot \- Computes a vector-vector dot product with extended precision.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fIres\fR= \fBsdsdot\fR(\fIn\fR, \fIsb\fR, \fIsx\fR, \fIincx\fR, \fIsy\fR, \fIincy\fR)
+.PP
+\fIres\fR= \fBdsdot\fR(\fIn\fR, \fIsx\fR, \fIincx\fR, \fIsy\fR, \fIincy\fR)
+.PP
+.B Fortran 95
+.PP
+\fIres\fR= \fBsdot\fR(\fIsx\fR, \fIsy\fR)
+.PP
+\fIres\fR= \fBsdot\fR(\fIsx\fR, \fIsy\fR, \fIsb\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.  Specifies the number of elements in the input vectors \fIsx\fR and \fIsy\fR. 
+.TP 10
+\fBsb\fR
+.NL
+\fBREAL\fR. Single precision scalar to be added to inner product (for the function \fBsdsdot\fR only). 
+.TP 10
+\fBsx\fR, \fBsy\fR
+.NL
+\fBREAL\fR.
+.IP
+Arrays, \fBDIMENSION\fR at least (1+(\fIn\fR -1)*abs(\fIincx\fR)) and (1+(\fIn\fR-1)*abs(\fIincy\fR)), respectively. Contain the input single precision vectors.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR.  Specifies the increment for the elements of \fIsx\fR.
+.TP 10
+\fBincy\fR
+.NL
+\fBINTEGER\fR.  Specifies the increment for the elements of \fIsy\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBres\fR
+.NL
+\fBREAL\fR for \fBsdsdot\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsdot\fR
+.IP
+Contains the result of the dot product of \fIsx\fR and \fIsy\fR (with \fIsb\fR added for \fBsdsdot\fR), if \fIn\fR is positive. Otherwise, \fIres\fR contains \fIsb\fR for \fBsdsdot\fR and 0 for \fBdsdot\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBsdot\fR interface are the following:
+.TP 10
+\fBsx\fR
+.NL
+Holds the vector of length(\fIn\fR).
+.TP 10
+\fBsy\fR
+.NL
+Holds the vector of length(\fIn\fR).
+.PP
+.B NOTE:
+Note that scalar parameter \fBsb\fR is declared as a required parameter in Fortran 95 interface for the function \fBsdot\fR to distinguish between function flavors that output final result in different precision. 

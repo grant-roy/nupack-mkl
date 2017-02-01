@@ -1,0 +1,123 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lansy 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lansy \- Returns the value of the 1-norm, Frobenius norm, infinity-norm, or the largest absolute value of any element, of a real symmetric or a complex Hermitian matrix.
+.SH SYNOPSIS
+.PP
+\fIval\fR= \fBpslansy\fR(\fInorm\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBpdlansy\fR(\fInorm\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBpclansy\fR(\fInorm\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBpzlansy\fR(\fInorm\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBpclanhe\fR(\fInorm\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBpzlanhe\fR(\fInorm\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnorm\fR
+.NL
+(global) \fBCHARACTER\fR.  Specifies what value is returned by the routine:
+.IP
+= \fB\'M\'\fR or \fB\'m\': \fR\fIval\fR = \fBmax\fR(\fBabs\fR(\fIA\fR(ij))), largest absolute value  of the matrix \fIA\fR, it s not a matrix norm.
+.IP
+= \fB\'1\'\fR or \fB\'O\'\fR or \fB\'o\': \fR\fIval\fR = \fBnorm1\fR(\fIA\fR), 1-norm of the matrix \fIA\fR (maximum column sum),
+.IP
+= \fB\'I\'\fR or \fB\'i\': \fR\fIval\fR = \fBnormI\fR(\fIA\fR), infinity norm of the matrix \fIA\fR (maximum row sum),
+.IP
+= \fB\'F\'\fR, \fB\'f\'\fR, \fB\'E\'\fR  or \fB\'e\': \fR\fIval\fR = \fBnormF\fR(\fIA\fR), Frobenius norm of the matrix \fIA\fR (square root of sum of squares).
+.TP 10
+\fBuplo\fR
+.NL
+(global) \fBCHARACTER\fR. Specifies whether the upper or lower triangular part of the  symmetric matrix sub(\fIA\fR) is to be referenced.
+.IP
+= \fB\'U\'\fR:  Upper triangular part of sub(\fIA\fR) is referenced,
+.IP
+= \fB\'L\'\fR:  Lower triangular part of sub(\fIA\fR) is referenced.
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of columns to be operated on i.e the number of columns of the distributed submatrix sub(\fIA\fR). When \fIn\fR = 0, \fBp?lansy\fR is set to zero. \fIn\fR \(>= 0.
+.TP 10
+\fBa\fR
+.NL
+(local). 
+.IP
+\fBReal\fR for \fBpslansy\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlansy\fR
+.IP
+\fBCOMPLEX\fR for \fBpclansy\fR, \fBpclanhe\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlansy\fR, \fBpzlanhe\fR. 
+.IP
+Pointer into the local memory  to an array of \fBDIMENSION\fR (\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1)) containing the local pieces of the distributed matrix sub(\fIA\fR). 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the leading \fIn\fR-by-\fIn\fR upper triangular part of sub(\fIA\fR) contains the upper triangular matrix whose norm is to be computed, and the strictly lower triangular part of this matrix is not referenced.  If \fIuplo\fR = \fB\'L\'\fR, the leading \fIn\fR-by-\fIn\fR lower triangular part of sub(\fIA\fR) contains the lower triangular matrix whose norm is to be computed, and the  strictly upper triangular part of sub(\fIA\fR) is not referenced.
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIA\fR indicating the first row and the first column of the submatrix sub(\fIA\fR), respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBwork\fR
+.NL
+(local). 
+.IP
+\fBReal\fR for \fBpslansy\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlansy\fR
+.IP
+\fBCOMPLEX\fR for \fBpclansy\fR, \fBpclanhe\fR\fB\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlansy\fR, \fBpzlanhe\fR. 
+.IP
+Array \fBDIMENSION\fR (\fIlwork\fR).
+.IP
+\fIlwork\fR \(>= 0 if \fInorm\fR = \fB\'M\'\fR or \fB\'m\'\fR (not referenced), 
+.IP
+2*\fInq\fR0+\fInp\fR0+\fIldw\fR if \fInorm\fR = \'1\', \fB\'O\'\fR or \fB\'o\'\fR, \fB\'I\'\fR or \fB\'i\'\fR,
+.IP
+where \fIldw\fR is given by:
+.IP
+if( \fInprow\fR.\fIne\fR.\fInpcol\fR ) then
+.IP
+\fIldw\fR = \fImb\(ula\fR*ceil(ceil(\fInp\fR0/\fImb\(ula\fR)/(\fIlcm\fR/\fInprow\fR))
+.IP
+else
+.IP
+\fIldw\fR = 0 
+.IP
+end if
+.IP
+0 if \fInorm\fR = \fB\'F\'\fR, \fB\'f\'\fR, \fB\'E\'\fR or \fB\'e\'\fR (not referenced),
+.IP
+where \fIlcm\fR is the least common multiple of \fInprow\fR and \fInpcol\fR,\fI lcm\fR = ilcm( \fInprow\fR, \fInpcol\fR ) and \fBceil\fR denotes the ceiling operation (\fBiceil\fR).
+.IP
+\fIiroffa\fR = \fBmod\fR(\fIia\fR-1, \fImb\(ula\fR ), \fIicoffa\fR = \fBmod\fR( \fIja\fR-1, \fInb\(ula\fR),
+.IP
+\fIiarow\fR = \fBindxg2p\fR(\fIia\fR, \fImb\(ula\fR, \fImyrow\fR, \fIrsrc\(ula\fR, \fInprow\fR),
+.IP
+\fIiacol\fR = \fBindxg2p\fR(\fIja\fR, \fInb\(ula\fR, \fImycol\fR, \fIcsrc\(ula\fR, \fInpcol\fR),
+.IP
+\fImp\fR0 = \fBnumroc\fR(\fIm\fR+\fIiroffa\fR, \fImb\(ula\fR, \fImyrow\fR, \fIiarow\fR, \fInprow\fR),
+.IP
+\fInq\fR0 = \fBnumroc\fR(\fIn\fR+\fIicoffa\fR, \fInb\(ula\fR, \fImycol\fR, \fIiacol\fR, \fInpcol\fR),
+.IP
+\fBindxg2p\fR and \fBnumroc\fR are ScaLAPACK tool functions; \fImyrow\fR, \fImycol\fR, \fInprow\fR, and \fInpcol\fR can be determined by calling the subroutine \fBblacs\(ulgridinfo\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBval\fR
+.NL
+The value returned by the routine.

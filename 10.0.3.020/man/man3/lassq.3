@@ -1,0 +1,69 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lassq 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lassq \- Updates a sum of squares represented in scaled form.
+.SH SYNOPSIS
+.PP
+\fBcall slassq\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIscale\fR, \fIsumsq\fR)
+.PP
+\fBcall dlassq\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIscale\fR, \fIsumsq\fR)
+.PP
+\fBcall classq\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIscale\fR, \fIsumsq\fR)
+.PP
+\fBcall zlassq\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIscale\fR, \fIsumsq\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of elements to be used from the vector \fIx\fR. 
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBslassq\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlassq\fR
+.IP
+\fBCOMPLEX\fR for \fBclassq\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlassq\fR.
+.IP
+The vector for which a scaled sum of squares is computed: \fIx\fR(\fIi\fR) = \fIx\fR(1+(\fIi\fR-1)*\fIincx\fR), 1 \(<= \fIi\fR \(<= \fIn\fR.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. The increment between successive values of the vector \fIx\fR. \fIincx\fR > 0.
+.TP 10
+\fBscale\fR
+.NL
+\fBREAL\fR for \fBslassq\fR/\fBclassq\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlassq\fR/\fBzlassq\fR.
+.IP
+On entry, the value \fIscale\fR in the equation above.
+.TP 10
+\fBsumsq\fR
+.NL
+\fBREAL\fR for \fBslassq\fR/\fBclassq\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlassq\fR/\fBzlassq\fR.
+.IP
+On entry, the value \fIsumsq\fR in the equation above.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBscale\fR
+.NL
+On exit, \fIscale\fR is overwritten with \fIscl\fR, the scaling factor for the sum of squares.
+.TP 10
+\fBsumsq\fR
+.NL
+For real flavors: 
+.IP
+On exit, \fIsumsq\fR is overwritten with the value \fIsmsq\fR in the equation above.
+.IP
+For complex flavors: 
+.IP
+On exit, \fIsumsq\fR is overwritten with the value \fIssq\fR in the equation above.

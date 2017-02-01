@@ -1,0 +1,131 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH NewTask 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+NewTask \- Creates a new convolution or correlation task descriptor for multidimensional case.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslsconvnewtask\fR(\fItask\fR, \fImode\fR, \fIdims\fR, \fIxshape\fR, \fIyshape\fR, \fIzshape\fR)
+.PP
+\fIstatus\fR= \fBvsldconvnewtask\fR(\fItask\fR, \fImode\fR, \fIdims\fR, \fIxshape\fR, \fIyshape\fR, \fIzshape\fR)
+.PP
+\fIstatus\fR= \fBvslscorrnewtask\fR(\fItask\fR, \fImode\fR, \fIdims\fR, \fIxshape\fR, \fIyshape\fR, \fIzshape\fR)
+.PP
+\fIstatus\fR= \fBvsldcorrnewtask\fR(\fItask\fR, \fImode\fR, \fIdims\fR, \fIxshape\fR, \fIyshape\fR, \fIzshape\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslsConvNewTask\fR(\fItask\fR, \fImode\fR, \fIdims\fR, \fIxshape\fR, \fIyshape\fR, \fIzshape\fR);
+.PP
+\fIstatus\fR= \fBvsldConvNewTask\fR(\fItask\fR, \fImode\fR, \fIdims\fR, \fIxshape\fR, \fIyshape\fR, \fIzshape\fR);
+.PP
+\fIstatus\fR= \fBvslsCorrNewTask\fR(\fItask\fR, \fImode\fR, \fIdims\fR, \fIxshape\fR, \fIyshape\fR, \fIzshape\fR);
+.PP
+\fIstatus\fR= \fBvsldCorrNewTask\fR(\fItask\fR, \fImode\fR, \fIdims\fR, \fIxshape\fR, \fIyshape\fR, \fIzshape\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBmode\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies whether convolution/correlation calculation must be performed by using a direct algorithm or through Fourier transform of the input data. 
+.PP
+.SB Name
+.br
+\h\'1\'\fBdims\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Rank of user data. Specifies number of dimensions for the input and output arrays \fIx\fR, \fIy\fR, and \fIz\fR used during the execution stage. Must be in the range from 1 to 7. The value is explicitly assigned by the constructor.
+.PP
+.SB Name
+.br
+\h\'1\'\fBxshape\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER, DIMENSION(*)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint[]\fR
+.br
+.SB Description
+.br
+\h\'1\'Defines the shape of the input data for the source array \fIx\fR.  
+.PP
+.SB Name
+.br
+\h\'1\'\fByshape\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER, DIMENSION(*)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint[]\fR
+.br
+.SB Description
+.br
+\h\'1\'Defines the shape of the input data for the source array \fIy\fR. 
+.PP
+.SB Name
+.br
+\h\'1\'\fBzshape\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER, DIMENSION(*)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint[]\fR
+.br
+.SB Description
+.br
+\h\'1\'Defines the shape of the output data to be stored in array \fIz\fR.  
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBtask\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulCONV\(ulTASK)\fR for \fBvslsconvnewtask\fR, \fBvsldconvnewtask\fR
+.br
+\h\'11\'\fBTYPE(VSL\(ulCORR\(ulTASK)\fR for \fBvslscorrnewtask\fR, \fBvsldcorrnewtask\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLConvTaskPtr*\fR for \fBvslsConvNewTask\fR, \fBvsldConvNewTask\fR
+.br
+\h\'11\'\fBVSLCorrTaskPtr*\fR for \fBvslsCorrNewTask\fR, \fBvsldCorrNewTask\fR
+.br
+.SB Description
+.br
+\h\'1\'Pointer to the task descriptor if created successfully or \fBNULL\fR pointer otherwise.
+.PP
+.SB Name
+.br
+\h\'1\'\fBstatus\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Set to \fBVSL\(ulSTATUS\(ulOK\fR if the task is created successfully or set to non-zero error code otherwise.

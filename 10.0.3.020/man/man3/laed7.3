@@ -1,0 +1,199 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laed7 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laed7 \- Used by \fB?stedc\fR. Computes the updated eigensystem of a diagonal matrix after modification by a rank-one symmetric matrix. Used when the original matrix is dense.
+.SH SYNOPSIS
+.PP
+\fBcall slaed7\fR( \fIicompq\fR, \fIn\fR, \fIqsiz\fR, \fItlvls\fR, \fIcurlvl\fR, \fIcurpbm\fR, \fId\fR, \fIq\fR, \fIldq\fR, \fIindxq\fR, \fIrho\fR, \fIcutpnt\fR, \fIqstore\fR, \fIqptr\fR, \fIprmptr\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIgivnum\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlaed7\fR( \fIicompq\fR, \fIn\fR, \fIqsiz\fR, \fItlvls\fR, \fIcurlvl\fR, \fIcurpbm\fR, \fId\fR, \fIq\fR, \fIldq\fR, \fIindxq\fR, \fIrho\fR, \fIcutpnt\fR, \fIqstore\fR, \fIqptr\fR, \fIprmptr\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIgivnum\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall claed7\fR( \fIn\fR, \fIcutpnt\fR, \fIqsiz\fR, \fItlvls\fR, \fIcurlvl\fR, \fIcurpbm\fR, \fId\fR, \fIq\fR, \fIldq\fR, \fIrho\fR, \fIindxq\fR, \fIqstore\fR, \fIqptr\fR, \fIprmptr\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIgivnum\fR, \fIwork\fR, \fIrwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall zlaed7\fR( \fIn\fR, \fIcutpnt\fR, \fIqsiz\fR, \fItlvls\fR, \fIcurlvl\fR, \fIcurpbm\fR, \fId\fR, \fIq\fR, \fIldq\fR, \fIrho\fR, \fIindxq\fR, \fIqstore\fR, \fIqptr\fR, \fIprmptr\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIgivnum\fR, \fIwork\fR, \fIrwork\fR, \fIiwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicompq\fR
+.NL
+\fBINTEGER\fR. Used with real flavors only.
+.IP
+If \fIicompq\fR = 0, compute eigenvalues only. 
+.IP
+If \fIicompq\fR = 1, compute eigenvectors of original dense symmetric matrix also. On entry, the array \fIq\fR must contain the orthogonal matrix used to reduce the original matrix to tridiagonal form.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The dimension of the symmetric tridiagonal matrix (\fIn\fR\(>= 0). 
+.TP 10
+\fBcutpnt\fR
+.NL
+\fBINTEGER\fR. The location of the last eigenvalue in the leading sub-matrix. min(1,\fIn\fR) \(<= \fIcutpnt\fR \(<= \fIn\fR .
+.TP 10
+\fBqsiz\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the orthogonal/unitary matrix used to reduce the full matrix to tridiagonal form; \fIqsiz\fR\(>=\fIn\fR  (for real flavors, \fIqsiz\fR\(>=\fIn\fR if \fIicompq\fR = 1).
+.TP 10
+\fBtlvls\fR
+.NL
+\fBINTEGER\fR. The total number of merging levels in the overall divide and conquer tree.
+.TP 10
+\fBcurlvl\fR
+.NL
+\fBINTEGER\fR. The current level in the overall merge routine, 0 \(<= \fIcurlvl\fR \(<= \fItlvls\fR .
+.TP 10
+\fBcurpbm\fR
+.NL
+\fBINTEGER\fR. The current problem in the current level in the overall merge routine (counting from upper left to lower right).
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslaed7\fR/\fBclaed7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed7\fR/\fBzlaed7\fR. 
+.IP
+Array, dimension at least max(1, \fIn\fR). 
+.IP
+Array \fId\fR(*) contains the eigenvalues of the rank-1-perturbed matrix. 
+.TP 10
+\fBq\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBslaed7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed7\fR
+.IP
+\fBCOMPLEX\fR for \fBclaed7\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaed7\fR.
+.IP
+Arrays: 
+.IP
+\fIq\fR(\fIldq\fR, *) contains the the eigenvectors of the rank-1-perturbed matrix. The second dimension of \fIq\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR(\fI*\fR) is a workspace array, dimension at least (3\fIn\fR+\fIqsiz\fR*\fIn\fR) for real flavors and at least (\fBqsiz\fR*\fIn\fR) for complex flavors.
+.TP 10
+\fBldq\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIq\fR; \fIldq\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBindxq\fR
+.NL
+\fBINTEGER\fR. Array, dimension (\fIn\fR).
+.IP
+Contains the permutation that separately sorts the two sub-problems in \fId\fR into ascending order.
+.TP 10
+\fBrho\fR
+.NL
+\fBREAL\fR for \fBslaed7\fR /\fBclaed7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed7\fR/\fBzlaed7\fR. 
+.IP
+The subdiagonal element used to create the rank-1 modification.
+.TP 10
+\fBqstore\fR
+.NL
+\fBREAL\fR for \fBslaed7\fR/\fBclaed7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed7\fR/\fBzlaed7\fR.
+.IP
+Array, dimension (\fIn\fR**2+1). Serves also as output parameter. 
+.IP
+Stores eigenvectors of submatrices encountered during divide and conquer, packed together. \fIqptr\fR points to beginning of the submatrices.
+.TP 10
+\fBqptr\fR
+.NL
+\fBINTEGER\fR. Array, dimension (\fIn\fR+2). Serves also as output parameter. List of indices pointing to beginning of submatrices stored in \fIqstore\fR. The submatrices are numbered starting at the bottom left of the divide and conquer tree, from left to right and bottom to top.
+.TP 10
+\fBprmptr\fR, \fBperm\fR, \fBgivptr\fR
+.NL
+\fBINTEGER\fR. Arrays, dimension (\fIn\fR lg\fIn\fR) each.
+.IP
+The array \fIprmptr\fR(*) contains a list of pointers which indicate where in \fIperm\fR a level\'s permutation is stored. \fIprmptr\fR(i+1) - \fIprmptr\fR(i) indicates the size of the permutation and also the size of the full, non-deflated problem.
+.IP
+The array \fIperm\fR(*) contains the permutations (from deflation and sorting) to be applied to each eigenblock. This parameter can be modified by \fB?laed8\fR, where it is output.
+.IP
+The array \fIgivptr\fR(*) contains a list of pointers which indicate where in \fIgivcol\fR a level\'s Givens rotations are stored. \fIgivptr\fR(i+1) - \fIgivptr\fR(i) indicates the number of Givens rotations.
+.TP 10
+\fBgivcol\fR
+.NL
+\fBINTEGER\fR. Array, dimension (2, \fIn\fR lg\fIn\fR).
+.IP
+Each pair of numbers indicates a pair of columns to take place in a Givens rotation.
+.TP 10
+\fBgivnum\fR
+.NL
+\fBREAL\fR for \fBslaed7\fR/\fBclaed7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed7\fR/\fBzlaed7\fR.
+.IP
+Array, dimension (2, \fIn\fR lg\fIn\fR). 
+.IP
+Each number indicates the \fIS\fR value to be used in the corresponding Givens rotation.
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, dimension (4\fIn\fR ).
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBclaed7\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzlaed7\fR. 
+.IP
+Workspace array, dimension (3\fIn\fR+2\fIqsiz\fR*\fIn\fR). Used in complex flavors only.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+On exit, contains the eigenvalues of the repaired matrix.
+.TP 10
+\fBq\fR
+.NL
+On exit, \fIq\fR contains the eigenvectors of the repaired tridiagonal matrix.
+.TP 10
+\fBindxq\fR
+.NL
+\fBINTEGER\fR. Array, dimension (\fIn\fR).
+.IP
+Contains the permutation that reintegrates the subproblems back into a sorted order, that is, 
+.IP
+\fId\fR(\fIindxq\fR(i = 1, \fIn\fR)) will be in the ascending order.
+.TP 10
+\fBrho\fR
+.NL
+This parameter can be modified by \fB?laed8\fR, where it is input/output.
+.TP 10
+\fBprmptr\fR, \fBperm\fR,\fBgivptr\fR
+.NL
+\fBINTEGER\fR. Arrays, dimension (\fIn\fR lg\fIn\fR) each.
+.IP
+The array \fIprmptr\fR contains an updated list of pointers.
+.IP
+The array \fIperm\fR contains an updated permutation.
+.IP
+The array \fIgivptr\fR contains an updated list of pointers.
+.TP 10
+\fBgivcol\fR
+.NL
+This parameter can be modified by \fB?laed8\fR, where it is output.
+.TP 10
+\fBgivnum\fR
+.NL
+This parameter can be modified by \fB?laed8\fR, where it is output.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value. 
+.IP
+If \fIinfo\fR = 1, an eigenvalue did not converge.

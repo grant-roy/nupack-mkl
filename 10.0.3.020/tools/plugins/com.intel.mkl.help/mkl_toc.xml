@@ -1,0 +1,1395 @@
+<?xml version="1.0"?>
+<toc label="Intel(R) Math Kernel Library Help">
+
+   <topic label="Intel Math Kernel Library Reference Manual" href="frontmatter/mkl_title.html"/>
+   <topic label="Legal Information" href="frontmatter/mkl_legalinfo.html"/>
+<topic label="Version Information" href="frontmatter/mkl_versioninfo.html"/>
+   <topic label="Overview" href="intro/mkl_overview.html">
+      <topic label="About This Software" href="intro/mkl_overview_about.html">
+         <topic label="Technical Support" href="intro/mkl_overview_ts.html"/>
+         <topic label="BLAS Routines" href="intro/mkl_overview_BLAS.html"/>
+         <topic label="Sparse BLAS Routines" href="intro/mkl_overview_SBLAS.html"/>
+         <topic label="LAPACK Routines" href="intro/mkl_overview_LAPACK.html"/>
+         <topic label="ScaLAPACK Routines" href="intro/mkl_overview_ScaLAPACK.html"/>
+         <topic label="Sparse Solver Routines" href="intro/mkl_overview_SSR.html"/>
+         <topic label="VML Functions" href="intro/mkl_overview_VML.html"/>
+         <topic label="Statistical Functions" href="intro/mkl_overview_VSL.html"/>
+         <topic label="Fourier Transform Functions" href="intro/mkl_overview_FTF.html"/>
+         <topic label="Interval Solver Routines" href="intro/mkl_overview_ILS.html"/>
+         <topic label="Partial Differential Equations Support" href="intro/mkl_overview_PDES.html"/>
+         <topic label="Optimization Solvers Routines" href="intro/mkl_overview_OSR.html"/>
+         <topic label="Support Functions" href="intro/mkl_overview_SPT.html"/>
+         <topic label="BLACS Routines" href="intro/mkl_overview_BLACS.html"/>
+         <topic label="GMP Arithmetic Functions" href="intro/mkl_overview_GMP.html"/>
+         <topic label="Performance Enhancements" href="intro/mkl_overview_PE.html"/>
+         <topic label="Parallelism" href="intro/mkl_overview_Parallelism.html"/>
+         <topic label="Platforms Supported" href="intro/mkl_overview_platforms.html"/>
+      </topic>
+      <topic label="About This Manual" href="intro/mkl_overview_aboutmanual.html">
+         <topic label="Audience for This Manual" href="intro/mkl_overview_audience.html"/>
+         <topic label="Manual Organization" href="intro/mkl_overview_manualorg.html"/>
+         <topic label="Notational Conventions" href="intro/mkl_overview_notation.html"/>
+      </topic>
+   </topic>
+   <topic label="BLAS and Sparse BLAS Routines" href="bla/bla_Intro.html">
+      <topic label="BLAS Routines and Functions">
+         <topic label="Routine Naming Conventions" href="bla/bla_namingconv.html"/>
+         <topic label="Fortran 95 Interface Conventions" href="bla/bla_BLASfortran95.html"/>
+         <topic label="Matrix Storage Schemes" href="bla/bla_BLASmss.html"/>
+         <topic label="BLAS Level 1 Routines" href="bla/bla_BLAS1.html">
+            <topic label="?asum" href="bla/functn_asum.html"/>
+            <topic label="?axpy" href="bla/functn_axpy.html"/>
+            <topic label="?copy" href="bla/functn_copy.html"/>
+            <topic label="?dot" href="bla/functn_dot.html"/>
+            <topic label="?sdot" href="bla/functn_sdot.html"/>
+            <topic label="?dotc" href="bla/functn_dotc.html"/>
+            <topic label="?dotu" href="bla/functn_dotu.html"/>
+            <topic label="?nrm2" href="bla/functn_nrm2.html"/>
+            <topic label="?rot" href="bla/functn_d_s_rot.html"/>
+            <topic label="?rotg" href="bla/functn_rotg.html"/>
+            <topic label="?rotm" href="bla/functn_rotm.html"/>
+            <topic label="?rotmg" href="bla/functn_rotmg.html"/>
+            <topic label="?scal" href="bla/functn_scal.html"/>
+            <topic label="?swap" href="bla/functn_swap.html"/>
+            <topic label="i?amax" href="bla/functn_iamax.html"/>
+            <topic label="i?amin" href="bla/functn_iamin.html"/>
+            <topic label="dcabs1" href="bla/functn_dcabs1.html"/>
+         </topic>
+         <topic label="BLAS Level 2 Routines" href="bla/bla_BLAS2.html">
+            <topic label="?gbmv" href="bla/functn_gbmv.html"/>
+            <topic label="?gemv" href="bla/functn_gemv.html"/>
+            <topic label="?ger" href="bla/functn_ger.html"/>
+            <topic label="?gerc" href="bla/functn_gerc.html"/>
+            <topic label="?geru" href="bla/functn_geru.html"/>
+            <topic label="?hbmv" href="bla/functn_hbmv.html"/>
+            <topic label="?hemv" href="bla/functn_hemv.html"/>
+            <topic label="?her" href="bla/functn_her.html"/>
+            <topic label="?her2" href="bla/functn_her2.html"/>
+            <topic label="?hpmv" href="bla/functn_hpmv.html"/>
+            <topic label="?hpr" href="bla/functn_hpr.html"/>
+            <topic label="?hpr2" href="bla/functn_hpr2.html"/>
+            <topic label="?sbmv" href="bla/functn_sbmv.html"/>
+            <topic label="?spmv" href="bla/functn_d_s_spmv.html"/>
+            <topic label="?spr" href="bla/functn_d_s_spr.html"/>
+            <topic label="?spr2" href="bla/functn_spr2.html"/>
+            <topic label="?symv" href="bla/functn_d_s_symv.html"/>
+            <topic label="?syr" href="bla/functn_d_s_syr.html"/>
+            <topic label="?syr2" href="bla/functn_syr2.html"/>
+            <topic label="?tbmv" href="bla/functn_tbmv.html"/>
+            <topic label="?tbsv" href="bla/functn_tbsv.html"/>
+            <topic label="?tpmv" href="bla/functn_tpmv.html"/>
+            <topic label="?tpsv" href="bla/functn_tpsv.html"/>
+            <topic label="?trmv" href="bla/functn_trmv.html"/>
+            <topic label="?trsv" href="bla/functn_trsv.html"/>
+         </topic>
+         <topic label="BLAS Level 3 Routines" href="bla/bla_BLAS3.html">
+            <topic label="?gemm" href="bla/functn_gemm.html"/>
+            <topic label="?gemm3m" href="bla/functn_gemm3m.html"/>
+            <topic label="?hemm" href="bla/functn_hemm.html"/>
+            <topic label="?herk" href="bla/functn_herk.html"/>
+            <topic label="?her2k" href="bla/functn_her2k.html"/>
+            <topic label="?symm" href="bla/functn_symm.html"/>
+            <topic label="?syrk" href="bla/functn_syrk.html"/>
+            <topic label="?syr2k" href="bla/functn_syr2k.html"/>
+            <topic label="?trmm" href="bla/functn_trmm.html"/>
+            <topic label="?trsm" href="bla/functn_trsm.html"/>
+         </topic>
+      </topic>
+      <topic label="Sparse BLAS Level 1 Routines" href="bla/bla_SBLAS1.html">
+         <topic label="Vector Arguments" href="bla/bla_SBLASvector.html"/>
+         <topic label="Naming Conventions" href="bla/bla_SBLASnaming.html"/>
+         <topic label="Routines and Data Types" href="bla/bla_SBLAS_lvl1rdtypes.html"/>
+         <topic label="BLAS Level 1 Routines That Can Work With Sparse Vectors" href="bla/bla_SBLAS_lvl1routines.html"/>
+         <topic label="?axpyi" href="bla/functn_axpyi.html"/>
+         <topic label="?doti" href="bla/functn_doti.html"/>
+         <topic label="?dotci" href="bla/functn_dotci.html"/>
+         <topic label="?dotui" href="bla/functn_dotui.html"/>
+         <topic label="?gthr" href="bla/functn_gthr.html"/>
+         <topic label="?gthrz" href="bla/functn_gthrz.html"/>
+         <topic label="?roti" href="bla/functn_roti.html"/>
+         <topic label="?sctr" href="bla/functn_sctr.html"/>
+      </topic>
+      <topic label="Sparse BLAS Level 2 and Level 3" href="bla/bla_SBLAS2-3.html">
+         <topic label="Naming Conventions in Sparse BLAS Level 2 and Level 3" href="bla/bla_SBLAS2-3_naming.html"/>
+         <topic label="Sparse Matrix Storage Formats" href="bla/bla_SMDS.html"/>
+         <topic label="Routines and Supported Operations" href="bla/bla_RSO.html"/>
+         <topic label="Interface Consideration" href="bla/bla_IC.html"/>
+         <topic label="Sparse BLAS Level 2 and Level 3 Routines" href="bla/bla_SBLAS2-3_routines.html">
+            <topic label="mkl_?csrgemv" href="bla/functn_mkl_dcsrgemv.html"/>
+            <topic label="mkl_dbsrgemv" href="bla/functn_mkl_dbsrgemv.html"/>
+            <topic label="mkl_dcoogemv" href="bla/functn_mkl_dcoogemv.html"/>
+            <topic label="mkl_ddiagemv" href="bla/functn_mkl_ddiagemv.html"/>
+            <topic label="mkl_dcsrsymv" href="bla/functn_mkl_dcsrsymv.html"/>
+            <topic label="mkl_dbsrsymv" href="bla/functn_mkl_dbsrsymv.html"/>
+            <topic label="mkl_dcoosymv" href="bla/functn_mkl_dcoosymv.html"/>
+            <topic label="mkl_ddiasymv" href="bla/functn_mkl_ddiasymv.html"/>
+            <topic label="mkl_dcsrtrsv" href="bla/functn_mkl_dcsrtrsv.html"/>
+            <topic label="mkl_dbsrtrsv" href="bla/functn_mkl_dbsrtrsv.html"/>
+            <topic label="mkl_dcootrsv" href="bla/functn_mkl_dcootrsv.html"/>
+            <topic label="mkl_ddiatrsv" href="bla/functn_mkl_ddiatrsv.html"/>
+            <topic label="mkl_cspblas_dcsrgemv" href="bla/functn_mkl_cspblas_dcsrgemv.html"/>
+            <topic label="mkl_cspblas_dbsrgemv" href="bla/functn_mkl_cspblas_dbsrgemv.html"/>
+            <topic label="mkl_cspblas_dcoogemv" href="bla/functn_mkl_cspblas_dcoogemv.html"/>
+            <topic label="mkl_cspblas_dcsrsymv" href="bla/functn_mkl_cspblas_dcsrsymv.html"/>
+            <topic label="mkl_cspblas_dbsrsymv" href="bla/functn_mkl_cspblas_dbsrsymv.html"/>
+            <topic label="mkl_cspblas_dcoosymv" href="bla/functn_mkl_cspblas_dcoosymv.html"/>
+            <topic label="mkl_cspblas_dcsrtrsv" href="bla/functn_mkl_cspblas_dcsrtrsv.html"/>
+            <topic label="mkl_cspblas_dbsrtrsv" href="bla/functn_mkl_cspblas_dbsrtrsv.html"/>
+            <topic label="mkl_cspblas_ dcootrsv" href="bla/functn_mkl_cspblas_dcootrsv.html"/>
+            <topic label="mkl_dcsrmv" href="bla/functn_mkl_dcsrmv.html"/>
+            <topic label="mkl_dbsrmv" href="bla/functn_mkl_dbsrmv.html"/>
+            <topic label="mkl_dcscmv" href="bla/functn_mkl_dcscmv.html"/>
+            <topic label="mkl_dcoomv" href="bla/functn_mkl_dcoomv.html"/>
+            <topic label="mkl_dcsrsv" href="bla/functn_mkl_dcsrsv.html"/>
+            <topic label="mkl_dbsrsv" href="bla/functn_mkl_dbsrsv.html"/>
+            <topic label="mkl_dcscsv" href="bla/functn_mkl_dcscsv.html"/>
+            <topic label="mkl_dcoosv" href="bla/functn_mkl_dcoosv.html"/>
+            <topic label="mkl_dcsrmm" href="bla/functn_mkl_dcsrmm.html"/>
+            <topic label="mkl_dbsrmm" href="bla/functn_mkl_dbsrmm.html"/>
+            <topic label="mkl_dcscmm" href="bla/functn_mkl_dcscmm.html"/>
+            <topic label="mkl_dcoomm" href="bla/functn_mkl_dcoomm.html"/>
+            <topic label="mkl_dcsrsm" href="bla/functn_mkl_dcsrsm.html"/>
+            <topic label="mkl_dcscsm" href="bla/functn_mkl_dcscsm.html"/>
+            <topic label="mkl_dcoosm" href="bla/functn_mkl_dcoosm.html"/>
+            <topic label="mkl_dbsrsm" href="bla/functn_mkl_dbsrsm.html"/>
+            <topic label="mkl_ddiamv" href="bla/functn_mkl_ddiamv.html"/>
+            <topic label="mkl_dskymv" href="bla/functn_mkl_dskymv.html"/>
+            <topic label="mkl_ddiasv" href="bla/functn_mkl_ddiasv.html"/>
+            <topic label="mkl_dskysv" href="bla/functn_mkl_dskysv.html"/>
+            <topic label="mkl_ddiamm" href="bla/functn_mkl_ddiamm.html"/>
+            <topic label="mkl_dskymm" href="bla/functn_mkl_dskymm.html"/>
+            <topic label="mkl_ddiasm" href="bla/functn_mkl_ddiasm.html"/>
+            <topic label="mkl_dskysm" href="bla/functn_mkl_dskysm.html"/>
+         </topic>
+      </topic>
+   </topic>
+   <topic label="LAPACK Routines: Linear Equations" href="lle/lle_Intro.html">
+      <topic label="Routine Naming Conventions" href="lle/lle_naming.html"/>
+      <topic label="Fortran 95 Interface Conventions" href="lle/lle_fortran95.html">
+         <topic label="Intel(R) MKL Fortran 95 Interfaces for LAPACK Routines vs. Netlib* Implementation" href="lle/lle_fortran95netlib.html"/>
+      </topic>
+      <topic label="Matrix Storage Schemes" href="lle/lle_MSS.html"/>
+      <topic label="Mathematical Notation" href="lle/lle_MN.html"/>
+      <topic label="Error Analysis" href="lle/lle_EA.html"/>
+      <topic label="Computational Routines" href="lle/lle_CRoutines.html">
+         <topic label="Routines for Matrix Factorization" href="lle/lle_MFRoutines.html">
+            <topic label="?getrf" href="lle/functn_getrf.html"/>
+            <topic label="?gbtrf" href="lle/functn_gbtrf.html"/>
+            <topic label="?gttrf" href="lle/functn_gttrf.html"/>
+            <topic label="?potrf" href="lle/functn_potrf.html"/>
+            <topic label="?pptrf" href="lle/functn_pptrf.html"/>
+            <topic label="?pbtrf" href="lle/functn_pbtrf.html"/>
+            <topic label="?pttrf" href="lle/functn_pttrf.html"/>
+            <topic label="?sytrf" href="lle/functn_sytrf.html"/>
+            <topic label="?hetrf" href="lle/functn_hetrf.html"/>
+            <topic label="?sptrf" href="lle/functn_sptrf.html"/>
+            <topic label="?hptrf" href="lle/functn_hptrf.html"/>
+         </topic>
+         <topic label="Routines for Solving Systems of Linear Equations" href="lle/lle_SSLERoutines.html">
+            <topic label="?getrs" href="lle/functn_getrs.html"/>
+            <topic label="?gbtrs" href="lle/functn_gbtrs.html"/>
+            <topic label="?gttrs" href="lle/functn_gttrs.html"/>
+            <topic label="?potrs" href="lle/functn_potrs.html"/>
+            <topic label="?pptrs" href="lle/functn_pptrs.html"/>
+            <topic label="?pbtrs" href="lle/functn_pbtrs.html"/>
+            <topic label="?pttrs" href="lle/functn_pttrs.html"/>
+            <topic label="?sytrs" href="lle/functn_sytrs.html"/>
+            <topic label="?hetrs" href="lle/functn_hetrs.html"/>
+            <topic label="?sptrs" href="lle/functn_sptrs.html"/>
+            <topic label="?hptrs" href="lle/functn_hptrs.html"/>
+            <topic label="?trtrs" href="lle/functn_trtrs.html"/>
+            <topic label="?tptrs" href="lle/functn_tptrs.html"/>
+            <topic label="?tbtrs" href="lle/functn_tbtrs.html"/>
+         </topic>
+         <topic label="Routines for Estimating the Condition Number" href="lle/lle_ECNRoutines.html">
+            <topic label="?gecon" href="lle/functn_gecon.html"/>
+            <topic label="?gbcon" href="lle/functn_gbcon.html"/>
+            <topic label="?gtcon" href="lle/functn_gtcon.html"/>
+            <topic label="?pocon" href="lle/functn_pocon.html"/>
+            <topic label="?ppcon" href="lle/functn_ppcon.html"/>
+            <topic label="?pbcon" href="lle/functn_pbcon.html"/>
+            <topic label="?ptcon" href="lle/functn_ptcon.html"/>
+            <topic label="?sycon" href="lle/functn_sycon.html"/>
+            <topic label="?hecon" href="lle/functn_hecon.html"/>
+            <topic label="?spcon" href="lle/functn_spcon.html"/>
+            <topic label="?hpcon" href="lle/functn_hpcon.html"/>
+            <topic label="?trcon" href="lle/functn_trcon.html"/>
+            <topic label="?tpcon" href="lle/functn_tpcon.html"/>
+            <topic label="?tbcon" href="lle/functn_tbcon.html"/>
+         </topic>
+         <topic label="Refining the Solution and Estimating Its Error" href="lle/lle_RSEIE.html">
+            <topic label="?gerfs" href="lle/functn_gerfs.html"/>
+            <topic label="?gbrfs" href="lle/functn_gbrfs.html"/>
+            <topic label="?gtrfs" href="lle/functn_gtrfs.html"/>
+            <topic label="?porfs" href="lle/functn_porfs.html"/>
+            <topic label="?pprfs" href="lle/functn_pprfs.html"/>
+            <topic label="?pbrfs" href="lle/functn_pbrfs.html"/>
+            <topic label="?ptrfs" href="lle/functn_ptrfs.html"/>
+            <topic label="?syrfs" href="lle/functn_syrfs.html"/>
+            <topic label="?herfs" href="lle/functn_herfs.html"/>
+            <topic label="?sprfs" href="lle/functn_sprfs.html"/>
+            <topic label="?hprfs" href="lle/functn_hprfs.html"/>
+            <topic label="?trrfs" href="lle/functn_trrfs.html"/>
+            <topic label="?tprfs" href="lle/functn_tprfs.html"/>
+            <topic label="?tbrfs" href="lle/functn_tbrfs.html"/>
+         </topic>
+         <topic label="Routines for Matrix Inversion" href="lle/lle_MIRoutines.html">
+            <topic label="?getri" href="lle/functn_getri.html"/>
+            <topic label="?potri" href="lle/functn_potri.html"/>
+            <topic label="?pptri" href="lle/functn_pptri.html"/>
+            <topic label="?sytri" href="lle/functn_sytri.html"/>
+            <topic label="?hetri" href="lle/functn_hetri.html"/>
+            <topic label="?sptri" href="lle/functn_sptri.html"/>
+            <topic label="?hptri" href="lle/functn_hptri.html"/>
+            <topic label="?trtri" href="lle/functn_trtri.html"/>
+            <topic label="?tptri" href="lle/functn_tptri.html"/>
+         </topic>
+         <topic label="Routines for Matrix Equilibration" href="lle/lle_MERoutines.html">
+            <topic label="?geequ" href="lle/functn_geequ.html"/>
+            <topic label="?gbequ" href="lle/functn_gbequ.html"/>
+            <topic label="?poequ" href="lle/functn_poequ.html"/>
+            <topic label="?ppequ" href="lle/functn_ppequ.html"/>
+            <topic label="?pbequ" href="lle/functn_pbequ.html"/>
+         </topic>
+      </topic>
+      <topic label="Driver Routines" href="lle/lle_DRoutines.html">
+         <topic label="?gesv" href="lle/functn_gesv.html"/>
+         <topic label="?gesvx" href="lle/functn_gesvx.html"/>
+         <topic label="?gbsv" href="lle/functn_gbsv.html"/>
+         <topic label="?gbsvx" href="lle/functn_gbsvx.html"/>
+         <topic label="?gtsv" href="lle/functn_gtsv.html"/>
+         <topic label="?gtsvx" href="lle/functn_gtsvx.html"/>
+         <topic label="?posv" href="lle/functn_posv.html"/>
+         <topic label="?posvx" href="lle/functn_posvx.html"/>
+         <topic label="?ppsv" href="lle/functn_ppsv.html"/>
+         <topic label="?ppsvx" href="lle/functn_ppsvx.html"/>
+         <topic label="?pbsv" href="lle/functn_pbsv.html"/>
+         <topic label="?pbsvx" href="lle/functn_pbsvx.html"/>
+         <topic label="?ptsv" href="lle/functn_ptsv.html"/>
+         <topic label="?ptsvx" href="lle/functn_ptsvx.html"/>
+         <topic label="?sysv" href="lle/functn_sysv.html"/>
+         <topic label="?sysvx" href="lle/functn_sysvx.html"/>
+         <topic label="?hesv" href="lle/functn_hesv.html"/>
+         <topic label="?hesvx" href="lle/functn_hesvx.html"/>
+         <topic label="?spsv" href="lle/functn_spsv.html"/>
+         <topic label="?spsvx" href="lle/functn_spsvx.html"/>
+         <topic label="?hpsv" href="lle/functn_hpsv.html"/>
+         <topic label="?hpsvx" href="lle/functn_hpsvx.html"/>
+      </topic>
+   </topic>
+   <topic label="LAPACK Routines: Least Squares and Eigenvalue Problems" href="lse/lse_intro.html">
+      <topic label="Routine Naming Conventions" href="lse/lse_naming.html"/>
+      <topic label="Matrix Storage Schemes" href="lse/lse_mss.html"/>
+      <topic label="Mathematical Notation" href="lse/lse_mn.html"/>
+      <topic label="Computational Routines" href="lse/lse_comproutines.html">
+         <topic label="Orthogonal Factorizations" href="lse/lse_crofactor.html">
+            <topic label="?geqrf" href="lse/functn_geqrf.html"/>
+            <topic label="?geqpf" href="lse/functn_geqpf.html"/>
+            <topic label="?geqp3" href="lse/functn_geqp3.html"/>
+            <topic label="?orgqr" href="lse/functn_orgqr.html"/>
+            <topic label="?ormqr" href="lse/functn_ormqr.html"/>
+            <topic label="?ungqr" href="lse/functn_ungqr.html"/>
+            <topic label="?unmqr" href="lse/functn_unmqr.html"/>
+            <topic label="?gelqf" href="lse/functn_gelqf.html"/>
+            <topic label="?orglq" href="lse/functn_orglq.html"/>
+            <topic label="?ormlq" href="lse/functn_ormlq.html"/>
+            <topic label="?unglq" href="lse/functn_unglq.html"/>
+            <topic label="?unmlq" href="lse/functn_unmlq.html"/>
+            <topic label="?geqlf" href="lse/functn_geqlf.html"/>
+            <topic label="?orgql" href="lse/functn_orgql.html"/>
+            <topic label="?ungql" href="lse/functn_ungql.html"/>
+            <topic label="?ormql" href="lse/functn_ormql.html"/>
+            <topic label="?unmql" href="lse/functn_unmql.html"/>
+            <topic label="?gerqf" href="lse/functn_gerqf.html"/>
+            <topic label="?orgrq" href="lse/functn_orgrq.html"/>
+            <topic label="?ungrq" href="lse/functn_ungrq.html"/>
+            <topic label="?ormrq" href="lse/functn_ormrq.html"/>
+            <topic label="?unmrq" href="lse/functn_unmrq.html"/>
+            <topic label="?tzrzf" href="lse/functn_tzrzf.html"/>
+            <topic label="?ormrz" href="lse/functn_ormrz.html"/>
+            <topic label="?unmrz" href="lse/functn_unmrz.html"/>
+            <topic label="?ggqrf" href="lse/functn_ggqrf.html"/>
+            <topic label="?ggrqf" href="lse/functn_ggrqf.html"/>
+         </topic>
+         <topic label="Singular Value Decomposition" href="lse/lse_crsvd.html">
+            <topic label="?gebrd" href="lse/functn_gebrd.html"/>
+            <topic label="?gbbrd" href="lse/functn_gbbrd.html"/>
+            <topic label="?orgbr" href="lse/functn_orgbr.html"/>
+            <topic label="?ormbr" href="lse/functn_ormbr.html"/>
+            <topic label="?ungbr" href="lse/functn_ungbr.html"/>
+            <topic label="?unmbr" href="lse/functn_unmbr.html"/>
+            <topic label="?bdsqr" href="lse/functn_bdsqr.html"/>
+            <topic label="?bdsdc" href="lse/functn_bdsdc.html"/>
+         </topic>
+         <topic label="Symmetric Eigenvalue Problems" href="lse/lse_crsep.html">
+            <topic label="?sytrd" href="lse/functn_sytrd.html"/>
+            <topic label="?syrdb" href="lse/functn_syrdb.html"/>
+            <topic label="?herdb" href="lse/functn_herdb.html"/>
+            <topic label="?orgtr" href="lse/functn_orgtr.html"/>
+            <topic label="?ormtr" href="lse/functn_ormtr.html"/>
+            <topic label="?hetrd" href="lse/functn_hetrd.html"/>
+            <topic label="?ungtr" href="lse/functn_ungtr.html"/>
+            <topic label="?unmtr" href="lse/functn_unmtr.html"/>
+            <topic label="?sptrd" href="lse/functn_sptrd.html"/>
+            <topic label="?opgtr" href="lse/functn_opgtr.html"/>
+            <topic label="?opmtr" href="lse/functn_opmtr.html"/>
+            <topic label="?hptrd" href="lse/functn_hptrd.html"/>
+            <topic label="?upgtr" href="lse/functn_upgtr.html"/>
+            <topic label="?upmtr" href="lse/functn_upmtr.html"/>
+            <topic label="?sbtrd" href="lse/functn_sbtrd.html"/>
+            <topic label="?hbtrd" href="lse/functn_hbtrd.html"/>
+            <topic label="?sterf" href="lse/functn_sterf.html"/>
+            <topic label="?steqr" href="lse/functn_steqr.html"/>
+            <topic label="?stemr" href="lse/functn_stemr.html"/>
+            <topic label="?stedc" href="lse/functn_stedc.html"/>
+            <topic label="?stegr" href="lse/functn_stegr.html"/>
+            <topic label="?pteqr" href="lse/functn_pteqr.html"/>
+            <topic label="?stebz" href="lse/functn_stebz.html"/>
+            <topic label="?stein" href="lse/functn_stein.html"/>
+            <topic label="?disna" href="lse/functn_disna.html"/>
+         </topic>
+         <topic label="Generalized Symmetric-Definite Eigenvalue Problems" href="lse/lse_crgsdep.html">
+            <topic label="?sygst" href="lse/functn_sygst.html"/>
+            <topic label="?hegst" href="lse/functn_hegst.html"/>
+            <topic label="?spgst" href="lse/functn_spgst.html"/>
+            <topic label="?hpgst" href="lse/functn_hpgst.html"/>
+            <topic label="?sbgst" href="lse/functn_sbgst.html"/>
+            <topic label="?hbgst" href="lse/functn_hbgst.html"/>
+            <topic label="?pbstf" href="lse/functn_pbstf.html"/>
+         </topic>
+         <topic label="Nonsymmetric Eigenvalue Problems" href="lse/lse_crnsep.html">
+            <topic label="?gehrd" href="lse/functn_gehrd.html"/>
+            <topic label="?orghr" href="lse/functn_orghr.html"/>
+            <topic label="?ormhr" href="lse/functn_ormhr.html"/>
+            <topic label="?unghr" href="lse/functn_unghr.html"/>
+            <topic label="?unmhr" href="lse/functn_unmhr.html"/>
+            <topic label="?gebal" href="lse/functn_gebal.html"/>
+            <topic label="?gebak" href="lse/functn_gebak.html"/>
+            <topic label="?hseqr" href="lse/functn_hseqr.html"/>
+            <topic label="?hsein" href="lse/functn_hsein.html"/>
+            <topic label="?trevc" href="lse/functn_trevc.html"/>
+            <topic label="?trsna" href="lse/functn_trsna.html"/>
+            <topic label="?trexc" href="lse/functn_trexc.html"/>
+            <topic label="?trsen" href="lse/functn_trsen.html"/>
+            <topic label="?trsyl" href="lse/functn_trsyl.html"/>
+         </topic>
+         <topic label="Generalized Nonsymmetric Eigenvalue Problems" href="lse/lse_crgnsep.html">
+            <topic label="?gghrd" href="lse/functn_gghrd.html"/>
+            <topic label="?ggbal" href="lse/functn_ggbal.html"/>
+            <topic label="?ggbak" href="lse/functn_ggbak.html"/>
+            <topic label="?hgeqz" href="lse/functn_hgeqz.html"/>
+            <topic label="?tgevc" href="lse/functn_tgevc.html"/>
+            <topic label="?tgexc" href="lse/functn_tgexc.html"/>
+            <topic label="?tgsen" href="lse/functn_tgsen.html"/>
+            <topic label="?tgsyl" href="lse/functn_tgsyl.html"/>
+            <topic label="?tgsna" href="lse/functn_tgsna.html"/>
+         </topic>
+         <topic label="Generalized Singular Value Decomposition" href="lse/lse_crgsvd.html">
+            <topic label="?ggsvp" href="lse/functn_ggsvp.html"/>
+            <topic label="?tgsja" href="lse/functn_tgsja.html"/>
+         </topic>
+      </topic>
+      <topic label="Driver Routines" href="lse/lse_driverroutines.html">
+         <topic label="Linear Least Squares (LLS) Problems" href="lse/lse_drllsp.html">
+            <topic label="?gels" href="lse/functn_gels.html"/>
+            <topic label="?gelsy" href="lse/functn_gelsy.html"/>
+            <topic label="?gelss" href="lse/functn_gelss.html"/>
+            <topic label="?gelsd" href="lse/functn_gelsd.html"/>
+         </topic>
+         <topic label="Generalized LLS Problems" href="lse/lse_drgllsp.html">
+            <topic label="?gglse" href="lse/functn_gglse.html"/>
+            <topic label="?ggglm" href="lse/functn_ggglm.html"/>
+         </topic>
+         <topic label="Symmetric Eigenproblems" href="lse/lse_drsymep.html">
+            <topic label="?syev" href="lse/functn_syev.html"/>
+            <topic label="?heev" href="lse/functn_heev.html"/>
+            <topic label="?syevd" href="lse/functn_syevd.html"/>
+            <topic label="?heevd" href="lse/functn_heevd.html"/>
+            <topic label="?syevx" href="lse/functn_syevx.html"/>
+            <topic label="?heevx" href="lse/functn_heevx.html"/>
+            <topic label="?syevr" href="lse/functn_syevr.html"/>
+            <topic label="?heevr" href="lse/functn_heevr.html"/>
+            <topic label="?spev" href="lse/functn_spev.html"/>
+            <topic label="?hpev" href="lse/functn_hpev.html"/>
+            <topic label="?spevd" href="lse/functn_spevd.html"/>
+            <topic label="?hpevd" href="lse/functn_hpevd.html"/>
+            <topic label="?spevx" href="lse/functn_spevx.html"/>
+            <topic label="?hpevx" href="lse/functn_hpevx.html"/>
+            <topic label="?sbev" href="lse/functn_sbev.html"/>
+            <topic label="?hbev" href="lse/functn_hbev.html"/>
+            <topic label="?sbevd" href="lse/functn_sbevd.html"/>
+            <topic label="?hbevd" href="lse/functn_hbevd.html"/>
+            <topic label="?sbevx" href="lse/functn_sbevx.html"/>
+            <topic label="?hbevx" href="lse/functn_hbevx.html"/>
+            <topic label="?stev" href="lse/functn_stev.html"/>
+            <topic label="?stevd" href="lse/functn_stevd.html"/>
+            <topic label="?stevx" href="lse/functn_stevx.html"/>
+            <topic label="?stevr" href="lse/functn_stevr.html"/>
+         </topic>
+         <topic label="Nonsymmetric Eigenproblems" href="lse/lse_drnonsymep.html">
+            <topic label="?gees" href="lse/functn_gees.html"/>
+            <topic label="?geesx" href="lse/functn_geesx.html"/>
+            <topic label="?geev" href="lse/functn_geev.html"/>
+            <topic label="?geevx" href="lse/functn_geevx.html"/>
+         </topic>
+         <topic label="Singular Value Decomposition" href="lse/lse_drsvd.html">
+            <topic label="?gesvd" href="lse/functn_gesvd.html"/>
+            <topic label="?gesdd" href="lse/functn_gesdd.html"/>
+            <topic label="?ggsvd" href="lse/functn_ggsvd.html"/>
+         </topic>
+         <topic label="Generalized Symmetric Definite Eigenproblems" href="lse/lse_drgsymdep.html">
+            <topic label="?sygv" href="lse/functn_sygv.html"/>
+            <topic label="?hegv" href="lse/functn_hegv.html"/>
+            <topic label="?sygvd" href="lse/functn_sygvd.html"/>
+            <topic label="?hegvd" href="lse/functn_hegvd.html"/>
+            <topic label="?sygvx" href="lse/functn_sygvx.html"/>
+            <topic label="?hegvx" href="lse/functn_hegvx.html"/>
+            <topic label="?spgv" href="lse/functn_spgv.html"/>
+            <topic label="?hpgv" href="lse/functn_hpgv.html"/>
+            <topic label="?spgvd" href="lse/functn_spgvd.html"/>
+            <topic label="?hpgvd" href="lse/functn_hpgvd.html"/>
+            <topic label="?spgvx" href="lse/functn_spgvx.html"/>
+            <topic label="?hpgvx" href="lse/functn_hpgvx.html"/>
+            <topic label="?sbgv" href="lse/functn_sbgv.html"/>
+            <topic label="?hbgv" href="lse/functn_hbgv.html"/>
+            <topic label="?sbgvd" href="lse/functn_sbgvd.html"/>
+            <topic label="?hbgvd" href="lse/functn_hbgvd.html"/>
+            <topic label="?sbgvx" href="lse/functn_sbgvx.html"/>
+            <topic label="?hbgvx" href="lse/functn_hbgvx.html"/>
+         </topic>
+         <topic label="Generalized Nonsymmetric Eigenproblems" href="lse/lse_drgnonsymep.html">
+            <topic label="?gges" href="lse/functn_gges.html"/>
+            <topic label="?ggesx" href="lse/functn_ggesx.html"/>
+            <topic label="?ggev" href="lse/functn_ggev.html"/>
+            <topic label="?ggevx" href="lse/functn_ggevx.html"/>
+         </topic>
+      </topic>
+   </topic>
+   <topic label="LAPACK Auxiliary and Utility Routines" href="lau/lau_intro.html">
+      <topic label="Auxiliary Routines" href="lau/lau_auxil.html">
+         <topic label="?lacgv" href="lau/functn_lacgv.html"/>
+         <topic label="?lacrm" href="lau/functn_lacrm.html"/>
+         <topic label="?lacrt" href="lau/functn_lacrt.html"/>
+         <topic label="?laesy" href="lau/functn_laesy.html"/>
+         <topic label="?rot" href="lau/functn_c_z_rot.html"/>
+         <topic label="?spmv" href="lau/functn_c_z_spmv.html"/>
+         <topic label="?spr" href="lau/functn_c_z_spr.html"/>
+         <topic label="?symv" href="lau/functn_c_z_symv.html"/>
+         <topic label="?syr" href="lau/functn_c_z_syr.html"/>
+         <topic label="i?max1" href="lau/functn_imax1.html"/>
+         <topic label="?sum1" href="lau/functn_sum1.html"/>
+         <topic label="?gbtf2" href="lau/functn_gbtf2.html"/>
+         <topic label="?gebd2" href="lau/functn_gebd2.html"/>
+         <topic label="?gehd2" href="lau/functn_gehd2.html"/>
+         <topic label="?gelq2" href="lau/functn_gelq2.html"/>
+         <topic label="?geql2" href="lau/functn_geql2.html"/>
+         <topic label="?geqr2" href="lau/functn_geqr2.html"/>
+         <topic label="?gerq2" href="lau/functn_gerq2.html"/>
+         <topic label="?gesc2" href="lau/functn_gesc2.html"/>
+         <topic label="?getc2" href="lau/functn_getc2.html"/>
+         <topic label="?getf2" href="lau/functn_getf2.html"/>
+         <topic label="?gtts2" href="lau/functn_gtts2.html"/>
+         <topic label="?isnan" href="lau/functn_isnan.html"/>
+         <topic label="?laisnan" href="lau/functn_laisnan.html"/>
+         <topic label="?labrd" href="lau/functn_labrd.html"/>
+         <topic label="?lacn2" href="lau/functn_lacn2.html"/>
+         <topic label="?lacon" href="lau/functn_lacon.html"/>
+         <topic label="?lacpy" href="lau/functn_lacpy.html"/>
+         <topic label="?ladiv" href="lau/functn_ladiv.html"/>
+         <topic label="?lae2" href="lau/functn_lae2.html"/>
+         <topic label="?laebz" href="lau/functn_laebz.html"/>
+         <topic label="?laed0" href="lau/functn_laed0.html"/>
+         <topic label="?laed1" href="lau/functn_laed1.html"/>
+         <topic label="?laed2" href="lau/functn_laed2.html"/>
+         <topic label="?laed3" href="lau/functn_laed3.html"/>
+         <topic label="?laed4" href="lau/functn_laed4.html"/>
+         <topic label="?laed5" href="lau/functn_laed5.html"/>
+         <topic label="?laed6" href="lau/functn_laed6.html"/>
+         <topic label="?laed7" href="lau/functn_laed7.html"/>
+         <topic label="?laed8" href="lau/functn_laed8.html"/>
+         <topic label="?laed9" href="lau/functn_laed9.html"/>
+         <topic label="?laeda" href="lau/functn_laeda.html"/>
+         <topic label="?laein" href="lau/functn_laein.html"/>
+         <topic label="?laev2" href="lau/functn_laev2.html"/>
+         <topic label="?laexc" href="lau/functn_laexc.html"/>
+         <topic label="?lag2" href="lau/functn_lag2.html"/>
+         <topic label="?lags2" href="lau/functn_lags2.html"/>
+         <topic label="?lagtf" href="lau/functn_lagtf.html"/>
+         <topic label="?lagtm" href="lau/functn_lagtm.html"/>
+         <topic label="?lagts" href="lau/functn_lagts.html"/>
+         <topic label="?lagv2" href="lau/functn_lagv2.html"/>
+         <topic label="?lahqr" href="lau/functn_lahqr.html"/>
+         <topic label="?lahrd" href="lau/functn_lahrd.html"/>
+         <topic label="?lahr2" href="lau/functn_lahr2.html"/>
+         <topic label="?laic1" href="lau/functn_laic1.html"/>
+         <topic label="?laln2" href="lau/functn_laln2.html"/>
+         <topic label="?lals0" href="lau/functn_lals0.html"/>
+         <topic label="?lalsa" href="lau/functn_lalsa.html"/>
+         <topic label="?lalsd" href="lau/functn_lalsd.html"/>
+         <topic label="?lamrg" href="lau/functn_lamrg.html"/>
+         <topic label="?laneg" href="lau/functn_laneg.html"/>
+         <topic label="?langb" href="lau/functn_langb.html"/>
+         <topic label="?lange" href="lau/functn_lange.html"/>
+         <topic label="?langt" href="lau/functn_langt.html"/>
+         <topic label="?lanhs" href="lau/functn_lanhs.html"/>
+         <topic label="?lansb" href="lau/functn_lansb.html"/>
+         <topic label="?lanhb" href="lau/functn_lanhb.html"/>
+         <topic label="?lansp" href="lau/functn_lansp.html"/>
+         <topic label="?lanhp" href="lau/functn_lanhp.html"/>
+         <topic label="?lanst/?lanht" href="lau/functn_lanst-lanht.html"/>
+         <topic label="?lansy" href="lau/functn_lansy.html"/>
+         <topic label="?lanhe" href="lau/functn_lanhe.html"/>
+         <topic label="?lantb" href="lau/functn_lantb.html"/>
+         <topic label="?lantp" href="lau/functn_lantp.html"/>
+         <topic label="?lantr" href="lau/functn_lantr.html"/>
+         <topic label="?lanv2" href="lau/functn_lanv2.html"/>
+         <topic label="?lapll" href="lau/functn_lapll.html"/>
+         <topic label="?lapmt" href="lau/functn_lapmt.html"/>
+         <topic label="?lapy2" href="lau/functn_lapy2.html"/>
+         <topic label="?lapy3" href="lau/functn_lapy3.html"/>
+         <topic label="?laqgb" href="lau/functn_laqgb.html"/>
+         <topic label="?laqge" href="lau/functn_laqge.html"/>
+         <topic label="?laqhb" href="lau/functn_laqhb.html"/>
+         <topic label="?laqp2" href="lau/functn_laqp2.html"/>
+         <topic label="?laqps" href="lau/functn_laqps.html"/>
+         <topic label="?laqr0" href="lau/functn_laqr0.html"/>
+         <topic label="?laqr1" href="lau/functn_laqr1.html"/>
+         <topic label="?laqr2" href="lau/functn_laqr2.html"/>
+         <topic label="?laqr3" href="lau/functn_laqr3.html"/>
+         <topic label="?laqr4" href="lau/functn_laqr4.html"/>
+         <topic label="?laqr5" href="lau/functn_laqr5.html"/>
+         <topic label="?laqsb" href="lau/functn_laqsb.html"/>
+         <topic label="?laqsp" href="lau/functn_laqsp.html"/>
+         <topic label="?laqsy" href="lau/functn_laqsy.html"/>
+         <topic label="?laqtr" href="lau/functn_laqtr.html"/>
+         <topic label="?lar1v" href="lau/functn_lar1v.html"/>
+         <topic label="?lar2v" href="lau/functn_lar2v.html"/>
+         <topic label="?larf" href="lau/functn_larf.html"/>
+         <topic label="?larfb" href="lau/functn_larfb.html"/>
+         <topic label="?larfg" href="lau/functn_larfg.html"/>
+         <topic label="?larft" href="lau/functn_larft.html"/>
+         <topic label="?larfx" href="lau/functn_larfx.html"/>
+         <topic label="?largv" href="lau/functn_largv.html"/>
+         <topic label="?larnv" href="lau/functn_larnv.html"/>
+         <topic label="?larra" href="lau/functn_larra.html"/>
+         <topic label="?larrb" href="lau/functn_larrb.html"/>
+         <topic label="?larrc" href="lau/functn_larrc.html"/>
+         <topic label="?larrd" href="lau/functn_larrd.html"/>
+         <topic label="?larre" href="lau/functn_larre.html"/>
+         <topic label="?larrf" href="lau/functn_larrf.html"/>
+         <topic label="?larrj" href="lau/functn_larrj.html"/>
+         <topic label="?larrk" href="lau/functn_larrk.html"/>
+         <topic label="?larrr" href="lau/functn_larrr.html"/>
+         <topic label="?larrv" href="lau/functn_larrv.html"/>
+         <topic label="?lartg" href="lau/functn_lartg.html"/>
+         <topic label="?lartv" href="lau/functn_lartv.html"/>
+         <topic label="?laruv" href="lau/functn_laruv.html"/>
+         <topic label="?larz" href="lau/functn_larz.html"/>
+         <topic label="?larzb" href="lau/functn_larzb.html"/>
+         <topic label="?larzt" href="lau/functn_larzt.html"/>
+         <topic label="?las2" href="lau/functn_las2.html"/>
+         <topic label="?lascl" href="lau/functn_lascl.html"/>
+         <topic label="?lasd0" href="lau/functn_lasd0.html"/>
+         <topic label="?lasd1" href="lau/functn_lasd1.html"/>
+         <topic label="?lasd2" href="lau/functn_lasd2.html"/>
+         <topic label="?lasd3" href="lau/functn_lasd3.html"/>
+         <topic label="?lasd4" href="lau/functn_lasd4.html"/>
+         <topic label="?lasd5" href="lau/functn_lasd5.html"/>
+         <topic label="?lasd6" href="lau/functn_lasd6.html"/>
+         <topic label="?lasd7" href="lau/functn_lasd7.html"/>
+         <topic label="?lasd8" href="lau/functn_lasd8.html"/>
+         <topic label="?lasd9" href="lau/functn_lasd9.html"/>
+         <topic label="?lasda" href="lau/functn_lasda.html"/>
+         <topic label="?lasdq" href="lau/functn_lasdq.html"/>
+         <topic label="?lasdt" href="lau/functn_lasdt.html"/>
+         <topic label="?laset" href="lau/functn_laset.html"/>
+         <topic label="?lasq1" href="lau/functn_lasq1.html"/>
+         <topic label="?lasq2" href="lau/functn_lasq2.html"/>
+         <topic label="?lasq3" href="lau/functn_lasq3.html"/>
+         <topic label="?lasq4" href="lau/functn_lasq4.html"/>
+         <topic label="?lasq5" href="lau/functn_lasq5.html"/>
+         <topic label="?lasq6" href="lau/functn_lasq6.html"/>
+         <topic label="?lasr" href="lau/functn_lasr.html"/>
+         <topic label="?lasrt" href="lau/functn_lasrt.html"/>
+         <topic label="?lassq" href="lau/functn_lassq.html"/>
+         <topic label="?lasv2" href="lau/functn_lasv2.html"/>
+         <topic label="?laswp" href="lau/functn_laswp.html"/>
+         <topic label="?lasy2" href="lau/functn_lasy2.html"/>
+         <topic label="?lasyf" href="lau/functn_lasyf.html"/>
+         <topic label="?lahef" href="lau/functn_lahef.html"/>
+         <topic label="?latbs" href="lau/functn_latbs.html"/>
+         <topic label="?latdf" href="lau/functn_latdf.html"/>
+         <topic label="?latps" href="lau/functn_latps.html"/>
+         <topic label="?latrd" href="lau/functn_latrd.html"/>
+         <topic label="?latrs" href="lau/functn_latrs.html"/>
+         <topic label="?latrz" href="lau/functn_latrz.html"/>
+         <topic label="?lauu2" href="lau/functn_lauu2.html"/>
+         <topic label="?lauum" href="lau/functn_lauum.html"/>
+         <topic label="?lazq3" href="lau/functn_lazq3.html"/>
+         <topic label="?lazq4" href="lau/functn_lazq4.html"/>
+         <topic label="?org2l/?ung2l" href="lau/functn_org2l-ung2l.html"/>
+         <topic label="?org2r/?ung2r" href="lau/functn_org2r-ung2r.html"/>
+         <topic label="?orgl2/?ungl2" href="lau/functn_orgl2-ungl2.html"/>
+         <topic label="?orgr2/?ungr2" href="lau/functn_orgr2-ungr2.html"/>
+         <topic label="?orm2l/?unm2l" href="lau/functn_orm2l-unm2l.html"/>
+         <topic label="?orm2r/?unm2r" href="lau/functn_orm2r-unm2r.html"/>
+         <topic label="?orml2/?unml2" href="lau/functn_orml2-unml2.html"/>
+         <topic label="?ormr2/?unmr2" href="lau/functn_ormr2-unmr2.html"/>
+         <topic label="?ormr3/?unmr3" href="lau/functn_ormr3-unmr3.html"/>
+         <topic label="?pbtf2" href="lau/functn_pbtf2.html"/>
+         <topic label="?potf2" href="lau/functn_potf2.html"/>
+         <topic label="?ptts2" href="lau/functn_ptts2.html"/>
+         <topic label="?rscl" href="lau/functn_rscl.html"/>
+         <topic label="?sygs2/?hegs2" href="lau/functn_sygs2-hegs2.html"/>
+         <topic label="?sytd2/?hetd2" href="lau/functn_sytd2-hetd2.html"/>
+         <topic label="?sytf2" href="lau/functn_sytf2.html"/>
+         <topic label="?hetf2" href="lau/functn_hetf2.html"/>
+         <topic label="?tgex2" href="lau/functn_tgex2.html"/>
+         <topic label="?tgsy2" href="lau/functn_tgsy2.html"/>
+         <topic label="?trti2" href="lau/functn_trti2.html"/>
+         <topic label="clag2z" href="lau/functn_clag2z.html"/>
+         <topic label="dlag2s" href="lau/functn_dlag2s.html"/>
+         <topic label="slag2d" href="lau/functn_slag2d.html"/>
+         <topic label="zlag2c" href="lau/functn_zlag2c.html"/>
+      </topic>
+      <topic label="Utility Functions and Routines" href="lau/lau_util.html">
+         <topic label="ilaver" href="lau/functn_ilaver.html"/>
+         <topic label="ilaenv" href="lau/functn_ilaenv.html"/>
+         <topic label="iparmq" href="lau/functn_iparmq.html"/>
+         <topic label="ieeeck" href="lau/functn_ieeeck.html"/>
+         <topic label="lsame" href="lau/functn_lsame.html"/>
+         <topic label="lsamen" href="lau/functn_lsamen.html"/>
+         <topic label="?labad" href="lau/functn_labad.html"/>
+         <topic label="?lamch" href="lau/functn_lamch.html"/>
+         <topic label="?lamc1" href="lau/functn_lamc1.html"/>
+         <topic label="?lamc2" href="lau/functn_lamc2.html"/>
+         <topic label="?lamc3" href="lau/functn_lamc3.html"/>
+         <topic label="?lamc4" href="lau/functn_lamc4.html"/>
+         <topic label="?lamc5" href="lau/functn_lamc5.html"/>
+         <topic label="second/dsecnd" href="lau/functn_second-dsecnd.html"/>
+         <topic label="xerbla" href="lau/functn_xerbla.html"/>
+      </topic>
+   </topic>
+   <topic label="ScaLAPACK Routines" href="sla/sla_intro.html">
+      <topic label="Overview" href="sla/sla_Overview.html"/>
+      <topic label="Routine Naming Conventions" href="sla/sla_naming.html"/>
+      <topic label="Computational Routines" href="sla/sla_comproutines.html">
+         <topic label="Linear Equations" href="sla/sla_linequations.html"/>
+         <topic label="Routines for Matrix Factorization" href="sla/sla_mfroutines.html">
+            <topic label="p?getrf" href="sla/functn_pgetrf.html"/>
+            <topic label="p?gbtrf" href="sla/functn_pgbtrf.html"/>
+            <topic label="p?dbtrf" href="sla/functn_pdbtrf.html"/>
+            <topic label="p?potrf" href="sla/functn_ppotrf.html"/>
+            <topic label="p?pbtrf" href="sla/functn_ppbtrf.html"/>
+            <topic label="p?pttrf" href="sla/functn_ppttrf.html"/>
+            <topic label="p?dttrf" href="sla/functn_pdttrf.html"/>
+         </topic>
+         <topic label="Routines for Solving Systems of Linear Equations" href="sla/sla_ssleroutines.html">
+            <topic label="p?getrs" href="sla/functn_pgetrs.html"/>
+            <topic label="p?gbtrs" href="sla/functn_pgbtrs.html"/>
+            <topic label="p?potrs" href="sla/functn_ppotrs.html"/>
+            <topic label="p?pbtrs" href="sla/functn_ppbtrs.html"/>
+            <topic label="p?pttrs" href="sla/functn_ppttrs.html"/>
+            <topic label="p?dttrs" href="sla/functn_pdttrs.html"/>
+            <topic label="p?dbtrs" href="sla/functn_pdbtrs.html"/>
+            <topic label="p?trtrs" href="sla/functn_ptrtrs.html"/>
+         </topic>
+         <topic label="Routines for Estimating the Condition Number" href="sla/sla_ecnroutines.html">
+            <topic label="p?gecon" href="sla/functn_pgecon.html"/>
+            <topic label="p?pocon" href="sla/functn_ppocon.html"/>
+            <topic label="p?trcon" href="sla/functn_ptrcon.html"/>
+         </topic>
+         <topic label="Refining the Solution and Estimating Its Error" href="sla/sla_refsolutions.html">
+            <topic label="p?gerfs" href="sla/functn_pgerfs.html"/>
+            <topic label="p?porfs" href="sla/functn_pporfs.html"/>
+            <topic label="p?trrfs" href="sla/functn_ptrrfs.html"/>
+         </topic>
+         <topic label="Routines for Matrix Inversion" href="sla/sla_miroutines.html">
+            <topic label="p?getri" href="sla/functn_pgetri.html"/>
+            <topic label="p?potri" href="sla/functn_ppotri.html"/>
+            <topic label="p?trtri" href="sla/functn_ptrtri.html"/>
+         </topic>
+         <topic label="Routines for Matrix Equilibration" href="sla/sla_meroutines.html">
+            <topic label="p?geequ" href="sla/functn_pgeequ.html"/>
+            <topic label="p?poequ" href="sla/functn_ppoequ.html"/>
+         </topic>
+         <topic label="Orthogonal Factorizations" href="sla/sla_ofactor.html">
+            <topic label="p?geqrf" href="sla/functn_pgeqrf.html"/>
+            <topic label="p?geqpf" href="sla/functn_pgeqpf.html"/>
+            <topic label="p?orgqr" href="sla/functn_porgqr.html"/>
+            <topic label="p?ungqr" href="sla/functn_pungqr.html"/>
+            <topic label="p?ormqr" href="sla/functn_pormqr.html"/>
+            <topic label="p?unmqr" href="sla/functn_punmqr.html"/>
+            <topic label="p?gelqf" href="sla/functn_pgelqf.html"/>
+            <topic label="p?orglq" href="sla/functn_porglq.html"/>
+            <topic label="p?unglq" href="sla/functn_punglq.html"/>
+            <topic label="p?ormlq" href="sla/functn_pormlq.html"/>
+            <topic label="p?unmlq" href="sla/functn_punmlq.html"/>
+            <topic label="p?geqlf" href="sla/functn_pgeqlf.html"/>
+            <topic label="p?orgql" href="sla/functn_porgql.html"/>
+            <topic label="p?ungql" href="sla/functn_pungql.html"/>
+            <topic label="p?ormql" href="sla/functn_pormql.html"/>
+            <topic label="p?unmql" href="sla/functn_punmql.html"/>
+            <topic label="p?gerqf" href="sla/functn_pgerqf.html"/>
+            <topic label="p?orgrq" href="sla/functn_porgrq.html"/>
+            <topic label="p?ungrq" href="sla/functn_pungrq.html"/>
+            <topic label="p?ormrq" href="sla/functn_pormrq.html"/>
+            <topic label="p?unmrq" href="sla/functn_punmrq.html"/>
+            <topic label="p?tzrzf" href="sla/functn_ptzrzf.html"/>
+            <topic label="p?ormrz" href="sla/functn_pormrz.html"/>
+            <topic label="p?unmrz" href="sla/functn_punmrz.html"/>
+            <topic label="p?ggqrf" href="sla/functn_pggqrf.html"/>
+            <topic label="p?ggrqf" href="sla/functn_pggrqf.html"/>
+         </topic>
+         <topic label="Symmetric Eigenproblems" href="sla/sla_symmeigen.html">
+            <topic label="p?sytrd" href="sla/functn_psytrd.html"/>
+            <topic label="p?ormtr" href="sla/functn_pormtr.html"/>
+            <topic label="p?hetrd" href="sla/functn_phetrd.html"/>
+            <topic label="p?unmtr" href="sla/functn_punmtr.html"/>
+            <topic label="p?stebz" href="sla/functn_pstebz.html"/>
+            <topic label="p?stein" href="sla/functn_pstein.html"/>
+         </topic>
+         <topic label="Nonsymmetric Eigenvalue Problems" href="sla/sla_nonsymmeigen.html">
+            <topic label="p?gehrd" href="sla/functn_pgehrd.html"/>
+            <topic label="p?ormhr" href="sla/functn_pormhr.html"/>
+            <topic label="p?unmhr" href="sla/functn_punmhr.html"/>
+            <topic label="p?lahqr" href="sla/functn_plahqr.html"/>
+         </topic>
+         <topic label="Singular Value Decomposition" href="sla/sla_svdecomp.html">
+            <topic label="p?gebrd" href="sla/functn_pgebrd.html"/>
+            <topic label="p?ormbr" href="sla/functn_pormbr.html"/>
+            <topic label="p?unmbr" href="sla/functn_punmbr.html"/>
+         </topic>
+         <topic label="Generalized Symmetric-Definite Eigen Problems" href="sla/sla_gsdeproblems.html">
+            <topic label="p?sygst" href="sla/functn_psygst.html"/>
+            <topic label="p?hegst" href="sla/functn_phegst.html"/>
+         </topic>
+      </topic>
+      <topic label="Driver Routines" href="sla/sla_driverroutines.html">
+         <topic label="p?gesv" href="sla/functn_pgesv.html"/>
+         <topic label="p?gesvx" href="sla/functn_pgesvx.html"/>
+         <topic label="p?gbsv" href="sla/functn_pgbsv.html"/>
+         <topic label="p?dbsv" href="sla/functn_pdbsv.html"/>
+         <topic label="p?dtsv" href="sla/functn_pdtsv.html"/>
+         <topic label="p?posv" href="sla/functn_pposv.html"/>
+         <topic label="p?posvx" href="sla/functn_pposvx.html"/>
+         <topic label="p?pbsv" href="sla/functn_ppbsv.html"/>
+         <topic label="p?ptsv" href="sla/functn_pptsv.html"/>
+         <topic label="p?gels" href="sla/functn_pgels.html"/>
+         <topic label="p?syev" href="sla/functn_psyev.html"/>
+         <topic label="p?syevx" href="sla/functn_psyevx.html"/>
+         <topic label="p?heevx" href="sla/functn_pheevx.html"/>
+         <topic label="p?gesvd" href="sla/functn_pgesvd.html"/>
+         <topic label="p?sygvx" href="sla/functn_psygvx.html"/>
+         <topic label="p?hegvx" href="sla/functn_phegvx.html"/>
+      </topic>
+   </topic>
+   <topic label="ScaLAPACK Auxiliary and Utility Routines" href="slau/slau_intro.html">
+      <topic label="Auxiliary Routines" href="slau/slau_aux.html">
+         <topic label="p?lacgv" href="slau/functn_placgv.html"/>
+         <topic label="p?max1" href="slau/functn_pmax1.html"/>
+         <topic label="?combamax1" href="slau/functn_combamax1.html"/>
+         <topic label="p?sum1" href="slau/functn_psum1.html"/>
+         <topic label="p?dbtrsv" href="slau/functn_pdbtrsv.html"/>
+         <topic label="p?dttrsv" href="slau/functn_pdttrsv.html"/>
+         <topic label="p?gebd2" href="slau/functn_pgebd2.html"/>
+         <topic label="p?gehd2" href="slau/functn_pgehd2.html"/>
+         <topic label="p?gelq2" href="slau/functn_pgelq2.html"/>
+         <topic label="p?geql2" href="slau/functn_pgeql2.html"/>
+         <topic label="p?geqr2" href="slau/functn_pgeqr2.html"/>
+         <topic label="p?gerq2" href="slau/functn_pgerq2.html"/>
+         <topic label="p?getf2" href="slau/functn_pgetf2.html"/>
+         <topic label="p?labrd" href="slau/functn_plabrd.html"/>
+         <topic label="p?lacon" href="slau/functn_placon.html"/>
+         <topic label="p?laconsb" href="slau/functn_placonsb.html"/>
+         <topic label="p?lacp2" href="slau/functn_placp2.html"/>
+         <topic label="p?lacp3" href="slau/functn_placp3.html"/>
+         <topic label="p?lacpy" href="slau/functn_placpy.html"/>
+         <topic label="p?laevswp" href="slau/functn_plaevswp.html"/>
+         <topic label="p?lahrd" href="slau/functn_plahrd.html"/>
+         <topic label="p?laiect" href="slau/functn_plaiect.html"/>
+         <topic label="p?lange" href="slau/functn_plange.html"/>
+         <topic label="p?lanhs" href="slau/functn_planhs.html"/>
+         <topic label="p?lansy, p?lanhe" href="slau/functn_plansy_planhe.html"/>
+         <topic label="p?lantr" href="slau/functn_plantr.html"/>
+         <topic label="p?lapiv" href="slau/functn_plapiv.html"/>
+         <topic label="p?laqge" href="slau/functn_plaqge.html"/>
+         <topic label="p?laqsy" href="slau/functn_plaqsy.html"/>
+         <topic label="p?lared1d" href="slau/functn_plared1d.html"/>
+         <topic label="p?lared2d" href="slau/functn_plared2d.html"/>
+         <topic label="p?larf" href="slau/functn_plarf.html"/>
+         <topic label="p?larfb" href="slau/functn_plarfb.html"/>
+         <topic label="p?larfc" href="slau/functn_plarfc.html"/>
+         <topic label="p?larfg" href="slau/functn_plarfg.html"/>
+         <topic label="p?larft" href="slau/functn_plarft.html"/>
+         <topic label="p?larz" href="slau/functn_plarz.html"/>
+         <topic label="p?larzb" href="slau/functn_plarzb.html"/>
+         <topic label="p?larzc" href="slau/functn_plarzc.html"/>
+         <topic label="p?larzt" href="slau/functn_plarzt.html"/>
+         <topic label="p?lascl" href="slau/functn_plascl.html"/>
+         <topic label="p?laset" href="slau/functn_plaset.html"/>
+         <topic label="p?lasmsub" href="slau/functn_plasmsub.html"/>
+         <topic label="p?lassq" href="slau/functn_plassq.html"/>
+         <topic label="p?laswp" href="slau/functn_plaswp.html"/>
+         <topic label="p?latra" href="slau/functn_platra.html"/>
+         <topic label="p?latrd" href="slau/functn_platrd.html"/>
+         <topic label="p?latrs" href="slau/functn_platrs.html"/>
+         <topic label="p?latrz" href="slau/functn_platrz.html"/>
+         <topic label="p?lauu2" href="slau/functn_plauu2.html"/>
+         <topic label="p?lauum" href="slau/functn_plauum.html"/>
+         <topic label="p?lawil" href="slau/functn_plawil.html"/>
+         <topic label="p?org2l/p?ung2l" href="slau/functn_porg2lpung2l.html"/>
+         <topic label="p?org2r/p?ung2r" href="slau/functn_porg2rpung2r.html"/>
+         <topic label="p?orgl2/p?ungl2" href="slau/functn_porgl2pungl2.html"/>
+         <topic label="p?orgr2/p?ungr2" href="slau/functn_porgr2pungr2.html"/>
+         <topic label="p?orm2l/p?unm2l" href="slau/functn_porm2lpunm2l.html"/>
+         <topic label="p?orm2r/p?unm2r" href="slau/functn_porm2rpunm2r.html"/>
+         <topic label="p?orml2/p?unml2" href="slau/functn_porml2punml2.html"/>
+         <topic label="p?ormr2/p?unmr2" href="slau/functn_pormr2punmr2.html"/>
+         <topic label="p?pbtrsv" href="slau/functn_ppbtrsv.html"/>
+         <topic label="p?pttrsv" href="slau/functn_ppttrsv.html"/>
+         <topic label="p?potf2" href="slau/functn_ppotf2.html"/>
+         <topic label="p?rscl" href="slau/functn_prscl.html"/>
+         <topic label="p?sygs2/p?hegs2" href="slau/functn_psygs2phegs2.html"/>
+         <topic label="p?sytd2/p?hetd2" href="slau/functn_psytd2phetd2.html"/>
+         <topic label="p?trti2" href="slau/functn_ptrti2.html"/>
+         <topic label="?lamsh" href="slau/functn_lamsh.html"/>
+         <topic label="?laref" href="slau/functn_laref.html"/>
+         <topic label="?lasorte" href="slau/functn_lasorte.html"/>
+         <topic label="?lasrt2" href="slau/functn_lasrt2.html"/>
+         <topic label="?stein2" href="slau/functn_stein2.html"/>
+         <topic label="?dbtf2" href="slau/functn_dbtf2.html"/>
+         <topic label="?dbtrf" href="slau/functn_dbtrf.html"/>
+         <topic label="?dttrf" href="slau/functn_dttrf.html"/>
+         <topic label="?dttrsv" href="slau/functn_dttrsv.html"/>
+         <topic label="?pttrsv" href="slau/functn_pttrsv.html"/>
+         <topic label="?steqr2" href="slau/functn_steqr2.html"/>
+      </topic>
+      <topic label="Utility Functions and Routines" href="slau/slau_util.html">
+         <topic label="p?labad" href="slau/functn_plabad.html"/>
+         <topic label="p?lachkieee" href="slau/functn_plachkieee.html"/>
+         <topic label="p?lamch" href="slau/functn_plamch.html"/>
+         <topic label="p?lasnbt" href="slau/functn_plasnbt.html"/>
+         <topic label="pxerbla" href="slau/functn_pxerbla.html"/>
+      </topic>
+   </topic>
+   <topic label="Sparse Solver Routines" href="ssr/ssr_Intro.html">
+      <topic label="PARDISO* - Parallel Direct Sparse Solver Interface" href="ssr/ssr_pardiso.html">
+         <topic label="pardiso" href="ssr/functn_pardiso.html"/>
+      </topic>
+      <topic label="Direct Sparse Solver (DSS) Interface Routines" href="ssr/ssr_DSSIntro.html">
+         <topic label="DSS Interface Description" href="ssr/ssr_DSSInterfaceDesc.html"/>
+         <topic label="DSS Routines">
+            <topic label="dss_create" href="ssr/functn_dss_create.html"/>
+            <topic label="dss_define_structure" href="ssr/functn_dss_define_structure.html"/>
+            <topic label="dss_reorder" href="ssr/functn_dss_reorder.html"/>
+            <topic label="dss_factor_real, dss_factor_complex" href="ssr/functn_dss_factor_real_dss_factor_complex.html"/>
+            <topic label="dss_solve_real, dss_solve_complex" href="ssr/functn_dss_solve_real_dss_solve_complex.html"/>
+            <topic label="dss_delete" href="ssr/functn_dss_delete.html"/>
+            <topic label="dss_statistics" href="ssr/functn_dss_statistics.html"/>
+            <topic label="mkl_cvt_to_null_terminated_str" href="ssr/functn_mkl_cvt_to_null_terminated_str.html"/>
+         </topic>
+         <topic label="Implementation Details" href="ssr/ssr_DSSImplDetails.html"/>
+      </topic>
+      <topic label="Iterative Sparse Solvers based on Reverse Communication Interface (RCI ISS)" href="ssr/ssr_RCICGS.html">
+         <topic label="CG Interface Description" href="ssr/ssr_RCIInterfaceDesc.html"/>
+         <topic label="FGMRES Interface Description" href="ssr/ssr_FGMRESInterfaceDesc.html"/>
+         <topic label="RCI ISS Routines">
+            <topic label="dcg_init" href="ssr/functn_rci_dcg_init.html"/>
+            <topic label="dcg_check" href="ssr/functn_rci_dcg_check.html"/>
+            <topic label="dcg" href="ssr/functn_rci_dcg.html"/>
+            <topic label="dcg_get" href="ssr/functn_rci_dcg_get.html"/>
+            <topic label="dcgmrhs_init" href="ssr/functn_rci_dcgmrhs_init.html"/>
+            <topic label="dcgmrhs_check" href="ssr/functn_rci_dcgmrhs_check.html"/>
+            <topic label="dcgmrhs" href="ssr/functn_rci_dcgmrhs.html"/>
+            <topic label="dcgmrhs_get" href="ssr/functn_rci_dcgmrhs_get.html"/>
+            <topic label="dfgmres_init" href="ssr/functn_rci_dfgmres_init.html"/>
+            <topic label="dfgmres_check" href="ssr/functn_rci_dfgmres_check.html"/>
+            <topic label="dfgmres" href="ssr/functn_rci_dfgmres.html"/>
+            <topic label="dfgmres_get" href="ssr/functn_rci_dfgmres_get.html"/>
+         </topic>
+         <topic label="Implementation Details" href="ssr/ssr_RCIImplDetails.html"/>
+      </topic>
+      <topic label="Preconditioners based on Incomplete LU Factorization Technique" href="ssr/ssr_ILUIntro.html">
+         <topic label="ILU0 and ILUT Preconditioners Interface Description" href="ssr/ssr_ILUInterfaceDesc.html"/>
+         <topic label="dcsrilu0" href="ssr/functn_dcsrilu0.html"/>
+         <topic label="dcsrilut" href="ssr/functn_dcsrilut.html"/>
+      </topic>
+      <topic label="Calling Sparse Solver and Preconditioner Routines from C/C++" href="ssr/ssr_CallingSSR.html"/>
+   </topic>
+   <topic label="Vector Mathematical Functions" href="vml/vml_Intro.html">
+      <topic label="Data Types and Accuracy Modes" href="vml/vml_DataTypesAccuracyModes.html"/>
+      <topic label="Function Naming Conventions" href="vml/vml_FunctionNaming.html">
+         <topic label="Functions Interface" href="vml/vml_FuncsInterface.html">
+            <topic label="VML Mathematical Functions" href="vml/vml_MathFuncs.html"/>
+            <topic label="Pack Functions" href="vml/vml_PackFunc.html"/>
+            <topic label="Unpack Functions" href="vml/vml_UnpackFuncs.html"/>
+            <topic label="Service Functions" href="vml/vml_ServFuncs.html"/>
+            <topic label="Input Parameters" href="vml/vml_InputParam.html"/>
+            <topic label="Output Parameters" href="vml/vml_OutputParam.html"/>
+         </topic>
+      </topic>
+      <topic label="Vector Indexing Methods" href="vml/vml_VectorIndexMethods.html"/>
+      <topic label="Error Diagnostics" href="vml/vml_ErrorDiagnostics.html"/>
+      <topic label="Vector Math Functions Threading" href="vml/vml_Threading.html"/>
+      <topic label="VML Mathematical Functions" href="vml/vml_VMLMathFuncs.html">
+         <topic label="Arithmetic Functions" href="vml/vml_ArithFuncs.html">
+            <topic label="Add" href="vml/functn_Add.html"/>
+            <topic label="Sub" href="vml/functn_Sub.html"/>
+            <topic label="Sqr" href="vml/functn_Sqr.html"/>
+            <topic label="Mul" href="vml/functn_Mul.html"/>
+            <topic label="MulByConj" href="vml/functn_MulByConj.html"/>
+            <topic label="Conj" href="vml/functn_Conj.html"/>
+            <topic label="Abs" href="vml/functn_Abs.html"/>
+         </topic>
+         <topic label="Power and Root Functions" href="vml/vml_PowerRootFuncs.html">
+            <topic label="Inv" href="vml/functn_Inv.html"/>
+            <topic label="Div" href="vml/functn_Div.html"/>
+            <topic label="Sqrt" href="vml/functn_Sqrt.html"/>
+            <topic label="InvSqrt" href="vml/functn_InvSqrt.html"/>
+            <topic label="Cbrt" href="vml/functn_Cbrt.html"/>
+            <topic label="InvCbrt" href="vml/functn_InvCbrt.html"/>
+            <topic label="Pow2o3" href="vml/functn_Pow2o3.html"/>
+            <topic label="Pow3o2" href="vml/functn_Pow3o2.html"/>
+            <topic label="Pow" href="vml/functn_Pow.html"/>
+            <topic label="Powx" href="vml/functn_Powx.html"/>
+            <topic label="Hypot" href="vml/functn_Hypot.html"/>
+         </topic>
+         <topic label="Exponential and Logarithmic Functions" href="vml/vml_ExpLogFuncs.html">
+            <topic label="Exp" href="vml/functn_Exp.html"/>
+            <topic label="Expm1" href="vml/functn_Expm1.html"/>
+            <topic label="Ln" href="vml/functn_Ln.html"/>
+            <topic label="Log10" href="vml/functn_Log10.html"/>
+            <topic label="Log1p" href="vml/functn_Log1p.html"/>
+         </topic>
+         <topic label="Trigonometric Functions" href="vml/vml_TrigonomFuncs.html">
+            <topic label="Cos" href="vml/functn_Cos.html"/>
+            <topic label="Sin" href="vml/functn_Sin.html"/>
+            <topic label="SinCos" href="vml/functn_SinCos.html"/>
+            <topic label="CIS" href="vml/functn_CIS.html"/>
+            <topic label="Tan" href="vml/functn_Tan.html"/>
+            <topic label="Acos" href="vml/functn_Acos.html"/>
+            <topic label="Asin" href="vml/functn_Asin.html"/>
+            <topic label="Atan" href="vml/functn_Atan.html"/>
+            <topic label="Atan2" href="vml/functn_Atan2.html"/>
+         </topic>
+         <topic label="Hyperbolic Functions" href="vml/vml_HyperbolicFuncs.html">
+            <topic label="Cosh" href="vml/functn_Cosh.html"/>
+            <topic label="Sinh" href="vml/functn_Sinh.html"/>
+            <topic label="Tanh" href="vml/functn_Tanh.html"/>
+            <topic label="Acosh" href="vml/functn_Acosh.html"/>
+            <topic label="Asinh" href="vml/functn_Asinh.html"/>
+            <topic label="Atanh" href="vml/functn_Atanh.html"/>
+         </topic>
+         <topic label="Special Functions" href="vml/vml_SpecialFuncs.html">
+            <topic label="Erf" href="vml/functn_Erf.html"/>
+            <topic label="Erfc" href="vml/functn_Erfc.html"/>
+            <topic label="ErfInv" href="vml/functn_ErfInv.html"/>
+         </topic>
+         <topic label="Rounding Functions" href="vml/vml_RoundingFuncs.html">
+            <topic label="Floor" href="vml/functn_Floor.html"/>
+            <topic label="Ceil" href="vml/functn_Ceil.html"/>
+            <topic label="Trunc" href="vml/functn_Trunc.html"/>
+            <topic label="Round" href="vml/functn_Round.html"/>
+            <topic label="NearbyInt" href="vml/functn_NearbyInt.html"/>
+            <topic label="Rint" href="vml/functn_Rint.html"/>
+            <topic label="Modf" href="vml/functn_Modf.html"/>
+         </topic>
+      </topic>
+      <topic label="VML Pack/Unpack Functions" href="vml/vml_VMLPackUnpackFuncs.html">
+         <topic label="Pack" href="vml/functn_Pack.html"/>
+         <topic label="Unpack" href="vml/functn_Unpack.html"/>
+      </topic>
+      <topic label="VML Service Functions" href="vml/vml_VMLServiceFuncs.html">
+         <topic label="SetMode" href="vml/functn_vml_SetMode.html"/>
+         <topic label="GetMode" href="vml/functn_GetMode.html"/>
+         <topic label="SetErrStatus" href="vml/functn_SetErrStatus.html"/>
+         <topic label="GetErrStatus" href="vml/functn_GetErrStatus.html"/>
+         <topic label="ClearErrStatus" href="vml/functn_ClearErrStatus.html"/>
+         <topic label="SetErrorCallBack" href="vml/functn_SetErrorCallBack.html"/>
+         <topic label="GetErrorCallBack" href="vml/functn_GetErrorCallBack.html"/>
+         <topic label="ClearErrorCallBack" href="vml/functn_ClearErrorCallBack.html"/>
+      </topic>
+   </topic>
+   <topic label="Statistical Functions" href="sf/sf_intro.html">
+      <topic label="Random Number Generators" href="sf/sf_rng.html">
+         <topic label="Conventions" href="sf/sf_conv.html">
+            <topic label="Mathematical Notation" href="sf/sf_rng_mathnotation.html"/>
+            <topic label="Naming Conventions" href="sf/sf_rng_namingconv.html"/>
+         </topic>
+         <topic label="Basic Generators" href="sf/sf_basicgen.html">
+            <topic label="BRNG Parameter Definition" href="sf/sf_brngparamdef.html"/>
+            <topic label="Random Streams" href="sf/sf_randstreams.html"/>
+            <topic label="Data Types" href="sf/sf_rng_datatypes.html"/>
+         </topic>
+         <topic label="Error Reporting" href="sf/sf_errorrep.html"/>
+         <topic label="Service Routines" href="sf/sf_servroutines.html">
+            <topic label="NewStream" href="sf/functn_NewStream.html"/>
+            <topic label="NewStreamEx" href="sf/functn_NewStreamEx.html"/>
+            <topic label="iNewAbstractStream" href="sf/functn_iNewAbstractStream.html"/>
+            <topic label="dNewAbstractStream" href="sf/functn_dNewAbstractStream.html"/>
+            <topic label="sNewAbstractStream" href="sf/functn_sNewAbstractStream.html"/>
+            <topic label="DeleteStream" href="sf/functn_DeleteStream.html"/>
+            <topic label="CopyStream" href="sf/functn_CopyStream.html"/>
+            <topic label="CopyStreamState" href="sf/functn_CopyStreamState.html"/>
+            <topic label="SaveStreamF" href="sf/functn_SaveStreamF.html"/>
+            <topic label="LoadStreamF" href="sf/functn_LoadStreamF.html"/>
+            <topic label="LeapfrogStream" href="sf/functn_LeapfrogStream.html"/>
+            <topic label="SkipAheadStream" href="sf/functn_SkipAheadStream.html"/>
+            <topic label="GetStreamStateBrng" href="sf/functn_GetStreamStateBrng.html"/>
+            <topic label="GetNumRegBrngs" href="sf/functn_GetNumRegBrngs.html"/>
+         </topic>
+         <topic label="Distribution Generators" href="sf/sf_distgen.html">
+            <topic label="Continuous Distributions" href="sf/sf_contdist.html">
+               <topic label="Uniform" href="sf/functn_conUniform.html"/>
+               <topic label="Gaussian" href="sf/functn_Gaussian.html"/>
+               <topic label="GaussianMV" href="sf/functn_GaussianMV.html"/>
+               <topic label="Exponential" href="sf/functn_Exponential.html"/>
+               <topic label="Laplace" href="sf/functn_Laplace.html"/>
+               <topic label="Weibull" href="sf/functn_Weibull.html"/>
+               <topic label="Cauchy" href="sf/functn_Cauchy.html"/>
+               <topic label="Rayleigh" href="sf/functn_Rayleigh.html"/>
+               <topic label="Lognormal" href="sf/functn_Lognormal.html"/>
+               <topic label="Gumbel" href="sf/functn_Gumbel.html"/>
+               <topic label="Gamma" href="sf/functn_Gamma.html"/>
+               <topic label="Beta" href="sf/functn_Beta.html"/>
+            </topic>
+            <topic label="Discrete Distributions" href="sf/sf_discdist.html">
+               <topic label="Uniform" href="sf/functn_disUniform.html"/>
+               <topic label="UniformBits" href="sf/functn_UniformBits.html"/>
+               <topic label="Bernoulli" href="sf/functn_Bernoulli.html"/>
+               <topic label="Geometric" href="sf/functn_Geometric.html"/>
+               <topic label="Binomial" href="sf/functn_Binomial.html"/>
+               <topic label="Hypergeometric" href="sf/functn_Hypergeometric.html"/>
+               <topic label="Poisson" href="sf/functn_Poisson.html"/>
+               <topic label="PoissonV" href="sf/functn_PoissonV.html"/>
+               <topic label="NegBinomial" href="sf/functn_NegBinomial.html"/>
+            </topic>
+         </topic>
+         <topic label="Advanced Service Routines" href="sf/sf_adservroutines.html">
+            <topic label="Data types" href="sf/sf_adservroutinesdt.html"/>
+            <topic label="RegisterBrng" href="sf/functn_RegisterBrng.html"/>
+            <topic label="GetBrngProperties" href="sf/functn_GetBrngProperties.html"/>
+            <topic label="Formats for User-Designed Generators" href="sf/sf_formatuserdesgen.html"/>
+         </topic>
+      </topic>
+      <topic label="Convolution and Correlation" href="sf/sf_convcorr.html">
+         <topic label="Overview" href="sf/sf_convcorr_overview.html"/>
+         <topic label="Naming Conventions" href="sf/sf_convcorr_namingconv.html"/>
+         <topic label="Data Types" href="sf/sf_convcorr_datatypes.html"/>
+         <topic label="Parameters" href="sf/sf_convcorr_param.html"/>
+         <topic label="Task Status and Error Reporting" href="sf/sf_taskstatus.html"/>
+         <topic label="Task Constructors" href="sf/sf_taskconstruct.html">
+            <topic label="NewTask" href="sf/functn_NewTask.html"/>
+            <topic label="NewTask1D" href="sf/functn_NewTask1D.html"/>
+            <topic label="NewTaskX" href="sf/functn_NewTaskX.html"/>
+            <topic label="NewTaskX1D" href="sf/functn_NewTaskX1D.html"/>
+         </topic>
+         <topic label="Task Editors" href="sf/sf_taskeditors.html">
+            <topic label="SetMode" href="sf/functn_vsl_SetMode.html"/>
+            <topic label="SetInternalPrecision" href="sf/functn_SetInternalPrecision.html"/>
+            <topic label="SetStart" href="sf/functn_SetStart.html"/>
+            <topic label="SetDecimation" href="sf/functn_SetDecimation.html"/>
+         </topic>
+         <topic label="Task Execution Routines" href="sf/sf_taskexecrout.html">
+            <topic label="Exec" href="sf/functn_Exec.html"/>
+            <topic label="Exec1D" href="sf/functn_Exec1D.html"/>
+            <topic label="ExecX" href="sf/functn_ExecX.html"/>
+            <topic label="ExecX1D" href="sf/functn_ExecX1D.html"/>
+         </topic>
+         <topic label="Task Destructors" href="sf/sf_taskdestruct.html">
+            <topic label="DeleteTask" href="sf/functn_DeleteTask.html"/>
+         </topic>
+         <topic label="Task Copy" href="sf/sf_taskcopy.html">
+            <topic label="CopyTask" href="sf/functn_CopyTask.html"/>
+         </topic>
+         <topic label="Usage Examples" href="sf/sf_usageex.html"/>
+         <topic label="Mathematical Notation and Definitions" href="sf/sf_convcorr_mathnotdef.html"/>
+         <topic label="Data Allocation" href="sf/sf_dataalloc.html"/>
+      </topic>
+   </topic>
+   <topic label="Fourier Transform Functions" href="fft/fft_intro.html">
+      <topic label="FFT Functions" href="fft/fft_DFTF.html">
+         <topic label="Computing FFT" href="fft/fft_ComputingDFT.html"/>
+         <topic label="FFT Interface" href="fft/fft_DFTInterface.html"/>
+         <topic label="Status Checking Functions" href="fft/fft_StatusChecking.html">
+            <topic label="ErrorClass" href="fft/functn_ErrorClass.html"/>
+            <topic label="ErrorMessage" href="fft/functn_ErrorMessage.html"/>
+         </topic>
+         <topic label="Descriptor Manipulation Functions" href="fft/fft_DescriptorManip.html">
+            <topic label="CreateDescriptor" href="fft/functn_CreateDescriptor.html"/>
+            <topic label="CommitDescriptor" href="fft/functn_CommitDescriptor.html"/>
+            <topic label="CopyDescriptor" href="fft/functn_CopyDescriptor.html"/>
+            <topic label="FreeDescriptor" href="fft/functn_FreeDescriptor.html"/>
+         </topic>
+         <topic label="FFT Computation Functions" href="fft/fft_DFTComputation.html">
+            <topic label="ComputeForward" href="fft/functn_ComputeForward.html"/>
+            <topic label="ComputeBackward" href="fft/functn_ComputeBackward.html"/>
+         </topic>
+         <topic label="Descriptor Configuration Functions" href="fft/fft_DescriptorConfig.html">
+            <topic label="SetValue" href="fft/functn_SetValue.html"/>
+            <topic label="GetValue" href="fft/functn_GetValue.html"/>
+         </topic>
+         <topic label="Configuration Settings" href="fft/fft_ConfigSettings.html">
+            <topic label="Precision of transform" href="fft/fft_Precision.html"/>
+            <topic label="Forward domain of transform" href="fft/fft_FwdDomain.html"/>
+            <topic label="Transform dimension and lengths" href="fft/fft_DimensionAndLength.html"/>
+            <topic label="Number of transforms" href="fft/fft_NumberOfTransforms.html"/>
+            <topic label="Scale" href="fft/fft_Scale.html"/>
+            <topic label="Placement of result" href="fft/fft_Placement.html"/>
+            <topic label="Packed formats" href="fft/fft_PackedFormats.html"/>
+            <topic label="Storage schemes" href="fft/fft_StorageSchemes.html"/>
+            <topic label="Number of user threads" href="fft/fft_NumberOfThreads.html"/>
+            <topic label="Input and output distances" href="fft/fft_InputOutputDistances.html"/>
+            <topic label="Strides" href="fft/fft_Strides.html"/>
+            <topic label="Ordering" href="fft/fft_Ordering.html"/>
+            <topic label="Transposition" href="fft/fft_Transposition.html"/>
+         </topic>
+      </topic>
+      <topic label="Cluster FFT Functions" href="fft/fft_CDFTF.html">
+         <topic label="Computing Cluster FFT" href="fft/fft_ccdftf.html"/>
+         <topic label="Distributing Data among Processes" href="fft/fft_cdft_DistributingData.html"/>
+         <topic label="Cluster FFT Interface" href="fft/fft_cdftfi.html"/>
+         <topic label="Descriptor Manipulation Functions" href="fft/fft_cdftf_dm.html">
+            <topic label="CreateDescriptorDM" href="fft/functn_CreateDescriptorDM.html"/>
+            <topic label="CommitDescriptorDM" href="fft/functn_CommitDescriptorDM.html"/>
+            <topic label="FreeDescriptorDM" href="fft/functn_FreeDescriptorDM.html"/>
+         </topic>
+         <topic label="FFT Computation Functions" href="fft/fft_DFTComputationDM.html">
+            <topic label="ComputeForwardDM" href="fft/functn_ComputeForwardDM.html"/>
+            <topic label="ComputeBackwardDM" href="fft/functn_ComputeBackwardDM.html"/>
+         </topic>
+         <topic label="Descriptor Configuration Functions" href="fft/fft_DFTDescConfigDM.html">
+            <topic label="SetValueDM" href="fft/functn_SetValueDM.html"/>
+            <topic label="GetValueDM" href="fft/functn_GetValueDM.html"/>
+         </topic>
+         <topic label="Error Codes" href="fft/fft_cdft_ErrorCodes.html"/>
+      </topic>
+   </topic>
+   <topic label="Interval Linear Solvers" href="ils/ils_Intro.html">
+      <topic label="Routine Naming Conventions" href="ils/ils_namingconv.html"/>
+      <topic label="Routines for Fast Solution of Interval Systems" href="ils/ils_FSIS.html">
+         <topic label="?trtrs" href="ils/functn_i_trtrs.html"/>
+         <topic label="?gegas" href="ils/functn_gegas.html"/>
+         <topic label="?gehss" href="ils/functn_gehss.html"/>
+         <topic label="?gekws" href="ils/functn_gekws.html"/>
+         <topic label="?gegss" href="ils/functn_gegss.html"/>
+         <topic label="?gehbs" href="ils/functn_gehbs.html"/>
+      </topic>
+      <topic label="Routines for Sharp Solution of Interval Systems" href="ils/ils_SSIS.html">
+         <topic label="?gepps" href="ils/functn_gepps.html"/>
+         <topic label="?gepss" href="ils/functn_gepss.html"/>
+      </topic>
+      <topic label="Routines for Inverting Interval Matrices" href="ils/ils_IIM.html">
+         <topic label="?trtri" href="ils/functn_i_trtri.html"/>
+         <topic label="?geszi" href="ils/functn_geszi.html"/>
+      </topic>
+      <topic label="Routines for Checking Properties of Interval Matrices" href="ils/ils_CPIM.html">
+         <topic label="?gerbr" href="ils/functn_gerbr.html"/>
+         <topic label="?gesvr" href="ils/functn_gesvr.html"/>
+      </topic>
+      <topic label="Auxiliary and Utility Routines" href="ils/ils_AU.html">
+         <topic label="?gemip" href="ils/functn_gemip.html"/>
+      </topic>
+   </topic>
+   <topic label="Partial Differential Equations Support" href="pdes/pdes_Intro.html">
+      <topic label="Trigonometric Transform Routines" href="pdes/pdes_ttr_Intro.html">
+         <topic label="Transforms Implemented" href="pdes/pdes_ttr_TransformsImplemented.html"/>
+         <topic label="Sequence of Invoking TT Routines" href="pdes/pdes_ttr_InvokingSequence.html"/>
+         <topic label="Interface Description" href="pdes/pdes_ttr_InterfaceDescription.html"/>
+         <topic label="TT Routines" href="pdes/pdes_ttr_TTRoutines.html">
+            <topic label="?_init_trig_transform" href="pdes/functn_init_trig_transform.html"/>
+            <topic label="?_commit_trig_transform" href="pdes/functn_commit_trig_transform.html"/>
+            <topic label="?_forward_trig_transform" href="pdes/functn_forward_trig_transform.html"/>
+            <topic label="?_backward_trig_transform" href="pdes/functn_backward_trig_transform.html"/>
+            <topic label="free_trig_transform" href="pdes/functn_free_trig_transform.html"/>
+         </topic>
+         <topic label="Common Parameters" href="pdes/pdes_ttr_CommonParameters.html"/>
+         <topic label="Implementation Details" href="pdes/pdes_ttr_ImplementationDetails.html"/>
+      </topic>
+      <topic label="Poisson Library Routines" href="pdes/pdes_plr_Intro.html">
+         <topic label="Poisson Library Implemented" href="pdes/pdes_plr_LibraryImplemented.html"/>
+         <topic label="Sequence of Invoking PL Routines" href="pdes/pdes_plr_InvokingSequence.html"/>
+         <topic label="Interface Description" href="pdes/pdes_plr_InterfaceDescription.html"/>
+         <topic label="PL Routines for the Cartesian Solver" href="pdes/pdes_plr_PLRoutines.html">
+            <topic label="?_init_Helmholtz_2D/?_init_Helmholtz_3D" href="pdes/functn_init_Helmholtz_2D-init_Helmholtz_3D.html"/>
+            <topic label="?_commit_Helmholtz_2D/?_commit_Helmholtz_3D" href="pdes/functn_commit_Helmholtz_2D-commit_Helmholtz_3D.html"/>
+            <topic label="?_Helmholtz_2D/?_Helmholtz_3D" href="pdes/functn_Helmholtz_2D-Helmholtz_3D.html"/>
+            <topic label="free_Helmholtz_2D/free_Helmholtz_3D" href="pdes/functn_free_Helmholtz_2D-free_Helmholtz_3D.html"/>
+         </topic>
+         <topic label="PL Routines for the Spherical Solver" href="pdes/pdes_plr_PLRoutines_s.html">
+            <topic label="?_init_sph_p/?_init_sph_np" href="pdes/functn_init_sph_p-init_sph_np.html"/>
+            <topic label="?_commit_sph_p/?_commit_sph_np" href="pdes/functn_commit_sph_p-commit_sph_np.html"/>
+            <topic label="?_sph_p/?_sph_np" href="pdes/functn_sph_p-sph_np.html"/>
+            <topic label="free_sph_p/free_sph_np" href="pdes/functn_free_sph_p-free_sph_np.html"/>
+         </topic>
+         <topic label="Common Parameters" href="pdes/pdes_plr_CommonParameters.html"/>
+         <topic label="Implementation Details" href="pdes/pdes_plr_ImplementationDetails.html"/>
+      </topic>
+      <topic label="Calling PDE Support Routines from Fortran 90" href="pdes/pdes_CallingFromFortran90.html"/>
+   </topic>
+   <topic label="Optimization Solver Routines" href="osr/osr_Intro.html">
+      <topic label="Organization and Implementation" href="osr/osr_orgimpl.html"/>
+      <topic label="Nonlinear Least Squares Problem without Constraints" href="osr/osr_NLSPnoC.html">
+         <topic label="dtrnlsp_init" href="osr/functn_dtrnlsp_init.html"/>
+         <topic label="dtrnlsp_solve" href="osr/functn_dtrnlsp_solve.html"/>
+         <topic label="dtrnlsp_get" href="osr/functn_dtrnlsp_get.html"/>
+         <topic label="dtrnlsp_delete" href="osr/functn_dtrnlsp_delete.html"/>
+         <topic label="Example of dtrnlsp Usage" href="osr/osr_dtrnlsp_example.html"/>
+      </topic>
+      <topic label="Nonlinear Least Squares Problem with Linear (Bound) Constraints" href="osr/osr_NLSPwC.html">
+         <topic label="dtrnlspbc_init" href="osr/functn_dtrnlspbc_init.html"/>
+         <topic label="dtrnlspbc_solve" href="osr/functn_dtrnlspbc_solve.html"/>
+         <topic label="dtrnlspbc_get" href="osr/functn_dtrnlspbc_get.html"/>
+         <topic label="dtrnlspbc_delete" href="osr/functn_dtrnlspbc_delete.html"/>
+         <topic label="Example of dtrnlspbc Usage" href="osr/osr_dtrnlspbc_example.html"/>
+      </topic>
+      <topic label="Jacobi Matrix Calculation Routines" href="osr/osr_JMCR.html">
+         <topic label="djacobi_init" href="osr/functn_djacobi_init.html"/>
+         <topic label="djacobi_solve" href="osr/functn_djacobi_solve.html"/>
+         <topic label="djacobi_delete" href="osr/functn_djacobi_delete.html"/>
+         <topic label="djacobi" href="osr/functn_djacobi.html"/>
+         <topic label="Example of djacobi_solve Usage" href="osr/osr_djacobi_solve_example.html"/>
+         <topic label="Example of djacobi Usage" href="osr/osr_djacobi_example.html"/>
+      </topic>
+   </topic>
+   <topic label="Support Functions" href="support/spt_Intro.html">
+      <topic label="Version Information Functions" href="support/spt_VersionInfo.html">
+         <topic label="MKLGetVersion" href="support/functn_mklgetversion.html"/>
+         <topic label="MKLGetVersionString" href="support/functn_mklgetversionstring.html"/>
+      </topic>
+      <topic label="Threading Control Functions" href="support/spt_Threading.html">
+         <topic label="mkl_set_num_threads" href="support/functn_mkl_set_num_threads.html"/>
+         <topic label="mkl_domain_set_num_threads" href="support/functn_mkl_domain_set_num_threads.html"/>
+         <topic label="mkl_set_dynamic" href="support/functn_mkl_set_dynamic.html"/>
+         <topic label="mkl_get_max_threads" href="support/functn_mkl_get_max_threads.html"/>
+         <topic label="mkl_domain_get_max_threads" href="support/functn_mkl_domain_get_max_threads.html"/>
+         <topic label="mkl_get_dynamic" href="support/functn_mkl_get_dynamic.html"/>
+      </topic>
+      <topic label="Error Handling Functions" href="support/spt_ErrorHandling.html">
+         <topic label="xerbla" href="support/functn_xerbla_spt.html"/>
+         <topic label="pxerbla" href="support/functn_pxerbla_spt.html"/>
+      </topic>
+      <topic label="Equality Test Functions" href="support/spt_EqualityTest.html">
+         <topic label="lsame" href="support/functn_lsame_spt.html"/>
+         <topic label="lsamen" href="support/functn_lsamen_spt.html"/>
+      </topic>
+      <topic label="Timing Functions" href="support/spt_Timing.html">
+         <topic label="second/dsecnd" href="support/functn_second-dsecnd.html"/>
+         <topic label="getcpuclocks" href="support/functn_getcpuclocks.html"/>
+         <topic label="getcpufrequency" href="support/functn_getcpufrequency.html"/>
+         <topic label="setcpufrequency" href="support/functn_setcpufrequency.html"/>
+      </topic>
+      <topic label="Memory Functions" href="support/spt_memfree.html">
+         <topic label="MKL_FreeBuffers" href="support/functn_freebuff.html"/>
+      </topic>
+   </topic>
+   <topic label="BLACS Routines" href="blacs/blacs_Intro.html">
+      <topic label="Matrix Shapes" href="blacs/blacs_matrixshape.html"/>
+      <topic label="BLACS Combine Operations" href="blacs/blacs_combines.html">
+         <topic label="?gamx2d" href="blacs/functn_gamx2d.html"/>
+         <topic label="?gamn2d" href="blacs/functn_gamn2d.html"/>
+         <topic label="?gsum2d" href="blacs/functn_gsum2d.html"/>
+      </topic>
+      <topic label="BLACS Point To Point Communication" href="blacs/blacs_PTP.html">
+         <topic label="?gesd2d" href="blacs/functn_gesd2d.html"/>
+         <topic label="?trsd2d" href="blacs/functn_trsd2d.html"/>
+         <topic label="?gerv2d" href="blacs/functn_gerv2d.html"/>
+         <topic label="?trrv2d" href="blacs/functn_trrv2d.html"/>
+      </topic>
+      <topic label="BLACS Broadcast Routines" href="blacs/blacs_broadcast.html">
+         <topic label="?gebs2d" href="blacs/functn_gebs2d.html"/>
+         <topic label="?trbs2d" href="blacs/functn_trbs2d.html"/>
+         <topic label="?gebr2d" href="blacs/functn_gebr2d.html"/>
+         <topic label="?trbr2d" href="blacs/functn_trbr2d.html"/>
+      </topic>
+      <topic label="BLACS Support Routines" href="blacs/blacs_support.html">
+         <topic label="Initialization Routines" href="blacs/blacs_Init.html">
+            <topic label="blacs_pinfo" href="blacs/functn_blacs_pinfo.html"/>
+            <topic label="blacs_setup" href="blacs/functn_blacs_setup.html"/>
+            <topic label="blacs_get" href="blacs/functn_blacs_get.html"/>
+            <topic label="blacs_set" href="blacs/functn_blacs_set.html"/>
+            <topic label="blacs_gridinit" href="blacs/functn_blacs_gridinit.html"/>
+            <topic label="blacs_gridmap" href="blacs/functn_blacs_gridmap.html"/>
+         </topic>
+         <topic label="Destruction Routines" href="blacs/blacs_Destruct.html">
+            <topic label="blacs_freebuff" href="blacs/functn_blacs_freebuff.html"/>
+            <topic label="blacs_gridexit" href="blacs/functn_blacs_gridexit.html"/>
+            <topic label="blacs_abort" href="blacs/functn_blacs_abort.html"/>
+            <topic label="blacs_exit" href="blacs/functn_blacs_exit.html"/>
+         </topic>
+         <topic label="Informational Routines" href="blacs/blacs_Info.html">
+            <topic label="blacs_gridinfo" href="blacs/functn_blacs_gridinfo.html"/>
+            <topic label="blacs_pnum" href="blacs/functn_blacs_pnum.html"/>
+            <topic label="blacs_pcoord" href="blacs/functn_blacs_pcoord.html"/>
+         </topic>
+         <topic label="Miscellaneous Routines" href="blacs/blacs_Misc.html">
+            <topic label="blacs_barrier" href="blacs/functn_blacs_barrier.html"/>
+         </topic>
+      </topic>
+      <topic label="BLACS Routines Usage Examples" href="blacs/blacs_example.html"/>
+   </topic>
+   <topic label="Appendices">
+      <topic label="A: Linear Solvers Basics" href="appendices/mkl_appA_Intro.html">
+         <topic label="Sparse Linear Systems" href="appendices/mkl_appA_SLS.html">
+            <topic label="Matrix Fundamentals" href="appendices/mkl_appA_MF.html"/>
+            <topic label="Direct Method" href="appendices/mkl_appA_DM.html"/>
+            <topic label="Sparse Matrix Storage Formats" href="appendices/mkl_appA_SMSF.html"/>
+         </topic>
+         <topic label="Interval Linear Systems" href="appendices/mkl_appA_ILS.html">
+            <topic label="Intervals" href="appendices/mkl_appA_I.html"/>
+            <topic label="Interval vectors and matrices" href="appendices/mkl_appA_IVM.html"/>
+            <topic label="Preconditioning" href="appendices/mkl_appA_Precond.html"/>
+            <topic label="Inverting interval matrices" href="appendices/mkl_appA_iim.html"/>
+         </topic>
+      </topic>
+      <topic label="B: Routine and Function Arguments" href="appendices/mkl_appB_Intro.html">
+         <topic label="Vector Arguments in BLAS" href="appendices/mkl_appB_VABLAS.html"/>
+         <topic label="Vector Arguments in VML" href="appendices/mkl_appB_VAVML.html"/>
+         <topic label="Matrix Arguments" href="appendices/mkl_appB_MA.html"/>
+      </topic>
+      <topic label="C: Code Examples" href="appendices/mkl_appC_Intro.html">
+         <topic label="BLAS Code Examples" href="appendices/mkl_appC_BLAS.html"/>
+         <topic label="PARDISO Code Examples" href="appendices/mkl_appC_Pardiso.html">
+            <topic label="Examples for Sparse Symmetric Linear Systems" href="appendices/mkl_appC_SSLS.html"/>
+            <topic label="Examples for Sparse Unsymmetric Linear Systems" href="appendices/mkl_appC_SULS.html"/>
+         </topic>
+         <topic label="Direct Sparse Solver Code Examples" href="appendices/mkl_appC_DSS.html"/>
+         <topic label="Iterative Sparse Solver Code Example" href="appendices/mkl_appC_ISS.html"/>
+         <topic label="Fourier Transform Functions Code Examples" href="appendices/mkl_appC_FFT.html">
+            <topic label="DFT Code Examples" href="appendices/mkl_appC_DFT.html">
+               <topic label="Examples of Using Multi-Threading for DFT Computation" href="appendices/mkl_appC_DFTMT.html"/>
+            </topic>
+            <topic label="Examples for Cluster DFT Functions" href="appendices/mkl_appC_CDFT.html"/>
+		<topic label="Auxiliary Data Transformations" href="appendices/mkl_appC_DFT_AuxTrans.html"/>
+         </topic>
+         <topic label="Interval Linear Solvers Code Examples" href="appendices/mkl_appC_ILS.html"/>
+         <topic label="PDE Support Code Examples" href="appendices/mkl_appC_PDES.html">
+            <topic label="Trigonometric Transform Code Examples" href="appendices/mkl_appC_TTR.html"/>
+            <topic label="Poisson Library Code Examples" href="appendices/mkl_appC_PLR.html"/>
+         </topic>
+         <topic label="Preconditioner Code Examples" href="appendices/mkl_appC_ILU.html"/>
+      </topic>
+      <topic label="D: CBLAS Interface to the BLAS" href="appendices/mkl_appD_Intro.html">
+         <topic label="CBLAS Arguments" href="appendices/mkl_appD_CBLAS_Args.html"/>
+         <topic label="Level 1 CBLAS" href="appendices/mkl_appD_CBLAS1.html"/>
+         <topic label="Level 2 CBLAS" href="appendices/mkl_appD_CBLAS2.html"/>
+         <topic label="Level 3 CBLAS" href="appendices/mkl_appD_CBLAS3.html"/>
+         <topic label="Sparse CBLAS" href="appendices/mkl_appD_SparseCBLAS.html"/>
+      </topic>
+      <topic label="E: Fortran 95 Interfaces: MKL vs. Netlib*" href="appendices/mkl_appE_Intro.html">
+         <topic label="Interfaces Identical to Netlib" href="appendices/mkl_appE_IdenNetlib.html"/>
+         <topic label="Interfaces with Replaced Argument Names" href="appendices/mkl_appE_ReplacedAN.html"/>
+         <topic label="Modified Netlib Interfaces" href="appendices/mkl_appE_modnetlibifs.html"/>
+         <topic label="Interfaces Absent From Netlib" href="appendices/mkl_appE_abs.html"/>
+         <topic label="Interfaces of New Functionality" href="appendices/mkl_appE_newfunc.html"/>
+      </topic>
+      <topic label="F: Optimization Solvers Basics" href="appendices/mkl_appF_Intro.html">
+         <topic label="Nonlinear Least Squares Problem" href="appendices/mkl_appF_nlsp.html"/>
+         <topic label="Trust-Region Algorithm" href="appendices/mkl_appF_tra.html"/>
+      </topic>
+   </topic>
+   <topic label="Bibliography" href="backmatter/mkl_biblio.html"/>
+   <topic label="Glossary" href="backmatter/mkl_Glossary.html"/>
+</toc>
+

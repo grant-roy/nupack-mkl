@@ -1,0 +1,81 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH MKLGetVersion 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+MKLGetVersion \- Returns information about the active library C version.
+.SH SYNOPSIS
+.PP
+\fBvoid \fR\fBMKLGetVersion\fR( \fBMKLVersion* \fR\fIpVersion\fR);
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBpVersion\fR
+.NL
+Pointer to the \fBMKLVersion\fR structure.
+.PP
+----------------------------------------------------------------------------------------------#include 
+.br
+#include 
+.br
+#include "mkl\(ulblas.h"
+.br
+#include "mkl\(ultypes.h"
+.br
+ 
+.br
+int main(void)
+.br
+{
+.br
+    MKLVersion Version;
+.br
+    MKLGetVersion(&Version);
+.br
+ 
+.br
+    printf("Major version:           %d\n",Version.MajorVersion);
+.br
+    printf("Minor version:           %d\n",Version.MinorVersion);
+.br
+    printf("Update number:           %d\n",Version.BuildNumber);
+.br
+    printf("Product status:          %s\n",Version.ProductStatus);
+.br
+    printf("Build:                   %s\n",Version.Build);
+.br
+    printf("Processor optimization:  %s\n",Version.Processor);
+.br
+    printf("================================================================\n");
+.br
+    printf("\n");
+.br
+    return 0;
+.br
+}
+.PP
+Output:
+.TP 10
+Major Version
+.NL
+9
+.TP 10
+Minor Version 
+.NL
+0
+.TP 10
+Build number
+.NL
+0
+.TP 10
+Product status
+.NL
+Product
+.TP 10
+Build
+.NL
+061909.09
+.TP 10
+Processor opimization
+.NL
+Intel\(rg Xeon\(rg Processor with Intel\(rg 64 architecture

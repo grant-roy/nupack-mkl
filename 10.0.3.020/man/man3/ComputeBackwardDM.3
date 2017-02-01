@@ -1,0 +1,87 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ComputeBackwardDM 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+ComputeBackwardDM \- Computes the backward FFT.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiComputeBackwardDM\fR(\fIhandle\fR, \fIin\(ulX\fR, \fIout\(ulX\fR)
+.PP
+\fBStatus\fR = \fBDftiComputeBackwardDM\fR(\fIhandle\fR, \fIin\(ulout\(ulX\fR)
+.PP
+.B /* C/C++ */
+.PP
+\fBstatus\fR = \fBDftiComputeBackwardDM\fR(\fIhandle\fR, \fIin\(ulX\fR, \fIout\(ulX\fR);
+.PP
+\fBstatus\fR = \fBDftiComputeBackwardDM\fR(\fIhandle\fR, \fIin\(ulout\(ulX\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+The descriptor handle.
+.TP 10
+\fBin\(ulX, in\(ulout\(ulX\fR
+.NL
+Local part of input data. Array of complex values. Refer to Distributing Data among Processes on how to allocate and initialize the array.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBout\(ulX, in\(ulout\(ulX \fR
+.NL
+Local part of output data. Array of complex values. Refer to Distributing Data among Processes on how to allocate the array.
+.SH RETURN VALUES
+.PP
+.PP
+The function returns DFTI\(ulNO\(ulERROR when completes successfully. If the function fails, it returns a value of another  error class constant (for the list of constants, refer to Error Codes).
+.PP
+
+.br
+! Fortran Interface
+.br
+INTERFACE DftiComputeBackwardDM
+.br
+   INTEGER(4) FUNCTION DftiComputeBackwardDM(h, in\(ulX, out\(ulX)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      COMPLEX(8), DIMENSION(*) :: in\(ulx, out\(ulX
+.br
+   END FUNCTION DftiComputeBackwardDM
+.br
+   INTEGER(4) FUNCTION DftiComputeBackwardDMi(h, in\(ulout\(ulX)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      COMPLEX(8), DIMENSION(*) :: in\(ulout\(ulX
+.br
+   END FUNCTION DftiComputeBackwardDMi
+.br
+   INTEGER(4) FUNCTION DftiComputeBackwardDMs(h, in\(ulX, out\(ulX)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      COMPLEX(4), DIMENSION(*) :: in\(ulx, out\(ulX
+.br
+   END FUNCTION DftiComputeBackwardDMs
+.br
+   INTEGER(4) FUNCTION DftiComputeBackwardDMis(h, in\(ulout\(ulX)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      COMPLEX(4), DIMENSION(*) :: in\(ulout\(ulX
+.br
+   END FUNCTION DftiComputeBackwardDMis
+.br
+END INTERFACE
+.br
+   
+.br
+/* C/C++ prototype */
+.br
+long DftiComputeBackwardDM(DFTI\(ulDESCRIPTOR\(ulDM\(ulHANDLE handle, void *in\(ulX,...);
+.br
+   

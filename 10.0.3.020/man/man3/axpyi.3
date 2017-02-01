@@ -1,0 +1,97 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?axpyi 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?axpyi \- Adds a scalar multiple of compressed sparse vector to a full-storage vector.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall saxpyi\fR(\fInz\fR, \fIa\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+\fBcall daxpyi\fR(\fInz\fR, \fIa\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+\fBcall caxpyi\fR(\fInz\fR, \fIa\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+\fBcall zaxpyi\fR(\fInz\fR, \fIa\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall axpyi\fR(\fIx\fR, \fIindx\fR, \fIy\fR[, \fIa\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnz\fR
+.NL
+\fBINTEGER\fR. The number of elements in \fIx\fR and \fBindx\fR.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBsaxpyi\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdaxpyi\fR
+.IP
+\fBCOMPLEX\fR for \fBcaxpyi\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzaxpyi\fR
+.IP
+Specifies the scalar \fIa\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsaxpyi\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdaxpyi\fR
+.IP
+\fBCOMPLEX\fR for \fBcaxpyi\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzaxpyi\fR
+.IP
+Array, \fBDIMENSION\fR at least \fBnz\fR.
+.TP 10
+\fBindx\fR
+.NL
+\fBINTEGER\fR.  Specifies the indices for the elements of \fIx\fR.
+.IP
+Array, \fBDIMENSION\fR at least \fBnz\fR.
+.TP 10
+\fBy\fR
+.NL
+\fBREAL\fR for \fBsaxpyi\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdaxpyi\fR
+.IP
+\fBCOMPLEX\fR for \fBcaxpyi\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzaxpyi\fR
+.IP
+Array, \fBDIMENSION\fR at least max(\fBindx\fR(i)).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBy\fR
+.NL
+Contains the updated vector \fIy\fR. 
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBaxpyi\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBindx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBy\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBa\fR
+.NL
+The default value is 1.

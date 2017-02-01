@@ -1,0 +1,195 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gemm 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gemm \- Computes a scalar-matrix-matrix product and adds the result to a scalar-matrix product.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgemm\fR(\fItransa\fR, \fItransb\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIalpha\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIbeta\fR, \fIc\fR, \fIldc\fR)
+.PP
+\fBcall dgemm\fR(\fItransa\fR, \fItransb\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIalpha\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIbeta\fR, \fIc\fR, \fIldc\fR)
+.PP
+\fBcall cgemm\fR(\fItransa\fR, \fItransb\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIalpha\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIbeta\fR, \fIc\fR, \fIldc\fR)
+.PP
+\fBcall zgemm\fR(\fItransa\fR, \fItransb\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIalpha\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIbeta\fR, \fIc\fR, \fIldc\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall gemm\fR(\fIa\fR, \fIb\fR, \fIc\fR[,\fItransa\fR][,\fItransb\fR] [,\fIalpha\fR][,\fIbeta\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBtransa\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the form of op(\fIA\fR) used in the matrix multiplication:
+.IP
+if \fBtransa\fR = \'N\' or \'n\', then op(\fIA\fR) = \fIA\fR;
+.IP
+if \fBtransa \fR= \'T\' or \'t\', then op(\fIA\fR) = \fIA\fR\';
+.IP
+if \fBtransa\fR = \'C\' or \'c\', then op(\fIA\fR) = conjg(\fIA\fR\').
+.TP 10
+\fBtransb\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the form of op(\fIB\fR) used in the matrix multiplication:
+.IP
+if \fBtransb\fR = \'N\' or \'n\', then op(\fIB\fR) = \fIB\fR;
+.IP
+if \fBtransb \fR= \'T\' or \'t\', then op(\fIB\fR) = \fIB\fR\';
+.IP
+if \fBtransb\fR = \'C\' or \'c\', then op(\fIB\fR) = conjg(\fIB\fR\').
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Specifies the number of rows of the matrix op(\fIA\fR) and of the matrix \fIC\fR. The value of \fIm\fR must be at least zero. 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Specifies the number of columns of the matrix op(\fIB\fR) and the number of columns of the matrix \fIC\fR.
+.IP
+The value of \fIn\fR must be at least zero.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. Specifies the number of columns of the matrix op(\fIA\fR) and the number of rows of the matrix op(\fIB\fR).
+.IP
+The value of \fIk\fR must be at least zero.
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL\fR for \fBsgemm\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgemm\fR
+.IP
+\fBCOMPLEX\fR for \fBcgemm\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgemm\fR
+.IP
+Specifies the scalar \fIalpha\fR.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBsgemm\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgemm\fR
+.IP
+\fBCOMPLEX\fR for \fBcgemm\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgemm\fR
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR, \fIka\fR), where \fIka\fR is \fIk\fR when \fItransa=\fR\fB\'N\'\fR or \fB\'n\'\fR, and is \fIm\fR otherwise. Before entry with \fBtransa=\fR\fB\'N\'\fR or \fB\'n\'\fR, the leading \fIm\fR-by-\fIk\fR part of the array \fIa\fR must contain the matrix \fIA\fR, otherwise the leading \fIk\fR-by-\fIm\fR part of the array \fIa\fR must contain the matrix \fIA\fR.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. Specifies the first dimension of \fIa\fR as declared in the calling (sub)program. When \fItransa=\fR\fB\'N\'\fR or \fB\'n\'\fR, then \fIlda\fR must be at least max(1, \fIm\fR), otherwise \fIlda\fR must be at least max(1, \fIk\fR).
+.TP 10
+\fBb\fR
+.NL
+\fBREAL\fR for \fBsgemm\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgemm\fR
+.IP
+\fBCOMPLEX\fR for \fBcgemm\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgemm\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldb\fR, \fIkb\fR), where \fIkb\fR is \fIn\fR when \fItransb\fR = \fB\'N\'\fR or \fB\'n\'\fR, and is \fIk\fR otherwise. Before entry with \fItransb\fR = \fB\'N\'\fR or \fB\'n\'\fR, the leading \fIk\fR-by-\fIn\fR part of the array \fIb\fR must contain the matrix \fIB\fR, otherwise the leading \fIn\fR-by-\fIk\fR part of the array \fIb\fR must contain the matrix \fIB\fR.
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. Specifies the first dimension of \fIb\fR as declared in the calling (sub)program. When \fItransb\fR = \fB\'N\'\fR or \fB\'n\'\fR, then \fIldb\fR must be at least max(1, \fIk\fR), otherwise \fIldb\fR must be at least max(1, \fIn\fR).
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL\fR for \fBsgemm\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgemm\fR
+.IP
+\fBCOMPLEX\fR for \fBcgemm\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgemm\fR
+.IP
+Specifies the scalar \fIbeta\fR.
+.IP
+When \fIbeta\fR is equal to zero, then \fIc\fR need not be set on input.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBsgemm\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgemm\fR
+.IP
+\fBCOMPLEX\fR for \fBcgemm\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgemm\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldc\fR, \fIn\fR).
+.IP
+Before entry, the leading \fIm\fR-by-\fIn\fR part of the array \fIc\fR must contain the matrix \fIC\fR, except when \fIbeta\fR is equal to zero, in which case \fIc\fR need not be set on entry.
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. Specifies the first dimension of \fIc\fR as declared in the calling (sub)program. The value of \fIldc\fR must be at least max(1, \fIm\fR). 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+Overwritten by the \fIm\fR-by-\fIn\fR matrix (\fIalpha\fR*op(\fIA\fR)*op(\fIB\fR) + \fIbeta\fR*\fIC\fR).
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBgemm\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fBma\fR,\fIka\fR) where 
+.IP
+\fIka\fR = \fIk\fR if \fItransa=\fR\fB\'N\'\fR, 
+.IP
+\fIka\fR = \fIm\fR otherwise,
+.IP
+\fIma\fR = \fIm\fR if \fItransa=\fR\fB\'N\'\fR, 
+.IP
+\fIma\fR = \fIk\fR otherwise.
+.TP 10
+\fBb\fR
+.NL
+Holds the matrix \fIB\fR of size (\fImb\fR,\fIkb\fR) where 
+.IP
+\fIkb\fR = \fIn\fR if \fItransb\fR = \fB\'N\'\fR, 
+.IP
+\fIkb\fR = \fIk\fR otherwise, 
+.IP
+\fImb\fR = \fIk\fR if \fItransb\fR = \fB\'N\'\fR, 
+.IP
+\fImb\fR = \fIn\fR otherwise.
+.TP 10
+\fBc\fR
+.NL
+Holds the matrix \fIC\fR of size (\fIm\fR,\fIn\fR).
+.TP 10
+\fBtransa\fR
+.NL
+Must be \fB\'N\'\fR, \fB\'C\'\fR, or \fB\'T\'\fR.
+.IP
+The default value is \fB\'N\'\fR.
+.TP 10
+\fBtransb\fR
+.NL
+Must be \fB\'N\'\fR, \fB\'C\'\fR, or \fB\'T\'\fR.
+.IP
+The default value is \fB\'N\'\fR.
+.TP 10
+\fBalpha\fR
+.NL
+The default value is 1.
+.TP 10
+\fBbeta\fR
+.NL
+The default value is 1.

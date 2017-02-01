@@ -1,0 +1,97 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH SetValueDM 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+SetValueDM \- Sets one particular configuration parameter with the specified configuration value.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiSetValueDM\fR (\fIhandle\fR, \fIparam\fR, \fIvalue\fR)
+.PP
+.B /* C/C++ */
+.PP
+\fBstatus\fR = \fBDftiSetValueDM\fR (\fIhandle\fR, \fIparam\fR, \fIvalue\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+The descriptor handle. Must be valid, that is, created in a call to \fBDftiCreateDescriptorDM\fR. 
+.TP 10
+\fBparam\fR
+.NL
+Name of a parameter to be set up in the descriptor handle. 
+.TP 10
+\fBvalue\fR
+.NL
+Value of the parameter.
+.SH RETURN VALUES
+.PP
+.PP
+The function returns DFTI\(ulNO\(ulERROR when completes successfully. If the function fails, it returns a value of another  error class constant (for the list of constants, refer to Error Codes).
+.PP
+
+.br
+! Fortran Interface
+.br
+INTERFACE DftiSetValueDM
+.br
+   INTEGER(4) FUNCTION DftiSetValueDM(h, p, v)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      INTEGER(4) :: p, v
+.br
+   END FUNCTION
+.br
+   INTEGER(4) FUNCTION DftiSetValueDMd(h, p, v)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      INTEGER(4) :: p
+.br
+      REAL(8) :: v
+.br
+   END FUNCTION
+.br
+   INTEGER(4) FUNCTION DftiSetValueDMs(h, p, v)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      INTEGER(4) :: p
+.br
+      REAL(4) :: v
+.br
+   END FUNCTION
+.br
+   INTEGER(4) FUNCTION DftiSetValueDMsw(h, p, v)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      INTEGER(4) :: p
+.br
+      COMPLEX(4) :: v(*)
+.br
+   END FUNCTION
+.br
+   INTEGER(4) FUNCTION DftiSetValueDMdw(h, p, v)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: h
+.br
+      INTEGER(4) :: p
+.br
+      COMPLEX(8) :: v(*)
+.br
+   END FUNCTION
+.br
+END INTERFACE
+.br
+   
+.br
+/* C/C++ prototype */
+.br
+long DftiSetValueDM(DFTI\(ulDESCRIPTOR\(ulDM\(ulHANDLE handle, int param,...);
+.br
+   

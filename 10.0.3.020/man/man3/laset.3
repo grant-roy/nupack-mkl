@@ -1,0 +1,83 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laset 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laset \- Initializes the off-diagonal elements and the diagonal elements of a matrix to given values. 
+.SH SYNOPSIS
+.PP
+\fBcall slaset\fR( \fIuplo\fR, \fIm\fR, \fIn\fR, \fIalpha\fR, \fIbeta\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall dlaset\fR( \fIuplo\fR, \fIm\fR, \fIn\fR, \fIalpha\fR, \fIbeta\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall claset\fR( \fIuplo\fR, \fIm\fR, \fIn\fR, \fIalpha\fR, \fIbeta\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall zlaset\fR( \fIuplo\fR, \fIm\fR, \fIn\fR, \fIalpha\fR, \fIbeta\fR, \fIa\fR, \fIlda\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the part of the matrix \fIA\fR to be set.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, upper triangular part is set; the strictly lower  triangular part of \fIA\fR is not changed. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR: lower triangular part is set; the strictly upper  triangular part of \fIA\fR is not changed. 
+.IP
+Otherwise:  \fIA\fRll of the matrix \fIA\fR is set.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIA\fR. \fIm\fR\(>= 0.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIA\fR. 
+.IP
+\fIn\fR\(>= 0.
+.TP 10
+\fBalpha\fR, \fBbeta\fR
+.NL
+\fBREAL\fR for \fBslaset\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaset\fR
+.IP
+\fBCOMPLEX\fR for \fBclaset\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaset\fR.
+.IP
+The constants to which the off-diagonal and diagonal elements are to be set, respectively.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBslaset\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaset\fR
+.IP
+\fBCOMPLEX\fR for \fBclaset\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaset\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR, \fIn\fR). 
+.IP
+On entry, the \fIm\fR-by-\fIn\fR matrix \fIA\fR.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIa\fR. 
+.IP
+\fIlda\fR\(>= max(1,\fIm\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, the leading \fIm\fR-by-\fIn\fR submatrix of \fIA\fR is set as follows: 
+.IP
+if \fIuplo\fR = \fB\'U\'\fR, \fIA\fR(\fIi\fR,\fIj\fR) = \fIalpha\fR, 1\(<=\fIi\fR\(<=\fIj\fR-1, 1\(<=\fIj\fR\(<=\fIn\fR, 
+.IP
+if \fIuplo\fR = \fB\'L\'\fR, \fIA\fR(\fIi\fR,\fIj\fR) = \fIalpha\fR, \fIj\fR+1\(<=\fIi\fR\(<=\fIm\fR, 1\(<=\fIj\fR\(<=\fIn\fR, 
+.IP
+otherwise, \fIA\fR(\fIi\fR,\fIj\fR) = \fIalpha\fR, 1\(<=\fIi\fR\(<=\fIm\fR, 1\(<=\fIj\fR\(<=\fIn\fR, \fIi\fR\(!=\fIj\fR, 
+.IP
+and, for all \fIuplo\fR, \fIA\fR(\fIi\fR,\fIi\fR) = \fIbeta\fR, 1\(<=\fIi\fR\(<=min(\fIm\fR, \fIn\fR).

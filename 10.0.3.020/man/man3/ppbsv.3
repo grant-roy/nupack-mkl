@@ -1,0 +1,131 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?pbsv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?pbsv \- Solves a symmetric/Hermitian positive definite banded system of linear equations.
+.SH SYNOPSIS
+.PP
+\fBcall pspbsv\fR(\fIuplo\fR, \fIn\fR, \fIbw\fR, \fInrhs\fR, \fIa\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIdescb\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdpbsv\fR(\fIuplo\fR, \fIn\fR, \fIbw\fR, \fInrhs\fR, \fIa\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIdescb\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcpbsv\fR(\fIuplo\fR, \fIn\fR, \fIbw\fR, \fInrhs\fR, \fIa\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIdescb\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzpbsv\fR(\fIuplo\fR, \fIn\fR, \fIbw\fR, \fInrhs\fR, \fIa\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIdescb\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+(global) \fBCHARACTER\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+Indicates whether the upper or lower triangular of \fIA\fR is stored. 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the upper triangular \fIA\fR is stored 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, the lower triangular of \fIA\fR is stored.
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The order of the distributed matrix \fIA\fR(\fIn\fR\(>= 0). 
+.TP 10
+\fBbw\fR
+.NL
+(global) \fBINTEGER\fR. The number of subdiagonals in \fIL\fR or \fIU\fR. 0 \(<= \fIbw\fR \(<= \fIn\fR-1.
+.TP 10
+\fBnrhs\fR
+.NL
+(global) \fBINTEGER\fR. The number of right-hand sides; the number of columns in \fIB\fR(\fInrhs\fR\(>= 0). 
+.TP 10
+\fBa\fR
+.NL
+(local). \fBREAL\fR for \fBpspbsv\fR
+.IP
+\fBDOUBLE PRECISON\fR for \fBpdpbsv\fR
+.IP
+\fBCOMPLEX\fR for \fBpcpbsv\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzpbsv\fR. 
+.IP
+Pointer into the local memory to an array with first dimension \fIlld\(ula\fR \(>= (\fIbw\fR+1) (stored in \fIdesca\fR). On entry, this array contains the local pieces of the distributed matrix sub(\fIA\fR) to be factored.
+.TP 10
+\fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The index in the global array \fIa\fR that points to the start of the matrix to be operated on (which may be either all of \fIA\fR or a submatrix of \fIA\fR).
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBb\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpspbsv\fR
+.IP
+\fBDOUBLE PRECISON\fR for \fBpdpbsv\fR
+.IP
+\fBCOMPLEX\fR for \fBpcpbsv\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzpbsv\fR. 
+.IP
+Pointer into the local memory to an array of local lead dimension \fIlld\(ulb\fR \(>= \fInb\fR. On entry, this array contains the local pieces of the right hand sides \fIB\fR(\fIib\fR:\fIib\fR+\fIn\fR-1, 1:\fInrhs\fR). 
+.TP 10
+\fBib\fR
+.NL
+(global) \fBINTEGER\fR. The row index in the global array \fIb\fR that points to the first row of the matrix to be operated on (which may be either all of \fIb\fR or a submatrix of \fIB\fR).
+.TP 10
+\fBdescb\fR
+.NL
+(global and local) \fBINTEGER\fR array of dimension \fIdlen\fR. 
+.IP
+If 1D type (\fIdtype\(ulb\fR =502), \fIdlen\fR \(>= 7; 
+.IP
+If 2D type (\fIdtype\(ulb\fR =1), \fIdlen\fR \(>= 9. 
+.IP
+The array descriptor for the distributed matrix \fIB\fR. 
+.IP
+Contains information of mapping of \fIB\fR to memory.
+.TP 10
+\fBwork\fR
+.NL
+(local).
+.IP
+\fBREAL\fR for \fBpspbsv\fR
+.IP
+\fBDOUBLE PRECISON\fR for \fBpdpbsv\fR
+.IP
+\fBCOMPLEX\fR for \fBpcpbsv\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzpbsv\fR. 
+.IP
+Temporary workspace. This space may be overwritten in between calls to routines. \fIwork\fR must be the size given in \fIlwork\fR. 
+.TP 10
+\fBlwork\fR
+.NL
+(local or global) \fBINTEGER\fR. Size of user-input workspace \fIwork\fR. If \fIlwork\fR is too small, the minimal acceptable size will be returned in \fIwork\fR(1)and an error code is returned. \fIlwork\fR \(>=  (\fInb\fR+2*\fIbw\fR)*\fIbw\fR +max((\fIbw\fR*\fInrhs\fR), \fIbw\fR*\fIbw\fR)
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, this array contains information containing details of the factorization. Note that permutations are performed on the matrix, so that the factors returned are different from those returned by LAPACK.  
+.TP 10
+\fBb\fR
+.NL
+On exit, contains the local piece of the solutions distributed matrix \fIX\fR.
+.TP 10
+\fBwork\fR
+.NL
+On exit, \fIwork\fR(1) contains the minimal \fIlwork\fR. 
+.TP 10
+\fBinfo\fR
+.NL
+(global). \fBINTEGER\fR. If \fIinfo\fR=0, the execution is successful. 
+.IP
+< 0: If the \fIi\fR-th argument is an array and the \fIj\fR-entry had an illegal value, then \fIinfo\fR = -(\fIi\fR*100+\fIj\fR), if the \fIi\fR-th argument is a scalar and had an illegal value, then \fIinfo\fR = -\fIi\fR. 
+.IP
+> 0: If \fIinfo\fR = \fIk\fR \(<= \fBNPROCS\fR, the submatrix stored on processor \fIinfo\fR and factored locally was not positive definite, and the factorization was not completed. 
+.IP
+If \fIinfo\fR = \fIk\fR > \fBNPROCS\fR, the submatrix stored on processor \fIinfo\fR-\fBNPROCS\fR representing interactions with other processors was not positive definite, and the factorization was not completed. 

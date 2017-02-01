@@ -1,0 +1,65 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laneg 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laneg \- Computes the Sturm count, the number of negative pivots encountered while factoring tridiagonal \fIT\fR-\fBsigma\fR*\fII\fR = \fIL\fR*\fID\fR*\fIL\fR**\fIT\fR.
+.SH SYNOPSIS
+.PP
+\fIvalue\fR= \fBslaneg\fR( \fIn\fR, \fId\fR, \fIlld\fR, \fIsigma\fR, \fIpivmin\fR, \fIr\fR)
+.PP
+\fIvalue\fR= \fBdlaneg\fR( \fIn\fR, \fId\fR, \fIlld\fR, \fIsigma\fR, \fIpivmin\fR, \fIr\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix. 
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslaneg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaneg\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+Contains \fBn\fR diagonal elements of the matrix \fID\fR.
+.TP 10
+\fBlld\fR
+.NL
+\fBREAL\fR for \fBslaneg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaneg\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1).
+.IP
+Contains (\fBn\fR-1) elements \fIL\fR(i)*\fIL\fR(i)*\fID\fR(i).
+.TP 10
+\fBsigma\fR
+.NL
+\fBREAL\fR for \fBslaneg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaneg\fR
+.IP
+Shift amount in \fIT\fR-\fBsigma\fR*\fII\fR = \fIL\fR*\fID\fR*\fIL\fR**\fIT\fR.
+.TP 10
+\fBpivmin\fR
+.NL
+\fBREAL\fR for \fBslaneg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaneg\fR
+.IP
+The minimum pivot in the Sturm sequence. May be used when zero pivots are encountered on non-IEEE-754 architectures.
+.TP 10
+\fBr\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The twist index for the twisted factorization that is used for the negcount.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBvalue\fR
+.NL
+\fBINTEGER\fR. The number of negative pivots encountered while factoring. 

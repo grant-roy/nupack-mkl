@@ -1,0 +1,45 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lanv2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lanv2 \- Computes the Schur factorization of a real 2-by-2 nonsymmetric matrix in standard form.
+.SH SYNOPSIS
+.PP
+\fBcall slanv2\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fId\fR, \fIrt1r\fR, \fIrt1i\fR, \fIrt2r\fR, \fIrt2i\fR, \fIcs\fR, \fIsn\fR)
+.PP
+\fBcall dlanv2\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fId\fR, \fIrt1r\fR, \fIrt1i\fR, \fIrt2r\fR, \fIrt2i\fR, \fIcs\fR, \fIsn\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR, \fBc\fR, \fBd\fR
+.NL
+\fBREAL\fR for \fBslanv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlanv2\fR.
+.IP
+On entry, elements of the input matrix.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR, \fBc\fR, \fBd\fR
+.NL
+On exit, overwritten by the elements of the standardized Schur form.
+.TP 10
+\fBrt1r\fR, \fBrt1i\fR, \fBrt2r\fR, \fBrt2i\fR
+.NL
+\fBREAL\fR for \fBslanv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlanv2\fR. 
+.IP
+The real and imaginary parts of the eigenvalues.
+.IP
+If the eigenvalues are a complex conjugate pair, \fBrt1i\fR > 0.
+.TP 10
+\fBcs\fR, \fBsn\fR
+.NL
+\fBREAL\fR for \fBslanv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlanv2\fR.
+.IP
+Parameters of the rotation matrix.

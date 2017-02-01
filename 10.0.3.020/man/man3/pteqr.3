@@ -1,0 +1,151 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?pteqr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?pteqr \- Computes all eigenvalues and (optionally) all eigenvectors of a real symmetric positive-definite tridiagonal matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall spteqr\fR(\fIcompz\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dpteqr\fR(\fIcompz\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall cpteqr\fR(\fIcompz\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall zpteqr\fR(\fIcompz\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall rpteqr\fR(\fId\fR, \fIe\fR[,\fIz\fR] [,\fIcompz\fR] [,\fIinfo\fR])
+.PP
+\fBcall pteqr\fR(\fId\fR, \fIe\fR[,\fIz\fR] [,\fIcompz\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBcompz\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'I\'\fR or \fB\'V\'\fR.
+.IP
+If \fIcompz\fR = \fB\'N\'\fR, the routine computes eigenvalues only. 
+.IP
+If \fIcompz\fR = \fB\'I\'\fR, the routine computes the eigenvalues and eigenvectors of the tridiagonal matrix \fIT\fR. 
+.IP
+If \fIcompz\fR = \fB\'V\'\fR, the routine computes the eigenvalues and eigenvectors of \fIA\fR (and the array \fIz\fR must contain the matrix \fIQ\fR on entry).
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIT\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBd\fR, \fBe\fR, \fBwork\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+Arrays: 
+.IP
+\fId\fR(*) contains the diagonal elements of \fIT\fR. 
+.IP
+The dimension of \fId\fR must be at least max(1, \fIn\fR).
+.IP
+\fIe\fR(*) contains the off-diagonal elements of \fIT\fR. 
+.IP
+The dimension of \fIe\fR must be at least max(1, \fIn\fR-1).
+.IP
+\fIwork\fR(*) is a workspace array. 
+.IP
+The dimension of \fIwork\fR must be: 
+.IP
+at least 1 if \fIcompz\fR = \fB\'N\'\fR;
+.IP
+at least max(1, 4*\fIn\fR-4) if \fIcompz\fR = \fB\'V\'\fR or \fB\'I\'\fR.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBspteqr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdpteqr\fR
+.IP
+\fBCOMPLEX\fR for \fBcpteqr\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzpteqr\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIldz\fR,*) 
+.IP
+If \fIcompz\fR = \fB\'N\'\fR or \fB\'I\'\fR, \fIz\fR need not be set. 
+.IP
+If \fIvect\fR = \fB\'V\'\fR, \fIz\fR must contains the \fIn\fR-by-\fIn\fR matrix \fIQ\fR. 
+.IP
+The second dimension of \fIz\fR must be: 
+.IP
+at least 1 if \fIcompz\fR = \fB\'N\'\fR;
+.IP
+at least max(1, \fIn\fR) if \fIcompz\fR = \fB\'V\'\fR or \fB\'I\'\fR.
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIz\fR. Constraints:
+.IP
+\fIldz\fR\(>= 1 if \fIcompz\fR = \fB\'N\'\fR;
+.IP
+\fIldz\fR\(>= max(1, \fIn\fR) if \fIcompz\fR = \fB\'V\'\fR or \fB\'I\'\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+The \fIn\fR eigenvalues in descending order, unless \fIinfo\fR > 0. 
+.IP
+See also \fIinfo\fR.
+.TP 10
+\fBe\fR
+.NL
+On exit, the array is overwritten.
+.TP 10
+\fBz\fR
+.NL
+If \fIinfo\fR = 0, contains the \fIn\fR orthonormal eigenvectors, stored by columns. (The \fIi\fR-th column corresponds to the \fIi-\fRth eigenvalue.)
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fIi\fR, the leading minor of order \fIi\fR (and hence \fIT\fR itself) is not positive-definite. 
+.IP
+If \fIinfo\fR = \fIn\fR + \fIi\fR, the algorithm for computing singular values failed to converge; \fIi\fR off-diagonal elements have not converged to zero. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBpteqr\fR interface are the following:
+.TP 10
+\fBd\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBe\fR
+.NL
+Holds the vector of length (\fIn-\fR1).
+.TP 10
+\fBz\fR
+.NL
+Holds the matrix \fIZ\fR of size (\fIn,n\fR).
+.TP 10
+\fBcompz\fR
+.NL
+If omitted, this argument is restored based on the presence of argument \fIz\fR as follows: 
+.IP
+\fIcompz\fR = \fB\'I\'\fR, if \fIz\fR is present, 
+.IP
+\fIcompz\fR = \fB\'N\'\fR, if \fIz\fR is omitted. 
+.IP
+If present, \fIcompz\fR must be equal to \fB\'I\'\fR or \fB\'V\'\fR and the argument \fIz\fR must also be present. Note that there will be an error condition if \fIcompz\fR is present and \fIz\fR omitted.
+.PP
+Note that two variants of Fortran 95 interface for \fBpteqr\fR routine are needed because of an ambiguous choice between real and complex cases appear when \fIz\fR is omitted. Thus, the name \fBrpteqr\fR is used in real cases (single or double precision), and the name \fBpteqr\fR is used in complex cases (single or double precision).

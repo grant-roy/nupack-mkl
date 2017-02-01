@@ -1,0 +1,142 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larrb 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larrb \- Provides limited bisection to locate eigenvalues for more accuracy.
+.SH SYNOPSIS
+.PP
+\fBcall slarrb\fR( \fIn\fR, \fId\fR, \fIlld\fR, \fIifirst\fR, \fIilast\fR, \fIrtol1\fR, \fIrtol2\fR, \fIoffset\fR, \fIw\fR, \fIwgap\fR, \fIwerr\fR, \fIwork\fR, \fIiwork\fR, \fIpivmin\fR, \fIspdiam\fR, \fItwist\fR, \fIinfo\fR)
+.PP
+\fBcall dlarrb\fR( \fIn\fR, \fId\fR, \fIlld\fR, \fIifirst\fR, \fIilast\fR, \fIrtol1\fR, \fIrtol2\fR, \fIoffset\fR, \fIw\fR, \fIwgap\fR, \fIwerr\fR, \fIwork\fR, \fIiwork\fR, \fIpivmin\fR, \fIspdiam\fR, \fItwist\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslarrb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrb\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The \fIn\fR diagonal elements of the diagonal matrix \fID\fR.
+.TP 10
+\fBlld\fR
+.NL
+\fBREAL\fR for \fBslarrb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrb\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). 
+.IP
+The \fIn\fR-1 elements \fIL\fR(\fIi\fR)*\fIL\fR(\fIi\fR)*\fID\fR(\fIi\fR).
+.TP 10
+\fBifirst\fR
+.NL
+\fBINTEGER\fR. The index of the first eigenvalue to be computed.
+.TP 10
+\fBilast\fR
+.NL
+\fBINTEGER\fR. The index of the last eigenvalue to be computed.
+.TP 10
+\fBrtol1\fR, \fBrtol2\fR
+.NL
+\fBREAL\fR for \fBslarrb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrb\fR
+.IP
+Tolerance for the convergence of the bisection intervals. An interval [\fIleft\fR, \fIright\fR] has converged if RIGHT-LEFT.LT.MAX( \fBrtol1\fR*\fBgap\fR, \fBrtol2\fR*max(|left|,|right|) ), where \fBgap\fR is the (estimated) distance to the nearesteigenvalue.
+.TP 10
+\fBoffset\fR
+.NL
+\fBINTEGER\fR. Offset for the arrays \fIw\fR, \fIwgap\fR and \fIwerr\fR, that is, the \fIifirst\fR-\fIoffset\fR through \fIilast\fR-\fIoffset\fR elements of these arrays are to be used.
+.TP 10
+\fBw\fR
+.NL
+\fBREAL\fR for \fBslarrb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrb\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On input, \fIw\fR( \fIifirst\fR-\fIoffset\fR ) through \fIw\fR( \fIilast\fR-\fIoffset\fR ) are estimates of the eigenvalues of \fIL*D*L\fR**\fIT\fR indexed \fIifirst\fR through \fIilast\fR.
+.TP 10
+\fBwgap\fR
+.NL
+\fBREAL\fR for \fBslarrb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrb\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). The estimated gaps between consecutive eigenvalues of \fIL*D*L\fR**\fIT\fR, that is, \fIwgap\fR(\fIi\fR-\fIoffset\fR) is the gap between eigenvalues \fIi\fR and \fIi\fR+1. Note that if \fBIFIRST.EQ.ILAST\fR then \fIwgap\fR(\fIifirst\fR-\fIoffset\fR) must be set to 0. 
+.TP 10
+\fBwerr\fR
+.NL
+\fBREAL\fR for \fBslarrb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrb\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On input, \fIwerr\fR(\fIifirst\fR-\fIoffset\fR) through \fIwerr\fR(\fIilast\fR-\fIoffset\fR) are the errors in the estimates of the corresponding elements in \fIw\fR.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslarrb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrb\fR
+.IP
+Workspace array, \fBDIMENSION\fR (2*\fIn\fR). 
+.TP 10
+\fBpivmin\fR
+.NL
+\fBREAL\fR for \fBslarrb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrb\fR
+.IP
+The minimum pivot in the Sturm sequence. 
+.TP 10
+\fBspdiam\fR
+.NL
+\fBREAL\fR for \fBslarrb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrb\fR
+.IP
+The spectral diameter of the matrix. 
+.TP 10
+\fBtwist\fR
+.NL
+\fBINTEGER\fR. The twist index for the twisted factorization that is used          for the negcount.
+.RS
+.IP \(bu nobullet
+\fBtwist\fR = \fIn\fR: Compute negcount from \fIL\fR*\fID\fR*\fIL\fR**\fIT\fR - \fIlambda\fR*\fIi\fR = \fIL+\fR*\fI D+ \fR*\fIL+\fR**\fIT\fR
+.IP \(bu
+\fBtwist\fR = \fIn\fR: Compute negcount from \fIL\fR*\fID\fR*\fIL\fR**\fIT\fR - \fIlambda\fR*\fIi\fR = \fIU-\fR*\fID-\fR*\fIU-\fR**\fIT\fR
+.IP \(bu
+\fBtwist\fR = \fIn\fR: Compute negcount from \fIL\fR*\fID\fR*\fIL\fR**\fIT\fR - \fIlambda\fR*\fIi\fR = \fIN\fR(\fIr\fR)*\fID \fR*\fIN\fR
+.RE
+
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (2*\fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBw\fR
+.NL
+On output, the estimates of the eigenvalues are``refined''.
+.TP 10
+\fBwgap\fR
+.NL
+On output, the gaps are refined.
+.TP 10
+\fBwerr\fR
+.NL
+On output, ``refined'' errors in the estimates of \fIw\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Error flag. 

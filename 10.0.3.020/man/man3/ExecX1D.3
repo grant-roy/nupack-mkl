@@ -1,0 +1,111 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ExecX1D 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+ExecX1D \- Computes convolution or correlation for one-dimensional case with the fixed first operand vector.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslsconvexecx1d\fR(\fItask\fR, \fIy\fR, \fIystride\fR, \fIz\fR, \fIzstride\fR)
+.PP
+\fIstatus\fR= \fBvsldconvexecx1d\fR(\fItask\fR, \fIy\fR, \fIystride\fR, \fIz\fR, \fIzstride\fR)
+.PP
+\fIstatus\fR= \fBvslscorrexecx1d\fR(\fItask\fR, \fIy\fR, \fIystride\fR, \fIz\fR, \fIzstride\fR)
+.PP
+\fIstatus\fR= \fBvsldcorrexecx1d\fR(\fItask\fR, \fIy\fR, \fIystride\fR, \fIz\fR, \fIzstride\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslsConvExecX1D\fR(\fItask\fR, \fIy\fR, \fIystride\fR, \fIz\fR, \fIzstride\fR);
+.PP
+\fIstatus\fR= \fBvsldConvExecX1D\fR(\fItask\fR, \fIy\fR, \fIystride\fR, \fIz\fR, \fIzstride\fR);
+.PP
+\fIstatus\fR= \fBvslsCorrExecX1D\fR(\fItask\fR, \fIy\fR, \fIystride\fR, \fIz\fR, \fIzstride\fR);
+.PP
+\fIstatus\fR= \fBvsldCorrExecX1D\fR(\fItask\fR, \fIy\fR, \fIystride\fR, \fIz\fR, \fIzstride\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBtask\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulCONV\(ulTASK)\fR for \fBvslsconvexecx1d\fR and \fBvsldconvexecx1d\fR
+.br
+\h\'1\'\fBTYPE(VSL\(ulCORR\(ulTASK)\fR for \fBvslscorrexecx1d\fR and \fBvsldcorrexecx1d\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLConvTaskPtr\fR for \fBvslsConvExecX1D\fR and \fBvsldConvExecX1D\fR
+.br
+\h\'1\'\fBVSLCorrTaskPtr\fR for \fBvslsCorrExecX1D\fR and \fBvsldCorrExecX1D\fR
+.br
+.SB Description
+.br
+\h\'1\'Pointer to the task descriptor.
+.PP
+.SB Name
+.br
+\h\'1\'\fBx\fR , \fBy\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL(KIND=4), DIMENSION(*)\fR for \fBvslsconvexecx1d\fR and \fBvslscorrexecx1d\fR
+.br
+\h\'1\'\fBREAL(KIND=8), DIMENSION(*)\fR for \fBvsldconvexecx1d\fR and \fBvsldcorrexecx1d\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat[]\fR for \fBvslsConvExecX1D\fR and \fBvslsCorrExecX1D\fR
+.br
+\h\'1\'\fBdouble[]\fR for \fBvsldConvExeX1D\fR and \fBvsldCorrExecX1D\fR
+.br
+.SB Description
+.br
+\h\'1\'Pointer to array containing input data (for the second operand vector).
+.PP
+.SB Name
+.br
+\h\'1\'\fBystride\fR, \fBzstride\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Strides for input and output data. 
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBz\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL(KIND=4), DIMENSION(*)\fR for \fBvslsconvexecx1d\fR and \fBvslscorrexecx1d\fR
+.br
+\h\'1\'\fBREAL(KIND=8), DIMENSION(*)\fR for \fBvsldconvexecx1d\fR and \fBvsldcorrexec1d\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat[]\fR for \fBvslsConvExecX1D\fR and \fBvslsCorrExecX1D\fR
+.br
+\h\'1\'\fBdouble[]\fR for \fBvsldConvExecX1D\fR and \fBvsldCorrExecX1D\fR
+.br
+.SB Description
+.br
+\h\'1\'Pointer to the array that stores output data. 
+.PP
+.SB Name
+.br
+\h\'1\'\fBstatus\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Set to \fBVSL\(ulSTATUS\(ulOK\fR if the task is executed successfully or set to non-zero error code otherwise.

@@ -1,0 +1,67 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laswp 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laswp \- Performs a series of row interchanges on a general rectangular matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slaswp\fR( \fIn\fR, \fIa\fR, \fIlda\fR, \fIk1\fR, \fIk2\fR, \fIipiv\fR, \fIincx\fR)
+.PP
+\fBcall dlaswp\fR( \fIn\fR, \fIa\fR, \fIlda\fR, \fIk1\fR, \fIk2\fR, \fIipiv\fR, \fIincx\fR)
+.PP
+\fBcall claswp\fR( \fIn\fR, \fIa\fR, \fIlda\fR, \fIk1\fR, \fIk2\fR, \fIipiv\fR, \fIincx\fR)
+.PP
+\fBcall zlaswp\fR( \fIn\fR, \fIa\fR, \fIlda\fR, \fIk1\fR, \fIk2\fR, \fIipiv\fR, \fIincx\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIA\fR.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBslaswp\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaswp\fR
+.IP
+\fBCOMPLEX\fR for \fBclaswp\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaswp\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR, \fIn\fR). 
+.IP
+On entry, the matrix of column dimension \fIn\fR to which the row interchanges will be applied.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIa\fR.
+.TP 10
+\fBk1\fR
+.NL
+\fBINTEGER\fR. The first element of \fIipiv\fR for which a row interchange will  be done.
+.TP 10
+\fBk2\fR
+.NL
+\fBINTEGER\fR. The last element of \fIipiv\fR for which a row interchange will be done.
+.TP 10
+\fBipiv\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIk2\fR*|\fIincx\fR|). 
+.IP
+The vector of pivot indices. Only the elements in positions \fIk1\fR through \fIk2\fR of \fIipiv\fR are accessed.
+.IP
+\fIipiv\fR(\fIk\fR) = \fIl\fR implies rows \fIk\fR and \fIl\fR are to be interchanged.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. The increment between successive values of \fIipiv\fR. If \fIipiv\fR is negative, the pivots are applied in reverse order.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, the permuted matrix.

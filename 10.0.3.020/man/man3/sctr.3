@@ -1,0 +1,81 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?sctr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?sctr \- Converts compressed sparse vectors into full storage form.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall ssctr\fR(\fInz\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+\fBcall dsctr\fR(\fInz\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+\fBcall csctr\fR(\fInz\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+\fBcall zsctr\fR(\fInz\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall sctr\fR(\fIx\fR, \fIindx\fR, \fIy\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnz\fR
+.NL
+\fBINTEGER\fR.  The number of elements of \fIx\fR to be scattered.
+.TP 10
+\fBindx\fR
+.NL
+\fBINTEGER\fR.  Specifies indices of elements to be scattered.
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBssctr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsctr\fR
+.IP
+\fBCOMPLEX\fR for \fBcsctr\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzsctr\fR
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR.
+.IP
+Contains the vector to be converted to full-storage form.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBy\fR
+.NL
+\fBREAL\fR for \fBssctr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsctr\fR
+.IP
+\fBCOMPLEX\fR for \fBcsctr\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzsctr\fR
+.IP
+Array, \fBDIMENSION\fR at least max(\fIindx(i)\fR).
+.IP
+Contains the vector \fIy\fR with updated elements.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBsctr\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBindx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBy\fR
+.NL
+Holds the vector of length (\fInz\fR).

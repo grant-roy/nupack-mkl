@@ -1,0 +1,139 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasd1 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasd1 \- Computes the SVD of an upper bidiagonal matrix B of the specified size. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasd1\fR( \fInl\fR, \fInr\fR, \fIsqre\fR, \fId\fR, \fIalpha\fR, \fIbeta\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIidxq\fR, \fIiwork\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlasd1\fR( \fInl\fR, \fInr\fR, \fIsqre\fR, \fId\fR, \fIalpha\fR, \fIbeta\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIidxq\fR, \fIiwork\fR, \fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnl\fR
+.NL
+\fBINTEGER\fR. The row dimension of the upper block. 
+.IP
+\fInl\fR\(>= 1.
+.TP 10
+\fBnr\fR
+.NL
+\fBINTEGER\fR. The row dimension of the lower block. 
+.IP
+\fInr\fR\(>= 1.
+.TP 10
+\fBsqre\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIsqre\fR = 0: the lower block is an \fInr\fR-by-\fInr\fR square matrix. 
+.IP
+If \fIsqre\fR = 1: the lower block is an \fInr\fR-by-(\fInr\fR+1) rectangular matrix. The bidiagonal matrix has row dimension \fIn\fR = \fInl\fR + \fInr\fR + 1, and column dimension \fIm\fR = \fIn\fR + \fIsqre\fR.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasd1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd1\fR
+.IP
+Array, \fBDIMENSION\fR (\fInl\fR+\fInr\fR+1). \fIn\fR = \fInl\fR+\fInr\fR+1. On entry \fId\fR(1:\fInl\fR,1:\fInl\fR) contains the singular values of the upper block; and \fId\fR(\fInl\fR+2:\fIn\fR) contains the singular values of the lower block.
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL\fR for \fBslasd1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd1\fR
+.IP
+Contains the diagonal element associated with the added row.
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL\fR for \fBslasd1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd1\fR
+.IP
+Contains the off-diagonal element associated with the added row.
+.TP 10
+\fBu\fR
+.NL
+\fBREAL\fR for \fBslasd1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd1\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldu\fR, \fIn\fR). On entry \fIu\fR(1:\fInl\fR, 1:\fInl\fR) contains the left singular vectors of the upper block; \fIu\fR(\fInl\fR+2:\fIn\fR, \fInl\fR+2:\fIn\fR) contains the left singular vectors of the lower block.
+.TP 10
+\fBldu\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIU\fR. 
+.IP
+\fIldu\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBvt\fR
+.NL
+\fBREAL\fR for \fBslasd1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd1\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldvt\fR, \fIm\fR), where \fIm\fR = \fIn\fR + \fIsqre\fR. 
+.IP
+On entry \fIvt\fR(1:\fInl\fR+1, 1:\fInl\fR+1)\' contains the right singular vectors of the upper block; \fIvt\fR(\fInl\fR+2:\fIm\fR, \fInl\fR+2:\fIm\fR)\' contains the right singular vectors of the lower block.
+.TP 10
+\fBldvt\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIvt\fR. 
+.IP
+\fIldvt\fR\(>= max(1, \fIM\fR).
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (4\fIn\fR).
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslasd1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd1\fR
+.IP
+Workspace array, \fBDIMENSION\fR (3\fIm\fR + 2\fIm\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+On exit \fId\fR(1:\fIn\fR) contains the singular values of the modified matrix.
+.TP 10
+\fBalpha\fR
+.NL
+On exit, the diagonal element associated with the added row deflated by max( abs( \fBalpha\fR ), abs( \fBbeta\fR ), abs( D(I) ) ), I = 1,n.
+.TP 10
+\fBbeta\fR
+.NL
+On exit, the off-diagonal element associated with the added row deflated by max( abs( \fBalpha\fR ), abs( \fBbeta\fR ), abs( D(I) ) ), I = 1,n.
+.TP 10
+\fBu\fR
+.NL
+On exit \fIu\fR contains the left singular vectors of the bidiagonal matrix.
+.TP 10
+\fBvt\fR
+.NL
+On exit \fIvt\fR\' contains the right singular vectors of the bidiagonal matrix.
+.TP 10
+\fBidxq\fR
+.NL
+\fBINTEGER\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). Contains the permutation which will reintegrate the subproblem just solved back into sorted order, that is, \fId\fR(\fIidxq\fR( \fIi\fR = 1, \fIn\fR )) will be in ascending order.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0:  successful exit. 
+.IP
+If \fIinfo\fR = -\fIi\fR < 0, the \fIi\fR-th argument had an illegal value. 
+.IP
+If \fIinfo\fR  = 1, an singular value did not converge.

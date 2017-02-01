@@ -1,0 +1,83 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lansp 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lansp \- Returns the value of the 1-norm, or the Frobenius norm, or the infinity norm, or the  element of  largest absolute value of a symmetric matrix supplied in packed form.
+.SH SYNOPSIS
+.PP
+\fIval\fR= \fBslansp\fR( \fInorm\fR, \fIuplo\fR, \fIn\fR, \fIap\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBdlansp\fR( \fInorm\fR, \fIuplo\fR, \fIn\fR, \fIap\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBclansp\fR( \fInorm\fR, \fIuplo\fR, \fIn\fR, \fIap\fR, \fIwork\fR)
+.PP
+\fIval\fR= \fBzlansp\fR( \fInorm\fR, \fIuplo\fR, \fIn\fR, \fIap\fR, \fIwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnorm\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the vaule to be returned by the routine:
+.IP
+= \fB\'M\'\fR or \fB\'m\': \fR\fIval\fR = \fBmax\fR(\fBabs\fR(\fIA\fR(\fIi\fR,\fIj\fR))), largest absolute value  of the matrix \fIA\fR.
+.IP
+= \fB\'1\'\fR or \fB\'O\'\fR or \fB\'o\': \fR\fIval\fR = \fBnorm1\fR(\fIA\fR), 1-norm of the matrix \fIA\fR (maximum column sum),
+.IP
+= \fB\'I\'\fR or \fB\'i\': \fR\fIval\fR = \fBnormI\fR(\fIA\fR), infinity norm of the matrix \fIA\fR (maximum row sum),
+.IP
+= \fB\'F\'\fR, \fB\'f\'\fR, \fB\'E\'\fR  or \fB\'e\': \fR\fIval\fR = \fBnormF\fR(\fIA\fR), Frobenius norm of the matrix \fIA\fR (square root of sum of squares).
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR.
+.IP
+Specifies whether the upper or lower triangular part of the symmetric matrix \fIA\fR is supplied. 
+.IP
+If \fIuplo\fR =  \fB\'U\'\fR: Upper triangular part of \fIA\fR is supplied 
+.IP
+If \fIuplo\fR =  \fB\'L\'\fR: Lower triangular part of \fIA\fR is supplied.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR. \fIn\fR\(>= 0. When 
+.IP
+\fIn\fR = 0, \fB?lansp\fR is set to zero.
+.TP 10
+\fBap\fR
+.NL
+\fBREAL\fR for \fBslansp\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlansp\fR
+.IP
+\fBCOMPLEX\fR for \fBclansp\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlansp\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR(\fIn\fR+1)/2). 
+.IP
+The upper or lower triangle of the symmetric matrix \fIA\fR, packed columnwise in a linear array. The \fIj\fR-th column of \fIA\fR is stored in the array \fIap\fR as follows: 
+.IP
+if \fIuplo\fR = \fB\'U\'\fR, \fIap\fR(\fIi\fR + (\fIj\fR-1)\fIj\fR/2) = \fIA\fR(\fIi\fR,\fIj\fR) for 1 \(<= \fIi\fR \(<= \fIj\fR;
+.IP
+if \fIuplo\fR = \fB\'L\'\fR, \fIap\fR(\fIi\fR + (\fIj\fR-1)(2\fIn\fR-\fIj\fR)/2) = \fIA\fR(\fIi\fR,\fIj\fR) for \fIj\fR \(<= \fIi\fR \(<= \fIn\fR.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslansp\fR and \fBclansp\fR. 
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlansp\fR and \fBzlansp\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR(max(1,\fIlwork\fR)), where 
+.IP
+\fIlwork\fR\(>=\fIn\fR when \fInorm\fR = \fB\'I\'\fR or \fB\'1\'\fR or \fB\'O\'\fR; otherwise, \fIwork\fR is not referenced. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBval\fR
+.NL
+\fBREAL\fR for \fBslansp\fR/\fBclansp\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlansp\fR/\fBzlansp\fR
+.IP
+Value returned by the function.

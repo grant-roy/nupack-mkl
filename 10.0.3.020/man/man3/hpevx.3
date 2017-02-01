@@ -1,0 +1,243 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?hpevx 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?hpevx \- Computes selected eigenvalues and, optionally, eigenvectors of a Hermitian matrix in packed storage.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall chpevx\fR(\fIjobz\fR, \fIrange\fR, \fIuplo\fR, \fIn\fR, \fIap\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIabstol\fR, \fIm\fR, \fIw\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIrwork\fR, \fIiwork\fR, \fIifail\fR, \fIinfo\fR)
+.PP
+\fBcall zhpevx\fR(\fIjobz\fR, \fIrange\fR, \fIuplo\fR, \fIn\fR, \fIap\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIabstol\fR, \fIm\fR, \fIw\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIrwork\fR, \fIiwork\fR, \fIifail\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall hpevx\fR(\fIa\fR, \fIw\fR[,\fIuplo\fR] [,\fIz\fR] [,\fIvl\fR] [,\fIvu\fR] [,\fIil\fR] [,\fIiu\fR] [,\fIm\fR] [,\fIifail\fR] [,\fIabstol\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobz\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjob\fR = \fB\'N\'\fR, then only eigenvalues are computed. 
+.IP
+If \fIjob\fR = \fB\'V\'\fR, then eigenvalues and eigenvectors are computed.
+.TP 10
+\fBrange\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'A\'\fR or \fB\'V\'\fR or \fB\'I\'\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR, the routine computes all eigenvalues. 
+.IP
+If \fIrange\fR = \fB\'V\'\fR, the routine computes eigenvalues \fIlambda\fR(\fIi\fR) in the half-open interval: \fIvl\fR<\fIlambda\fR(\fIi\fR) \(<=\fIvu\fR. 
+.IP
+If \fIrange\fR = \fB\'I\'\fR, the routine computes eigenvalues with indices \fIil\fR to \fIiu\fR.
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, \fIap\fR stores the packed upper triangular part of \fIA\fR. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, \fIap\fR stores the packed lower triangular part of \fIA\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBap\fR, \fBwork\fR
+.NL
+\fBCOMPLEX\fR for \fBchpevx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzhpevx\fR
+.IP
+Arrays:
+.IP
+\fIap(*)\fR contains the packed upper or lower triangle of the Hermitian matrix \fIA\fR, as specified by \fIuplo\fR. 
+.IP
+The dimension of \fIap\fR must be at least max(1, \fIn\fR*(\fIn\fR+1)/2).
+.IP
+\fIwork(*)\fR is a workspace array, \fBDIMENSION\fR at least max(1, 2\fIn\fR). 
+.TP 10
+\fBvl\fR, \fBvu\fR
+.NL
+\fBREAL\fR for \fBchpevx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzhpevx\fR
+.IP
+If \fIrange\fR = \fB\'V\'\fR, the lower and upper bounds of the interval to be searched for eigenvalues. 
+.IP
+Constraint: \fIvl\fR< \fIvu\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'I\'\fR, \fIvl\fR and \fIvu\fR are not referenced.
+.TP 10
+\fBil\fR, \fBiu\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIrange\fR = \fB\'I\'\fR, the indices in ascending order of the smallest and largest eigenvalues to be returned. 
+.IP
+Constraint: 1 \(<=\fIil\fR\(<=\fIiu\fR\(<=\fIn\fR, if \fIn\fR > 0; \fIil\fR=1 and \fIiu\fR=0 if \fIn\fR = 0.
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'V\'\fR, \fIil\fR and \fIiu\fR are not referenced.
+.TP 10
+\fBabstol\fR
+.NL
+\fBREAL\fR for \fBchpevx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzhpevx\fR
+.IP
+The absolute error tolerance to which each eigenvalue is required. 
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIz\fR. 
+.IP
+Constraints: 
+.IP
+if \fIjobz\fR = \fB\'N\'\fR, then \fIldz\fR\(>= 1; 
+.IP
+if \fIjobz\fR = \fB\'V\'\fR, then \fIldz\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBchpevx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzhpevx\fR
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, 7\fIn\fR).
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace array, \fBDIMENSION\fR at least max(1, 5\fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBap\fR
+.NL
+On exit, this array is overwritten by the values generated during the reduction to tridiagonal form. The elements of the diagonal and the off-diagonal of the tridiagonal matrix overwrite the corresponding elements of \fIA\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The total number of eigenvalues found, 0 \(<=\fIm\fR\(<=\fIn\fR. 
+.IP
+If \fIrange\fR = \fB\'A\'\fR, \fIm\fR = \fIn\fR, and if \fIrange\fR = \fB\'I\'\fR, \fIm\fR = \fIiu\fR-\fIil\fR+1.
+.TP 10
+\fBw\fR
+.NL
+\fBREAL\fR for \fBchpevx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzhpevx\fR
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). 
+.IP
+If \fIinfo\fR = 0, contains the selected eigenvalues of the matrix \fIA\fR in ascending order. 
+.TP 10
+\fBz\fR
+.NL
+\fBCOMPLEX\fR for \fBchpevx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzhpevx\fR
+.IP
+Array \fBz\fR(\fIldz\fR,*). 
+.IP
+The second dimension of \fIz\fR must be at least max(1, \fIm\fR). 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, then if \fIinfo\fR = 0, the first \fIm\fR columns of \fIz\fR contain the orthonormal eigenvectors of the matrix \fIA\fR corresponding to the selected eigenvalues, with the \fIi\fR-th column of \fIz\fR holding the eigenvector associated with \fIw\fR(\fIi\fR). 
+.IP
+If an eigenvector fails to converge, then that column of \fIz\fR contains the latest approximation to the eigenvector, and the index of the eigenvector is returned in \fIifail\fR. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then \fIz\fR is not referenced. 
+.IP
+Note: you must ensure that at least max(1,\fIm\fR) columns are supplied in the array \fIz\fR; if \fIrange\fR = \fB\'V\'\fR, the exact value of \fIm\fR is not known in advance and an upper bound must be used.
+.TP 10
+\fBifail\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, then if \fIinfo\fR = 0, the first \fIm\fR elements of \fIifail\fR are zero; if \fIinfo\fR > 0, the \fIifail\fR contains the indices the eigenvectors that failed to converge. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then \fIifail\fR is not referenced. 
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value. 
+.IP
+If \fIinfo\fR = \fIi\fR, then \fIi\fR eigenvectors failed to converge; their indices are stored in the array \fIifail\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBhpevx\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Stands for argument \fIap\fR in Fortan 77 interface. Holds the array \fIA\fR of size (\fIn*(n+1)/2\fR).
+.TP 10
+\fBw\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBz\fR
+.NL
+Holds the matrix \fIZ\fR of size (\fIn\fR, \fIn\fR), where the values \fIn\fR and \fIm\fR are significant.
+.TP 10
+\fBifail\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.
+.TP 10
+\fBvl\fR
+.NL
+Default value for this element is \fIvl\fR = \fB-HUGE\fR(\fIvl\fR).
+.TP 10
+\fBvu\fR
+.NL
+Default value for this element is \fIvu\fR = \fBHUGE\fR(\fIvl\fR).
+.TP 10
+\fBil\fR
+.NL
+Default value for this argument is \fIil\fR = 1.
+.TP 10
+\fBiu\fR
+.NL
+Default value for this argument is \fIiu\fR = \fIn\fR.
+.TP 10
+\fBabstol\fR
+.NL
+Default value for this element is \fIabstol\fR = \fB0.0\(ulWP\fR.
+.TP 10
+\fBjobz\fR
+.NL
+Restored based on the presence of the argument \fIz\fR as follows: 
+.IP
+\fIjobz\fR = \fB\'V\'\fR, if \fIz\fR is present, 
+.IP
+\fIjobz\fR = \fB\'N\'\fR, if \fIz\fR is omitted 
+.IP
+Note that there will be an error condition if \fIifail\fR is present and \fIz\fR is omitted.
+.TP 10
+\fBrange\fR
+.NL
+Restored based on the presence of arguments \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR as follows: 
+.IP
+\fIrange\fR = \fB\'V\'\fR, if one of or both \fIvl\fR and \fIvu\fR are present, 
+.IP
+\fIrange\fR = \fB\'I\'\fR, if one of or both \fIil\fR and \fIiu\fR are present, 
+.IP
+\fIrange\fR = \fB\'A\'\fR, if none of \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR is present, 
+.IP
+Note that there will be an error condition if one of or both \fIvl\fR and \fIvu\fR are present and at the same time one of or both \fIil\fR and \fIiu\fR are present.

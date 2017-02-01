@@ -1,0 +1,155 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laref 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laref \- Applies Householder reflectors to matrices on either their rows or columns.
+.SH SYNOPSIS
+.PP
+\fBcall slaref\fR(\fItype\fR, \fIa\fR, \fIlda\fR, \fIwantz\fR, \fIz\fR, \fIldz\fR, \fIblock\fR, \fIirow1\fR, \fIicol1\fR, \fIistart\fR, \fIistop\fR, \fIitmp1\fR, \fIitmp2\fR, \fIliloz\fR, \fIlihiz\fR, \fIvecs\fR, \fIv2\fR, \fIv3\fR, \fIt1\fR, \fIt2\fR, \fIt3\fR)
+.PP
+\fBcall dlaref\fR(\fItype\fR, \fIa\fR, \fIlda\fR, \fIwantz\fR, \fIz\fR, \fIldz\fR, \fIblock\fR, \fIirow1\fR, \fIicol1\fR, \fIistart\fR, \fIistop\fR, \fIitmp1\fR, \fIitmp2\fR, \fIliloz\fR, \fIlihiz\fR, \fIvecs\fR, \fIv2\fR, \fIv3\fR, \fIt1\fR, \fIt2\fR, \fIt3\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBtype\fR
+.NL
+(global) \fBCHRACTER*1\fR. 
+.IP
+If \fItype\fR = \fB\'R\'\fR, apply reflectors to the rows of the matrix (apply from left). Otherwise, apply reflectors to the columns of the matrix. Unchanged on exit.
+.TP 10
+\fBa\fR
+.NL
+(global) \fBREAL\fR for \fBslaref\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaref\fR
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR, *). 
+.IP
+On entry, the matrix to receive the reflections.
+.TP 10
+\fBlda\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the leading dimension of \fIA\fR; unchanged on exit.
+.TP 10
+\fBwantz\fR
+.NL
+(global) \fBLOGICAL\fR. 
+.IP
+If \fIwantz\fR = \fB.TRUE.\fR, apply any column reflections to \fIZ\fR as well. 
+.IP
+If \fIwantz\fR = \fB.FALSE.\fR, do no additional work on \fIZ\fR.
+.TP 10
+\fBz\fR
+.NL
+(global) \fBREAL\fR for \fBslaref\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaref\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldz\fR, *). 
+.IP
+On entry, the second matrix to receive column reflections.
+.TP 10
+\fBldz\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the leading dimension of \fIZ\fR; unchanged on exit.
+.TP 10
+\fBblock\fR
+.NL
+(global). \fBLOGICAL\fR. 
+.IP
+= \fB.TRUE.\fR  : apply several reflectors at once and read their data from the \fIvecs\fR array;
+.IP
+= \fB.FALSE.\fR : apply the single reflector given by \fIv2\fR, \fIv3\fR, \fIt1\fR, \fIt2\fR, and \fIt3\fR.
+.TP 10
+\fBirow1\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the local row element of the matrix A.
+.TP 10
+\fBicol1\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+On entry, the local column element of the matrix A.
+.TP 10
+\fBistart\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+Specifies the "number" of the first reflector. 
+.IP
+\fIistart\fR is used as an index into \fIvecs\fR if \fIblock\fR is set. \fIistart\fR is ignored if \fIblock\fR is \fB.FALSE.\fR .
+.TP 10
+\fBistop\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+Specifies the "number" of the last reflector. 
+.IP
+\fIistop\fR is used as an index into \fIvecs\fR if \fIblock\fR is set. \fIistop\fR is ignored if \fIblock\fR is \fB.FALSE.\fR .
+.TP 10
+\fBitmp1\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+Starting range into \fIA\fR. For rows, this is the local first column. For columns, this is the local first row.
+.TP 10
+\fBitmp2\fR
+.NL
+(local) \fBINTEGER\fR. 
+.IP
+Ending range into \fIA\fR. For rows, this is the local last column. For columns, this is the local last row.
+.TP 10
+\fBliloz\fR, \fBlihiz\fR
+.NL
+(local). \fBINTEGER\fR.
+.IP
+Serve the same purpose as \fIitmp1\fR, \fIitmp2\fR but for \fIZ\fR when \fIwantz\fR is set.
+.TP 10
+\fBvecs\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBslaref\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaref\fR. 
+.IP
+Array of size 3 *\fIn\fR (matrix size). This array holds the size 3 reflectors one after another and is only accessed when \fIblock\fR is \fB.TRUE.\fR
+.TP 10
+\fBv2\fR,\fBv3\fR,\fBt1\fR,\fBt2\fR,\fBt3\fR
+.NL
+(global). \fBINTEGER\fR. 
+.IP
+\fBREAL\fR for \fBslaref\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaref\fR. 
+.IP
+These parameters hold information on a single size 3 Householder reflector and are read when \fIblock\fR is \fB.FALSE.\fR, and overwritten when \fIblock\fR is \fB.TRUE.\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, the updated matrix.
+.TP 10
+\fBz\fR
+.NL
+Changed only if \fIwantz\fR is set. If \fIwantz\fR is \fB.FALSE.\fR , \fIz\fR is not referenced.
+.TP 10
+\fBirow1\fR
+.NL
+Undefined.
+.TP 10
+\fBicol1\fR
+.NL
+Undefined.
+.TP 10
+\fBv2\fR,\fBv3\fR,\fBt1\fR,\fBt2\fR,\fBt3\fR
+.NL
+These parameters are read when \fIblock\fR is \fB.FALSE.\fR, and overwritten when \fIblock\fR is \fB.TRUE.\fR.

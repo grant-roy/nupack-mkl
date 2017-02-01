@@ -1,0 +1,187 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasd2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasd2 \- Merges the two sets of singular values together into a single  sorted set. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasd2\fR( \fInl\fR, \fInr\fR, \fIsqre\fR, \fIk\fR, \fId\fR, \fIz\fR, \fIalpha\fR, \fIbeta\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIdsigma\fR, \fIu2\fR, \fIldu2\fR, \fIvt2\fR, \fIldvt2\fR, \fIidxp\fR, \fIidx\fR, \fIidxp\fR, \fIidxq\fR, \fIcoltyp\fR, \fIinfo\fR)
+.PP
+\fBcall dlasd2\fR( \fInl\fR, \fInr\fR, \fIsqre\fR, \fIk\fR, \fId\fR, \fIz\fR, \fIalpha\fR, \fIbeta\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIdsigma\fR, \fIu2\fR, \fIldu2\fR, \fIvt2\fR, \fIldvt2\fR, \fIidxp\fR, \fIidx\fR, \fIidxp\fR, \fIidxq\fR, \fIcoltyp\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnl\fR
+.NL
+\fBINTEGER\fR. The row dimension of the upper block. 
+.IP
+\fInl\fR\(>= 1.
+.TP 10
+\fBnr\fR
+.NL
+\fBINTEGER\fR. The row dimension of the lower block. 
+.IP
+\fInr\fR\(>= 1.
+.TP 10
+\fBsqre\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIsqre\fR = 0): the lower block is an \fInr\fR-by-\fInr\fR square matrix 
+.IP
+If \fIsqre\fR = 1): the lower block is an \fInr\fR-by-(\fInr\fR+1) rectangular matrix. The bidiagonal matrix has \fIn\fR = \fInl\fR + \fInr\fR + 1 rows and \fIm\fR = \fIn\fR + \fIsqre\fR\(>=\fIn\fR columns.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd2\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On entry \fId\fR contains the singular values of the two submatrices to be combined. 
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL\fR for \fBslasd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd2\fR
+.IP
+Contains the diagonal element associated with the added row.
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL\fR for \fBslasd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd2\fR
+.IP
+Contains the off-diagonal element associated with the added row.
+.TP 10
+\fBu\fR
+.NL
+\fBREAL\fR for \fBslasd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd2\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldu\fR, \fIn\fR). On entry \fIu\fR contains the left singular vectors of two submatrices in the two square blocks with corners at (1,1), (\fInl\fR, \fInl\fR), and (\fInl\fR+2, \fInl\fR+2), (\fIn\fR,\fIn\fR). 
+.TP 10
+\fBldu\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIu\fR. 
+.IP
+\fIldu\fR\(>=\fIn\fR.
+.TP 10
+\fBldu2\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIu2\fR. \fIldu2\fR\(>=\fIn\fR.
+.TP 10
+\fBvt\fR
+.NL
+\fBREAL\fR for \fBslasd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd2\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldvt\fR, \fIm\fR). On entry, \fIvt\fR\' contains the right singular vectors of two submatrices in the two square blocks with corners at (1,1), (\fInl\fR+1, \fInl\fR+1), and (\fInl\fR+2, \fInl\fR+2), (\fIm\fR, \fIm\fR). 
+.TP 10
+\fBldvt\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIvt\fR. \fIldvt\fR\(>=\fIm\fR.
+.TP 10
+\fBldvt2\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIvt2\fR. \fIldvt2\fR\(>=\fIm\fR.
+.TP 10
+\fBidxp\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (\fIn\fR). This will contain the permutation used to place deflated values of \fID\fR at the end of the array. On output \fIidxp\fR(2:\fIk\fR) points to the nondeflated \fId\fR-values and \fIidxp\fR(\fIk\fR+1:\fIn\fR) points to the deflated singular values. 
+.TP 10
+\fBidx\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (\fIn\fR). This will contain the permutation used to sort the contents of \fId\fR into ascending order. 
+.TP 10
+\fBcoltyp\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (\fIn\fR). As workspace, this array contains a label that indicates which of the following types a column in the \fIu2\fR matrix or a row in the \fIvt2\fR matrix is: 
+.IP
+1 : non-zero in the upper half only 
+.IP
+2 : non-zero in the lower half only 
+.IP
+3 : dense 
+.IP
+4 : deflated.
+.TP 10
+\fBidxq\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn\fR). This parameter contains the permutation that separately sorts the two sub-problems in \fID\fR into ascending order. Note that entries in the first half of this permutation must first be moved one position backward; and entries in the second half must first have \fInl\fR+1 added to their values.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. Contains the dimension of the non-deflated matrix, This is the order of the related secular equation. 1 \(<= \fIk\fR \(<= \fIn\fR.
+.TP 10
+\fBd\fR
+.NL
+On exit \fID\fR contains the trailing (\fIn\fR-\fIk\fR) updated singular values (those which were deflated) sorted into increasing order.
+.TP 10
+\fBu\fR
+.NL
+On exit \fIu\fR contains the trailing (\fIn\fR-\fIk\fR) updated left singular vectors (those which were deflated) in its last \fIn\fR-\fIk\fR columns.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslasd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd2\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On exit, \fIz\fR contains the updating row vector in the secular equation.
+.TP 10
+\fBdsigma\fR
+.NL
+\fBREAL\fR for \fBslasd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd2\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). Contains a copy of the diagonal elements (\fIk\fR-1 singular values and one zero) in the secular equation.
+.TP 10
+\fBu2\fR
+.NL
+\fBREAL\fR for \fBslasd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd2\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldu2\fR, \fIn\fR). Contains a copy of the first \fIk\fR-1 left singular vectors which will be used by \fB?lasd3\fR in a matrix multiply (\fB?gemm\fR) to solve for the new left singular vectors. \fIu2\fR is arranged into four blocks. The first block contains a column with 1 at \fInl\fR+1 and zero everywhere else; the second block contains non-zero entries only at and above \fInl\fR; the third contains non-zero entries only below \fInl\fR+1; and the fourth is dense.
+.TP 10
+\fBvt\fR
+.NL
+On exit, \fIvt\fR\' contains the trailing (\fIn\fR-\fIk\fR) updated right singular vectors (those which were deflated) in its last \fIn\fR-\fIk\fR columns. In case \fIsqre\fR =1, the last row of \fIvt\fR spans the right null space.
+.TP 10
+\fBvt2\fR
+.NL
+\fBREAL\fR for \fBslasd2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd2\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldvt2\fR, \fIn\fR). \fIvt2\fR\' contains a copy of the first \fIk\fR right singular vectors which will be used by \fB?lasd3\fR in a matrix multiply (\fB?gemm\fR) to solve for the new right singular vectors. \fIvt2\fR is arranged into three blocks. The first block contains a row that corresponds to the special 0 diagonal element in \fIsigma\fR; the second block contains non-zeros only at and before \fInl\fR +1; the third block contains non-zeros only at and after \fInl\fR +2.
+.TP 10
+\fBidxc\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn\fR). This will contain the permutation used to arrange the columns of the deflated \fIu\fR matrix into three groups: the first group contains non-zero entries only at and above \fInl\fR, the second contains non-zero entries only below \fInl\fR+2, and the third is dense.
+.TP 10
+\fBcoltyp\fR
+.NL
+On exit, it is an array of dimension 4, with \fIcoltyp\fR(\fIi\fR) being the dimension of the \fIi\fR-th type columns.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0):  successful exit 
+.IP
+If \fIinfo\fR = -\fIi\fR < 0, the \fIi\fR-th argument had an illegal value.

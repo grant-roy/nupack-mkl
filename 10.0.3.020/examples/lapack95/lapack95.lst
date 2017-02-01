@@ -1,0 +1,9 @@
+SRC_F90 = gbsv gels gesv hpev sbevx sygvx \
+          gbsvx geev geevab geevx \
+          gelss gelsy gesvd gesvxab \
+          ggev ggevx ggglm gglse ggsvd gtsv \
+          gtsvx hesv hpevx hpgv hpgvx pbsv \
+          posv posvx ppsv ppsvx ptsv ptsvx \
+          sbev sbgv sbgvx spsv spsvx stev \
+          stevr stevx syev syevr syevx sygv sysv
+IFACE_F90 = mkl_lapack

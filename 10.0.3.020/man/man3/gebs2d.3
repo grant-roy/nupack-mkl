@@ -1,0 +1,35 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gebs2d 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gebs2d \- Starts a broadcast along a scope for a generalrectangular matrix.
+.SH SYNOPSIS
+.PP
+\fBcall igebs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall sgebs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall dgebs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall cgebs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall zgebs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle that indicates the context.
+.TP 10
+\fBscope\fR
+.NL
+\fBCHARACTER*1\fR. Indicates what scope the broadcast should proceed on. Limited to \'Row\', \'Column\', or \'All\'.
+.TP 10
+\fBtop\fR
+.NL
+\fBCHARACTER*1\fR. Indicates the communication pattern to use for the broadcast.
+.TP 10
+\fBm\fR, \fBn\fR, \fBa\fR, \fBlda\fR
+.NL
+Describe the matrix to be sent.  See Matrix Shapes for details.

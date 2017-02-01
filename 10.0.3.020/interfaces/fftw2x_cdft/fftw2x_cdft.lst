@@ -1,0 +1,13 @@
+WRAP = \
+1d_create_plan \
+1d_destroy_plan \
+1d_fftw \
+1d_local_sizes \
+nd_create_plan \
+nd_destroy_plan \
+nd_fftw \
+nd_local_sizes \
+rnd_create_plan \
+rnd_destroy_plan \
+rnd_fftw \
+rnd_local_sizes

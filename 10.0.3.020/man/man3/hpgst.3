@@ -1,0 +1,103 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?hpgst 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?hpgst \- Reduces a complex Hermitian-definite generalized eigenvalue problem to the standard form using packed storage.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall chpgst\fR(\fIitype\fR, \fIuplo\fR, \fIn\fR, \fIap\fR, \fIbp\fR, \fIinfo\fR)
+.PP
+\fBcall zhpgst\fR(\fIitype\fR, \fIuplo\fR, \fIn\fR, \fIap\fR, \fIbp\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall hpgst\fR(\fIa\fR, \fIb\fR[,\fIitype\fR] [,\fIuplo\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBitype\fR
+.NL
+\fBINTEGER\fR. Must be 1 or 2 or 3. 
+.IP
+If \fIitype\fR = 1, the generalized eigenproblem is \fIA*z\fR = \fIlambda\fR\fI*B*z\fR
+.IP
+for \fIuplo\fR = \fB\'U\'\fR: \fIC\fR = inv(\fIU\fR**\fIH\fR)*\fIA\fR*inv(\fIU\fR), \fIz\fR = inv(\fIU\fR)*\fIy\fR;
+.IP
+for \fIuplo\fR = \fB\'L\'\fR: \fIC\fR = inv(\fIL\fR)*\fIA\fR*inv(\fIL\fR**\fIH\fR), \fIz\fR = inv(\fIL\fR**\fIH\fR)*\fIy\fR. 
+.IP
+If \fIitype\fR = 2, the generalized eigenproblem is \fIA\fR*\fIB\fR*\fIz\fR = \fIlambda\fR*\fIz\fR
+.IP
+for \fIuplo\fR = \fB\'U\'\fR: \fIC\fR = \fIU\fR*\fIA\fR*\fIU\fR**\fIH\fR, \fIz\fR = inv(\fIU\fR)*\fIy\fR;
+.IP
+for \fIuplo\fR = \fB\'L\'\fR: \fIC\fR = \fIL\fR**\fIH\fR*\fIA\fR*\fIL\fR, \fIz\fR = inv(\fIL\fR**\fIH\fR)*\fIy\fR. 
+.IP
+If \fIitype\fR = 3, the generalized eigenproblem is \fIB*A\fR*\fIz\fR = \fIlambda\fR*\fIz\fR
+.IP
+for \fIuplo\fR = \fB\'U\'\fR: \fIC\fR = \fIU\fR*\fIA\fR*\fIU\fR**\fIH\fR, \fIz\fR = \fIU\fR**\fIH\fR*\fIy\fR;
+.IP
+for \fIuplo\fR = \fB\'L\'\fR: \fIC\fR = \fIL\fR**\fIH\fR*\fIA\fR*\fIL\fR, \fIz\fR = \fIL\fR*\fIy\fR.
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR. 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, \fIap\fR stores the packed upper triangle of \fIA\fR; you must supply \fIB\fR in the factored form \fIB\fR = \fIU\fR**\fIH\fR\fI*U\fR. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, \fIap\fR stores the packed lower triangle of \fIA\fR; you must supply \fIB\fR in the factored form B = \fIL*L\fR**\fIH\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrices \fIA\fR and \fIB\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBap\fR, \fBbp\fR
+.NL
+\fBCOMPLEX\fR for \fBchpgst\fR\fBDOUBLE COMPLEX\fR for \fBzhpgst\fR. 
+.IP
+Arrays: 
+.IP
+\fIap\fR(*) contains the packed upper or lower triangle of \fIA\fR. 
+.IP
+The dimension of \fIa\fR must be at least max(1, \fIn\fR*(\fIn\fR+1)/2).
+.IP
+\fIbp\fR(*) contains the packed Cholesky factor of \fIB\fR (as returned by \fB?pptrf\fR with the same \fIuplo\fR value). 
+.IP
+The dimension of \fIb\fR must be at least max(1, \fIn\fR*(\fIn\fR+1)/2).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBap\fR
+.NL
+The upper or lower triangle of \fIA\fR is overwritten by the upper or lower triangle of \fIC\fR, as specified by the arguments \fIitype\fR and \fIuplo\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBhpgst\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Stands for argument \fIap\fR in Fortan 77 interface. Holds the array \fIA\fR of size (\fIn*(n+1)/2\fR).
+.TP 10
+\fBb\fR
+.NL
+Stands for argument \fIbp\fR in Fortan 77 interface. Holds the array \fIB\fR of size (\fIn*(n+1)/2\fR).
+.TP 10
+\fBitype\fR
+.NL
+Must be 1, 2, or 3. The default value is 1.
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.

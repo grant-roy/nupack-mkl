@@ -1,0 +1,91 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larra 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larra \- Computes the splitting points with the specified threshold.
+.SH SYNOPSIS
+.PP
+\fBcall slarra\fR( \fIn\fR, \fId\fR, \fIe\fR, \fIe2\fR, \fIspltol\fR, \fItnrm\fR, \fInsplit\fR, \fIisplit\fR, \fIinfo\fR)
+.PP
+\fBcall dlarra\fR( \fIn\fR, \fId\fR, \fIe\fR, \fIe2\fR, \fIspltol\fR, \fItnrm\fR, \fInsplit\fR, \fIisplit\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix (\fIn\fR> 1). 
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslarra\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarra\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+Contains \fBn\fR diagonal elements of the tridiagonal matrix \fIT\fR.
+.TP 10
+\fBe\fR
+.NL
+\fBREAL\fR for \fBslarra\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarra\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+First (\fBn\fR-1) entries contain the subdiagonal elements of the tridiagonal matrix \fIT\fR; \fBe\fR(\fBn\fR) need not be set.
+.TP 10
+\fBe2\fR
+.NL
+\fBREAL\fR for \fBslarra\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarra\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+First (\fBn\fR-1) entries contain the squares of the subdiagonal elements of the tridiagonal matrix \fIT\fR; \fBe2\fR(\fBn\fR) need not be set.
+.TP 10
+\fBspltol\fR
+.NL
+\fBREAL\fR for \fBslarra\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarra\fR
+.IP
+The threshold for splitting. Two criteria can be used: \fBspltol\fR
+.TP 10
+\fBtnrm\fR
+.NL
+\fBREAL\fR for \fBslarra\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarra\fR
+.IP
+The norm of the matrix.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBe\fR
+.NL
+On exit, the entries \fBe\fR(\fBisplit\fR(i)), 1 \(<= i \(<= \fBnsplit\fR, are set to zero, the other entries of \fBe\fR are untouched.
+.TP 10
+\fBe2\fR
+.NL
+On exit, the entries \fBe2\fR(\fBisplit\fR(i)), 1 \(<= i \(<= \fBnsplit\fR, are set to zero.
+.TP 10
+\fBnsplit\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The number of blocks the matrix \fIT\fR splits into. 1 \(<=\fB nsplit\fR \(<=\fB n\fR
+.TP 10
+\fBisplit\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The splitting points, at which \fIT\fR breaks up into blocks. The first block consists of rows/columns 1 to \fBisplit\fR(1),  the second of rows/columns \fBisplit\fR(1)+1 through \fBisplit\fR(2), and so on, and the \fBnsplit\fR-th consists of rows/columns \fBisplit\fR(\fBnsplit\fR-1)+1 through \fBisplit\fR(\fBnsplit\fR)=\fBn\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0:  successful exit.

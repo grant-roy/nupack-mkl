@@ -1,0 +1,215 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?stemr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?stemr \- Computes selected eigenvalues and eigenvectors of a real symmetric tridiagonal matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sstemr\fR(\fIjobz\fR, \fIrange\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIm\fR, \fIw\fR, \fIz\fR, \fIldz\fR, \fInzc\fR, \fIisuppz\fR, \fItryrac\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall dstemr\fR(\fIjobz\fR, \fIrange\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIm\fR, \fIw\fR, \fIz\fR, \fIldz\fR, \fInzc\fR, \fIisuppz\fR, \fItryrac\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall cstemr\fR(\fIjobz\fR, \fIrange\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIm\fR, \fIw\fR, \fIz\fR, \fIldz\fR, \fInzc\fR, \fIisuppz\fR, \fItryrac\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall zstemr\fR(\fIjobz\fR, \fIrange\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIm\fR, \fIw\fR, \fIz\fR, \fIldz\fR, \fInzc\fR, \fIisuppz\fR, \fItryrac\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobz\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then only eigenvalues are computed. 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, then eigenvalues and eigenvectors are computed.
+.TP 10
+\fBrange\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'A\'\fR or \fB\'V\'\fR or \fB\'I\'\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR, the routine computes all eigenvalues. 
+.IP
+If \fBrange\fR = \fB\'V\'\fR, the routine computes all eigenvalues in the half-open interval: (\fBvl\fR, \fBvu\fR]. 
+.IP
+If \fBrange\fR = \fB\'I\'\fR, the routine computes eigenvalues with indices \fIil\fR to \fIiu\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIT\fR (\fIn\fR\(>=0). 
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+Contains \fBn\fR diagonal elements of the tridiagonal matrix \fIT\fR.
+.TP 10
+\fBe\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). 
+.IP
+Contains (\fBn\fR-1) off-diagonal elements of the tridiagonal matrix \fIT\fR in elements 1 to \fBn\fR-1 of \fBe\fR. \fBe\fR(\fBn\fR) need not be set on input, but is used internally as workspace.
+.TP 10
+\fBvl\fR, \fBvu\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+If \fBrange\fR = \fB\'V\'\fR,  the lower and upper bounds of the interval to be searched for eigenvalues. Constraint: \fBvl\fR<\fBvu\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'I\'\fR, \fBvl\fR and \fBvu\fR are not referenced.
+.TP 10
+\fBil\fR, \fBiu\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIrange\fR = \fB\'I\'\fR, the indices in ascending order of the smallest and largest eigenvalues to be returned. 
+.IP
+Constraint: 1\(<=\fBil\fR\(<=\fBiu\fR\(<=\fIn\fR, if \fIn\fR>0.
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'V\'\fR,  \fBil\fR and \fBiu\fR are not referenced.
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIz\fR. 
+.IP
+if \fIjobz\fR = \fB\'V\'\fR, then \fIldz\fR \(>= max(1, \fBn\fR);
+.IP
+\fIldz\fR \(>= 1 otherwise.
+.TP 10
+\fBnzc\fR
+.NL
+\fBINTEGER\fR. The number of eigenvectors to be held in the array \fIz\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR, then \fInzc\fR\(>=max(1, \fBn\fR);
+.IP
+If \fBrange\fR = \fB\'V\'\fR, then \fInzc\fR is greater than or equal to the number of eigenvalues in the half-open interval: (\fBvl\fR, \fBvu\fR]. 
+.IP
+If \fBrange\fR = \fB\'I\'\fR, then \fInzc\fR\(>=\fBil\fR+\fBiu\fR+1.
+.IP
+This value is returned as the first entry of the array \fIz\fR, and no error message related to \fInzc\fR is issued by the routine \fBxerbla\fR.
+.TP 10
+\fBtryrac\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+If \fItryrac\fR = \fB.TRUE.\fR, it indicates that the code should check whether the tridiagonal matrix defines its eigenvalues to high relative accuracy.  If so, the code uses relative-accuracy preserving algorithms that might be (a bit) slower depending on the matrix.If the matrix does not define its eigenvalues to high relative accuracy, the code can uses possibly faster algorithms.
+.IP
+If \fItryrac\fR = \fB.FALSE.\fR, the code is not required to guarantee relatively accurate eigenvalues and can use the fastest possible techniques.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Workspace array, \fBDIMENSION\fR (\fIlwork\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR, 
+.IP
+\fIlwork\fR\(>=max(1, 18*\fBn\fR). 
+.IP
+If \fIlwork\fR=-1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR. 
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (\fIliwork\fR).
+.TP 10
+\fBliwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIiwork\fR. 
+.IP
+\fIlwork\fR\(>=max(1, 10*\fIn\fR) if the eigenvectors are desired, and \fIlwork\fR\(>=max(1, 8*\fIn\fR) if only the eigenvalues are to be computed. 
+.IP
+If \fIliwork\fR=-1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIiwork\fR array, returns this value as the first entry of the \fIiwork\fR array, and no error message related to \fIliwork\fR is issued by \fBxerbla\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBe\fR
+.NL
+On exit, the array \fIe\fR is overwritten. 
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The total number of eigenvalues found, 0\(<=\fIm\fR\(<=\fIn\fR. 
+.IP
+If \fIrange\fR = \fB\'A\'\fR, then \fIm\fR=\fIn\fR, and if If \fIrange\fR = \fB\'I\'\fR, then \fIm\fR=\fIiu\fR-\fIil\fR+1.
+.TP 10
+\fBw\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The first \fBm\fR elements contain the selected eigenvalues in ascending order.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBsstemr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdstemr\fR
+.IP
+\fBCOMPLEX\fR for \fBcstemr\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzstemr\fR. 
+.IP
+Array \fIz\fR(\fIldz\fR, *), the second dimension of \fIz\fR must be at least max(1, \fIm\fR).
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, and \fIinfo\fR = 0, then the first \fBm\fR columns of \fBz\fR contain the orthonormal eigenvectors of the matrix \fIT\fR corresponding to the selected eigenvalues, with the \fBi\fR-th column of \fBz\fR holding the eigenvector associated with \fBw\fR(i).
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then \fIz\fR is not referenced. 
+.IP
+Note: you must ensure that at least max(1,\fIm\fR) columns are supplied in the array \fIz\fR ; if \fBrange\fR = \fB\'V\'\fR, the exact value of \fIm\fR is not known in advance and an can be computed with a workspace query by setting \fBnzc\fR=-1, see description of the parameter \fBnzc\fR.
+.TP 10
+\fBisuppz\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR  (2*max(1, \fIm\fR)).
+.IP
+The support of the eigenvectors in \fIz\fR, that is the indices indicating the nonzero elements in \fIz\fR. The i-th computed eigenvector is nonzero only in elements \fIisuppz\fR(2*i-1) through \fIisuppz\fR(2*i). This is relevant in the case when the matrix is split. \fBisuppz\fR is only accessed when \fIjobz\fR = \fB\'V\'\fR and \fIn\fR>0.
+.TP 10
+\fBtryrac\fR
+.NL
+On exit, TRUE.\fBtryrac\fR is set to .FALSE. if the matrix does not define its eigenvalues to high relative accuracy.
+.TP 10
+\fBwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIwork\fR(1) returns the optimal (and minimal) size of \fIlwork\fR.
+.TP 10
+\fBiwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIiwork\fR(1) returns the optimal size of \fIliwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = -i, the i-th parameter had an illegal value.
+.IP
+If \fIinfo\fR = 1, internal error in \fB?larre\fR occurred, 
+.IP
+if \fIinfo\fR = 2, internal error in \fB?larrv\fR occurred.

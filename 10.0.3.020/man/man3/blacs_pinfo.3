@@ -1,0 +1,19 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH blacs\(ulpinfo 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+blacs\(ulpinfo \- Returns the number of processes available for use. 
+.SH SYNOPSIS
+.PP
+\fBcall blacs\(ulpinfo\fR( \fImypnum\fR, \fInprocs\fR)
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBmypnum\fR
+.NL
+\fBINTEGER\fR.  An integer between 0 and (\fBnprocs\fR - 1) that uniquely identifies each process.
+.TP 10
+\fBnprocs\fR
+.NL
+\fBINTEGER\fR.The number of processes available for BLACS use.

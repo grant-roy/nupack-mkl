@@ -1,0 +1,493 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+
+<HEAD>
+	<TITLE>Vector Math Library (VML) Notes</TITLE>
+<style>
+<!--
+h1 {
+	color: #0860A8;
+	font-size: 15pt;
+	padding-bottom: 1px;
+	margin-left: 0pt;
+	margin-bottom: 0;
+	border-bottom:1px solid #0860A8;
+	font-weight: normal;
+}
+p { 
+	font-size: 11pt; 
+	line-height: 120%; 
+	margin-top: 0; 
+	margin-bottom: 5pt;
+}
+h2 {
+	color: #0860A8;
+	font-weight: lighter;
+	margin-top: 5pt;
+	margin-bottom: 0;
+	font-size: 13pt;
+}
+h3 {
+	color: #333333;
+	font-weight: bold;
+	background-color: #ffffff;
+	margin-top: 5pt;
+	margin-bottom: 0;
+	font-size: 11pt;
+}
+H3.TableHead{ 
+	padding: 4px; 
+	text-align: left; 
+	background-color: #555555; 
+	font-weight: bold; 
+	margin-top: 0; 
+	margin-bottom: 0; 
+	color: #FFFFFF; 
+	font-size: 11pt;
+}
+td p { 
+	margin-top: 0px; 
+	margin-left: 0px;
+	padding: 5px; 
+	text-align: left; 
+	font-size: 11pt; 
+	line-height: 120%;
+}
+table { 
+	margin-bottom: 5pt; 
+	border-collapse: collapse; 
+	margin-top: 0.3em; 
+	font-size: 10pt;
+}	
+-->
+</style>
+<style type="text/css">
+body { 
+	color:#333333; 
+	background-color:#ffffff; 
+	font-family: Verdana, Geneva, Helvetica, Arial, sans-serif; 
+	font-size: 12px; 
+	margin-left: 30px;
+	font-weight: normal;
+}
+p { 
+	font-size: 11pt; 
+	line-height: 120%; 
+	margin-top: 0; 
+	margin-bottom: 5pt;
+}
+p.Note { 
+	margin-top: 0px; 
+	margin-left: 25px;
+	margin-bottom: 10pt;
+}
+p.twoColumnListHead { 
+	color: #000000; 
+	padding: 4px; 
+	text-align: left; 
+	width: auto; 
+	margin-top: 0px; 
+	margin-bottom: 0px; 
+	margin-left: 0px;
+	font-weight: bold;
+}
+p.pRelatedLink { 
+	margin-top: 0px; 
+	margin-bottom: 0px;
+}	
+table { 
+	margin-bottom: 5pt; 
+	border-collapse: collapse; 
+	margin-top: 0.3em; 
+	font-size: 10pt;
+}	
+td { 
+	border: 1px #BABABA solid; 
+	vertical-align: top; 
+	font-size: 11pt;
+	margin-bottom: 0px;
+}
+td, P.TableCell, td p { 
+	margin-top: 0px; 
+	margin-left: 0px;
+	padding: 5px; 
+	text-align: left; 
+	font-size: 11pt; 
+	line-height: 120%;
+}
+tr { 
+	vertical-align:top;
+}
+td.noBorder { 
+	border: 0px none;
+}
+th, th h3{ 
+	padding: 4px; 
+	text-align: left; 
+	background-color: #555555; 
+	font-weight: bold; 
+	margin-top: 0; 
+	margin-bottom: 0; 
+	color: #FFFFFF; 
+	font-size: 11pt;	
+}
+th { 
+	border:1px #BABABA solid;
+}
+th h3.TableHead, th h3 { 
+	padding:0;
+}		
+H3.TableHead{ 
+	padding: 4px; 
+	text-align: left; 
+	background-color: #555555; 
+	font-weight: bold; 
+	margin-top: 0; 
+	margin-bottom: 0; 
+	color: #FFFFFF; 
+	font-size: 11pt;
+}
+h1 {
+	color: #0860A8;
+	font-size: 15pt;
+	padding-bottom: 1px;
+	margin-left: 0pt;
+	margin-bottom: 0;
+	border-bottom:1px solid #0860A8;
+	font-weight: normal;
+}
+h1.title { 
+	border-bottom: 0 none; 
+	margin-left: 0px;
+	font-weight: normal;
+}
+h2 {
+	color: #0860A8;
+	font-weight: lighter;
+	margin-top: 5pt;
+	margin-bottom: 0;
+	font-size: 13pt;
+}
+h3 {
+	color: #333333;
+	font-weight: bold;
+	background-color: #ffffff;
+	margin-top: 5pt;
+	margin-bottom: 0;
+	font-size: 11pt;
+}
+h3.NoteTipHead {
+	color:#006699;
+	margin-top:11pt;
+	padding-bottom:0;
+	line-height: 18px;
+	text-transform: uppercase;
+}
+h3.NoteTipHead img {
+	vertical-align: middle;
+}
+ul { 
+	margin-bottom: 1em; 
+	font-size: 11pt; 
+	margin-top: 0px; 
+	
+}
+ul ol { 
+	margin-bottom: 0em; 
+	font-size: 11pt;
+	list-style-type: decimal;
+}
+ul ul { 
+	margin-bottom:0px; 
+	font-size: 11pt;
+}
+ul.Note {
+	margin-left:25px;
+}
+td ul { 
+	font-size: 11pt;
+}
+ol { 
+	margin-bottom: 1em; 
+	font-size: 11pt; 
+	margin-top: 0px; 
+	list-style-type: decimal;
+}
+ol ol { 
+	list-style: lower-alpha; 
+	margin-bottom: 0em; 
+	font-size: 11pt;
+}
+ol.Note {
+	margin-left:25px;
+}
+td ol { 
+	font-size: 11pt;
+}
+ol ul { 
+	margin-bottom:0px; 
+	font-size: 11pt;
+}
+li { 
+	font-size: 11pt; 
+	margin-top: 0px; 
+	line-height: 120%;
+}
+li p, ol p, ul p { 
+	margin-bottom: 0.2em; 
+	margin-top: 0.2em; 
+	margin-left: 0px; 
+	padding-left: 0px; 
+	font-size: 11pt;
+}
+li table, td table, dd table { 
+	margin-left: 0px;
+}
+indent li p { 
+	margin-bottom: 0.2em; 
+	margin-top: 0.2em; 
+	margin-left: -2em;
+}
+P.Preformatted, pre { 
+	line-height: 90%; 
+	x-text-tab-stops: repeat 1in; 
+	margin-top:0; 
+	margin-bottom:0; 
+	font-size: 10pt; 
+	font-family: "Courier New", Courier, monospace; 
+	background-color: #eeeeee;
+}
+td P.Preformatted, td pre { 
+	line-height: 90%; 
+	x-text-tab-stops: repeat 1in; 
+	margin-top:0; 
+	margin-bottom:0; 
+	margin-left: 0px;
+	font-size: 10pt; 
+	font-family: "Courier New", Courier, monospace; 
+	background-color: #eeeeee;
+}
+SPAN.Code, .Code { 
+	font-family: "Courier New", Courier, monospace;
+}
+blockquote { 
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+HR { 
+	color: #555555; 
+	border: 0px;
+	background: #555555; 
+	height: 1px;
+	margin-left: 0px;
+}
+SPAN.Big { 
+	font-weight: bold; 
+	font-size: 105%;
+}
+.welcomeImg { 
+	padding-left: 0px; 
+	padding-bottom: 0px; 
+}
+.IntelExt {
+	color: #008080;
+} 
+dl { 
+	margin-bottom: 1em; 
+	font-size: 11pt; 
+	margin-top: 0px; 
+	line-height: 150%; 
+}	
+dt { 
+	font-weight: bold; 
+	margin-top: 1em;
+}
+dd {
+	font-size: 11pt; 
+	margin-left: 0px; 
+}
+dd p {
+	margin-bottom: 0.2em; 
+	margin-top: 0.2em; 
+	font-size: 11pt;
+}
+.link_buttons {
+	background-color: #EEEEEE;
+	border-color: #EEEEEE;
+	border-width: 1px;
+	padding: 4px;
+}
+a:link {
+	color: #0860A8;
+	text-decoration: none;
+}
+a:visited { 
+	color: #0860A8;
+	text-decoration: none;	
+}
+a:active {
+	color: #0860A8;
+	text-decoration: underline;
+}
+a:hover {
+	color: #0860A8;
+	text-decoration: underline;
+}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+
+</HEAD>
+<body>
+
+
+<H1 ALIGN="CENTER"><i><b>
+Vector Math Library (VML) Notes<BR>
+for Intel<sup> &reg;</sup> Architecture Processors</i></b></H1>
+
+<p align="center"><b><i>Document Number: 310712-007US</i></b></p> 
+
+<p>
+
+<font size=2><i><A HREF="tables/revision.htm">Revision 7</A></i></font>
+
+
+<P>&nbsp;</P>
+
+<P>This document describes Vector Math Library (VML), which is
+designed to compute elementary functions on vector arguments. VML is
+an integral part of the Intel&reg Math Kernel Library and the VML
+terminology is used here for simplicity in discussing this group of
+functions.</P>
+
+<P>VML includes a set of highly optimized implementations of certain
+computationally expensive core mathematical functions (power,
+trigonometric, exponential, hyperbolic, etc.) that operate on
+vectors. VML may significantly improve performance for such
+applications as nonlinear software, computations of integrals, and
+many others.</P>
+
+<P>Each vector function from VML (for each data format) can work in
+three modes: High Accuracy (HA), Low Accuracy (LA), and Enhanced Performance (EP). For many
+functions, using the LA version improves performance at the cost
+of slight reduction in accuracy (1-2 least significant bits). In contrast to the LA accuracy flavor, the EP flavor 
+further enhances the performance at the cost of significant reduction in accuracy. In both single and double 
+precision, about half bits of floating-point mantissa are correct. Moreover, subtle argument paths for certain 
+functions (for example, large arguments in trigonometric functions) may be calculated with even less accuracy.</P>
+
+<P>Despite the fact that default accuracy is HA, LA is more than sufficient in most cases. For certain applications 
+that are not very demanding for accuracy (for example, media applications, some Monte Carlo simulations, etc.) you 
+may find the EP accuracy flavor sufficient. The accuracy flavor can be controlled by <code>vmlSetMode</code> function. 
+Please refer to the MKL Reference Manual for further details.
+</P> 
+
+<P>Accuracy behavior is processor specific, so results might slightly differ 
+across different processor families and even within a processor family, for example, between some processor 
+models of the family, or between 64-bit and 32-bit libraries. Also results might slightly differ from release 
+to release. Nevertheless these differences are within specified error bounds.</P>
+
+<P>Error and special value behaviors are identical for HA and LA functions and do not depend on the 
+processor on which the software runs. Correct error and special value behavior is not guaranteed for the EP flavor.</P>
+
+<P>This document refers to a more detailed description of
+performance and accuracy properties of VML functions, which you can find at 
+the <A HREF="http://www.intel.com/software/products/mkl">product web page</A>. There are
+several issues considered (performance, accuracy, special values
+processing) and two levels of details (brief information for all
+functions in one table and more detailed information for every
+function on a separate page).</P>
+
+<P><B>Performance issues:</B> Performance numbers in the respective tables
+ are shown for so-called &quot;working&quot; intervals arguments. Performance 
+behavior may be different for other intervals. 
+For example, it is
+quite expensive to compute trigonometric functions on &quot;huge&quot;
+arguments. Therefore, to obtain needed accuracy, performance is
+sacrificed.  Each function lists the working interval over which
+performance is measured. The same page contains graphs that demonstrate how the performance behavior depends on
+vector length. There are two extreme cases: so-called
+&quot;short&quot; and &quot;long&quot; vectors (logarithmic scale is
+used to show both cases). For short vectors there are&nbsp;loop organization and initialization overheads. The cost of such overheads
+is amortized with increasing vector length, and for vectors longer
+than a few dozens of elements the performance remains quite flat until 
+the L2 cache size is exceeded with the length of the vector.</P>
+
+<P>Data prefetching with the Intel&reg; Pentium&reg; <FONT FACE="arial,
+helvetica">III</FONT>  processor (explicit data prefetch in software) and Pentium
+4 processor (implicit data prefetch in hardware) greatly reduce the
+out-of-cache problem.</P>
+
+<P>
+See a comprehensive <A
+HREF="http://www.intel.com/software/products/mkl/data/vml/functions/_performanceall.html">table</A> for the performance data
+ on all VML functions.
+</P>
+
+<P><B>Accuracy issues</B>: The design requirement for the HA
+functions is less than 1.0 ulp error with all special values being
+processed correctly. <font face="Verdana" color="#333333">
+<span lang="EN-US" style="color: #333333; font-family: Verdana">A measured error 
+in the LA version does not exceed 4 ulp</span></font>. For more details see the web-placed <A
+HREF="http://www.intel.com/software/products/mkl/data/vml/functions/_accuracyall.html">accuracy table</A> with ulp errors for all
+functions.</P>
+
+<P><B>Special Values processing issues</B>: Special Values are processed in
+accordance with C9X standard. For full lists of special values, see
+the corresponding tables for <A HREF="tables/vml_special_values_real.htm">real</A> 
+and <A HREF="tables/vml_special_values_complex.htm">complex</A> functions.</P>
+
+<P>For more details on individual functions see the <A HREF="http://www.intel.com/software/products/mkl/data/vml/functions/_listfunc.html">list of VML functions</A>
+at the product web page.<BR>
+&nbsp;
+
+<p>To ensure a correct display of this document, use the following recommended browser versions: 
+Internet Explorer* 5.5 or higher (on Windows*), Netscape* 4.79 or Mozilla* 1.4 or higher (on Linux*).</p>
+&nbsp;&nbsp;
+
+<a name="Legal"></a>
+<h3>Disclaimer </h3>
+
+<p>
+<font size=-1>
+<p>INFORMATION IN THIS DOCUMENT IS PROVIDED IN CONNECTION WITH INTEL(R) PRODUCTS. NO LICENSE, EXPRESS OR IMPLIED, 
+BY ESTOPPEL OR OTHERWISE, TO ANY INTELLECTUAL PROPERTY RIGHTS IS GRANTED BY THIS DOCUMENT. EXCEPT AS PROVIDED IN 
+INTEL'S TERMS AND CONDITIONS OF SALE FOR SUCH PRODUCTS, INTEL ASSUMES NO LIABILITY WHATSOEVER, AND INTEL DISCLAIMS 
+ANY EXPRESS OR IMPLIED WARRANTY, RELATING TO SALE AND/OR USE OF INTEL PRODUCTS INCLUDING LIABILITY OR WARRANTIES 
+RELATING TO FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR INFRINGEMENT OF ANY PATENT, COPYRIGHT OR OTHER 
+INTELLECTUAL PROPERTY RIGHT.<br>
+UNLESS OTHERWISE AGREED IN WRITING BY INTEL, THE INTEL PRODUCTS ARE NOT DESIGNED NOR INTENDED FOR ANY APPLICATION 
+IN WHICH THE FAILURE OF THE INTEL PRODUCT COULD CREATE A SITUATION WHERE PERSONAL INJURY OR DEATH MAY OCCUR.</p>
+<p>Intel may make changes to specifications and product descriptions at any time, without notice. Designers must 
+not rely on the absence or characteristics of any features or instructions marked &quot;reserved&quot; or 
+&quot;undefined&quot;. Intel 
+reserves these for future definition and shall have no responsibility whatsoever for conflicts or incompatibilities 
+arising from future changes to them. The information here is subject to change without notice. Do not finalize a 
+design with this information. </p>
+<p>The products described in this document may contain design defects or errors known as errata which may cause the 
+product to deviate from published specifications. Current characterized errata are available on request. </p>
+<p>Contact your local Intel sales office or your distributor to obtain the latest specifications and before placing 
+your product order.</p>
+<p>Copies of documents which have an order number and are referenced in this document, or other Intel literature, 
+may be obtained by calling 1-800-548-4725, or by visiting <a href="http://www.intel.com/" target="_blank">Intel's Web Site</a>.
+Intel processor numbers are not a measure of performance. Processor numbers differentiate features within each 
+processor family, not across different processor families. See http://www.intel.com/products/processor_number for 
+details.</p>
+<p>BunnyPeople, Celeron, Celeron Inside, Centrino, Centrino Atom, Centrino Inside, Centrino logo, Core Inside, 
+FlashFile, i960, InstantIP, Intel, Intel logo, Intel386, Intel486, IntelDX2, IntelDX4, IntelSX2, Intel Atom, 
+Intel Core, Intel Inside, Intel Inside logo, Intel. Leap ahead., Intel. Leap ahead. logo, Intel NetBurst, 
+Intel NetMerge, Intel NetStructure, Intel SingleDriver, Intel SpeedStep, Intel StrataFlash, Intel Viiv, 
+Intel vPro, Intel XScale, Itanium, Itanium Inside, MCS, MMX, Oplus, OverDrive, PDCharm, Pentium, Pentium Inside, 
+skoool, Sound Mark, The Journey Inside, Viiv Inside, vPro Inside, VTune, Xeon, and Xeon Inside are trademarks of 
+Intel Corporation in the U.S. and other countries.</p>
+</font>
+<p>*Other names and brands may be claimed as the property of
+others.</font></p>
+<p>Copyright &copy 2000-2008, Intel Corporation. All rights reserved.</font></p>
+<!-- #EndEditable -->
+<!-- //////////////// End adding content //////////////// -->
+<!-- #EndEditable -->
+<!-- //////////////// End adding content //////////////// -->
+
+</BODY>
+</HTML>

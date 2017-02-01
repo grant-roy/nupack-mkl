@@ -1,0 +1,12 @@
+DFT = \
+complex_1d_double_ex1 complex_1d_double_ex2 complex_2d_double_ex2 \
+real_1d_double_ex2 real_2d_double_ex2 complex_1d_single_ex1 \
+complex_1d_single_ex2 complex_2d_single_ex1 real_1d_single_ex2 \
+real_2d_single_ex2 \
+r2r_1d_redft00_double_ex r2r_1d_rodft00_double_ex r2r_1d_rodft10_01_double_ex \
+r2r_1d_redft10_01_double_ex r2r_1d_redft11_double_ex r2r_1d_rodft11_double_ex \
+r2r_1d_mkl_rodft00_double_ex r2r_1d_redft00_single_ex r2r_1d_rodft00_single_ex \
+r2r_1d_rodft10_01_single_ex r2r_1d_redft10_01_single_ex r2r_1d_redft11_single_ex \
+r2r_1d_rodft11_single_ex r2r_1d_mkl_rodft00_single_ex
+
+

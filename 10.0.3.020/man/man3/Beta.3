@@ -1,0 +1,187 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH Beta 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+Beta \- Generates beta distributed random values.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvsrngbeta\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIp\fR, \fIq\fR, \fIa\fR, \fIbeta\fR)
+.PP
+\fIstatus\fR= \fBvdrngbeta\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIp\fR, \fIq\fR, \fIa\fR, \fIbeta\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvsRngBeta\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIp\fR, \fIq\fR, \fIa\fR, \fIbeta\fR);
+.PP
+\fIstatus\fR= \fBvdRngBeta\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIp\fR, \fIq\fR, \fIa\fR, \fIbeta\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBmethod\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Generation method. The specific values are as follows: 
+.br
+\fBVSL\(ulMETHOD\(ulSBETA\(ulCJA\fR
+.br
+.br
+\fBVSL\(ulMETHOD\(ulDBETA\(ulCJA\fR
+.br
+\fBVSL\(ulMETHOD\(ulSBETA\(ulCJA\(ulACCURATE\fR
+.br
+\fBVSL\(ulMETHOD\(ulDBETA\(ulCJA\(ulACCURATE\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE (VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Descriptor of the stream state structure
+.br
+\h\'2\'C:\h\'7\'Pointer to the stream state structure
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Number of random values to be generated
+.PP
+.SB Name
+.br
+\h\'1\'\fBp\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvsrngbeta\fR
+.br
+\h\'1\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdrngbeta\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat\fR for \fBvsRngBeta\fR
+.br
+\h\'1\'\fBdouble\fR for \fBvdRngBeta\fR
+.br
+.SB Description
+.br
+\h\'1\'Shape \fIp\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBq\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvsrngbeta\fR
+.br
+\h\'1\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdrngbeta\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat\fR for \fBvsRngBeta\fR
+.br
+\h\'1\'\fBdouble\fR for \fBvdRngBeta\fR
+.br
+.SB Description
+.br
+\h\'1\'Shape \fIq\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBa\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvsrngbeta\fR
+.br
+\h\'1\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdrngbeta\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat\fR for \fBvsRngBeta\fR
+.br
+\h\'1\'\fBdouble\fR for \fBvdRngBeta\fR
+.br
+.SB Description
+.br
+\h\'1\'Displacement.
+.PP
+.SB Name
+.br
+\h\'1\'\fBbeta\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvsrngbeta\fR
+.br
+\h\'1\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdrngbeta\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat\fR for \fBvsRngBeta\fR
+.br
+\h\'1\'\fBdouble\fR for \fBvdRngBeta\fR
+.br
+.SB Description
+.br
+\h\'1\'Scalefactor.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBr\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(OUT)\fR for \fBvsrngbeta\fR
+.br
+\h\'1\'\fBDOUBLE PRECISION\fR, \fBINTENT(OUT)\fR for \fBvdrngbeta\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat*\fR for \fBvsRngBeta\fR
+.br
+\h\'1\'\fBdouble*\fR for \fBvdRngBeta\fR
+.br
+.SB Description
+.br
+\h\'1\'Vector of \fIn\fR random numbers with beta distribution
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK, VSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+\fBstream\fR is a \fBNULL\fR pointer.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulSTREAM\fR
+.NL
+\fIstream\fR is not a valid random stream.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulUPDATE\fR
+.NL
+Callback function for an abstract BRNG returns an invalid number of updated entries in a buffer, that is, < 0 or > \fBnmax\fR.
+.TP 10
+\fBVSL\(ulERROR\(ulNO\(ulNUMBERS\fR
+.NL
+Callback function for an abstract BRNG returns 0 as the number of updated entries in a buffer.

@@ -1,0 +1,59 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH i?amax 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+i?amax \- Finds the index of the element with maximum absolute value.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fIindex\fR= \fBisamax\fR(\fIn\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fIindex\fR= \fBidamax\fR(\fIn\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fIindex\fR= \fBicamax\fR(\fIn\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fIindex\fR= \fBizamax\fR(\fIn\fR, \fIx\fR, \fIincx\fR)
+.PP
+.B Fortran 95
+.PP
+\fIindex\fR= \fBiamax\fR(\fIx\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.  Specifies the order of the vector \fIx\fR. 
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBisamax\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBidamax\fR
+.IP
+\fBCOMPLEX\fR for \fBicamax\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBizamax\fR
+.IP
+Array, \fBDIMENSION\fR at least (1+(\fIn\fR-1)*abs(\fIincx\fR)). 
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR.  Specifies the increment for the elements of \fIx\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBindex\fR
+.NL
+\fBINTEGER\fR.  Contains the position of vector element \fIx\fR  that has the largest absolute value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBiamax\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fIn\fR).

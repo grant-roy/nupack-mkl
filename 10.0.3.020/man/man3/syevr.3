@@ -1,0 +1,248 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?syevr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?syevr \- Computes selected eigenvalues and, optionally, eigenvectors of a real symmetric matrix using the Relatively Robust Representations.
+.SH SYNOPSIS
+.PP
+.PP
+\fBcall ssyevr\fR(\fIjobz\fR, \fIrange\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIabstol\fR, \fIm\fR, \fIw\fR, \fIz\fR, \fIldz\fR, \fIisuppz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall dsyevr\fR(\fIjobz\fR, \fIrange\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIabstol\fR, \fIm\fR, \fIw\fR, \fIz\fR, \fIldz\fR, \fIisuppz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall syevr\fR(\fIa\fR, \fIw\fR[,\fIuplo\fR] [,\fIz\fR] [,\fIvl\fR] [,\fIvu\fR] [,\fIil\fR] [,\fIiu\fR] [,\fIm\fR] [,\fIisuppz\fR] [,\fIabstol\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobz\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then only eigenvalues are computed. 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, then eigenvalues and eigenvectors are computed.
+.TP 10
+\fBrange\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'A\'\fR or \fB\'V\'\fR or \fB\'I\'\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR, the routine computes all eigenvalues. 
+.IP
+If \fIrange\fR = \fB\'V\'\fR, the routine computes eigenvalues \fIlambda\fR(\fIi\fR) in the half-open interval: 
+.IP
+\fIvl\fR< \fIlambda\fR(\fIi\fR)\(<=\fIvu\fR. 
+.IP
+If \fIrange\fR = \fB\'I\'\fR, the routine computes eigenvalues with indices \fIil\fR to \fIiu\fR.
+.IP
+For \fIrange\fR = \fB\'V\'\fRor \fB\'I\'\fR and \fIiu\fR-\fIil\fR < \fIn\fR\fB-\fR1, \fBsstebz\fR/\fBdstebz\fR and \fBsstein\fR/\fBdstein\fR are called.
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, \fIa\fR stores the upper triangular part of \fIA\fR. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, \fIa\fR stores the lower triangular part of \fIA\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBssyevr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsyevr\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) is an array containing either upper or lower triangular part of the symmetric matrix \fIA\fR, as specified by \fIuplo\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIa\fR. Must be at least max(1, \fIn\fR).
+.TP 10
+\fBvl\fR, \fBvu\fR
+.NL
+\fBREAL\fR for \fBssyevr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsyevr\fR. 
+.IP
+If \fIrange\fR = \fB\'V\'\fR, the lower and upper bounds of the interval to be searched for eigenvalues. 
+.IP
+Constraint: \fIvl\fR< \fIvu\fR.
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'I\'\fR, \fIvl\fR and \fIvu\fR are not referenced.
+.TP 10
+\fBil\fR, \fBiu\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIrange\fR = \fB\'I\'\fR, the indices in ascending order of the smallest and largest eigenvalues to be returned. 
+.IP
+Constraint: 
+.IP
+1 \(<=\fIil\fR\(<=\fIiu\fR\(<=\fIn\fR, if \fIn\fR > 0;
+.IP
+\fIil\fR=1 and \fIiu\fR=0, if \fIn\fR = 0.
+.IP
+If \fIrange\fR = \fB\'A\'\fR or \fB\'V\'\fR, \fIil\fR and \fIiu\fR are not referenced.
+.TP 10
+\fBabstol\fR
+.NL
+\fBREAL\fR for \fBssyevr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsyevr\fR. The absolute error tolerance to which each eigenvalue/eigenvector is required. 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, the eigenvalues and eigenvectors output have residual norms bounded by \fIabstol\fR, and the dot products between different eigenvectors are bounded by \fIabstol\fR.
+.IP
+If \fIabstol\fR < \fIn\fR *eps*|\fIT\fR|, then \fIn\fR *eps*|\fIT\fR| is used instead, where eps is the machine precision, and |\fIT\fR| is the 1-norm of the matrix \fIT\fR. The eigenvalues are computed to an accuracy of eps*|\fIT\fR| irrespective of \fIabstol\fR.
+.IP
+If high relative accuracy is important, set \fIabstol\fR to \fB?lamch\fR(\'S\').
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIz\fR. 
+.IP
+Constraints:
+.IP
+\fIldz\fR\(>= 1 if \fIjobz\fR = \fB\'N\'\fR;
+.IP
+\fIldz\fR < max(1, \fIn\fR) if \fIjobz\fR = \fB\'V\'\fR.
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR. 
+.IP
+Constraint: \fIlwork\fR\(>= max(1, 26\fIn\fR). 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR.
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace array, its dimension max(1, \fBliwork\fR).
+.TP 10
+\fBliwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIiwork\fR, \fIlwork\fR\(>= max(1, 10\fIn\fR).
+.IP
+If \fIliwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIiwork\fR array, returns this value as the first entry of the \fIiwork\fR array, and no error message related to \fIliwork\fR is issued by \fBxerbla\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, the lower triangle (if \fIuplo\fR = \fB\'L\'\fR) or the upper triangle (if \fIuplo\fR = \fB\'U\'\fR) of \fIA\fR, including the diagonal, is overwritten. 
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The total number of eigenvalues found, 0 \(<=\fIm\fR\(<=\fIn\fR. 
+.IP
+If \fIrange\fR = \fB\'A\'\fR, \fIm\fR = \fIn\fR, and if \fIrange\fR = \fB\'I\'\fR, \fIm\fR = \fIiu\fR-\fIil\fR+1.
+.TP 10
+\fBw\fR, \fBz\fR
+.NL
+\fBREAL\fR for \fBssyevr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsyevr\fR. 
+.IP
+Arrays:
+.IP
+\fIw\fR(*), \fBDIMENSION\fR at least max(1, \fIn\fR), contains the selected eigenvalues in ascending order, stored in \fIw\fR(1) to \fIw\fR(\fIm\fR);
+.IP
+\fIz\fR(\fIldz\fR, *), the second dimension of \fIz\fR must be at least max(1, \fIm\fR). 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR, then if \fIinfo\fR = 0, the first \fIm\fR columns of \fIz\fR contain the orthonormal eigenvectors of the matrix \fIT\fR corresponding to the selected eigenvalues, with the \fIi\fR-th column of \fIz\fR holding the eigenvector associated with \fIw\fR(\fIi\fR). 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then \fIz\fR is not referenced. Note that you must ensure that at least max(1, \fIm\fR) columns are supplied in the array \fIz\fR ; if \fIrange\fR = \fB\'V\'\fR, the exact value of \fIm\fR is not known in advance and an upper bound must be used.
+.TP 10
+\fBisuppz\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR at least 2 *max(1, \fIm\fR).
+.IP
+The support of the eigenvectors in \fIz\fR, i.e., the indices indicating the nonzero elements in \fIz\fR. The \fIi\fR-th eigenvector is nonzero only in elements \fIisuppz\fR( 2\fIi\fR-1) through \fIisuppz\fR( 2\fIi\fR ). Referenced only if eigenvectors are needed (\fIjobz\fR = \fB\'V\'\fR) and all eigenvalues are needed, that is, \fIrange\fR = \fB\'A\'\fRor \fIrange\fR = \fB\'I\'\fRand \fIil\fR = 1and \fIiu\fR = \fIn\fR.
+.TP 10
+\fBwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIwork(1)\fR returns the required minimal size of \fIlwork\fR.
+.TP 10
+\fBiwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIiwork(1)\fR returns the required minimal size of \fIliwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value. 
+.IP
+If \fIinfo\fR = \fIi\fR, an internal error has occurred.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their FORTRAN 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBsyevr\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBw\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBz\fR
+.NL
+Holds the matrix \fIZ\fR of size (\fIn\fR, \fIn\fR), where the values \fIn\fR and \fIm\fR are significant.
+.TP 10
+\fBisuppz\fR
+.NL
+Holds the vector of length (2*\fIm\fR), where the values (2*\fIm\fR) are significant.
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.
+.TP 10
+\fBvl\fR
+.NL
+Default value for this element is \fIvl\fR = \fB-HUGE\fR(\fIvl\fR).
+.TP 10
+\fBvu\fR
+.NL
+Default value for this element is \fIvu\fR = \fBHUGE\fR(\fIvl\fR).
+.TP 10
+\fBil\fR
+.NL
+Default value for this argument is \fIil\fR = 1.
+.TP 10
+\fBiu\fR
+.NL
+Default value for this argument is \fIiu\fR = \fIn\fR.
+.TP 10
+\fBabstol\fR
+.NL
+Default value for this element is \fIabstol\fR = \fB0.0\(ulWP\fR.
+.TP 10
+\fBjobz\fR
+.NL
+Restored based on the presence of the argument \fIz\fR as follows: \fIjobz\fR = \fB\'V\'\fR, if \fIz\fR is present, \fIjobz\fR = \fB\'N\'\fR, if \fIz\fR is omitted Note that there will be an error condition if \fIisuppz\fR is present and \fIz\fR is omitted.
+.TP 10
+\fBrange\fR
+.NL
+Restored based on the presence of arguments \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR as follows: \fIrange\fR = \fB\'V\'\fR, if one of or both \fIvl\fR and \fIvu\fR are present, \fIrange\fR = \fB\'I\'\fR, if one of or both \fIil\fR and \fIiu\fR are present, \fIrange\fR = \fB\'A\'\fR, if none of \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR is present, Note that there will be an error condition if one of or both \fIvl\fR and \fIvu\fR are present and at the same time one of or both \fIil\fR and \fIiu\fR are present.

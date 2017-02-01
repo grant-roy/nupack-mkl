@@ -1,0 +1,132 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dcsrilu0 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dcsrilu0 \- ILU0 preconditioner based on incomplete LU factorization of a sparse matrix.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall dcsrilu0\fR(\fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIbilu0\fR, \fIipar\fR, \fIdpar\fR, \fIierr\fR)
+.PP
+.B /* C */
+.PP
+\fBdcsrilu0\fR(\fI&n\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIbilu0\fR, \fIipar\fR, \fIdpar\fR, \fI&ierr\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Size (number of rows or columns) of the original square \fBn\fR-by-\fBn\fR matrix \fIA\fR.
+.TP 10
+\fBa\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array containing the set of elements of the matrix \fIA\fR. Its length is equal to the number of non-zero elements in the matrix \fIA\fR. Refer to the \fBvalues\fR array description in the Sparse Matrix Storage Format section for more details.
+.TP 10
+\fBia\fR
+.NL
+\fBINTEGER\fR. Array of size (\fIn\fR+1) containing begin indices of rows of the matrix \fIA \fRsuch that \fBia\fR(I) is the index in the array \fIA\fR of the first non-zero element from the row I. The value of the last element \fBia\fR(\fBn\fR+1) is equal to the number of non-zeros in the matrix \fIA\fR plus one. Refer to the \fBrowIndex\fR array description in the Sparse Matrix Storage Format section for more details.
+.TP 10
+\fBja\fR
+.NL
+\fBINTEGER\fR. Array containing the column indices for each non-zero element of the matrix \fIA\fR. Its size is equal to the size of the array \fBa\fR. Refer to the \fBcolumns\fR array description in the Sparse Matrix Storage Format section for more details.
+.TP 10
+.BR
+.B NOTE:
+Column indices should be put in increasing order for each row of matrix.
+.TP 10
+\fBipar\fR
+.NL
+\fBINTEGER\fR array of size \fB128\fR.  This parameter specifies the integer set of data for both the ILU0 and RCIFGMRES computations. Refer to the \fBipar\fR array description in the FGMRES Common Parameters for more details on FGMRES parameter entries. The  entries that are specific to ILU0 are listed below.
+.sp
+\fBipar\fR\fB(31)\fR- specifies how the routine operates when a zero diagonal element occurs during calculation. If this parameter is set to 0 (default value set by the routine ), then the calculations are stopped and the routine returns a non-zero error value. Otherwise, the diagonal element is set to the specified value and the calculations continues.
+.sp
+.TP 10
+.BR
+.B NOTE:
+Advanced users can define this array in the code as : INTEGER \fBipar\fR(31). However, to guarantee the compatibility with the future releases of Intel MKL , declare the array \fBipar\fR of length 128.
+.TP 10
+\fBdpar\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size \fB128\fR.  This parameter specifies the double precision set of data for both the ILU0 and RCIFGMRES computations. Refer to the \fBdpar\fR array description in the FGMRES Common Parameters for more details on FGMRES parameter entries. The  entries specific to ILU0 are listed below.
+.sp
+\fBdpar\fR\fB(31)\fR- specifies the small value that is compared with the diagonal elements during the calculation; if the value of the diagonal element is smaller, then it is set to \fBdpar\fR\fB(32)\fR, or the calculation is stopped in accordance with \fBipar\fR\fB(31)\fR. The default value is 1.0D-16.
+.TP 10
+.BR
+.B NOTE:
+This parameter can be set to the negative value, because the calculation uses its absolute value.
+.PP
+If this parameter is set to 0, the comparison with the diagonal element is not performed.
+.sp
+\fBdpar\fR\fB(32)\fR- specifies the value that is assigned to the diagonal element if its value is less than  \fBdpar\fR\fB(31)\fR (see above). The default value is 1.0D-10.
+.sp
+.TP 10
+.BR
+.B NOTE:
+Advanced users can define this array in the code as  DOUBLE PRECISION \fB dpar\fR(32). However, to guarantee the compatibility with the future releases of Intel MKL, declare the array \fBdpar\fR of length 128.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBbilu0\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array  \fIB\fR  containing non-zero elements of the resulting preconditioning matrix, stored in the format accepted in direct sparse solvers. Its size is equal to the number of non-zero elements in the matrix \fIA\fR. Refer to the \fBvalues\fR array description in the Sparse Matrix Storage Format section for more details.
+.TP 10
+\fBierr\fR
+.NL
+\fBINTEGER\fR. Error flag, informs about the routine completion.
+.PP
+.B NOTE:
+To present the resulting preconditioning matrix in the CSR format the arrays  \fBia\fR (row indices) and  \fBja\fR (column indices) of the input matrix must be used.
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBierr\fR=0
+.NL
+The routine completes task normally.
+.TP 10
+\fBierr\fR=-101
+.NL
+The routine is interrupted, the error occurs: at least one diagonal element is omitted from the matrix in CSR format (see Sparse Matrix Storage Format).
+.TP 10
+\fBierr\fR=-102
+.NL
+The routine is interrupted because the matrix contains zero diagonal element, the routine cannot perform operations.
+.TP 10
+\fBierr\fR=-103
+.NL
+The routine is interrupted as the matrix contains too small diagonal element, and an overflow may occur because of  the division by its value required to complete the task, or a bad approximation to ILU0 with use of this element will be computed.
+.TP 10
+\fBierr\fR=-104
+.NL
+The routine is interrupted because the memory is insufficient for the internal work array.
+.TP 10
+\fBierr\fR=-105
+.NL
+The routine is interrupted because the input matrix size \fBn\fR is less than or equal to 0.
+.TP 10
+\fBierr\fR=-106
+.NL
+The routine is interrupted because the column indices \fBja\fR are not placed in the increasing order.
+.SH INTERFACES
+.PP
+
+.PP
+\fBFortran 77 and Fortran 95:\fR
+.br
+SUBROUTINE dcsrilu0 (n, a, ia, ja, bilu0, ipar, dpar, ierr)
+.br
+INTEGER n, ierr, ipar(128)
+.br
+INTEGER ia(*), ja(*)
+.br
+DOUBLE PRECISION a(*), bilu0(*), dpar(128)
+.PP
+\fBC:\fR
+.br
+.PP
+.br
+void dcsrilu0 (int \fI*n\fR, double \fI*a\fR, int \fI*ia\fR, int \fI*ja\fR, double  \fI*bilu0\fR, int \fI*ipar\fR, double \fI*dpar\fR, int \fI*ierr\fR);
+.br
+

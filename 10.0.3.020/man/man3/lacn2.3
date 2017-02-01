@@ -1,0 +1,93 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lacn2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lacn2 \- Estimates the 1-norm of a square matrix, using reverse communication for evaluating matrix-vector products.
+.SH SYNOPSIS
+.PP
+\fBcall slacn2\fR( \fIn\fR, \fIv\fR, \fIx\fR, \fIisgn\fR, \fIest\fR, \fIkase\fR, \fIisave\fR)
+.PP
+\fBcall dlacn2\fR( \fIn\fR, \fIv\fR, \fIx\fR, \fIisgn\fR, \fIest\fR, \fIkase\fR, \fIisave\fR)
+.PP
+\fBcall clacn2\fR( \fIn\fR, \fIv\fR, \fIx\fR, \fIest\fR, \fIkase\fR, \fIisave\fR)
+.PP
+\fBcall zlacn2\fR( \fIn\fR, \fIv\fR, \fIx\fR, \fIest\fR, \fIkase\fR, \fIisave\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR (\fIn\fR\(>= 1). 
+.TP 10
+\fBv\fR, \fBx\fR
+.NL
+\fBREAL\fR for \fBslacn2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlacn2\fR
+.IP
+\fBCOMPLEX\fR for \fBclacn2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlacn2\fR.
+.IP
+Arrays, \fBDIMENSION\fR (\fIn\fR) each. 
+.IP
+\fIv\fR is a workspace array.
+.IP
+\fIx\fR is used as input after an intermediate return. 
+.TP 10
+\fBisgn\fR
+.NL
+\fBINTEGER\fR.
+.IP
+Workspace array, \fBDIMENSION\fR (\fIn\fR), used with real flavors only. 
+.TP 10
+\fBest\fR
+.NL
+\fBREAL\fR for \fBslacn2\fR/\fBclacn2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlacn2\fR/\fBzlacn2\fR
+.IP
+On entry with  \fIkase\fR set to 1 or 2, and \fIisave\fR(1) = 1, \fBest\fR must be unchanged from the previous call to the routine.
+.TP 10
+\fBkase\fR
+.NL
+\fBINTEGER\fR.
+.IP
+On the initial call to the routine, \fIkase\fR must be set to 0.
+.TP 10
+\fBisave\fR
+.NL
+\fBINTEGER\fR.  Array, \fBDIMENSION\fR (\fI3\fR).  
+.IP
+Contains variables from the previous call to the routine.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBest\fR
+.NL
+An estimate (a lower bound) for norm(\fIA\fR).
+.TP 10
+\fBkase\fR
+.NL
+On an intermediate return, \fIkase\fR is set to 1 or 2, indicating whether \fIx\fR is overwritten by \fIA\fR*\fIx\fR or \fIA\'\fR*\fIx\fR. 
+.IP
+On the final return, \fIkase\fR is set to 0.
+.TP 10
+\fBv\fR
+.NL
+On the final return, \fIv\fR = \fIA\fR*\fIw\fR, where \fIest\fR = norm(\fIv\fR)/norm(\fIw\fR) (\fIw\fR is not returned). 
+.TP 10
+\fBx\fR
+.NL
+On an intermediate return, \fIx\fR is overwritten by 
+.IP
+\fIA\fR*\fIx\fR ,     if \fIkase\fR = 1, 
+.IP
+\fIA\'\fR*\fIx\fR ,    if \fIkase\fR = 2, 
+.IP
+(\fIA\'\fR is the conjugate transpose of \fIA\fR), and the routine must be re-called with all the other parameters unchanged.
+.TP 10
+\fBisave\fR
+.NL
+This parameter  is used to save variables between calls to the routine.

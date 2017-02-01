@@ -1,0 +1,425 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?ggevx 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?ggevx \- Computes the generalized eigenvalues, and, optionally, the left and/or right generalized eigenvectors.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sggevx\fR(\fIbalanc\fR, \fIjobvl\fR, \fIjobvr\fR, \fIsense\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIilo\fR, \fIihi\fR, \fIlscale\fR, \fIrscale\fR, \fIabnrm\fR, \fIbbnrm\fR, \fIrconde\fR, \fIrcondv\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+\fBcall dggevx\fR(\fIbalanc\fR, \fIjobvl\fR, \fIjobvr\fR, \fIsense\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIilo\fR, \fIihi\fR, \fIlscale\fR, \fIrscale\fR, \fIabnrm\fR, \fIbbnrm\fR, \fIrconde\fR, \fIrcondv\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+\fBcall cggevx\fR(\fIbalanc\fR, \fIjobvl\fR, \fIjobvr\fR, \fIsense\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalpha\fR, \fIbeta\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIilo\fR, \fIihi\fR, \fIlscale\fR, \fIrscale\fR, \fIabnrm\fR, \fIbbnrm\fR, \fIrconde\fR, \fIrcondv\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIiwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+\fBcall zggevx\fR(\fIbalanc\fR, \fIjobvl\fR, \fIjobvr\fR, \fIsense\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalpha\fR, \fIbeta\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIilo\fR, \fIihi\fR, \fIlscale\fR, \fIrscale\fR, \fIabnrm\fR, \fIbbnrm\fR, \fIrconde\fR, \fIrcondv\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIiwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall ggevx\fR(\fIa\fR, \fIb\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR[,\fIvl\fR] [,\fIvr\fR] [,\fIbalanc\fR] [,\fIilo\fR] [,\fIihi\fR] [, \fIlscale\fR] [,\fIrscale\fR] [,\fIabnrm\fR] [,\fIbbnrm\fR] [,\fIrconde\fR] [,\fIrcondv\fR] [,\fIinfo\fR])
+.PP
+\fBcall ggevx\fR(\fIa\fR, \fIb\fR, \fIalpha\fR, \fIbeta\fR[, \fIvl\fR] [,\fIvr\fR] [,\fIbalanc\fR] [,\fIilo\fR] [,\fIihi\fR] [,\fIlscale\fR] [, \fIrscale\fR] [,\fIabnrm\fR] [,\fIbbnrm\fR] [,\fIrconde\fR] [,\fIrcondv\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBbalanc\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'P\'\fR, \fB\'S\'\fR, or \fB\'B\'\fR. Specifies the balance option to be performed.
+.IP
+If \fIbalanc\fR = \fB\'N\'\fR, do not diagonally scale or permute; 
+.IP
+If \fIbalanc\fR = \fB\'P\'\fR, permute only; 
+.IP
+If \fIbalanc\fR = \fB\'S\'\fR, scale only; 
+.IP
+If \fIbalanc\fR = \fB\'B\'\fR, both permute and scale.
+.IP
+Computed reciprocal condition numbers will be for the matrices after balancing and/or permuting. Permuting does not change condition numbers (in exact arithmetic), but balancing does.
+.TP 10
+\fBjobvl\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobvl\fR = \fB\'N\'\fR, the left generalized eigenvectors are not computed; 
+.IP
+If \fIjobvl\fR = \fB\'V\'\fR, the left generalized eigenvectors are computed.
+.TP 10
+\fBjobvr\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobvr\fR = \fB\'N\'\fR, the right generalized eigenvectors are not computed; 
+.IP
+If \fIjobvr\fR = \fB\'V\'\fR, the right generalized eigenvectors are computed.
+.TP 10
+\fBsense\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'E\'\fR, \fB\'V\'\fR, or \fB\'B\'\fR. Determines which reciprocal condition number are computed.
+.IP
+If \fIsense\fR = \fB\'N\'\fR, none are computed; 
+.IP
+If \fIsense\fR = \fB\'E\'\fR, computed for eigenvalues only; 
+.IP
+If \fIsense\fR = \fB\'V\'\fR, computed for eigenvectors only; 
+.IP
+If \fIsense\fR = \fB\'B\'\fR, computed for eigenvalues and eigenvectors.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrices \fIA\fR, \fIB\fR, \fIvl\fR, and \fIvr\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR, \fBb\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsggevx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggevx\fR
+.IP
+\fBCOMPLEX\fR for \fBcggevx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggevx\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) is an array containing the \fIn\fR-by-\fIn\fR matrix \fIA\fR (first of the pair of matrices). 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIb\fR(\fIldb\fR,*) is an array containing the \fIn\fR-by-\fIn\fR matrix \fIB\fR (second of the pair of matrices). 
+.IP
+The second dimension of \fIb\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIa\fR. 
+.IP
+Must be at least max(1, \fIn\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIb\fR. 
+.IP
+Must be at least max(1, \fIn\fR).
+.TP 10
+\fBldvl\fR, \fBldvr\fR
+.NL
+\fBINTEGER\fR. The first dimensions of the output matrices \fIvl\fR and \fIvr\fR, respectively. 
+.IP
+Constraints:
+.IP
+\fIldvl\fR\(>= 1. If \fIjobvl\fR = \fB\'V\'\fR, \fIldvl\fR\(>= max(1, \fIn\fR).
+.IP
+\fIldvr\fR\(>= 1. If \fIjobvr\fR = \fB\'V\'\fR, \fIldvr\fR\(>= max(1, \fIn\fR). 
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR. \fIlwork\fR\(>= max(1, 2*\fIn\fR);
+.IP
+\fIFor real flavors\fR:
+.IP
+If \fIbalanc\fR = \fB\'S\'\fR, or \fB\'B\'\fR, or   \fIjobvl\fR = \fB\'V\'\fR, or  \fIjobvr\fR = \fB\'V\'\fR, then \fIlwork\fR\(>= max(1, 6*\fIn\fR); 
+.IP
+if \fIsense\fR = \fB\'E\'\fR, or \fB\'B\'\fR, then \fIlwork\fR\(>= max(1, 10*\fIn\fR); 
+.IP
+if \fIsense\fR = \fB\'V\'\fR, or \fB\'B\'\fR, \fIlwork\fR\(>= (2\fIn\fR**2+ 8*\fIn\fR+16). 
+.IP
+\fIFor complex flavors:\fR
+.IP
+if \fIsense\fR = \fB\'E\'\fR,  \fIlwork\fR\(>= max(1, 4*\fIn\fR); 
+.IP
+if \fIsense\fR = \fB\'V\'\fR, or \fB\'B\'\fR, \fIlwork\fR\(>=max(1, 2*\fIn\fR**2+ 2*\fIn\fR).
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR.
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBcggevx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzggevx\fR
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, 6*\fIn\fR) if \fIbalanc\fR = \fB\'S\'\fR, or \fB\'B\'\fR, and at least   max(1, 2*\fIn\fR) otherwise. 
+.IP
+This array is used in complex flavors only.
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR at least (\fIn\fR+6) for real flavors and at least (\fIn\fR+2) for complex flavors. 
+.IP
+Not referenced if \fIsense\fR = \fB\'E\'\fR.
+.TP 10
+\fBbwork\fR
+.NL
+\fBLOGICAL\fR. Workspace array, \fBDIMENSION\fR at least max(1, \fIn\fR). 
+.IP
+Not referenced if \fIsense\fR = \fB\'N\'\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR
+.NL
+On exit, these arrays have been overwritten. 
+.IP
+If \fIjobvl\fR = \fB\'V\'\fR or \fIjobvr\fR = \fB\'V\'\fR or both, then \fIa\fR contains the first part of the real Schur form of the ``balanced'' versions of the input \fIA\fR and \fIB\fR, and \fIb\fR contains its second part.
+.TP 10
+\fBalphar\fR, \fBalphai\fR
+.NL
+\fBREAL\fR for \fBsggevx\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggevx\fR. 
+.IP
+Arrays, \fBDIMENSION\fR at least max(1, \fIn\fR) each. Contain values that form generalized eigenvalues in real flavors. 
+.IP
+See \fIbeta\fR.
+.TP 10
+\fBalpha\fR
+.NL
+\fBCOMPLEX\fR for \fBcggevx\fR;
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggevx\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). Contain values that form generalized eigenvalues in complex flavors. See \fIbeta\fR.
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL\fR for \fBsggevx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggevx\fR
+.IP
+\fBCOMPLEX\fR for \fBcggevx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggevx\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR).
+.IP
+\fIFor real flavors\fR:
+.IP
+On exit, (\fIalphar\fR(j) + \fIalphai\fR(j)*i)/\fIbeta\fR(j), j=1,..., \fIn\fR, will be the generalized eigenvalues. 
+.IP
+If \fIalphai\fR(j) is zero, then the j-th eigenvalue is real; if positive, then the j-th and (j+1)-st eigenvalues are a complex conjugate pair, with \fIalphai\fR(j+1) negative.
+.IP
+\fIFor complex flavors:\fR
+.IP
+On exit, \fIalpha\fR(j)/\fIbeta\fR(j), j=1,..., \fIn\fR, will be the generalized eigenvalues. 
+.TP 10
+\fBvl\fR, \fBvr\fR
+.NL
+\fBREAL\fR for \fBsggevx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggevx\fR
+.IP
+\fBCOMPLEX\fR for \fBcggevx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggevx\fR. 
+.IP
+Arrays:
+.IP
+\fIvl\fR(\fIldvl\fR,*); the second dimension of \fIvl\fR must be at least max(1, \fIn\fR).
+.IP
+If \fIjobvl\fR = \fB\'V\'\fR, the left generalized eigenvectors \fIu\fR(j) are stored one after another in the columns of \fIvl\fR, in the same order as their eigenvalues. Each eigenvector will be scaled so the largest component have abs(Re) + abs(Im) = 1. 
+.IP
+If \fIjobvl\fR = \fB\'N\'\fR, \fIvl\fR is not referenced. 
+.IP
+\fIFor real flavors\fR:
+.IP
+If the j-th eigenvalue is real, then \fIu\fR(j) = \fIvl\fR(:,j), the j-th column of \fIvl\fR. 
+.IP
+If the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then \fIu\fR(j) = \fIvl\fR(:,j) + \fIi\fR*\fIvl\fR(:,j+1) and \fIu\fR(j+1) = \fIvl\fR(:,j) - \fIi\fR*\fIvl\fR(:,j+1), where \fIi\fR = sqrt(-1).
+.IP
+\fIFor complex flavors\fR: 
+.IP
+\fIu\fR(j) = \fIvl\fR(:,j), the j-th column of \fIvl\fR.
+.IP
+\fIvr\fR(\fIldvr\fR,*); the second dimension of \fIvr\fR must be at least max(1, \fIn\fR).
+.IP
+If \fIjobvr\fR = \fB\'V\'\fR, the right generalized eigenvectors \fIv\fR(j) are stored one after another in the columns of \fIvr\fR, in the same order as their eigenvalues. Each eigenvector will be scaled so the largest component have abs(Re) + abs(Im) = 1. 
+.IP
+If \fIjobvr\fR = \fB\'N\'\fR, \fIvr\fR is not referenced. 
+.IP
+\fIFor real flavors\fR:
+.IP
+If the j-th eigenvalue is real, then \fIv\fR(j) = \fIvr\fR(:,j), the j-th column of \fIvr\fR. 
+.IP
+If the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then \fIv\fR(j) = \fIvr\fR(:,j) + \fIi\fR*\fIvr\fR(:,j+1) and \fIv\fR(j+1) = \fIvr\fR(:,j) - \fIi\fR*\fIvr\fR(:,j+1). 
+.IP
+\fIFor complex flavors\fR: 
+.IP
+\fIv\fR(j) = \fIvr\fR(:,j), the j-th column of \fIvr\fR.
+.TP 10
+\fBilo\fR, \fBihi\fR
+.NL
+\fBINTEGER\fR. \fIilo\fR and \fIihi\fR are integer values such that on exit \fIA\fR(i,j) = 0 and \fIB\fR(i,j) = 0 if i > j and j = 1,..., \fIilo\fR-1 or i = \fIihi\fR+1,..., \fIn\fR. 
+.IP
+If \fIbalanc\fR = \fB\'N\'\fR or \fB\'S\'\fR, \fIilo\fR = 1 and \fIihi\fR = \fIn\fR.
+.TP 10
+\fBlscale\fR, \fBrscale\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+Arrays, \fBDIMENSION\fR at least max(1, \fIn\fR) each. 
+.IP
+\fIlscale\fR contains details of the permutations and scaling factors applied to the left side of \fIA\fR and \fIB\fR. 
+.IP
+If \fIPL\fR(j) is the index of the row interchanged with row j, and \fIDL\fR(j) is the scaling factor applied to row j, then
+.IP
+\fIlscale\fR(j) = \fIPL\fR(j), for j = 1,..., \fIilo\fR-1
+.IP
+= \fIDL\fR(j), for j = \fIilo\fR,...,\fIihi\fR
+.IP
+= \fIPL\fR(j) for j = \fIihi\fR+1,..., \fIn\fR.
+.IP
+The order in which the interchanges are made is \fIn\fR to \fIihi\fR+1, then 1 to \fIilo\fR-1.
+.IP
+\fIrscale\fR contains details of the permutations and scaling factors applied to the right side of \fIA\fR and \fIB\fR. 
+.IP
+If \fIPR\fR(j) is the index of the column interchanged with column j, and \fIDR\fR(j) is the scaling factor applied to column j, then
+.IP
+\fIrscale\fR(j) = \fIPR\fR(j), for j = 1,..., \fIilo\fR-1
+.IP
+= \fIDR\fR(j), for j = \fIilo\fR,...,\fIihi\fR
+.IP
+= \fIPR\fR(j) for j = \fIihi\fR+1,..., \fIn\fR.
+.IP
+The order in which the interchanges are made is \fIn\fR to \fIihi\fR+1, then 1 to \fIilo\fR-1.
+.TP 10
+\fBabnrm\fR, \fBbbnrm\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors.
+.IP
+The one-norms of the balanced matrices \fIA\fR and \fIB\fR, respectively.
+.TP 10
+\fBrconde\fR, \fBrcondv\fR
+.NL
+\fBREAL\fR for single precision flavors \fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Arrays, \fBDIMENSION\fR at least max(1, \fIn\fR) each.
+.IP
+If \fIsense\fR = \fB\'E\'\fR, or \fB\'B\'\fR, \fIrconde\fR contains the reciprocal condition numbers of the eigenvalues, stored in consecutive elements of the array. For a complex conjugate pair of eigenvalues two consecutive elements of \fIrconde\fR are set to the same value. Thus \fIrconde\fR(j), \fIrcondv\fR(j), and the j-th columns of \fIvl\fR and \fIvr\fR all correspond to the same eigenpair (but not in general the j-th eigenpair, unless all eigenpairs are selected). 
+.IP
+If \fIsense\fR = \fB\'N\'\fR, or \fB\'V\'\fR,\fI rconde\fR is not referenced.
+.IP
+If \fIsense\fR = \fB\'V\'\fR, or \fB\'B\'\fR, \fIrcondv\fR contains the estimated reciprocal condition numbers of the eigenvectors, stored in consecutive elements of the array. For a complex eigenvector two consecutive elements of \fIrcondv\fR are set to the same value. 
+.IP
+If the eigenvalues cannot be reordered to compute \fIrcondv\fR(j), \fIrcondv\fR(j) is set to 0; this can only occur when the true value would be very small anyway. 
+.IP
+If \fIsense\fR = \fB\'N\'\fR, or \fB\'E\'\fR, \fIrcondv\fR is not referenced.
+.TP 10
+\fBwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIwork(1)\fR returns the required minimal size of \fIlwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.IP
+If \fIinfo\fR = \fIi\fR, and 
+.IP
+\fIi\fR\(<=\fIn\fR:
+.IP
+the \fIQZ\fR iteration failed. No eigenvectors have been calculated, but \fIalphar\fR(j), \fIalphai\fR(j) (for real flavors), or \fIalpha\fR(j) (for complex flavors), and \fIbeta\fR(j), j=\fIinfo\fR+1,..., \fIn\fR should be correct.
+.IP
+\fIi\fR > \fIn\fR: errors that usually indicate LAPACK problems:
+.IP
+\fIi\fR = \fIn\fR+1: other than \fIQZ\fR iteration failed in \fB?hgeqz\fR;
+.IP
+\fIi\fR = \fIn\fR+2: error return from \fB?tgevc\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBggevx\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBb\fR
+.NL
+Holds the matrix \fIB\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBalphar\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBalphai\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBalpha\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in complex flavors only.
+.TP 10
+\fBbeta\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBvl\fR
+.NL
+Holds the matrix \fIVL\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBvr\fR
+.NL
+Holds the matrix \fIVR\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBlscale\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBrscale\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBrconde\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBrcondv\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBbalanc\fR
+.NL
+Must be \fB\'N\'\fR, \fB\'B\'\fR, or \fB\'P\'\fR. The default value is \fB\'N\'\fR.
+.TP 10
+\fBjobvl\fR
+.NL
+Restored based on the presence of the argument \fIvl\fR as follows: 
+.IP
+\fIjobvl\fR = \fB\'V\'\fR, if \fIvl\fR is present, 
+.IP
+\fIjobvl\fR = \fB\'N\'\fR, if \fIvl\fR is omitted.
+.TP 10
+\fBjobvr\fR
+.NL
+Restored based on the presence of the argument \fIvr\fR as follows: 
+.IP
+\fIjobvr\fR = \fB\'V\'\fR, if \fIvr\fR is present, 
+.IP
+\fIjobvr\fR = \fB\'N\'\fR, if \fIvr\fR is omitted.
+.TP 10
+\fBsense\fR
+.NL
+Restored based on the presence of arguments \fIrconde\fR and \fBrcondv\fR as follows: 
+.IP
+\fIsense\fR = \fB\'B\'\fR, if both \fIrconde\fR and \fIrcondv\fR are present, 
+.IP
+\fIsense\fR = \fB\'E\'\fR, if \fIrconde\fR is present and \fIrcondv\fR omitted, 
+.IP
+\fIsense\fR = \fB\'V\'\fR, if \fIrconde\fR is omitted and \fIrcondv\fR present, 
+.IP
+\fIsense\fR = \fB\'N\'\fR, if both \fIrconde\fR and \fIrcondv\fR are omitted.

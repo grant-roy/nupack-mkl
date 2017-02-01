@@ -1,0 +1,91 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?hegst 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?hegst \- Reduces a Hermitian-definite generalized eigenvalue problem to the standard form.
+.SH SYNOPSIS
+.PP
+\fBcall pchegst\fR( \fIibtype\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIscale\fR, \fIinfo\fR)
+.PP
+\fBcall pzhegst\fR( \fIibtype\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIscale\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBibtype\fR
+.NL
+(global) \fBINTEGER\fR. Must be 1 or 2 or 3. 
+.IP
+If \fIitype\fR = 1, compute inv(\fIU\fR**\fIH\fR)*sub(\fIA\fR)*inv(\fIU\fR), or inv(\fIL\fR)*sub(\fIA\fR)*inv(\fIL\fR**\fIH\fR); 
+.IP
+If \fIitype\fR = 2 or 3, compute \fIU\fR*sub(\fIA\fR)*\fIU\fR**\fIH\fR,  or  \fIL\fR**\fIH\fR*sub(\fIA\fR)*\fIL\fR.
+.TP 10
+\fBuplo\fR
+.NL
+(global) \fBCHARACTER\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR. 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the upper triangle of sub(\fIA\fR) is stored and sub (\fIB\fR) is factored as \fIU\fR**\fIH\fR*\fIU\fR. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, the lower triangle of sub(\fIA\fR) is stored and sub (\fIB\fR) is factored as \fIL\fR*\fIL\fR**\fIH\fR.
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The order of the matrices sub (\fIA\fR) and sub (\fIB\fR) (\fIn\fR\(>=0). 
+.TP 10
+\fBa\fR
+.NL
+(local)
+.IP
+\fBCOMPLEX\fR for \fBpchegst\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzhegst\fR. 
+.IP
+Pointer into the local memory to an array of dimension (\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1)). On entry, the array contains the local pieces of the \fIn\fR-by-\fIn\fR Hermitian distributed matrix sub(\fIA\fR). If \fIuplo\fR = \fB\'U\'\fR, the leading \fIn\fR-by-\fIn\fR upper triangular part of sub(\fIA\fR) contains the upper triangular part of the matrix, and its strictly lower triangular part is not referenced. If \fIuplo\fR = \fB\'L\'\fR, the leading \fIn\fR-by-\fIn\fR lower triangular part of sub(\fIA\fR) contains the lower triangular part of the matrix, and its strictly upper triangular part is not referenced. 
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix \fIA\fR, respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBb\fR
+.NL
+(local)
+.IP
+\fBCOMPLEX\fR for \fBpchegst\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzhegst\fR. 
+.IP
+Pointer into the local memory to an array of dimension (\fIlld\(ulb\fR, \fILOCc\fR(\fIjb\fR+\fIn\fR-1)). On entry, the array contains the local pieces of the triangular factor from the Cholesky factorization of sub (\fIB\fR) as returned by \fBp?potrf\fR. 
+.TP 10
+\fBib\fR, \fBjb\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIb\fR indicating the first row and the first column of the submatrix \fIB\fR, respectively.
+.TP 10
+\fBdescb\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix B.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, if \fIinfo\fR = 0, the transformed matrix, stored in the same format as sub(\fIA\fR). 
+.TP 10
+\fBscale\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBpchegst\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpzhegst\fR. 
+.IP
+Amount by which the eigenvalues should be scaled to compensate for the scaling performed in this routine. At present, \fIscale\fR is always returned as 1.0, it is returned here to allow for future enhancement. 
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. If \fIinfo\fR 

@@ -1,0 +1,60 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dss\(uldefine\(ulstructure 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dss\(uldefine\(ulstructure \- Communicates locations of non-zero elements in the matrix to the solver.
+.SH SYNOPSIS
+.PP
+\fBdss\(uldefine\(ulstructure\fR(\fIhandle\fR, \fIopt\fR, \fIrowIndex\fR, \fInRows\fR, \fInCols\fR, \fIcolumns\fR, \fInNonZeros\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBopt\fR
+.NL
+\fBINTEGER\fR. Options passing argument. The default option for the matrix structure is \fBMKL\(ulDSS\(ulSYMMETRIC\fR.
+.TP 10
+\fBrowIndex\fR
+.NL
+\fBINTEGER\fR. Array of size min(\fInRows\fR, \fInCols\fR)+1. Defines the location of non-zero entries in the matrix.
+.TP 10
+\fBnRows\fR
+.NL
+\fBINTEGER\fR. Number of rows in the matrix.
+.TP 10
+\fBnCols\fR
+.NL
+\fBINTEGER\fR. Number of columns in the matrix.
+.TP 10
+\fBcolumns\fR
+.NL
+\fBINTEGER\fR. Array of size \fInNonZeros\fR. Defines the location of non-zero entries in the matrix.
+.TP 10
+\fBnNonZeros\fR
+.NL
+\fBINTEGER\fR. Number of non-zero elements in the matrix.
+.PP
+.B CAUTION:
+Pointers to the\fBrowIndex\fR and \fBcolumns\fR are stored in the handle. These arrays are used when the solver runs. Do not free or delete them before calling \fBdss\(ulsolve\(ulreal\fR or \fBdss\(ulsolver\(ulcomplex\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fBMKL\(ulDSS\(ulHANDLE\fR type (see Interface Description).
+.SH RETURN VALUES
+.PP
+.PP
+\fBMKL\(ulDSS\(ulSUCCESS\fR
+.PP
+\fBMKL\(ulDSS\(ulSTATE\(ulERR\fR
+.PP
+\fBMKL\(ulDSS\(ulINVALID\(ulOPTION\fR
+.PP
+\fBMKL\(ulDSS\(ulCOL\(ulERR\fR
+.PP
+\fBMKL\(ulDSS\(ulNOT\(ulSQUARE\fR
+.PP
+\fBMKL\(ulDSS\(ulTOO\(ulFEW\(ulVALUES\fR
+.PP
+\fBMKL\(ulDSS\(ulTOO\(ulMANY\(ulVALUES\fR

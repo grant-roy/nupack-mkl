@@ -1,0 +1,67 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lar2v 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lar2v \- Applies a vector of plane rotations with real cosines and real/complex sines from both sides to a sequence of 2-by-2 symmetric/Hermitian matrices.
+.SH SYNOPSIS
+.PP
+\fBcall slar2v\fR( \fIn\fR, \fIx\fR, \fIy\fR, \fIz\fR, \fIincx\fR, \fIc\fR, \fIs\fR, \fIincc\fR)
+.PP
+\fBcall dlar2v\fR( \fIn\fR, \fIx\fR, \fIy\fR, \fIz\fR, \fIincx\fR, \fIc\fR, \fIs\fR, \fIincc\fR)
+.PP
+\fBcall clar2v\fR( \fIn\fR, \fIx\fR, \fIy\fR, \fIz\fR, \fIincx\fR, \fIc\fR, \fIs\fR, \fIincc\fR)
+.PP
+\fBcall zlar2v\fR( \fIn\fR, \fIx\fR, \fIy\fR, \fIz\fR, \fIincx\fR, \fIc\fR, \fIs\fR, \fIincc\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of plane rotations to be applied.
+.TP 10
+\fBx\fR, \fBy\fR, \fBz\fR
+.NL
+\fBREAL\fR for \fBslar2v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar2v\fR
+.IP
+\fBCOMPLEX\fR for \fBclar2v\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlar2v\fR
+.IP
+Arrays, \fBDIMENSION\fR (1+(\fIn\fR-1)*\fIincx\fR) each. Contain the  vectors x, y and z, respectively. For all flavors of \fB?lar2v\fR, elements of \fIx\fR and \fIy\fR are assumed to be real.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. The increment between elements of \fIx\fR, \fIy\fR, and \fIz\fR. \fIincx\fR > 0.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBslar2v\fR/\fBclar2v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar2v\fR/\fBzlar2v\fR
+.IP
+Array, \fBDIMENSION\fR (1+(\fIn\fR-1)*\fIincc\fR). The cosines of the plane rotations.
+.TP 10
+\fBs\fR
+.NL
+\fBREAL\fR for \fBslar2v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar2v\fR
+.IP
+\fBCOMPLEX\fR for \fBclar2v\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlar2v\fR
+.IP
+Array, \fBDIMENSION\fR (1+(\fIn\fR-1)*\fIincc\fR). The sines of the plane rotations.
+.TP 10
+\fBincc\fR
+.NL
+\fBINTEGER\fR. The increment between elements of \fIc\fR and \fIs\fR. \fIincc\fR > 0.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR, \fBy\fR, \fBz\fR
+.NL
+Vectors \fIx\fR, \fIy\fR and \fIz\fR, containing the results of transform. 

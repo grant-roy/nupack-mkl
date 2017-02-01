@@ -1,0 +1,210 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larrv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larrv \- Computes the eigenvectors of the tridiagonal matrix \fIT\fR = \fIL*\fR\fID*\fR\fIL\fR**\fIT\fR given \fIL\fR, \fID\fR and the eigenvalues of \fIL*\fR\fID*\fR\fIL\fR**\fIT\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slarrv\fR( \fIn\fR, \fIvl\fR, \fIvu\fR, \fId\fR, \fIl\fR, \fIpivmin\fR, \fIisplit\fR, \fIm\fR, \fIdol\fR, \fIdou\fR, \fIminrgp\fR, \fIrtol1\fR, \fIrtol2\fR, \fIw\fR, \fIwerr\fR, \fIwgap\fR, \fIiblock\fR, \fIindexw\fR, \fIgers\fR, \fIz\fR, \fIldz\fR, \fIisuppz\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlarrv\fR( \fIn\fR, \fIvl\fR, \fIvu\fR, \fId\fR, \fIl\fR, \fIpivmin\fR, \fIisplit\fR, \fIm\fR, \fIdol\fR, \fIdou\fR, \fIminrgp\fR, \fIrtol1\fR, \fIrtol2\fR, \fIw\fR, \fIwerr\fR, \fIwgap\fR, \fIiblock\fR, \fIindexw\fR, \fIgers\fR, \fIz\fR, \fIldz\fR, \fIisuppz\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall clarrv\fR( \fIn\fR, \fIvl\fR, \fIvu\fR, \fId\fR, \fIl\fR, \fIpivmin\fR, \fIisplit\fR, \fIm\fR, \fIdol\fR, \fIdou\fR, \fIminrgp\fR, \fIrtol1\fR, \fIrtol2\fR, \fIw\fR, \fIwerr\fR, \fIwgap\fR, \fIiblock\fR, \fIindexw\fR, \fIgers\fR, \fIz\fR, \fIldz\fR, \fIisuppz\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall zlarrv\fR( \fIn\fR, \fIvl\fR, \fIvu\fR, \fId\fR, \fIl\fR, \fIpivmin\fR, \fIisplit\fR, \fIm\fR, \fIdol\fR, \fIdou\fR, \fIminrgp\fR, \fIrtol1\fR, \fIrtol2\fR, \fIw\fR, \fIwerr\fR, \fIwgap\fR, \fIiblock\fR, \fIindexw\fR, \fIgers\fR, \fIz\fR, \fIldz\fR, \fIisuppz\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix. \fIn\fR\(>= 0.
+.TP 10
+\fBvl\fR, \fBvu\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+Lower and upper bounds respectively of the interval that contains the desired eigenvalues. \fBvl\fR < \fBvu\fR. Needed to compute gaps on the left or right end of the extremal eigenvalues in the desired range. 
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On entry, the \fIn\fR diagonal elements of the diagonal matrix \fID\fR. 
+.TP 10
+\fBl\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+On entry, the (\fIn\fR-1) subdiagonal elements of the unit bidiagonal matrix \fIL\fR are contained in elements 1 to \fIn\fR-1 of \fIL\fR if the matrix is not splitted. At the end of each block the corresponding shift is stored as given by \fBslarre\fR for real flavors and by \fBdlarre\fR for double precision flavors. 
+.TP 10
+\fBpivmin\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+The minimum pivot allowed in the Sturm sequence.
+.TP 10
+\fBisplit\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The splitting points, at which \fIT\fR breaks up into blocks. The first block consists of rows/columns 1 to \fIisplit\fR(1), the second of rows/columns \fIisplit\fR(1)+1 through \fIisplit\fR(2), etc.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The total number of eigenvalues found. 
+.IP
+0 \(<= \fIm\fR \(<= \fIn\fR. If \fIrange\fR = \fB\'A\'\fR, \fIm\fR = \fIn\fR, and if \fIrange\fR = \fB\'I\'\fR, \fIm\fR = \fIiu\fR - \fIil\fR +1.
+.TP 10
+\fBdol\fR, \fBdou\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If you want to compute only selected eigenvectors from all the eigenvalues supplied, specify an index range \fBdol\fR:\fBdou\fR. Or else apply the setting \fBdol\fR=1, \fBdou\fR=\fBm\fR. Note that \fBdol\fR and \fBdou\fR refer to the order in which the eigenvalues are stored in \fBw\fR.
+.IP
+If you want to compute only selected eigenpairs, then the columns \fBdol\fR-1 to \fBdou\fR+1 of the eigenvector space \fIZ\fR contain the computed eigenvectors. All other columns of \fIZ\fR are set to zero.
+.TP 10
+\fBminrgp\fR, \fBrtol1\fR,  \fBrtol2\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+Parameters for bisection. An interval \fB[LEFT,RIGHT]\fR has converged if RIGHT-LEFT.LT.MAX( \fBrtol1\fR*gap, \fBrtol2\fR*max(|LEFT|,|RIGHT|) ). 
+.TP 10
+\fBw\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The first \fIm\fR elements of \fIw\fR  contain the approximate eigenvalues for which eigenvectors are to be computed. The eigenvalues should be grouped by split-off block and ordered from smallest to largest within the block (the output array \fIw\fR from \fB?larre\fR is expected here). These eigenvalues are set with respect to the shift of the corresponding root representation for their block.
+.TP 10
+\fBwerr\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The first \fIm\fR elements contain the semiwidth of the uncertainty interval of the corresponding eigenvalue in \fIw\fR.
+.TP 10
+\fBwgap\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The separation from the right neighbor eigenvalue in \fIw\fR.
+.TP 10
+\fBiblock\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The indices of the blocks (submatrices) associated with the corresponding eigenvalues in \fIw\fR; \fIiblock\fR(\fIi\fR)=1 if eigenvalue \fIw\fR(\fIi\fR) belongs to the first block from the top, =2 if \fIw\fR(\fIi\fR) belongs to the second block, etc. 
+.TP 10
+\fBindexw\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn\fR).
+.IP
+The indices of the eigenvalues within each block (submatrix);          for example, \fIindexw\fR(\fIi\fR)= 10 and \fIiblock\fR(\fIi\fR)=2 imply that the \fIi\fR-th eigenvalue \fIw\fR(\fIi\fR) is the 10-th eigenvalue in the second block.
+.TP 10
+\fBgers\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+Array, \fBDIMENSION\fR (2*\fIn\fR). The \fIn\fR Gerschgorin intervals (the \fIi\fR-th Gerschgorin interval is (\fBgers\fR(2*\fIi\fR-1), \fBgers\fR(2*\fIi\fR)). The Gerschgorin intervals should be computed from the original unshifted matrix.
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIZ\fR. \fIldz\fR\(>= 1, and if \fIjobz\fR = \fB\'V\'\fR, \fIldz\fR\(>= max(1,\fIn\fR).
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR/\fBclarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR/\fBzlarrv\fR
+.IP
+Workspace array, \fBDIMENSION\fR (12*\fIn\fR).
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (7*\fIn\fR). 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+On exit, \fBd\fR may be overwritten.
+.TP 10
+\fBl\fR
+.NL
+On exit, \fBl\fR is overwritten.
+.TP 10
+\fBw\fR
+.NL
+On exit, \fBw\fR holds the eigenvalues of the unshifted matrix.
+.TP 10
+\fBwerr\fR
+.NL
+On exit, \fBwerr\fR contains refined values of its input approximations.
+.TP 10
+\fBwgap\fR
+.NL
+On exit, \fBwgap\fR contains refined values of its input approximations. Very small gaps are changed.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslarrv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrv\fR
+.IP
+\fBCOMPLEX\fR for \fBclarrv\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarrv\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldz\fR, max(1,\fIm\fR) ). 
+.IP
+If \fIinfo\fR = 0, the first \fIm\fR columns of \fIz\fR contain the orthonormal eigenvectors of the matrix \fIT\fR corresponding to the input eigenvalues, with the \fIi\fR-th column of \fIz\fR holding the eigenvector associated with \fIw\fR(\fIi\fR). 
+.TP 10
+.BR
+.B NOTE:
+The user must ensure that at least max(1,\fIm\fR) columns are  supplied in the array \fIz\fR.
+.TP 10
+\fBisuppz\fR
+.NL
+\fBINTEGER\fR . 
+.IP
+Array, \fBDIMENSION\fR(2*max(1,\fIm\fR)). The support of the eigenvectors in \fIz\fR, that is, the indices indicating the nonzero elements in \fIz\fR. The \fIi\fR-th eigenvector is nonzero only in elements \fIisuppz\fR(2\fIi\fR-1) through \fIisuppz\fR(2\fIi\fR).
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0:  successful exit 
+.IP
+If \fIinfo\fR > 0:  A problem occured in \fB?larrv\fR. If \fIinfo\fR = 5, the Rayleigh Quotient Iteration failed to converge to full accuracy.
+.IP
+If \fIinfo\fR < 0: One of the called subroutines signaled an internal problem. Inspection of the corresponding parameter \fBinfo\fR for further information is required.
+.RS
+.IP \(bu
+If \fIinfo\fR = -1, there is a problem in \fB?larrb\fR when refining a child eigenvalue;
+.IP \(bu
+If \fIinfo\fR = -2, there is a problem in \fB?larrf\fR when computing the relatively robust representation (RRR) of a child. When a child is inside a tight cluster, it can be difficult to find an RRR. A partial remedy from the user\'s point of view is to make the parameter \fBminrgp\fR smaller and recompile. However, as the orthogonality of the computed vectors is proportional to 1/\fBminrgp\fR, you should be aware that you might be trading in precision when you decrease \fBminrgp\fR.
+.IP \(bu
+If \fIinfo\fR = -3, there is a problem in \fB?larrb\fR when refining a single eigenvalue after the Rayleigh correction was rejected.
+.RE
+

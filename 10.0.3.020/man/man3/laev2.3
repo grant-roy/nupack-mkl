@@ -1,0 +1,57 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laev2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laev2 \- Computes the eigenvalues and eigenvectors of a 2-by-2 symmetric/Hermitian matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slaev2\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fIrt1\fR, \fIrt2\fR, \fIcs1\fR, \fIsn1\fR)
+.PP
+\fBcall dlaev2\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fIrt1\fR, \fIrt2\fR, \fIcs1\fR, \fIsn1\fR)
+.PP
+\fBcall claev2\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fIrt1\fR, \fIrt2\fR, \fIcs1\fR, \fIsn1\fR)
+.PP
+\fBcall zlaev2\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fIrt1\fR, \fIrt2\fR, \fIcs1\fR, \fIsn1\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR, \fBc\fR
+.NL
+\fBREAL\fR for \fBslaev2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaev2\fR
+.IP
+\fBCOMPLEX\fR for \fBclaev2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaev2\fR.
+.IP
+Elements of the input matrix.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBrt1\fR, \fBrt2\fR
+.NL
+\fBREAL\fR for \fBslaev2\fR/\fBclaev2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaev2\fR/\fBzlaev2\fR.
+.IP
+Eigenvalues of larger and smaller absolute value, respectively.
+.TP 10
+\fBcs1\fR
+.NL
+\fBREAL\fR for \fBslaev2\fR/\fBclaev2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaev2\fR/\fBzlaev2\fR.
+.TP 10
+\fBsn1\fR
+.NL
+\fBREAL\fR for \fBslaev2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaev2\fR
+.IP
+\fBCOMPLEX\fR for \fBclaev2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaev2\fR.
+.IP
+The vector (\fIcs1\fR, \fIsn1\fR) is the unit right eigenvector for \fBrt1\fR.

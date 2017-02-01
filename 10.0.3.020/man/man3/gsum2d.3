@@ -1,0 +1,65 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gsum2d 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gsum2d \- Performs element-wise summation.
+.SH SYNOPSIS
+.PP
+\fBcall igsum2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.PP
+\fBcall sgsum2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.PP
+\fBcall dgsum2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.PP
+\fBcall cgsum2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.PP
+\fBcall zgsum2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle that indicates the context.
+.TP 10
+\fBscope\fR
+.NL
+\fBCHARACTER*1\fR. Indicates what scope the combine should proceed on. Limited to \fBROW\fR, \fBCOLUMN\fR, or \fBALL\fR.
+.TP 10
+\fBtop\fR
+.NL
+\fBCHARACTER*1\fR. Communication pattern to use during the combine operation.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of matrix rows to be combined.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of matrix columns to be combined.
+.TP 10
+\fBa\fR
+.NL
+\fBTYPE\fR array (\fBlda\fR, \fBn\fR). Matrix to be added to produce the sum.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the matrix \fIA\fR,  that is, the distance between two successive elements in a matrix row.
+.TP 10
+\fBrdest\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The process row coordinate of the process that should receive the result. If \fBrdest\fR or \fBcdest\fR = -1, all processes within the indicatedscope receive the answer.
+.TP 10
+\fBcdest\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The process column coordinate of the process that should receive the result. If \fBrdest\fR or \fBcdest\fR = -1, all processes within the indicatedscope receive the answer.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+\fBTYPE\fR array (\fBlda\fR, \fBn\fR). Contains the result if this process is selected to receive the answer, or intermediate results if the process is not selected to receive the result.

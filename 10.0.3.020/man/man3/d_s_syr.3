@@ -1,0 +1,99 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?syr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?syr \- Performs a rank-1 update of a symmetric matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall ssyr\fR(\fIuplo\fR, \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall dsyr\fR(\fIuplo\fR, \fIn\fR, \fIalpha\fR, \fIx\fR, \fIincx\fR, \fIa\fR, \fIlda\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall syr\fR(\fIa\fR, \fIx\fR[,\fIuplo\fR] [, \fIalpha\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether the upper or lower triangular part of the array \fBa\fR is used.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, then the upper  triangular part of the array \fBa\fR is used.
+.IP
+If \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, then the low  triangular part of the array \fBa\fR is is used.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Specifies the order of the matrix \fIA\fR. The value of \fIn\fR  must be at least zero.
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL\fR for \fBssyr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsyr\fR
+.IP
+Specifies the scalar  \fIalpha\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBssyr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsyr\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIn\fR-1)*abs(\fIincx\fR)). Before entry, the incremented array \fIx\fR must contain the \fIn\fR-element vector \fIx\fR.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. Specifies the increment for the elements of \fIx\fR.
+.IP
+The value of \fIincx\fR  must not be zero.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBssyr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdsyr\fR
+.IP
+Array, \fBDIMENSION\fR(\fIlda\fR, \fIn\fR).
+.IP
+Before entry with \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, the leading \fIn\fR-by-\fIn\fR upper triangular part of the array \fBa\fR must contain the upper triangular part of the symmetric matrix \fIA\fR and the strictly lower triangular part of \fBa\fR is not referenced.
+.IP
+Before entry with \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, the leading \fIn\fR-by-\fIn\fR lower triangular part of the array \fIa\fR must contain the lower triangular part of the symmetric matrix \fIA\fR and the strictly upper triangular part of \fIa\fR is not referenced. 
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. Specifies the first dimension of \fIa\fR as declared in the calling (sub)program. The value of \fIlda\fR must be at least max(1, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+With \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, the upper triangular part of the array \fIa\fR is overwritten by the upper triangular part of the updated matrix.
+.IP
+With \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, the lower triangular part of the array \fIa\fR is overwritten by the lower triangular part of the updated matrix.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBsyr\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn\fR,\fIn\fR).
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.
+.TP 10
+\fBalpha\fR
+.NL
+The default value is 1.

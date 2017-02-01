@@ -1,0 +1,71 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lamch 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lamch \- Determines machine parameters for floating-point arithmetic.
+.SH SYNOPSIS
+.PP
+\fIval\fR= \fBpslamch\fR(\fIictxt\fR, \fIcmach\fR)
+.PP
+\fIval\fR= \fBpdlamch\fR(\fIictxt\fR, \fIcmach\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBictxt\fR
+.NL
+(global). \fBINTEGER\fR.The BLACS context handle in which the computation takes place.
+.TP 10
+\fBcmach\fR
+.NL
+(global) \fBCHARACTER*1\fR. 
+.IP
+Specifies the value to be returned by \fBp?lamch\fR:
+.IP
+= \fB\'E\'\fR or \fB\'e\'\fR, \fBp?lamch\fR := \fBeps\fR
+.IP
+= \fB\'S\'\fR or \fB\'s\'\fR , \fBp?lamch\fR := \fBsfmin\fR
+.IP
+= \fB\'B\'\fR or \fB\'b\'\fR, \fBp?lamch\fR := \fBbase\fR
+.IP
+= \fB\'P\'\fR or \fB\'p\'\fR, \fBp?lamch\fR := \fBeps*base\fR
+.IP
+= \fB\'N\'\fR or \fB\'n\'\fR, \fBp?lamch\fR := \fBt\fR
+.IP
+= \fB\'R\'\fR or \fB\'r\'\fR, \fBp?lamch\fR := \fBrnd\fR
+.IP
+= \fB\'M\'\fR or \fB\'m\'\fR, \fBp?lamch\fR := \fBemin\fR
+.IP
+= \fB\'U\'\fR or \fB\'u\'\fR, \fBp?lamch\fR := \fBrmin\fR
+.IP
+= \fB\'L\'\fR or \fB\'l\'\fR, \fBp?lamch\fR := \fBemax\fR
+.IP
+= \fB\'O\'\fR or \fB\'o\'\fR, \fBp?lamch\fR := \fBrmax\fR,
+.IP
+where
+.IP
+\fBeps\fR = relative machine precision 
+.IP
+\fBsfmin\fR = safe minimum, such that 1/sfmin does not overflow 
+.IP
+\fBbase\fR = base of the machine 
+.IP
+\fBprec\fR = \fBeps*base\fR
+.IP
+\fBt\fR     = number of (base) digits in the mantissa 
+.IP
+\fBrnd\fR = 1.0 when rounding occurs in addition, 0.0 otherwise 
+.IP
+\fBemin\fR = minimum exponent before (gradual) underflow 
+.IP
+\fBrmin\fR = underflow threshold - \fBbase\fR**(\fBemin\fR-1)
+.IP
+\fBemax\fR = largest exponent before overflow 
+.IP
+\fBrmax\fR = overflow threshold - (\fBbase\fR**\fBemax\fR)*(1-\fBeps\fR)
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBval\fR
+.NL
+Value returned by the routine.

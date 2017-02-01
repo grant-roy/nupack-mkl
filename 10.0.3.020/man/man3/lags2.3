@@ -1,0 +1,61 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lags2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lags2 \- Computes 2-by-2 orthogonal matrices U, V, and Q, and applies them to matrices A and B such that the rows of the transformed A and B are parallel.
+.SH SYNOPSIS
+.PP
+\fBcall slags2\fR( \fIupper\fR, \fIa1\fR, \fIa2\fR, \fIa3\fR, \fIb1\fR, \fIb2\fR, \fIb3\fR, \fIcsu\fR, \fIsnu\fR, \fIcsv\fR, \fIsnv\fR, \fIcsq\fR, \fIsnq\fR)
+.PP
+\fBcall dlags2\fR( \fIupper\fR, \fIa1\fR, \fIa2\fR, \fIa3\fR, \fIb1\fR, \fIb2\fR, \fIb3\fR, \fIcsu\fR, \fIsnu\fR, \fIcsv\fR, \fIsnv\fR, \fIcsq\fR, \fIsnq\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBupper\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+If \fIupper\fR = \fB.TRUE.\fR, the input matrices \fIA\fR and \fIB\fR are upper triangular; If \fIupper\fR = \fB.FALSE.\fR, the input matrices \fIA\fR and \fIB\fR are lower triangular.
+.TP 10
+\fBa1\fR, \fBa2\fR, \fBa3\fR
+.NL
+\fBREAL\fR for \fBslags2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlags2\fR
+.IP
+On entry, \fIa1, a2\fR and \fIa3\fR are elements of the input 2-by-2 upper (lower) triangular matrix \fIA\fR.
+.TP 10
+\fBb1\fR, \fBb2\fR, \fBb3\fR
+.NL
+\fBREAL\fR for \fBslags2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlags2\fR
+.IP
+On entry, \fIb1, b2\fR and \fIb3\fR are elements of the input 2-by-2 upper (lower) triangular matrix \fIB\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBcsu\fR, \fBsnu\fR
+.NL
+\fBREAL\fR for \fBslags2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlags2\fR
+.IP
+The desired orthogonal matrix \fIU\fR.
+.TP 10
+\fBcsv\fR, \fBsnv\fR
+.NL
+\fBREAL\fR for \fBslags2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlags2\fR
+.IP
+The desired orthogonal matrix \fIV\fR.
+.TP 10
+\fBcsq\fR, \fBsnq\fR
+.NL
+\fBREAL\fR for \fBslags2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlags2\fR
+.IP
+The desired orthogonal matrix \fIQ\fR.

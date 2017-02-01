@@ -1,0 +1,115 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?rot 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?rot \- Performs rotation of points in the plane.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall srot\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIc\fR, \fIs\fR)
+.PP
+\fBcall drot\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIc\fR, \fIs\fR)
+.PP
+\fBcall csrot\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIc\fR, \fIs\fR)
+.PP
+\fBcall zdrot\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIc\fR, \fIs\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall rot\fR(\fIx\fR, \fIy\fR[,\fIc\fR] [,\fIs\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.  Specifies the order of vectors \fIx\fR and \fIy\fR. 
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsrot\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrot\fR
+.IP
+\fBCOMPLEX\fR for \fBcsrot\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzdrot\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIn\fR-1)*abs(\fIincx\fR)). 
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR.  Specifies the increment for the elements of \fIx\fR. 
+.TP 10
+\fBy\fR
+.NL
+\fBREAL\fR for \fBsrot\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrot\fR
+.IP
+\fBCOMPLEX\fR for \fBcsrot\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzdrot\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIn\fR -1)*abs(\fIincy\fR)). 
+.TP 10
+\fBincy\fR
+.NL
+\fBINTEGER\fR.  Specifies the increment for the elements of \fIy\fR.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBsrot\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrot\fR
+.IP
+\fBREAL\fR for \fBcsrot\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzdrot\fR
+.IP
+A scalar.
+.TP 10
+\fBs\fR
+.NL
+\fBREAL\fR for \fBsrot\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrot\fR
+.IP
+\fBREAL\fR for \fBcsrot\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzdrot\fR
+.IP
+A scalar.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+Each element is replaced by \fIc\fR*\fIx\fR + \fIs\fR*\fIy\fR.
+.TP 10
+\fBy\fR
+.NL
+Each element is replaced by \fIc\fR*\fIy\fR - \fIs\fR*\fIx\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBrot\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length(\fIn\fR).
+.TP 10
+\fBy\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBc\fR
+.NL
+The default value is 1.
+.TP 10
+\fBs\fR
+.NL
+The default value is 1.

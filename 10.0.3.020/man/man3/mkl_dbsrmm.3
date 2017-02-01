@@ -1,0 +1,148 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH mkl\(uldbsrmm 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+mkl\(uldbsrmm \- Computes matrix - matrix product of a sparse matrix stored in the BSR format.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall mkl\(uldbsrmm\fR(\fItransa\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIlb\fR, \fIalpha\fR, \fImatdescra\fR, \fIval\fR, \fIindx\fR, \fIpntrb\fR, \fIpntre\fR, \fIb\fR, \fIldb\fR, \fIbeta\fR, \fIc\fR, \fIldc\fR)
+.PP
+.B /* C */
+.PP
+\fBmkl\(uldbsrmm\fR(\fI&transa\fR, \fI&m\fR, \fI&n\fR, \fI&k\fR, \fI&lb\fR, \fI&alpha\fR, \fImatdescra\fR, \fIval\fR, \fIindx\fR, \fIpntrb\fR, \fIpntre\fR, \fIb\fR, \fI&ldb\fR, \fI&beta\fR, \fIc\fR, \fI&ldc\fR);
+.SH INPUT PARAMETERS
+.PP
+Parameter descriptions are common for all implemented interfaces with the exception of data types that
+.br
+dfdfdfdfdfdfd
+.br
+refer here to the Fortran 77 standard types. Data types specific to the different interfaces are described in the section \fB``Interfaces''\fR below.
+.TP 10
+\fBtransa\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the operation.
+.IP
+If \fItransa\fR = \fB\'N\'\fR or \fB\'n\'\fR, then the matrix-matrix product is computed as \fIC\fR := \fIalpha\fR*\fIA\fR*\fIB\fR + \fIbeta\fR*\fIC\fR
+.IP
+If \fItransa\fR = \fB\'T\'\fR or \fB\'t\'\fR or \fB\'C\'\fR or \fB\'c\'\fR, then the matrix-vector product is computed as \fIC\fR := \fIalpha\fR*\fIA\'\fR*\fIB\fR + \fIbeta\fR*\fIC\fR,
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Number of block rows of the matrix \fIA\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Number of columns of the matrix \fIC\fR.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. Number of block columns of the matrix \fIA\fR.
+.TP 10
+\fBlb\fR
+.NL
+\fBINTEGER\fR. Size of the block in the matrix \fIA\fR.
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL*8\fR. Specifies the scalar \fIalpha\fR. 
+.TP 10
+\fBmatdescra\fR
+.NL
+\fBCHARACTER\fR. Array of six elements, specifies properties of the matrix used for operation. Only first four array elements are used, their possible values are given in the ``Possible Values of the Parameter \fImatdescra\fR''.
+.TP 10
+\fBval\fR
+.NL
+\fBREAL*8\fR. Array containing elements of non-zero blocks of the matrix \fIA\fR. Its length is equal to the number of non-zero blocks in the matrix \fIA\fR multiplied by \fBlb\fR*\fBlb\fR. Refer to the \fIvalues\fR array description in BSR Format for more details.
+.TP 10
+\fBindx\fR
+.NL
+\fBINTEGER\fR. Array containing the column indices for each non-zero block in the matrix \fIA\fR. Its length is equal to the number of non-zero blocks in the matrix \fIA\fR. Refer to the \fIcolumns\fR array description in BSR Format for more details.
+.TP 10
+\fBpntrb\fR
+.NL
+\fBINTEGER\fR. Array of length \fIm\fR. 
+.IP
+For one-based indexing: this array contains row indices, such that \fIpntrb\fR(\fIi\fR) - \fIpntrb\fR(1)+1 is the first index of block row \fIi\fR in the array \fIindx\fR. 
+.IP
+For zero-based indexing: this array contains row indices, such that \fIpntrb\fR(\fIi\fR) - \fIpntrb\fR(0) is the first index of block row \fIi\fR in the array \fIindx\fR. 
+.IP
+Refer to \fIpointerB\fR array description in BSR Format for more details.
+.TP 10
+\fBpntre\fR
+.NL
+\fBINTEGER\fR. Array of length \fIm\fR.
+.IP
+For one-based intexing this array contains row indices, such that \fIpntre\fR(\fIi\fR) - \fIpntrb\fR(1) is the last index of block row \fIi\fR in the array \fIindx\fR. 
+.IP
+For zero-based intexing this array contains row indices, such that \fIpntre\fR(\fIi\fR) - \fIpntrb\fR(0)-1 is the last index of block row \fIi\fR in the array \fIindx\fR.
+.IP
+Refer to \fIpointerE\fR array description in BSR Format for more details.
+.TP 10
+\fBb\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR(\fIldb\fR, \fIn\fR) for one-based indexing,  \fBDIMENSION\fR(\fIm\fR, \fIldb\fR) for zero-based indexing.
+.IP
+On entry with \fItransa=\fR\fB\'N\'\fR or \fB\'n\'\fR, the leading \fIn\fR-by-\fIk\fR block part of the array \fIb\fR must contain the matrix \fIB\fR, otherwise the leading \fIm\fR-by-\fIn\fR block part of the array \fIb\fR must contain the matrix \fIB\fR.
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. Specifies the first dimension (in blocks) of \fIb\fR as declared in the calling (sub)program.
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL*8\fR. Specifies the scalar \fIbeta\fR. 
+.TP 10
+\fBc\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR(\fIldc\fR, \fIn\fR) for one-based indexing,  \fBDIMENSION\fR(\fIk\fR, \fIldc\fR) for zero-based indexing.
+.IP
+On entry, the leading \fIm\fR-by-\fIn\fR block part of the array \fIc\fR must contain the matrix \fIC\fR, otherwise the leading \fIn\fR-by-\fBk\fR block part of the array \fIc\fR must contain the matrix \fIC\fR.
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. Specifies the first\fBcbbcbbcbcb\fR dimension (in blocks) of \fIc\fR as declared in the calling (sub)program.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+Overwritten by the matrix (\fIalpha\fR*\fIA\fR*\fIB\fR + \fIbeta\fR*\fIC\fR) or (\fIalpha\fR*\fIA\'\fR*\fIB\fR + \fIbeta\fR*\fIC\fR).
+.SH INTERFACES
+.PP
+
+.PP
+\fBFortran 77:\fR
+.br
+SUBROUTINE mkl\(uldbsrmm(transa, m, n, k, lb, alpha, matdescra, val,
+.br
+indx, pntrb, pntre, b, ldb, beta, c, ldc)
+.br
+CHARACTER*1   transa
+.br
+CHARACTER     matdescra(*)
+.br
+INTEGER       m, n, k, ld, ldb, ldc
+.br
+INTEGER       indx(*), pntrb(m), pntre(m)
+.br
+REAL*8        alpha, beta
+.br
+REAL*8        val(*), b(ldb,*), c(ldc,*)
+.PP
+\fBC:\fR
+.br
+.PP
+.br
+void mkl\(uldbsrmm(char \fI*transa\fR, int \fI*m\fR, int \fI*n\fR, int \fI*k\fR,  int \fI*lb\fR,
+.br
+.br
+double \fI*alpha\fR, char \fI*matdescra\fR, double  \fI*val\fR, int \fI*indx\fR, int \fI*pntrb\fR,
+.br
+int \fI*pntre\fR, double \fI*b\fR, int \fI*ldb\fR, double \fI*beta\fR, double \fI*c\fR, int \fI*ldc\fR,);

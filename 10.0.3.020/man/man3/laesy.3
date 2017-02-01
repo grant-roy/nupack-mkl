@@ -1,0 +1,47 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laesy 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laesy \- Computes the eigenvalues and eigenvectors of a 2-by-2 complex symmetric matrix, and checks that the norm of the matrix of eigenvectors is larger than a threshold value.
+.SH SYNOPSIS
+.PP
+\fBcall claesy\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fIrt1\fR, \fIrt2\fR, \fIevscal\fR, \fIcs1\fR, \fIsn1\fR)
+.PP
+\fBcall zlaesy\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fIrt1\fR, \fIrt2\fR, \fIevscal\fR, \fIcs1\fR, \fIsn1\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR, \fBc\fR
+.NL
+\fBCOMPLEX\fR for \fBclaesy\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaesy\fR
+.IP
+Elements of the input matrix.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBrt1\fR, \fBrt2\fR
+.NL
+\fBCOMPLEX\fR for \fBclaesy\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaesy\fR
+.IP
+Eigenvalues of larger and smaller modulus, respectively.
+.TP 10
+\fBevscal\fR
+.NL
+\fBCOMPLEX\fR for \fBclaesy\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaesy\fR
+.IP
+The complex value by which the eigenvector matrix was scaled to make it orthonormal. If \fIevscal\fR is zero, the eigenvectors were not computed. This means one of two things: the 2-by-2 matrix could not be diagonalized, or the norm of the matrix of eigenvectors before scaling was larger than the threshold value \fBthresh\fR (set to 0.1E0).
+.TP 10
+\fBcs1\fR, \fBsn1\fR
+.NL
+\fBCOMPLEX\fR for \fBclaesy\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaesy\fR
+.IP
+If \fIevscal\fR is not zero, then (\fIcs1\fR, \fIsn1\fR) is the unit right eigenvector for \fBrt1\fR.

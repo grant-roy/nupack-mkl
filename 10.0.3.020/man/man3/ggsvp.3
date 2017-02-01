@@ -1,0 +1,235 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?ggsvp 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?ggsvp \- Computes the preprocessing decomposition for the generalized SVD.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sggsvp\fR(\fIjobu\fR, \fIjobv\fR, \fIjobq\fR, \fIm\fR, \fIp\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fItola\fR, \fItolb\fR, \fIk\fR, \fIl\fR, \fIu\fR, \fIldu\fR, \fIv\fR, \fIldv\fR, \fIq\fR, \fIldq\fR, \fIiwork\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dggsvp\fR(\fIjobu\fR, \fIjobv\fR, \fIjobq\fR, \fIm\fR, \fIp\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fItola\fR, \fItolb\fR, \fIk\fR, \fIl\fR, \fIu\fR, \fIldu\fR, \fIv\fR, \fIldv\fR, \fIq\fR, \fIldq\fR, \fIiwork\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall cggsvp\fR (\fIjobu\fR, \fIjobv\fR, \fIjobq\fR, \fIm\fR, \fIp\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fItola\fR, \fItolb\fR, \fIk\fR, \fIl\fR, \fIu\fR, \fIldu\fR, \fIv\fR, \fIldv\fR, \fIq\fR, \fIldq\fR, \fIiwork\fR, \fIrwork\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall zggsvp\fR(\fIjobu\fR, \fIjobv\fR, \fIjobq\fR, \fIm\fR, \fIp\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fItola\fR, \fItolb\fR, \fIk\fR, \fIl\fR, \fIu\fR, \fIldu\fR, \fIv\fR, \fIldv\fR, \fIq\fR, \fIldq\fR, \fIiwork\fR, \fIrwork\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall ggsvp\fR(\fIa\fR, \fIb\fR, \fItola\fR, \fItolb\fR[, \fIk\fR] [,\fIl\fR] [,\fIu\fR] [,\fIv\fR] [,\fIq\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobu\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'U\'\fR or \fB\'N\'\fR. 
+.IP
+If \fIjobu\fR = \fB\'U\'\fR, orthogonal/unitary matrix \fIU\fR is computed. 
+.IP
+If \fIjobu\fR = \fB\'N\'\fR, \fIU\fR is not computed.
+.TP 10
+\fBjobv\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'V\'\fR or \fB\'N\'\fR. 
+.IP
+If \fIjobv\fR = \fB\'V\'\fR, orthogonal/unitary matrix \fIV\fR is computed. 
+.IP
+If \fIjobv\fR = \fB\'N\'\fR, \fIV\fR is not computed.
+.TP 10
+\fBjobq\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'Q\'\fR or \fB\'N\'\fR. 
+.IP
+If \fIjobq\fR = \fB\'Q\'\fR, orthogonal/unitary matrix \fIQ\fR is computed. 
+.IP
+If \fIjobq\fR = \fB\'N\'\fR, \fIQ\fR is not computed.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIA\fR (\fIm\fR\(>= 0).
+.TP 10
+\fBp\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIB\fR (\fIp\fR\(>= 0).
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrices \fIA\fR and \fIB\fR (\fIn\fR\(>= 0).
+.TP 10
+\fBa\fR, \fBb\fR, \fBtau\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsggsvp\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggsvp\fR
+.IP
+\fBCOMPLEX\fR for \fBcggsvp\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggsvp\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) contains the \fIm\fR-by-\fIn\fR matrix \fIA\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIb\fR(\fIldb\fR,*) contains the \fIp\fR-by-\fIn\fR matrix \fIB\fR. 
+.IP
+The second dimension of \fIb\fR must be at least max(1, \fIn\fR).
+.IP
+\fItau\fR(*\fI\fR) is a workspace array. 
+.IP
+The dimension of \fItau\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR(*\fI\fR) is a workspace array. 
+.IP
+The dimension of \fIwork\fR must be at least max(1, 3\fIn\fR, \fIm\fR, \fIp\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIm\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIb\fR; at least max(1, \fIp\fR).
+.TP 10
+\fBtola\fR, \fBtolb\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors.
+.IP
+\fItola\fR and \fItolb\fR are the thresholds to determine the effective numerical rank of matrix \fIB\fR and a subblock of \fIA\fR. Generally, they are set to 
+.IP
+\fItola\fR = max(\fIm\fR, \fIn\fR)*||\fIA\fR||*MACHEPS, 
+.IP
+\fItolb\fR = max(\fIp\fR, \fIn\fR)*||\fIB\fR||*MACHEPS. 
+.IP
+The size of \fItola\fR and \fItolb\fR may affect the size of backward errors of the decomposition.
+.TP 10
+\fBldu\fR
+.NL
+\fBINTEGER\fR. The first dimension of the output array \fIu\fR . \fIldu\fR\(>= max(1, \fIm\fR) if \fIjobu\fR = \fB\'U\'\fR; \fIldu\fR\(>= 1 otherwise.
+.TP 10
+\fBldv\fR
+.NL
+\fBINTEGER\fR. The first dimension of the output array \fIv\fR . \fIldv\fR\(>= max(1, \fIp\fR) if \fIjobv\fR = \fB\'V\'\fR; \fIldv\fR\(>= 1 otherwise.
+.TP 10
+\fBldq\fR
+.NL
+\fBINTEGER\fR. The first dimension of the output array \fIq\fR . \fIldq\fR\(>= max(1, \fIn\fR) if \fIjobq\fR = \fB\'Q\'\fR; \fIldq\fR\(>= 1 otherwise.
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace array, \fBDIMENSION\fR at least max(1, \fIn\fR).
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBcggsvp\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzggsvp\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, 2\fIn\fR). Used in complex flavors only.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+Overwritten by the triangular (or trapezoidal) matrix .
+.TP 10
+\fBb\fR
+.NL
+Overwritten by the triangular matrix .
+.TP 10
+\fBk\fR, \fBl\fR
+.NL
+\fBINTEGER\fR. On exit, \fIk\fR and \fIl\fR specify the dimension of subblocks. The sum \fIk\fR + \fIl\fR is equal to effective numerical rank of (\fIA\fR**\fIH\fR, \fIB\fR**\fIH\fR)**\fIH\fR.
+.TP 10
+\fBu\fR, \fBv\fR, \fBq\fR
+.NL
+\fBREAL\fR for \fBsggsvp\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdggsvp\fR
+.IP
+\fBCOMPLEX\fR for \fBcggsvp\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzggsvp\fR. 
+.IP
+Arrays: 
+.IP
+If \fIjobu\fR = \fB\'U\'\fR, \fIu\fR(\fIldu\fR,*) contains the orthogonal/unitary matrix \fIU\fR. 
+.IP
+The second dimension of \fIu\fR must be at least max(1, \fIm\fR).
+.IP
+If \fIjobu\fR = \fB\'N\'\fR, \fIu\fR is not referenced.
+.IP
+If \fIjobv\fR = \fB\'V\'\fR, \fIv\fR(\fIldv\fR,*) contains the orthogonal/unitary matrix \fIV\fR. 
+.IP
+The second dimension of \fIv\fR must be at least max(1, \fIm\fR).
+.IP
+If \fIjobv\fR = \fB\'N\'\fR, \fIv\fR is not referenced.
+.IP
+If \fIjobq\fR = \fB\'Q\'\fR, \fIq\fR(\fIldq\fR,*) contains the orthogonal/unitary matrix \fIQ\fR. 
+.IP
+The second dimension of \fIq\fR must be at least max(1, \fIn\fR).
+.IP
+If \fIjobq\fR = \fB\'N\'\fR, \fIq\fR is not referenced.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBggsvp\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIm,n\fR).
+.TP 10
+\fBb\fR
+.NL
+Holds the matrix \fIB\fR of size (\fIp,n\fR).
+.TP 10
+\fBu\fR
+.NL
+Holds the matrix \fIU\fR of size (\fIm,m\fR).
+.TP 10
+\fBv\fR
+.NL
+Holds the matrix \fIV\fR of size (\fIp,m\fR).
+.TP 10
+\fBq\fR
+.NL
+Holds the matrix \fIQ\fR of size (\fIn,n\fR).
+.TP 10
+\fBjobu\fR
+.NL
+Restored based on the presence of the argument \fIu\fR as follows: 
+.IP
+\fIjobu\fR = \fB\'U\'\fR, if \fIu\fR is present, 
+.IP
+\fIjobu\fR = \fB\'N\'\fR, if \fIu\fR is omitted.
+.TP 10
+\fBjobv\fR
+.NL
+Restored based on the presence of the argument \fIv\fR as follows: 
+.IP
+\fIjobz\fR = \fB\'V\'\fR, if \fIv\fR is present, 
+.IP
+\fIjobz\fR = \fB\'N\'\fR, if \fIv\fR is omitted.
+.TP 10
+\fBjobq\fR
+.NL
+Restored based on the presence of the argument \fIq\fR as follows: 
+.IP
+\fIjobz\fR = \fB\'Q\'\fR, if \fIq\fR is present, 
+.IP
+\fIjobz\fR = \fB\'N\'\fR, if \fIq\fR is omitted.

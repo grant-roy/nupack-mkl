@@ -1,0 +1,39 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gesd2d 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gesd2d \- Takes a generalrectangular matrix and sends it to the destination process.
+.SH SYNOPSIS
+.PP
+\fBcall igesd2d\fR( \fIicontxt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.PP
+\fBcall sgesd2d\fR( \fIicontxt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.PP
+\fBcall dgesd2d\fR( \fIicontxt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.PP
+\fBcall cgesd2d\fR( \fIicontxt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.PP
+\fBcall zgesd2d\fR( \fIicontxt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIrdest\fR, \fIcdest\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle that indicates the context.
+.TP 10
+\fBm\fR, \fBn\fR, \fBa\fR, \fBlda\fR
+.NL
+Describe the matrix to be sent.  See Matrix Shapes for details.
+.TP 10
+\fBrdest\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The process row coordinate of the process to send the message to. 
+.TP 10
+\fBcdest\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The process column coordinate of the process to send the message to.

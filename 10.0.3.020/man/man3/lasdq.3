@@ -1,0 +1,133 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasdq 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasdq \- Computes the SVD of a real  bidiagonal matrix with diagonal \fId\fR and off-diagonal \fIe\fR. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasdq\fR( \fIuplo\fR, \fIsqre\fR, \fIn\fR, \fIncvt\fR, \fInru\fR, \fIncc\fR, \fId\fR, \fIe\fR, \fIvt\fR, \fIldvt\fR, \fIu\fR, \fIldu\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlasdq\fR( \fIuplo\fR, \fIsqre\fR, \fIn\fR, \fIncvt\fR, \fInru\fR, \fIncc\fR, \fId\fR, \fIe\fR, \fIvt\fR, \fIldvt\fR, \fIu\fR, \fIldu\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. On entry, \fIuplo\fR specifies whether the input bidiagonal matrix is upper or lower bidiagonal. 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR , \fIB\fR is upper bidiagonal; 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR , \fIB\fR is lower bidiagonal.
+.TP 10
+\fBsqre\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0: then the input matrix is \fIn\fR-by-\fIn\fR. 
+.IP
+= 1: then the input matrix is \fIn\fR-by-(\fIn\fR+1) if \fIuplu\fR = \fB\'U\'\fR and (\fIn\fR+1)-by-\fIn\fR if \fIuplu\fR
+.IP
+= \fB\'L\'\fR. The bidiagonal matrix has \fIn\fR = \fInl\fR + \fInr\fR + 1 rows and \fIm\fR = \fIn\fR + \fIsqre\fR\(>=\fIn\fR columns.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. On entry, \fIn\fR specifies the number of rows and columns  in the matrix. \fIn\fR must be at least 0.
+.TP 10
+\fBncvt\fR
+.NL
+\fBINTEGER\fR. On entry, \fIncvt\fR specifies the number of columns of the matrix \fIVT\fR. \fIncvt\fR must be at least 0.
+.TP 10
+\fBnru\fR
+.NL
+\fBINTEGER\fR. On entry, \fInru\fR specifies the number of rows of the matrix \fIU\fR. \fInru\fR must be at least 0.
+.TP 10
+\fBncc\fR
+.NL
+\fBINTEGER\fR. On entry, \fIncc\fR specifies the number of columns of the matrix \fIC\fR. \fIncc\fR must be at least 0.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fIslasdq\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fIdlasdq\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On entry, \fId\fR contains the diagonal entries of the  bidiagonal matrix.
+.TP 10
+\fBe\fR
+.NL
+\fBREAL\fR for \fIslasdq\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fIdlasdq\fR. 
+.IP
+Array, \fBDIMENSION\fR is (\fIn\fR-1) if \fIsqre\fR = 0 and \fIn\fR if \fIsqre\fR = 1. On entry, the entries of \fIe\fR contain the off-diagonal entries of the  bidiagonal matrix.
+.TP 10
+\fBvt\fR
+.NL
+\fBREAL\fR for \fBslasdq\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasdq\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldvt\fR, \fIncvt\fR). On entry, contains a matrix which on exit has been premultiplied by \fIP\fR**\fIT\fR, dimension \fIn\fR-by-\fIncvt\fR if \fIsqre\fR = 0 and (\fIn\fR+1)-by-\fIncvt\fR if \fIsqre\fR = 1 (not referenced if \fIncvt\fR=0).
+.TP 10
+\fBldvt\fR
+.NL
+\fBINTEGER\fR. On entry, \fIldvt\fR specifies the leading dimension of \fIvt\fR as declared in the calling (sub) program. \fIldvt\fR must be at least 1. If \fIncvt\fR is nonzero, \fIldvt\fR must also be at least \fIn\fR.
+.TP 10
+\fBu\fR
+.NL
+\fBREAL\fR for \fIslasdq\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fIdlasdq\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIldu\fR, \fIn\fR). On entry, contains a  matrix which on exit has been  postmultiplied by \fIQ\fR, dimension \fInru\fR-by-\fIn\fR if \fIsqre\fR = 0 and \fInru\fR-by-(\fIn\fR+1) if \fIsqre\fR = 1 (not referenced if \fInru\fR=0).
+.TP 10
+\fBldu\fR
+.NL
+\fBINTEGER\fR. On entry, \fIldu\fR  specifies the leading dimension of \fIu\fR as  declared in the calling (sub) program. \fIldu\fR must be at least max(1, \fInru\fR ) .
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fIslasdq\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fIdlasdq\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIldc\fR, \fIncc\fR). On entry, contains an \fIn\fR-by-\fIncc\fR matrix which on exit has been premultiplied by \fIQ\'\fR, dimension \fIn\fR-by-\fIncc\fR if \fIsqre\fR = 0 and (\fIn\fR+1)-by-\fIncc\fR if \fIsqre\fR = 1 (not referenced if \fIncc\fR=0).
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. On entry, \fIldc\fR specifies the leading dimension of \fIC\fR as declared in the calling (sub) program. \fIldc\fR must be at least 1. If \fIncc\fR is non-zero, \fIldc\fR must also be at least \fIn\fR.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslasdq\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasdq\fR.
+.IP
+Array, \fBDIMENSION\fR (4\fIn\fR). This is a workspace array. Only referenced if one of \fIncvt\fR, \fInru\fR, or \fIncc\fR is nonzero, and if \fIn\fR is at least 2. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+On normal exit, \fId\fR contains the singular values in ascending order.
+.TP 10
+\fBe\fR
+.NL
+On normal  exit, \fIe\fR will contain 0. If the algorithm does not converge, \fId\fR and \fIe\fR will contain the diagonal and superdiagonal entries  of a bidiagonal matrix orthogonally equivalent to the one  given as input.
+.TP 10
+\fBvt\fR
+.NL
+On exit, the matrix has been premultiplied by \fIP\fR\'.
+.TP 10
+\fBu\fR
+.NL
+On exit, the matrix has been postmultiplied by \fIQ\fR.
+.TP 10
+\fBc\fR
+.NL
+On exit, the matrix has been premultiplied by \fIQ\fR\'.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. On exit, a value of 0 indicates a successful exit. If \fIinfo\fR < 0, argument number -\fIinfo\fR is illegal. If \fIinfo\fR > 0, the algorithm did not converge, and \fIinfo\fR specifies how many superdiagonals did not converge.

@@ -1,0 +1,102 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH Pow 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+Pow \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall vspow\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+\fBcall vdpow\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+\fBcall vcpow\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+\fBcall vzpow\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+.B /* C */
+.PP
+\fBvsPow\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.PP
+\fBvdPow\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.PP
+\fBvcPow\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.PP
+\fBvzPow\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fIn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies the number of elements to be calculated. 
+.PP
+.SB Name
+.br
+\h\'1\'\fIa\fR, \fIb\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvspow\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdpow\fR
+.br
+\h\'11\'\fBCOMPLEX\fR, \fBINTENT(IN)\fR for \fBvcpow\fR
+.br
+\h\'11\'\fBDOUBLE COMPLEX\fR, \fBINTENT(IN)\fR for \fBvzpow\fR
+.br
+\h\'2\'C:\h\'7\'\fBconst float*\fR for \fBvsPow\fR
+.br
+\h\'11\'\fBconst double*\fR for \fBvdPow\fR
+.br
+\h\'11\'\fBconst MKL\(ulComplex8*\fR for \fBvcPow\fR
+.br
+\h\'11\'\fBconst MKL\(ulComplex16*\fR for \fBvzPow\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Arrays, specify the input vectors \fBa\fR and \fBb\fR.
+.br
+\h\'2\'C:\h\'7\'Pointers to arrays that contain the input vectors \fBa\fR and \fBb\fR.
+.PP
+.B NOTE:
+Overflow can occur also in \fBPow\fR complex function, but the exact formula is beyond the scope of this document.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fIy\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR for \fBvspow\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR for \fBvdpow\fR
+.br
+\h\'11\'\fBCOMPLEX\fR for \fBvcpow\fR
+.br
+\h\'11\'\fBDOUBLE COMPLEX\fR for \fBvzpow\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat*\fR for \fBvsPow\fR
+.br
+\h\'11\'\fBdouble*\fR for \fBvdPow\fR
+.br
+\h\'11\'\fBMKL\(ulComplex8*\fR for \fBvcPow\fR
+.br
+\h\'11\'\fBMKL\(ulComplex16*\fR for \fBvzPow\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Array, specifies the output vector \fBy\fR.
+.br
+\h\'2\'C:\h\'7\'Pointer to an array that contains the output vector \fBy\fR.

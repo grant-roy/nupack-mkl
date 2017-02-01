@@ -1,0 +1,63 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lartg 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lartg \- Generates a plane rotation with real cosine and real/complex sine.
+.SH SYNOPSIS
+.PP
+\fBcall slartg\fR( \fIf\fR, \fIg\fR, \fIcs\fR, \fIsn\fR, \fIr\fR)
+.PP
+\fBcall dlartg\fR( \fIf\fR, \fIg\fR, \fIcs\fR, \fIsn\fR, \fIr\fR)
+.PP
+\fBcall clartg\fR( \fIf\fR, \fIg\fR, \fIcs\fR, \fIsn\fR, \fIr\fR)
+.PP
+\fBcall zlartg\fR( \fIf\fR, \fIg\fR, \fIcs\fR, \fIsn\fR, \fIr\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBf\fR, \fBg\fR
+.NL
+\fBREAL\fR for \fBslartg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlartg\fR
+.IP
+\fBCOMPLEX\fR for \fBclartg\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlartg\fR
+.IP
+The first and second component of vector to be rotated.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBcs\fR
+.NL
+\fBREAL\fR for \fBslartg\fR/\fBclartg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlartg\fR/\fBzlartg\fR
+.IP
+The cosine of the rotation.
+.TP 10
+\fBsn\fR
+.NL
+\fBREAL\fR for \fBslartg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlartg\fR
+.IP
+\fBCOMPLEX\fR for \fBclartg\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlartg\fR
+.IP
+The sine of the rotation.
+.TP 10
+\fBr\fR
+.NL
+\fBREAL\fR for \fBslartg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlartg\fR
+.IP
+\fBCOMPLEX\fR for \fBclartg\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlartg\fR
+.IP
+The nonzero component of the rotated vector.

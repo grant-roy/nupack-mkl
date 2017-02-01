@@ -1,0 +1,119 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH GetValue 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+GetValue \- Gets the configuration value of one particular configuration parameter.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiGetValue\fR( \fIDesc\(ulHandle\fR, & 
+.PP
+\fIConfig\(ulParam\fR, & 
+.PP
+\fIConfig\(ulVal\fR)
+.PP
+.B /* C */
+.PP
+\fBstatus\fR = \fBDftiGetValue\fR( \fIdesc\(ulhandle\fR, \fIconfig\(ulparam\fR, \fI&config\(ulval\fR);
+.PP
+
+.br
+! Fortran interface
+.br
+INTERFACE DftiGetValue
+.br
+//Note that the body provided here is to illustrate the different
+.br
+//argument list and types of dummy arguments. The interface
+.br
+//does not guarantee what the actual function names are.
+.br
+//Users can only rely on the function name following the
+.br
+//keyword INTERFACE
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul7\(ulINTVAL( Desc\(ulHandle, Config\(ulParam, INTVAL )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul7\(ulINTVAL
+.br
+Type(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+INTEGER, INTENT(IN) :: Config\(ulParam
+.br
+INTEGER, INTENT(OUT) :: INTVAL
+.br
+END FUNCTION DFTI\(ulGET\(ulVALUE\(ulINTVAL 
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul7\(ulSGLVAL( Desc\(ulHandle, Config\(ulParam, SGLVAL )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul7\(ulSGLVAL
+.br
+Type(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+INTEGER, INTENT(IN) :: Config\(ulParam
+.br
+REAL, INTENT(OUT) :: SGLVAL
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul7\(ulSGLVAL 
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul7\(ulDBLVAL( Desc\(ulHandle, Config\(ulParam, DBLVAL )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul7\(ulDBLVAL
+.br
+Type(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+INTEGER, INTENT(IN) :: Config\(ulParam
+.br
+REAL (KIND(0D0)), INTENT(OUT) :: DBLVAL
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul7\(ulDBLVAL 
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul7\(ulINTVEC( Desc\(ulHandle, Config\(ulParam, INTVEC )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul7\(ulINTVEC
+.br
+Type(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+INTEGER, INTENT(IN) :: Config\(ulParam
+.br
+INTEGER, INTENT(OUT) :: INTVEC(*)
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul7\(ulINTVEC 
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul7\(ulINTPNT( Desc\(ulHandle, Config\(ulParam, INTPNT )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul7\(ulINTPNT
+.br
+Type(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+INTEGER, INTENT(IN) :: Config\(ulParam
+.br
+INTEGER, DIMENSION(*), POINTER :: INTPNT
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul7\(ulINTPNT 
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul7\(ulCHARS( Desc\(ulHandle, Config\(ulParam, CHARS )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul7\(ulCHARS
+.br
+Type(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+INTEGER, INTENT(IN) :: Config\(ulParam
+.br
+CHARCTER(*), INTENT(OUT):: CHARS
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul7\(ulCHARS
+.br
+END INTERFACE DftiGetValue 
+.br
+   
+.br
+/* C prototype */
+.br
+long DftiGetValue( DFTI\(ulDESCRIPTOR\(ulHANDLE,
+.br
+      DFTI\(ulCONFIG\(ulPARAM ,
+.br
+      ... );

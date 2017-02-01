@@ -1,0 +1,83 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?swap 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?swap \- Swaps a vector with another vector.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sswap\fR(\fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR)
+.PP
+\fBcall dswap\fR(\fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR)
+.PP
+\fBcall cswap\fR(\fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR)
+.PP
+\fBcall zswap\fR(\fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall swap\fR(\fIx\fR, \fIy\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.  Specifies the order of vectors \fIx\fR and \fIy\fR. 
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsswap\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdswap\fR
+.IP
+\fBCOMPLEX\fR for \fBcswap\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzswap\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIn\fR-1)*abs(\fIincx\fR)).
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR.  Specifies the increment for the elements of \fIx\fR.
+.TP 10
+\fBy\fR
+.NL
+\fBREAL\fR for \fBsswap\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdswap\fR
+.IP
+\fBCOMPLEX\fR for \fBcswap\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzswap\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIn\fR-1)*abs(\fIincy\fR)). 
+.TP 10
+\fBincy\fR
+.NL
+\fBINTEGER\fR.  Specifies the increment for the elements of \fIy\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+Contains the resultant vector \fIx\fR, that is, the input vector \fIy\fR.
+.TP 10
+\fBy\fR
+.NL
+Contains the resultant vector \fIy\fR, that is, the input vector \fIx\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBswap\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length(\fIn\fR).
+.TP 10
+\fBy\fR
+.NL
+Holds the vector of length(\fIn\fR).

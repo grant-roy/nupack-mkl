@@ -1,0 +1,134 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laln2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laln2 \- Solves a 1-by-1 or 2-by-2 linear system of equations of the specified form.
+.SH SYNOPSIS
+.PP
+\fBcall slaln2\fR( \fIltrans\fR, \fIna\fR, \fInw\fR, \fIsmin\fR, \fIca\fR, \fIa\fR, \fIlda\fR, \fId1\fR, \fId2\fR, \fIb\fR, \fIldb\fR, \fIwr\fR, \fIwi\fR, \fIx\fR, \fIldx\fR, \fIscale\fR, \fIxnorm\fR, \fIinfo\fR)
+.PP
+\fBcall dlaln2\fR( \fIltrans\fR, \fIna\fR, \fInw\fR, \fIsmin\fR, \fIca\fR, \fIa\fR, \fIlda\fR, \fId1\fR, \fId2\fR, \fIb\fR, \fIldb\fR, \fIwr\fR, \fIwi\fR, \fIx\fR, \fIldx\fR, \fIscale\fR, \fIxnorm\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBtrans\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+If \fItrans\fR = \fB.TRUE.\fR, \fIA\fR- transpose will be used. 
+.IP
+If \fItrans\fR = \fB.FALSE.\fR, \fIA\fR will be used (not transposed.)
+.TP 10
+\fBna\fR
+.NL
+\fBINTEGER\fR. The size of the matrix \fIA\fR, possible values 1 or 2.
+.TP 10
+\fBnw\fR
+.NL
+\fBINTEGER\fR. This parameter must be 1 if \fIw\fR is real, and 2 if \fIw\fR is complex. Possible values 1 or 2.
+.TP 10
+\fBsmin\fR
+.NL
+\fB REAL\fR for \fBslaln2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaln2\fR.
+.IP
+The desired lower bound on the singular values of \fIA\fR. 
+.IP
+This should be a safe distance away from underflow or overflow, for example, between (
+.TP 10
+\fBca\fR
+.NL
+\fBREAL\fR for \fBslaln2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaln2\fR.
+.IP
+The coefficient by which \fIA\fR is multiplied.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBslaln2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaln2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR,\fIna\fR). 
+.IP
+The \fIna\fR-by-\fIna\fR matrix \fIA\fR.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The leading dimension of \fIa\fR. Must be at least \fIna\fR.
+.TP 10
+\fBd1\fR, \fBd2\fR
+.NL
+\fBREAL\fR for \fBslaln2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaln2\fR.
+.IP
+The (1,1) and (2,2) elements in the diagonal matrix \fID\fR, respectively. \fId2\fR is not used if \fInw\fR = 1.
+.TP 10
+\fBb\fR
+.NL
+\fBREAL\fR for \fBslaln2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaln2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldb\fR,\fInw\fR). The \fIna\fR-by-\fInw\fR matrix \fIB\fR (right-hand side). If \fInw\fR =2 (\fIw\fR is complex), column 1 contains the real part of \fIB\fR and column 2 contains the imaginary part.
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The leading dimension of \fIb\fR. Must be at least \fIna\fR.
+.TP 10
+\fBwr\fR, \fBwi\fR
+.NL
+\fBREAL\fR for \fBslaln2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaln2\fR.
+.IP
+The real and imaginary part of the scalar \fIw\fR, respectively. 
+.IP
+\fIwi\fR is not used if \fInw\fR = 1.
+.TP 10
+\fBldx\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIx\fR. Must be at least \fIna\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBslaln2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaln2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldx\fR,\fInw\fR). The \fIna\fR-by-\fInw\fR matrix \fIX\fR (unknowns), as computed by the routine. If \fInw\fR = 2 (\fIw\fR is complex), on exit, column 1 will contain the real part of \fIX\fR and column 2 will contain the imaginary part.
+.TP 10
+\fBscale\fR
+.NL
+\fBREAL\fR for \fBslaln2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaln2\fR.
+.IP
+The scale factor that \fIB\fR must be multiplied by to insure that overflow does not occur when computing \fIX\fR. Thus (\fIca\fR*\fIA\fR - \fIw\fR*\fID\fR) \fIX\fR will be \fIscale\fR*\fIB\fR, not \fIB\fR (ignoring perturbations of \fIA\fR.) It will be at most 1.
+.TP 10
+\fBxnorm\fR
+.NL
+\fBREAL\fR for \fBslaln2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaln2\fR.
+.IP
+The infinity-norm of \fIX\fR, when \fIX\fR is regarded as an \fIna\fR-by-\fInw\fR real matrix.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+An error flag. It will be zero if no error occurs, a negative number if an argument is in error, or a positive number if (\fIca\fR*\fIA\fR - \fIw\fR*\fID\fR)  had to be perturbed. The possible values are: 
+.IP
+If \fIinfo\fR = 0: no error occurred, and (\fIca\fR*\fIA\fR - \fIw\fR*\fID\fR) did not have to be perturbed. 
+.IP
+If \fIinfo\fR = 1: (\fIca\fR*\fIA\fR - \fIw\fR*\fID\fR) had to be perturbed to make its smallest (or only) singular value greater than \fIsmin\fR.
+.PP
+.B NOTE:
+For higher speed, this routine does not check the inputs for errors.

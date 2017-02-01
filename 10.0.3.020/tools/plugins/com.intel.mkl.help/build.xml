@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="com.intel.mkl.help" default="build.index" basedir=".">
+
+	<target name="build.index" description="Build help index">
+		<help.buildHelpIndex manifest="plugin.xml" destination="."/>
+	</target>
+
+</project>

@@ -1,0 +1,131 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH Uniform 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+Uniform \- Generates random numbers uniformly distributed over the interval [\fIa\fR, \fIb\fR).
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvirnguniform\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIa\fR, \fIb\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBviRngUniform\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIa\fR, \fIb\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBmethod\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Generation method; dummy and set to 0 in case of uniform distribution. The specific value is as follows: 
+.br
+VSL\(ulMETHOD\(ulIUNIFORM\(ulSTD
+.br
+.br
+\h\'1\'Standard method. Currently there is only one method for this distribution generator.
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE (VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Descriptor of the stream state structure.
+.br
+\h\'2\'C:\h\'7\'Pointer to the stream state structure
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Number of random values to be generated
+.PP
+.SB Name
+.br
+\h\'1\'\fBa\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Left interval bound \fBa\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBb\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Right interval bound \fBb\fR
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBr\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(OUT)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint*\fR
+.br
+.SB Description
+.br
+\h\'1\'Vector of \fIn\fR random numbers uniformly distributed over the interval [\fIa\fR,\fIb\fR)
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK\fR, \fBVSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+\fBstream\fR is a \fBNULL\fR pointer.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulSTREAM\fR
+.NL
+\fIstream\fR is not a valid random stream.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulUPDATE\fR
+.NL
+Callback function for an abstract BRNG returns an invalid number of updated entries in a buffer, that is, < 0 or > \fBnmax\fR.
+.TP 10
+\fBVSL\(ulERROR\(ulNO\(ulNUMBERS\fR
+.NL
+Callback function for an abstract BRNG returns 0 as the number of updated entries in a buffer.

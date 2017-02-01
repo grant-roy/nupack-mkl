@@ -1,0 +1,42 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH blacs\(ulgridinit 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+blacs\(ulgridinit \- Assigns available processes into BLACS process grid. 
+.SH SYNOPSIS
+.PP
+\fBcall blacs\(ulgridinit\fR( \fIicontxt\fR, \fIorder\fR, \fInprow\fR, \fInpcol\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle indicating the system context to be used in creating the BLACS context. Call \fBblacs\(ulget\fR to obtain a default system context.
+.TP 10
+\fBorder\fR
+.NL
+\fBCHARACTER*1\fR. Indicates how to map processes to BLACS grid. Options are:
+.RS
+.IP \(bu
+\'R\' : Use row-major natural ordering
+.IP \(bu
+\'C\' : Use column-major natural ordering
+.IP \(bu
+ELSE : Use row-major natural ordering
+.RE
+
+.TP 10
+\fBnprow\fR
+.NL
+\fBINTEGER\fR.  Indicates how many process rows the process grid should contain.
+.TP 10
+\fBnpcol\fR
+.NL
+\fBINTEGER\fR. Indicates how many process columns the process grid should contain.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle to the created BLACS context. 

@@ -1,0 +1,195 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lar1v 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lar1v \- Computes the (scaled) \fIr\fR-th column of the inverse of the submatrix in rows \fIb1\fR through \fIbn\fR of tridiagonal matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slar1v\fR( \fIn\fR, \fIb1\fR, \fIbn\fR, \fIlambda\fR, \fId\fR, \fIl\fR, \fIld\fR, \fIlld\fR, \fIpivmin\fR, \fIgaptol\fR, \fIz\fR, \fIwantnc\fR, \fInegcnt\fR, \fIztz\fR, \fImingma\fR, \fIr\fR, \fIisuppz\fR, \fInrminv\fR, \fIresid\fR, \fIrqcorr\fR, \fIwork\fR)
+.PP
+\fBcall dlar1v\fR( \fIn\fR, \fIb1\fR, \fIbn\fR, \fIlambda\fR, \fId\fR, \fIl\fR, \fIld\fR, \fIlld\fR, \fIpivmin\fR, \fIgaptol\fR, \fIz\fR, \fIwantnc\fR, \fInegcnt\fR, \fIztz\fR, \fImingma\fR, \fIr\fR, \fIisuppz\fR, \fInrminv\fR, \fIresid\fR, \fIrqcorr\fR, \fIwork\fR)
+.PP
+\fBcall clar1v\fR( \fIn\fR, \fIb1\fR, \fIbn\fR, \fIlambda\fR, \fId\fR, \fIl\fR, \fIld\fR, \fIlld\fR, \fIpivmin\fR, \fIgaptol\fR, \fIz\fR, \fIwantnc\fR, \fInegcnt\fR, \fIztz\fR, \fImingma\fR, \fIr\fR, \fIisuppz\fR, \fInrminv\fR, \fIresid\fR, \fIrqcorr\fR, \fIwork\fR)
+.PP
+\fBcall zlar1v\fR( \fIn\fR, \fIb1\fR, \fIbn\fR, \fIlambda\fR, \fId\fR, \fIl\fR, \fIld\fR, \fIlld\fR, \fIpivmin\fR, \fIgaptol\fR, \fIz\fR, \fIwantnc\fR, \fInegcnt\fR, \fIztz\fR, \fImingma\fR, \fIr\fR, \fIisuppz\fR, \fInrminv\fR, \fIresid\fR, \fIrqcorr\fR, \fIwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIL*D*L\fR**\fIT\fR.
+.TP 10
+\fBb1\fR
+.NL
+\fBINTEGER\fR. First index of the submatrix of \fIL*D*L\fR**\fIT\fR.
+.TP 10
+\fBbn\fR
+.NL
+\fBINTEGER\fR. Last index of the submatrix of \fIL*D*L\fR**\fIT\fR.
+.TP 10
+\fBlambda\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+The shift. To compute an accurate eigenvector, \fIlambda\fR should be a good approximation to an eigenvalue of \fIL*D*L\fR**\fIT\fR.
+.TP 10
+\fBl\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). 
+.IP
+The (\fIn\fR-1) subdiagonal elements of the unit bidiagonal matrix \fIL\fR, in elements 1 to \fIn\fR-1.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The \fIn\fR diagonal elements of the diagonal matrix \fID\fR.
+.TP 10
+\fBld\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). 
+.IP
+The \fIn\fR-1 elements \fIL\fR(\fIi\fR)*\fID\fR(\fIi\fR).
+.TP 10
+\fBlld\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). 
+.IP
+The \fIn\fR-1 elements \fIL\fR(\fIi\fR)*\fIL\fR(\fIi\fR)*\fID\fR(\fIi\fR).
+.TP 10
+\fBpivmin\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+The minimum pivot in the Sturm sequence.
+.TP 10
+\fBgaptol\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+Tolerance that indicates when eigenvector entries are negligible with respect to their contribution to the residual.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR
+.IP
+\fBCOMPLEX\fR for \fBclar1v\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlar1v\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). All entries of \fBz\fR must be set to 0.
+.TP 10
+\fBwantnc\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Specifies whether \fBnegcnt\fR has to be computed.
+.TP 10
+\fBr\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The twist index for the twisted factorization used to compute \fBz\fR.On input, 0 \(<= \fBr\fR \(<= \fBn\fR. If \fBr\fR is input as 0, \fBr\fR is set tothe index where (\fIL*D*L\fR**\fIT\fR - \fIlambda\fR*\fII\fR)**-1 is largestin magnitude. If 1 \(<= \fBr\fR \(<= \fBn\fR, \fBr\fR is unchanged.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+Workspace array, \fBDIMENSION\fR (4*\fIn\fR). 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR
+.IP
+\fBCOMPLEX\fR for \fBclar1v\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlar1v\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The (scaled) \fIr\fR-th column of the inverse. \fIz\fR(\fIr\fR) is returned to be 1.
+.TP 10
+\fBnegcnt\fR
+.NL
+\fBINTEGER\fR.  If \fBwantnc\fR is \fB.TRUE.\fR then \fBnegcnt\fR = the number of pivots < \fBpivmin\fRin the  matrix factorization \fIL*D*L\fR**\fIT\fR, and \fBnegcnt\fR = -1 otherwise.
+.TP 10
+\fBztz\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+The square of the 2-norm of \fIz\fR.
+.TP 10
+\fBmingma\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+The reciprocal of the largest (in magnitude) diagonal element of the inverse of \fIL*D*L\fR**\fIT\fR - \fIlambda\fR*\fII\fR.
+.TP 10
+\fBr\fR
+.NL
+On output, \fIr\fR is the twist index used to compute \fIz\fR. Ideally, \fIr\fR designates the position of the maximum entry in theeigenvector.
+.TP 10
+\fBisuppz\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (2). The support of the vector in \fIZ\fR, that is, the vector \fIz\fR is nonzero only in elements \fIisuppz\fR(1) through \fIisuppz\fR(2).
+.TP 10
+\fBnrminv\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+Equals 1/sqrt( \fBztz\fR ).
+.TP 10
+\fBresid\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+The residual of the \fBFP\fR vector. 
+.IP
+\fBresid\fR = ABS( \fBmingma\fR )/sqrt( \fBztz\fR ).
+.TP 10
+\fBrqcorr\fR
+.NL
+\fBREAL\fR for \fBslar1v\fR/\fBclar1v\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlar1v\fR/\fBzlar1v\fR
+.IP
+The Rayleigh Quotient correction to \fIlambda\fR.
+.IP
+\fBrqcorr\fR =  \fBmingma\fR/\fBztz\fR.

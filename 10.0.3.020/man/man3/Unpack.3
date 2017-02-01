@@ -1,0 +1,163 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH Unpack 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+Unpack \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall vsunpacki\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fIincy\fR)
+.PP
+\fBcall vsunpackv\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fIiy\fR)
+.PP
+\fBcall vsunpackm\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fImy\fR)
+.PP
+\fBcall vdunpacki\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fIincy\fR)
+.PP
+\fBcall vdunpackv\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fIiy\fR)
+.PP
+\fBcall vdunpackm\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fImy\fR)
+.PP
+.B /* C */
+.PP
+\fBvsUnpackI\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fIincy\fR);
+.PP
+\fBvsUnpackV\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fIiy\fR);
+.PP
+\fBvsUnpackM\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fImy\fR);
+.PP
+\fBvdUnpackI\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fIincy\fR);
+.PP
+\fBvdUnpackV\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fIiy\fR);
+.PP
+\fBvdUnpackM\fR( \fIn\fR, \fIa\fR, \fIy\fR, \fImy\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR. 
+.br
+\h\'2\'C:\h\'7\'\fBint\fR. 
+.br
+.SB Description
+.br
+\h\'1\'Specifies the number of elements to be calculated.
+.PP
+.SB Name
+.br
+\h\'1\'\fBa\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvsunpacki\fR, \fBvsunpackv\fR, \fBvsunpackm\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdunpacki\fR, \fBvdunpackv\fR, \fBvdunpackm\fR.
+.br
+\h\'2\'C:\h\'7\'\fBconst float*\fR for \fBvsUnpackI\fR, \fBvsUnpackV\fR, \fBvsUnpackM\fR
+.br
+\h\'11\'\fBconst double*\fR for \fBvdUnpackI\fR, \fBvdUnpackV\fR, \fBvdUnpackM\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Array, \fBDIMENSION\fR at least \fIn\fR. 
+.br
+\h\'11\'Specifies the input vector \fBa\fR.
+.br
+\h\'1\'
+.br
+\h\'2\'C:\h\'7\'Specifies the pointer to an array of size at least \fIn\fR that contains the input vector \fBa\fR.
+.PP
+.SB Name
+.br
+\h\'1\'\fBincy\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR for \fBvsunpacki\fR, \fBvdunpacki\fR. 
+.br
+\h\'2\'C:\h\'7\'\fBint\fR for \fBvsUnpackI\fR, \fBvdUnpackI\fR. 
+.br
+.SB Description
+.br
+\h\'1\'Specifies the increment for the elements of \fIy\fR.
+.PP
+.SB Name
+.br
+\h\'1\'\fBiy\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR for \fBvsunpackv\fR, \fBvdunpackv\fR. 
+.br
+\h\'2\'C:\h\'7\'\fBconst int*\fR for \fBvsUnpackV\fR, \fBvdUnpackV\fR.
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Array, \fBDIMENSION\fR at least \fIn\fR. 
+.br
+\h\'11\'Specifies the index vector for the elements of \fIy\fR.
+.br
+\h\'2\'C:\h\'7\'Specifies the pointer to an array of size at least \fIn\fR that contains the index vector for the elements of \fIa\fR.
+.PP
+.SB Name
+.br
+\h\'1\'\fBmy\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR for \fBvsunpackm\fR, \fBvdunpackm\fR. 
+.br
+\h\'2\'C:\h\'7\'\fBconst int*\fR for \fBvsUnpackM\fR, \fBvdUnpackM\fR.
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Array, \fBDIMENSION\fR at least \fIn\fR, 
+.br
+\h\'11\'Specifies the mask vector for the elements of \fIy\fR.
+.br
+\h\'2\'C:\h\'7\'Specifies the pointer to an array of size at least \fIn\fR that contains the mask vector for the elements of \fIa\fR.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBy\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR for \fBvsunpacki\fR, \fBvsunpackv\fR, \fBvsunpackm\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR for \fBvdunpacki\fR, \fBvdunpackv\fR, \fBvdunpackm\fR. 
+.br
+\h\'1\'
+.br
+\h\'1\'
+.br
+\h\'2\'C:\h\'7\'\fBfloat*\fR for \fBvsUnpackI\fR, \fBvsUnpackV\fR, \fBvsUnpackM\fR
+.br
+\h\'11\'\fBdouble*\fR for \fBvdUnpackI\fR, \fBvdUnpackV\fR, \fBvdUnpackM\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Array, \fBDIMENSION\fR
+.br
+\h\'11\'at least (1 + (\fIn\fR-1)*\fIincy\fR) for \fBvsunpacki\fR, 
+.br
+\h\'11\'at least max( \fIn\fR,max(\fIiy\fR[j]) ),j=0,..., \fIn\fR-1, for \fBvsunpackv\fR, 
+.br
+\h\'11\'at least \fIn\fR for \fBvsunpackm/vdunpackm\fR
+.br
+\h\'2\'C:\h\'7\'Specifies the pointer to an array that contains the output vector \fBy\fR.
+.br
+\h\'11\'Size of the array must be:
+.IP \(bu nobullet
+at least (1 + (\fIn\fR-1)*\fIincy\fR) for \fBvsUnPackI\fR, 
+.IP \(bu
+at least max( \fIn\fR,max(\fIia\fR[j]) ),j=0,..., \fIn\fR-1, for \fBvsUnPackV\fR,
+.IP \(bu
+at least \fIn\fR for \fBvsUnPackM\fR.

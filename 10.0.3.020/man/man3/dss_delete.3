@@ -1,0 +1,29 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dss\(uldelete 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dss\(uldelete \- Deletes all of data structures created during the solutions process.
+.SH SYNOPSIS
+.PP
+\fBdss\(uldelete\fR(\fIhandle\fR, \fIopt\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBopt\fR
+.NL
+\fBINTEGER\fR. Options passing argument. The default value is \fBMKL\(ulDSS\(ulMSG\(ulLVL\(ulWARNING\fR + \fBMKL\(ulDSS\(ulTERM\(ulLVL\(ulERROR\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fBMKL\(ulDSS\(ulHANDLE\fR type (see ).
+.SH RETURN VALUES
+.PP
+.PP
+\fBMKL\(ulDSS\(ulSUCCESS\fR
+.PP
+\fBMKL\(ulDSS\(ulINVALID\(ulOPTION\fR
+.PP
+\fBMKL\(ulDSS\(ulOUT\(ulOF\(ulMEMORY\fR

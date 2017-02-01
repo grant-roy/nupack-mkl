@@ -1,0 +1,127 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasd8 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasd8 \- Finds the square roots of the roots of the secular equation, and stores, for each element in \fID\fR, the distance to its two nearest poles. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasd8\fR( \fIicompq\fR, \fIk\fR, \fId\fR, \fIz\fR, \fIvf\fR, \fIvl\fR, \fIdifl\fR, \fIdifr\fR, \fIlddifr\fR, \fIdsigma\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlasd8\fR( \fIicompq\fR, \fIk\fR, \fId\fR, \fIz\fR, \fIvf\fR, \fIvl\fR, \fIdifl\fR, \fIdifr\fR, \fIlddifr\fR, \fIdsigma\fR, \fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicompq\fR
+.NL
+\fBINTEGER\fR. Specifies whether singular vectors are to be computed in factored form in the calling routine:
+.IP
+= 0: Compute singular values only.
+.IP
+= 1: Compute singular vectors in factored form as well.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. The number of terms in the rational function to be solved by \fB?lasd4\fR. \fIk\fR\(>= 1.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslasd8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd8\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIk\fR ).
+.IP
+The first \fIk\fR elements of this array contain the components of the deflation-adjusted updating row vector.
+.TP 10
+\fBvf\fR
+.NL
+\fBREAL\fR for \fBslasd8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd8\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIk\fR ). 
+.IP
+On entry, \fIvf\fR contains  information passed through \fBdbede8\fR.
+.TP 10
+\fBvl\fR
+.NL
+\fBREAL\fR for \fBslasd8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd8\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIk\fR ). On entry, \fIvl\fR contains  information passed through \fBdbede8\fR.
+.TP 10
+\fBlddifr\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIdifr\fR, must be at least \fIk\fR.
+.TP 10
+\fBdsigma\fR
+.NL
+\fBREAL\fR for \fBslasd8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd8\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIk\fR ).
+.IP
+The first \fIk\fR elements of this array contain the old roots of the deflated updating problem. These are the poles of the secular equation.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslasd8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd8\fR.
+.IP
+Workspace array, \fBDIMENSION\fR at least (3\fIk\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasd8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd8\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIk\fR ).
+.IP
+On output, \fID\fR contains the updated singular values.
+.TP 10
+\fBvf\fR
+.NL
+On exit, \fIvf\fR contains the first \fIk\fR components of the first components of all right singular vectors of the bidiagonal matrix.
+.TP 10
+\fBvl\fR
+.NL
+On exit, \fIvl\fR contains the first \fIk\fR components of the last components of all right singular vectors of the bidiagonal matrix.
+.TP 10
+\fBdifl\fR
+.NL
+\fBREAL\fR for \fBslasd8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd8\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIk\fR ). On exit, \fIdifl\fR(\fIi\fR) = \fId\fR(\fIi\fR) - \fIdsigma\fR(\fIi\fR).
+.TP 10
+\fBdifr\fR
+.NL
+\fBREAL\fR for \fBslasd8\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd8\fR.
+.IP
+Array, 
+.IP
+\fBDIMENSION\fR ( \fIlddifr\fR, 2 ) if \fIicompq\fR = 1 and 
+.IP
+\fBDIMENSION\fR ( \fIk\fR ) if \fIicompq\fR = 0. 
+.IP
+On exit, \fIdifr\fR(i,1) = \fId\fR(\fIi\fR) - \fIdsigma\fR(i+1), \fIdifr\fR(\fIk\fR,1) is not  defined and will not be referenced. If \fIicompq\fR = 1, \fIdifr\fR(1:\fIk\fR,2) is an array containing the normalizing factors for the right singular vector matrix.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0:  successful exit.
+.IP
+< 0:  if \fIinfo\fR = -\fIi\fR, the \fIi\fR-th argument had an illegal value. 
+.IP
+> 0:  If \fIinfo\fR = 1, an singular value did not converge.

@@ -1,0 +1,94 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH mkl\(uldcoogemv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+mkl\(uldcoogemv \- Computes matrix - vector product of a sparse general matrix stored in the coordinate format with one-based indexing.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall mkl\(uldcoogemv\fR(\fItransa\fR, \fIm\fR, \fIval\fR, \fIrowind\fR, \fIcolind\fR, \fInnz\fR, \fIx\fR, \fIy\fR)
+.PP
+.B /* C */
+.PP
+\fBmkl\(uldcoogemv\fR(\fI&transa\fR, \fI&m\fR, \fIval\fR, \fIrowind\fR, \fIcolind\fR, \fI&nnz\fR, \fIx\fR, \fIy\fR);
+.SH INPUT PARAMETERS
+.PP
+Parameter descriptions are common for all implemented interfaces with the exception of data types that refer here to the Fortran 77 standard types. Data types specific to the different interfaces are described in the section \fB``Interfaces''\fR below.
+.TP 10
+\fBtransa\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the operation.
+.IP
+If \fItransa\fR = \fB\'N\'\fR or \fB\'n\'\fR, then the matrix-vector product is computed as \fIy\fR := \fIA\fR*\fIx\fR
+.IP
+If \fItransa\fR = \fB\'T\'\fR or \fB\'t\'\fR or \fB\'C\'\fR or \fB\'c\'\fR, then the matrix-vector product is computed as \fIy\fR := \fIA\'\fR*\fIx\fR,
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Number of rows of the matrix \fIA\fR.
+.TP 10
+\fBval\fR
+.NL
+\fBREAL*8\fR. Array of length \fInnz\fR, contains non-zero elements of the matrix \fIA\fR in the arbitrary order.
+.IP
+Refer to \fIvalues\fR array description in Coordinate Format for more details.
+.TP 10
+\fBrowind\fR
+.NL
+\fBINTEGER\fR. Array of length \fInnz\fR, contains the row indices for each non-zero element of the matrix \fIA\fR.
+.IP
+Refer to \fIrows\fR array description in Coordinate Format for more details.
+.TP 10
+\fBcolind\fR
+.NL
+\fBINTEGER\fR. Array of length \fInnz\fR, contains the column indices for each non-zero element of the matrix \fIA\fR. Refer to \fIcolumns\fR array description in Coordinate Format for more details.
+.TP 10
+\fBnnz\fR
+.NL
+\fBINTEGER\fR. Specifies the number of non-zero element of the matrix \fIA\fR.
+.IP
+Refer to \fInnz\fR description in Coordinate Format for more details.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR is \fIm\fR.
+.IP
+One entry, the array \fIx\fR must contain the vector \fIx\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBy\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR at least \fIm\fR.
+.IP
+On exit, the array \fIy\fR must contain the vector \fIy\fR. 
+.SH INTERFACES
+.PP
+
+.PP
+\fBFortran 77:\fR
+.br
+SUBROUTINE mkl\(uldcoogemv(transa, m, val, rowind, colind, nnz, x, y)
+.br
+CHARACTER*1   transa
+.br
+INTEGER       m, nnz
+.br
+INTEGER       rowind(*), colind(*)
+.br
+REAL*8        val(*), x(*), y(*)
+.PP
+\fBC:\fR
+.br
+.PP
+.br
+void mkl\(uldcoogemv(char \fI*transa\fR, int \fI*m\fR, double  \fI*val\fR, int \fI*rowind\fR,
+.br
+.br
+int \fI*colind\fR, int \fI*nnz\fR, double \fI*x\fR, double \fI*y\fR);

@@ -1,0 +1,45 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH FreeDescriptor 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+FreeDescriptor \- Frees memory allocated for a descriptor.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiFreeDescriptor\fR( \fIDesc\(ulHandle\fR)
+.PP
+.B /* C */
+.PP
+\fBstatus\fR = \fBDftiFreeDescriptor\fR( \fI&desc\(ulhandle\fR);
+.PP
+
+.br
+! Fortran interface
+.br
+INTERFACE DftiFreeDescriptor
+.br
+//Note that the body provided here is to illustrate the different
+.br
+//argument list and types of dummy arguments. The interface
+.br
+//does not guarantee what the actual function names are.
+.br
+//Users can only rely on the function name following the
+.br
+//keyword INTERFACE
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul3( Desc\(ulHandle )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul3
+.br
+TYPE(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul3
+.br
+END INTERFACE DftiFreeDescriptor 
+.br
+   
+.br
+long DftiFreeDescriptor( DFTI\(ulDESCRIPTOR\(ulHANDLE * );

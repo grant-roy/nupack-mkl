@@ -1,0 +1,19 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH blacs\(ulfreebuff 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+blacs\(ulfreebuff \- Frees BLACS buffer. 
+.SH SYNOPSIS
+.PP
+\fBcall blacs\(ulfreebuff\fR( \fIicontxt\fR, \fIwait\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle that indicates the BLACS context.
+.TP 10
+\fBwait\fR
+.NL
+\fBINTEGER\fR. Parameter indicating whether to wait for non-blocking operations or not. If equals 0, the operations should not be waited for; free only unused buffers. Otherwise, wait in order to free all buffers. 

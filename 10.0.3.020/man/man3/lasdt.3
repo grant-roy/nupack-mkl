@@ -1,0 +1,49 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasdt 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasdt \- Creates a tree of subproblems for bidiagonal divide and conquer. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasdt\fR( \fIn\fR, \fIlvl\fR, \fInd\fR, \fIinode\fR, \fIndiml\fR, \fIndimr\fR, \fImsub\fR)
+.PP
+\fBcall dlasdt\fR( \fIn\fR, \fIlvl\fR, \fInd\fR, \fIinode\fR, \fIndiml\fR, \fIndimr\fR, \fImsub\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. On entry, the number of diagonal elements of the  bidiagonal matrix.
+.TP 10
+\fBmsub\fR
+.NL
+\fBINTEGER\fR. On entry, the maximum row dimension each subproblem at the bottom of the tree can be of.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBlvl\fR
+.NL
+\fBINTEGER\fR. On exit, the number of levels on the computation tree.
+.TP 10
+\fBnd\fR
+.NL
+\fBINTEGER\fR. On exit, the number of nodes on the tree.
+.TP 10
+\fBinode\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On exit, centers of subproblems.
+.TP 10
+\fBndiml\fR
+.NL
+\fBINTEGER\fR . 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On exit, row dimensions of left children.
+.TP 10
+\fBndimr\fR
+.NL
+\fBINTEGER\fR . 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). On exit, row dimensions of right children.

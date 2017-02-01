@@ -1,0 +1,55 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?rscl 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?rscl \- Multiplies a vector by the reciprocal of a real scalar.
+.SH SYNOPSIS
+.PP
+\fBcall srscl\fR( \fIn\fR, \fIsa\fR, \fIsx\fR, \fIincx\fR)
+.PP
+\fBcall drscl\fR( \fIn\fR, \fIsa\fR, \fIsx\fR, \fIincx\fR)
+.PP
+\fBcall csrscl\fR( \fIn\fR, \fIsa\fR, \fIsx\fR, \fIincx\fR)
+.PP
+\fBcall zdrscl\fR( \fIn\fR, \fIsa\fR, \fIsx\fR, \fIincx\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of components of the vector \fIx\fR.
+.TP 10
+\fBsa\fR
+.NL
+\fBREAL\fR for \fBsrscl\fR/\fBcsrscl\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrscl\fR/\fBzdrscl\fR.
+.IP
+The scalar a which is used to divide each component of the vector \fIx\fR. \fBsa\fR must be \(>= 0, or the subroutine will divide by zero.
+.TP 10
+\fBsx\fR
+.NL
+\fBREAL\fR for \fBsrscl\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrscl\fR
+.IP
+\fBCOMPLEX\fR for \fBcsrscl\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzdrscl\fR.
+.IP
+Array, \fBDIMENSION\fR(1+(\fIn\fR-1)*|\fIincx\fR|). 
+.IP
+The \fIn\fR-element vector \fIx\fR.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. The increment between successive values of the vector \fIsx\fR. 
+.IP
+If \fIincx\fR > 0, \fIsx\fR(1)=\fIx\fR(1), and \fIsx\fR(1+(i-1)*\fIincx\fR)=\fIx\fR(\fIi\fR),  1<\fIi\fR\(<=\fIn\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBsx\fR
+.NL
+On exit, the result \fIx\fR/\fIa\fR.

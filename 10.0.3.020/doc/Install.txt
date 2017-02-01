@@ -1,0 +1,570 @@
+
+
+Intel(R) Math Kernel Library 10.0 for Linux* OS
+
+Installation Guide
+
+
+
+
+
+    Contents
+
+
+
+    * Introduction 
+
+    * System Requirements 
+
+    * Obtaining Intel MKL 
+
+    * Installing Intel MKL 
+    
+      * Silent Installation
+
+    * Uninstalling Intel MKL 
+
+    * Obtaining Technical Support 
+
+    * Disclaimer and Legal Information 
+
+
+
+
+
+Introduction
+
+
+This document explains how to install and configure Intel Math
+Kernel Library (Intel(R) MKL) 10.0 for Linux*. 
+Installation is a multi-step process. Please read this document 
+in its entirety before beginning and follow the steps in 
+sequence. For information about the product contents, including 
+new and changed features, please refer to the separate 
+Release Notes <Release_Notes.txt>.
+
+If you have a previous (lower numbered) version Intel MKL 
+for Linux installed, you do not need to uninstall it 
+before installing this version.  If you choose to uninstall the 
+older version, you may do so before or after installing this 
+version.
+
+
+
+System Requirements
+
+
+Hardware - Minimum Requirements
+
+  * A system based on a 300-MHz or faster Intel(R) Pentium(R)
+    processor with MMX(TM) technology
+
+  * 700 MB of free hard disk space plus additional 400 MB during 
+    installation for download and temporary files. 
+
+
+Hardware - Recommended
+
+  * Intel(R) Itanium(R) 2 processor
+
+  * 64-bit Intel(R) Xeon(R) processor
+
+  * Intel(R) Pentium(R) 4 processor with Streaming SIMD Extensions 3
+
+
+Hardware - Supported
+
+  Clusters or standalone PCs, workstations, or server systems using
+  the following:
+
+  * 45nm Hi-k Intel(R) Core(TM)2 and Intel Xeon(R) processor families 
+  
+  * Intel(R) Core(TM)2 Quad processor 
+  
+  * Dual-Core Intel(R) Xeon(R) processor MP 7000 sequence 
+  
+  * Dual-Core Intel(R) Xeon(R) processor 5100 sequence 
+  
+  * Intel(R) Core(TM) Duo processor
+  
+  * Intel(R) Core(TM)2 Duo processor
+  
+  * 64-bit Intel(R) Xeon(R) processor
+
+  * Intel(R) Itanium(R) 2 processor
+  
+  * Intel(R) Xeon(R) processors DP and MP
+  
+  * Intel(R) Pentium(R) D processor
+
+  * Intel(R) Pentium(R) M processor
+  
+  * Intel(R) Pentium(R) 4 processor with Streaming SIMD Extensions 3
+  
+  * Intel(R) Pentium(R) 4 processor
+
+  * Intel(R) Celeron(R) D processor
+
+  * Intel(R) Celeron(R) processor
+
+  * Intel(R) Pentium(R) III processor
+
+  * AMD* Athlon* and Opteron* processors
+
+
+Software - Minimum Requirements
+
+  * Linux* operating system 
+
+  * Compatible compiler 
+
+  * A supported Message Passing Interface (MPI) - (see the list
+    of supported MPIs later in this document)
+
+  * Adobe Acrobat* Reader application version 6.0 or higher
+
+
+Software - Recommended
+
+  * Red Hat* Enterprise Linux OS, version 5
+
+  * Intel(R) Fortran Compiler 10.1 for Linux* OS
+
+  * Intel(R) C++ Compiler 10.1 for Linux* OS
+
+  * Intel(R) MPI Library 3.1
+
+
+
+Software - Supported Linux* Operating Systems
+
+  * Red Hat EL3
+
+  * Red Hat EL4
+  
+  * Red Hat EL5
+  
+  * SuSE* SLES* 9
+
+  * SuSE* SLES* 10
+  
+  * SGI ProPack* for Linux 4 (for IA-64 (Itanium(R) processor family) architecture) 
+  
+  * SGI ProPack* for Linux 5 (for IA-64 architecture) 
+  
+  * Red Hat* Fedora* Core 7 (for IA-32 and Intel(R) 64 architecture) 
+  
+  * Debian* GNU/Linux 4.0
+  
+  * Ubuntu* 7 (for IA-32 and Intel(R) 64 architecture)
+  
+  * Asianux* Server 3
+  
+  * Turbolinux* 11
+
+
+Software - Supported Linux* OS Compilers (Intel MKL for Linux* OS has been
+tested with the following compilers)
+ 
+  * Intel(R) Fortran Compiler 9.1 for Linux* OS 
+  
+  * Intel(R) Fortran Compiler 10.0 for Linux* OS
+  
+  * Intel(R) Fortran Compiler 10.1 for Linux* OS 
+  
+  * Intel(R) C++ Compiler 9.1 for Linux* OS 
+  
+  * Intel(R) C++ Compiler 10.0 for Linux* OS
+  
+  * Intel(R) C++ Compiler 10.1 for Linux* OS
+
+  * GNU Compiler Collection (gcc*, g77*, gfortran* 4.2.0 and higher)
+
+  Note: Intel MKL has parts that have Fortran interfaces and are
+  Fortran in their data structures as well as parts that have C interfaces
+  and C data structures. The Intel MKL User's Guide document (file 
+  userguide.pdf in the doc directory) contains advice on how to link 
+  to Intel MKL with different compilers.
+
+
+Software - Supported MPI implementations
+
+  * Intel(R) MPI Library 3.1 
+  
+  * Intel(R) MPI Library 3.0
+
+  * Intel(R) MPI Library 2.0
+  
+  * SGI* Message Passing Toolkit (MPT), available at 
+    http://www.sgi.com/products/software/mpt
+
+  * Open MPI 1.1.2, 1.1.5, and 1.2, available at 
+    http://www.open-mpi.org 
+
+  * MPICH version 1.2.5.10 (designation from Myricom, Inc.), available at
+    http://www.myri.com/
+
+  * MPICH version 1.2.5.2, available at
+    http://www-unix.mcs.anl.gov/mpi/mpich
+
+  * MPICH version 2.0, available at
+    http://www-unix.mcs.anl.gov/mpi/mpich
+
+  Note: See the Intel MKL User's Guide document (file 
+  userguide.pdf in the doc directory) for linking
+  instructions.
+
+
+Software - Supported Java* Implementations (Intel MKL Java* examples have 
+been tested with the following Java* implementations)
+
+  * J2SE SDK 1.4.2; JDK* developer software, version 5.0 and 6.0 from 
+    Sun Microsystems, Inc. (http://www.sun.com) for IA-32 and 
+    Intel(R) 64 architectures
+  * JRockit* JDK* developer software, version 1.4.2 and 5.0 from BEA Systems, 
+    Inc. (http://www.bea.com) for IA-32, Intel(R) 64, and IA-64 architectures. 
+
+
+
+Obtaining Intel MKL 
+
+Before installing Intel MKL, you should check the File
+Downloads section of Intel(R) Premier Support to see if a newer
+version or update is available. The version on CD or as listed in your
+electronic download license letter may not be the most current.  In
+order to download and install a version from Intel Premier Support,
+you will first have to register for support as described under
+Technical Support.
+
+
+
+Installing Intel MKL 
+
+
+Pre-Installation Instructions
+
+Note: the default installation directory for the Intel MKL 
+10.0 is /opt/intel/mkl/10.0.xxx ,
+where xxx is the package number, 
+for example, /opt/intel/mkl/10.0.039.
+
+
+Installation Instructions
+
+To install the Intel MKL package on Linux*, use the following
+instructions. The installation software installs the full Intel MKL
+file set for all supported processors. See the Intel MKL website for
+updates, when available.
+
+   1. Do either of the following
+
+      A. Installing from the downloaded package
+
+         Unpack the Intel MKL package in a directory 
+         which you have write access to:
+
+         >tar -zxvf  l_mkl_p_10.0.xxx.tgz
+         
+         where xxx is the package number.
+
+      B. Installing from CD
+
+         Insert an Intel MKL CD into your CD-ROM device 
+         and mount it.
+
+   2. Run the installation script
+
+      A. Installing from the downloaded package
+
+         Execute the install script in the directory where the tar file
+         was extracted:
+
+         > cd l_mkl_p_10.0.xxx
+         > ./install.sh
+         
+         where xxx is the package number. 
+
+      B. Installing from CD
+
+         Execute the install script in the directory where your CD-ROM
+         device was mounted:
+
+         > cd <directory where your CD-ROM device was mounted>
+         > ./install.sh
+
+   3. The install script will display a series of options:
+
+        1. Install 
+        2. Readme
+        3. Release Notes
+        4. Installation Guide
+        h. Help
+        x. Exit
+
+      Option 1 is used to install Intel MKL. Options 2 - 4 and h
+      can be used to obtain additional information before
+      installing.
+
+      Type 1 and press Enter to begin the installation.
+
+   4. You will then be prompted to enter your serial number,
+      the path to your license file or select a different 
+      option:
+
+      Please make your selection by entering an option from the choices 
+      below:
+
+        1. Provide your serial number [Recommended] 
+           Use this option if you have a serial number to install and
+           register your software. The Intel(R) Software Setup Assistant
+           may connect to the Intel(R) Registration Center to verify your
+           serial number. Please refer to the Intel(R) Privacy Policy 
+           regarding the collection and handling of your personal 
+           information. Your Serial Number is in XXXX-XXXXXXXX format.
+        2. Provide the absolute path for an existing license file.
+           Use this option if you have obtained a license file instead 
+           of a serial number.
+        3. Where do I find my Serial Number? 
+        4. Intel(R) Privacy Policy
+        b. Go Back.
+        h. Help. 
+        x. Exit.
+
+      Please type a selection or Serial Number:
+
+      The serial number and a license file were provided to you when
+      you purchased the product, either in an e-mail from the reseller
+      or on a sticker attached to the CD-ROM package.
+
+      If you are connected to the internet, type your 
+      serial number and press Enter. The correct license file will be
+      automatically downloaded and installed to your system.
+
+      If you cannot connect to the internet, select option 2 and 
+      enter the absolute path to the license file.
+
+   Note: If the install detects that you already have a valid license
+            on your system, the first option will be:
+
+          1. Use existing license found on the system. [Recommended]
+
+   5. If you are not logged in as root, you will be asked if you want
+      to install as root (recommended), which will update the system
+      RPM database, or not as root, which won't use the system RPM
+      database. Use the non-root install if you want to install to a
+      private area.
+
+   6. The install script then extracts the product and does some
+      prerequisite checking. If any other versions of Intel 
+      MKL are installed on the system, they will be
+      displayed.
+
+      Press Enter to proceed with installation, or type x to exit the
+      install program.
+
+   7. Press enter again to display the license agreement. After the
+      license agreement is displayed, you are prompted to accept or
+      reject the license. If you accept the license, type accept and
+      press enter. If you reject the license, type reject and press
+      enter to end the install.
+
+   8. After temporary files have been extracted, a list of currently
+      installed versions of Intel MKL will be displayed. 
+      If you wish to uninstall any of the previous versions, type the 
+      number next to the first version you want to uninstall or press 
+      Enter to uninstall all the versions. After the uninstall is 
+      finished you will be returned to this screen.
+
+      Type c to continue with the installation.
+
+   9. You will be prompted for an install location. Press Enter to
+      select the default location, or type another path. If you are
+      installing with a non-root account, you will need to choose a
+      location that you have write permission for.
+
+      Please wait while the installation proceeds and when it
+      completes, press Enter to continue.
+  
+  10. After the install program deletes temporary files, you will 
+      be returned to the first installation menu (see step 3 above).
+
+      Type x and press Enter to quit.
+
+  11. You may be prompted to register for the Intel(R) Premier 
+      Support, if you used the serial number that was not yet 
+      registered. After the registration, the install script exits.
+      
+Note that Fortran 95 interface libraries for LAPACK and BLAS are 
+delivered as source code, and you need to build them yourself. See the 
+"Fortran 95 Interfaces and Wrappers to LAPACK and BLAS" section in 
+the Intel MKL User's Guide on how to do this.
+
+
+Installation Warning for RPM 4.0.2, 4.1, 4.2.1(x64), 3.0.5
+
+These RPMs cannot install to a non-default directory. This has been
+resolved in next versions of RPM.
+
+
+Silent Installation
+
+
+Silent installation enables installing Intel MKL on a single Linux machine 
+in a batch mode, without input prompts.
+To run silent installation, 
+   1. Log in as root
+   2. After the command prompt, enter 
+      ./install.sh --silent [<file>] [{--serialnumber <SN>, --licensepath <LP>}]
+
+      where <file> is the name of the install configuration file, which contains 
+      answers to questions that the installer asks. The <file> parameter is 
+      optional. If it is not specified, the installer will use the file 
+      SilentInstallConfigFile.ini in the “data” directory of the Intel MKL package.
+      --serialnumber / --licensepath option enables providing Intel MKL serial 
+      number <SN>/ license path <LP> right in the command line. --serialnumber 
+      and --licensepath are mutually exclusive and optional. If any of these options
+      is specified, it overrides the appropriate setting, if any, in the 
+      configuration file. 
+      
+Note that it is your responsibility to create the configuration file 
+./data/SilentInstallConfigFile.ini . To do this, you are encouraged to use the 
+--duplicate option (described below).
+
+Silent installation is especially helpful in case you have to replicate the 
+installation on multiple similarly configured machines, such as cluster nodes. 
+In this case, you should first save the configuration of your installation. 
+To do this, run interactive installation with an additional option:
+./install.sh --duplicate [<file>]
+
+Running the installation with this option will cause a file to be created that
+contains all your answers to questions asked. The optional <file> parameter, if 
+supplied, determines the file to be created. If the parameter is not supplied, 
+the file with the name MySilentInstallConfigFile.ini will be created in the same 
+directory as the installer. If this directory is read-only, then the /tmp/mkl/ 
+directory will be used. If the file already exists, it will be overwritten.
+
+Examples:
+./install.sh --silent
+Runs silent installation using the default configuration file 
+SilentInstallConfigFile.ini in the “data” directory. Note that 
+default configuration files that ./install.sh --duplicate creates and 
+./install.sh --silent consumes are different.
+
+./install.sh --silent /path/to/mysilentconfig.ini
+Run silent installation using /path/to/mysilentconfig.ini configuration file
+
+./install.sh --silent --serialnumber XXXX-YYYYYYYY
+Runs silent installation using the default configuration file and the serial number 
+specifed in the command line. Note that with the --serialnumber / --licensepath option
+supplied, the installation will run silently without the --silent option: 
+./install.sh --serialnumber XXXX-YYYYYYYY
+
+./install.sh --silent --licensepath /path/to/mylicense.lic
+./install.sh --licensepath /path/to/mylicense.lic
+Runs silent installation using the default configuration file and the license path 
+specified in the command line.
+
+Note: If the installer cannot find the configuration file, which is explicitly 
+specified or assumed by default, the former will complete with an error message, 
+which for the last example above will look like “ERROR: Cannot read 
+../data/SilentInstallConfigFile.ini!”. The configuration file must also have at 
+least read permissions.
+
+
+
+Uninstalling Intel MKL 
+
+Follow the instructions below to uninstall Intel MKL.
+
+If you've installed Intel MKL as root, 
+  1. Log in as root. 
+  2. To uninstall, run
+    <MKL-install-dir>/uninstall.sh .
+    If you've installed Intel MKL to the default directory, use
+    /opt/intel/mkl/10.0.xxx/uninstall.sh ,
+    
+    where xxx is the package number
+
+Note: 
+
+Uninstalling Intel MKL does not delete the 
+corresponding license file.
+
+
+
+Obtaining Technical Support
+
+Your feedback is very important to us. To receive technical support
+for the tools provided in this product and technical information
+including FAQ's and product updates, you need to be registered for an
+Intel(R) Premier Support account on our secure web site,
+https://premier.intel.com. If you did not register as part of the
+installation process, please register at
+http://support.intel.com/support/performancetools/support.htm and
+click on "Registration Center".
+
+Note: 
+
+If you have questions or problems getting started with the Intel(R)
+Math Kernel Library, please contact support at
+https://registrationcenter.intel.com/support/ .
+
+
+
+Disclaimer and Legal Information
+
+INFORMATION IN THIS DOCUMENT IS PROVIDED IN CONNECTION WITH INTEL(R) 
+PRODUCTS. NO LICENSE, EXPRESS OR IMPLIED, BY ESTOPPEL OR OTHERWISE, 
+TO ANY INTELLECTUAL PROPERTY RIGHTS IS GRANTED BY THIS DOCUMENT. 
+EXCEPT AS PROVIDED IN INTEL'S TERMS AND CONDITIONS OF SALE FOR SUCH 
+PRODUCTS, INTEL ASSUMES NO LIABILITY WHATSOEVER, AND INTEL DISCLAIMS 
+ANY EXPRESS OR IMPLIED WARRANTY, RELATING TO SALE AND/OR USE OF 
+INTEL PRODUCTS INCLUDING LIABILITY OR WARRANTIES RELATING TO FITNESS 
+FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR INFRINGEMENT OF ANY 
+PATENT, COPYRIGHT OR OTHER INTELLECTUAL PROPERTY RIGHT. 
+UNLESS OTHERWISE AGREED IN WRITING BY INTEL, THE INTEL PRODUCTS ARE 
+NOT DESIGNED NOR INTENDED FOR ANY APPLICATION IN WHICH THE FAILURE 
+OF THE INTEL PRODUCT COULD CREATE A SITUATION WHERE PERSONAL INJURY 
+OR DEATH MAY OCCUR.
+Intel may make changes to specifications and product descriptions at 
+any time, without notice. Designers must not rely on the absence or 
+characteristics of any features or instructions marked "reserved" or 
+"undefined." Intel reserves these for future definition and shall 
+have no responsibility whatsoever for conflicts or incompatibilities 
+arising from future changes to them. The information here is subject 
+to change without notice. Do not finalize a design with this 
+information. 
+The products described in this document may contain design defects or 
+errors known as errata which may cause the product to deviate from 
+published specifications. Current characterized errata are available 
+on request. 
+Contact your local Intel sales office or your distributor to obtain 
+the latest specifications and before placing your product order.
+Copies of documents which have an order number and are referenced in 
+this document, or other Intel literature, may be obtained by calling 
+1-800-548-4725, or by visiting Intel's Web Site, located at 
+http://www.intel.com/.
+
+Intel processor numbers are not a measure of performance. Processor 
+numbers differentiate features within each processor family, not 
+across different processor families. See 
+http://www.intel.com/products/processor_number for details.
+
+BunnyPeople, Celeron, Celeron Inside, Centrino, Centrino Atom, 
+Centrino Atom Inside, Centrino Inside, Centrino logo, Core Inside, 
+FlashFile, i960, InstantIP, Intel, Intel logo, Intel386, Intel486, 
+IntelDX2, IntelDX4, IntelSX2, Intel Atom, Intel Atom Inside, Intel Core, 
+Intel Inside, Intel Inside logo, Intel. Leap ahead., Intel. Leap ahead. 
+logo, Intel NetBurst, Intel NetMerge, Intel NetStructure, Intel 
+SingleDriver, Intel SpeedStep, Intel StrataFlash, Intel Viiv, Intel vPro, 
+XScale, IPLink, Itanium, Itanium Inside, MCS, MMX, Oplus, OverDrive, 
+Intel PDCharm, Pentium, Pentium Inside, skoool, Sound Mark, The Journey 
+Inside, VTune, Xeon, and Xeon Inside are trademarks of Intel 
+Corporation in the U.S. and other countries.
+
+
+* Other names and brands may be claimed as the property of others.
+
+
+Copyright (c) 2005 - 2008, Intel Corporation. All rights reserved
+

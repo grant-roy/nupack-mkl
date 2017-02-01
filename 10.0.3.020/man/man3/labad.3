@@ -1,0 +1,39 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?labad 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?labad \- Returns the square root of the underflow and overflow thresholds if the exponent-range is very large.
+.SH SYNOPSIS
+.PP
+\fBcall slabad\fR( \fIsmall\fR, \fIlarge\fR)
+.PP
+\fBcall dlabad\fR( \fIsmall\fR, \fIlarge\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBsmall\fR
+.NL
+\fBREAL\fR for \fBslabad\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlabad\fR.
+.IP
+The underflow threshold as computed by \fB?lamch\fR. 
+.TP 10
+\fBlarge\fR
+.NL
+\fBREAL\fR for \fBslabad\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlabad\fR.
+.IP
+The overflow threshold as computed by \fB?lamch\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBsmall\fR
+.NL
+On exit, if log10(\fIlarge\fR) is sufficiently large, the square root of \fIsmall\fR, otherwise unchanged.
+.TP 10
+\fBlarge\fR
+.NL
+On exit, if log10(\fIlarge\fR) is sufficiently large, the square root of \fIlarge\fR, otherwise unchanged.

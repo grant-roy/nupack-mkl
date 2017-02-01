@@ -1,0 +1,75 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lartv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lartv \- Applies a vector of plane rotations with real cosines and real/complex sines to the elements of a pair of vectors. 
+.SH SYNOPSIS
+.PP
+\fBcall slartv\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIc\fR, \fIs\fR, \fIincc\fR)
+.PP
+\fBcall dlartv\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIc\fR, \fIs\fR, \fIincc\fR)
+.PP
+\fBcall clartv\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIc\fR, \fIs\fR, \fIincc\fR)
+.PP
+\fBcall zlartv\fR( \fIn\fR, \fIx\fR, \fIincx\fR, \fIy\fR, \fIincy\fR, \fIc\fR, \fIs\fR, \fIincc\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of plane rotations to be applied.
+.TP 10
+\fBx\fR, \fBy\fR
+.NL
+\fBREAL\fR for \fBslartv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlartv\fR
+.IP
+\fBCOMPLEX\fR for \fBclartv\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlartv\fR
+.IP
+Arrays, \fBDIMENSION\fR (1+(\fIn\fR-1)*\fIincx\fR) and (1+(\fIn\fR-1)*\fIincy\fR), respectively. The input vectors \fIx\fR and \fIy\fR.
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. The increment between elements of \fIx\fR. \fIincx\fR > 0.
+.TP 10
+\fBincy\fR
+.NL
+\fBINTEGER\fR. The increment between elements of \fIy\fR. \fIincy\fR > 0.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBslartv\fR/\fBclartv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlartv\fR/\fBzlartv\fR
+.IP
+Array, \fBDIMENSION\fR (1+(\fIn\fR-1)*\fIincc\fR). 
+.IP
+The cosines of the plane rotations.
+.TP 10
+\fBs\fR
+.NL
+\fBREAL\fR for \fBslartv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlartv\fR
+.IP
+\fBCOMPLEX\fR for \fBclartv\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlartv\fR
+.IP
+Array, \fBDIMENSION\fR (1+(\fIn\fR-1)*\fIincc\fR). 
+.IP
+The sines of the plane rotations.
+.TP 10
+\fBincc\fR
+.NL
+\fBINTEGER\fR. The increment between elements of \fIc\fR and \fIs\fR. \fIincc\fR > 0.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR, \fBy\fR
+.NL
+The rotated vectors \fIx\fR and \fIy\fR.

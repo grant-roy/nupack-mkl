@@ -1,0 +1,33 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lamc1 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lamc1 \- Called from \fB?lamc2\fR. Determines machine parameters given by \fIbeta\fR, \fIt\fR, \fIrnd\fR, \fIieee1\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slamc1\fR( \fIbeta\fR, \fIt\fR, \fIrnd\fR, \fIieee1\fR)
+.PP
+\fBcall dlamc1\fR( \fIbeta\fR, \fIt\fR, \fIrnd\fR, \fIieee1\fR)
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBbeta\fR
+.NL
+\fBINTEGER\fR. The base of the machine.
+.TP 10
+\fBt\fR
+.NL
+\fBINTEGER\fR. The number of (\fIbeta\fR) digits in the mantissa.
+.TP 10
+\fBrnd\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Specifies whether proper rounding  ( \fIrnd\fR = \fB.TRUE.\fR )  or chopping  ( \fIrnd\fR = \fB.FALSE.\fR ) occurs in addition. This may not be a reliable guide to the way in which the machine performs its arithmetic.
+.TP 10
+\fBieee1\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Specifies whether rounding appears to be done in the \fIieee\fR \'round to nearest\' style.

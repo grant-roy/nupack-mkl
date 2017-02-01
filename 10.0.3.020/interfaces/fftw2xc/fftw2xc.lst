@@ -1,0 +1,23 @@
+WRAP = \
+fftw_destroy_plan fftwnd_destroy_plan \
+fftw fftw_one fftwnd fftwnd_one \
+fftw_create_plan fftw_create_plan_specific fftwnd_create_plan fftwnd_create_plan_specific \
+fftw2d_create_plan fftw2d_create_plan_specific fftw3d_create_plan fftw3d_create_plan_specific \
+\
+fftw_threads fftw_threads_one fftwnd_threads fftwnd_threads_one \
+\
+fftw_export_wisdom fftw_export_wisdom_to_file fftw_export_wisdom_to_string \
+fftw_fprint_plan fftw_print_plan fftwnd_fprint_plan fftwnd_print_plan fftw_print_max_memory_usage \
+fftw_import_wisdom fftw_import_wisdom_from_file fftw_import_wisdom_from_string \
+fftw_threads_init \
+\
+rfftw_destroy_plan rfftwnd_destroy_plan \
+rfftw rfftw_one rfftwnd_real_to_complex rfftwnd_one_real_to_complex \
+rfftwnd_complex_to_real rfftwnd_one_complex_to_real \
+rfftw_create_plan rfftw_create_plan_specific rfftwnd_create_plan \
+rfftw2d_create_plan rfftw3d_create_plan \
+\
+rfftw_threads rfftw_threads_one rfftwnd_threads_real_to_complex \
+rfftwnd_threads_one_real_to_complex \
+rfftwnd_threads_complex_to_real rfftwnd_threads_one_complex_to_real \
+fftw_free fftw_malloc

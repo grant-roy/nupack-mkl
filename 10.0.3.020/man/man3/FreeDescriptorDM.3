@@ -1,0 +1,53 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH FreeDescriptorDM 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+FreeDescriptorDM \- Frees memory allocated for a descriptor.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiFreeDescriptorDM\fR(\fIhandle\fR)
+.PP
+.B /* C/C++ */
+.PP
+\fBstatus\fR = \fBDftiFreeDescriptorDM\fR(\fI&handle\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+The descriptor handle. Must be valid, that is, created in a call to \fBDftiCreateDescriptorDM\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+The descriptor handle. Memory allocated for the handle is released on output.
+.SH RETURN VALUES
+.PP
+.PP
+The function returns DFTI\(ulNO\(ulERROR when completes successfully. If the function fails, it returns a value of another  error class constant (for the list of constants, refer to Error Codes).
+.PP
+
+.br
+! Fortran Interface
+.br
+INTERFACE DftiFreeDescriptorDM
+.br
+INTEGER(4) FUNCTION DftiFreeDescriptorDM(handle)
+.br
+      TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: handle
+.br
+   END FUNCTION
+.br
+END INTERFACE
+.br
+   
+.br
+/* C/C++ prototype */ 
+.br
+long DftiFreeDescriptorDM(DFTI\(ulDESCRIPTOR\(ulDM\(ulHANDLE *handle);
+.br
+   

@@ -1,0 +1,75 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?scal 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?scal \- Computes a vector by a scalar product.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sscal\fR(\fIn\fR, \fIa\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fBcall dscal\fR(\fIn\fR, \fIa\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fBcall cscal\fR(\fIn\fR, \fIa\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fBcall zscal\fR(\fIn\fR, \fIa\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fBcall csscal\fR(\fIn\fR, \fIa\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fBcall zdscal\fR(\fIn\fR, \fIa\fR, \fIx\fR, \fIincx\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall scal\fR(\fIx\fR, \fIa\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.  Specifies the order of vector \fIx\fR.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBsscal\fR and \fBcsscal\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdscal\fR and \fBzdscal\fR
+.IP
+\fBCOMPLEX\fR for \fBcscal\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzscal\fR
+.IP
+Specifies the scalar \fIa\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsscal\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdscal\fR
+.IP
+\fBCOMPLEX\fR for \fBcscal\fR and \fBcsscal\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzscal\fR and \fBzdscal\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIn\fR -1)*abs(\fIincx\fR)).
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR.  Specifies the increment for the elements of \fIx\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+Updated vector x.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBscal\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length(\fIn\fR).

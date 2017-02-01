@@ -1,0 +1,53 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH djacobi\(ulinit 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+djacobi\(ulinit \- Initializes the solver for Jacobian calculations.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIres\fR= \fBdjacobi\(ulinit\fR(\fIhandle\fR, \fIn\fR, \fIm\fR, \fIx\fR, \fIa\fR, \fIesp\fR)
+.PP
+.B /* C */
+.PP
+\fIres\fR= \fBdjacobi\(ulinit\fR(\fI&handle\fR, \fI&n\fR, \fI&m\fR, \fIx\fR, \fIa\fR, \fI&eps\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.  Length of \fIX\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Length of \fIF\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBDOUBLE PRECISION\fR.  Array of size \fIn\fR. Vector, at which the function is evaluated.
+.TP 10
+\fBeps\fR
+.NL
+\fBDOUBLE PRECISION\fR.  Precision of the Jacobi matrix calculation.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fB\(ulJACOBIMATRIX\(ulHANDLE\(ult\fR type in C/C++ and \fBINTEGER*8\fR in FORTRAN.
+.TP 10
+\fBa\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array of size (\fIm\fR,\fIn\fR). Contains the Jacobi matrix of the function.
+.TP 10
+\fBres\fR
+.NL
+\fBINTEGER\fR. Informs about the task completion. 
+.IP
+\fBres\fR = \fBTR\(ulSUCCESS\fR indicates that the routine completed the task normally.
+.IP
+\fBres\fR = \fBTR\(ulINVALID\(ulOPTION\fR indicates an error in the input parameters.
+.IP
+\fBres\fR = \fBTR\(ulOUT\(ulOF\(ulMEMORY\fR indicates a memory error.

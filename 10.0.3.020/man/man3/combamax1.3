@@ -1,0 +1,39 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?combamax1 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?combamax1 \- Finds the element with maximum real part absolute value and its corresponding global index.
+.SH SYNOPSIS
+.PP
+\fBcall ccombamax1\fR(\fIv1\fR, \fIv2\fR)
+.PP
+\fBcall zcombamax1\fR(\fIv1\fR, \fIv2\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBv1\fR
+.NL
+(local) 
+.IP
+\fBCOMPLEX\fR for \fBccombamax1\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzcombamax1\fR Array, \fBDIMENSION\fR 2. The first maximum absolute value element and its global index. \fBv1\fR(1)=\fBamax\fR, \fBv1\fR(2)=\fBindx\fR. 
+.TP 10
+\fBv2\fR
+.NL
+(local) 
+.IP
+\fBCOMPLEX\fR for \fBccombamax1\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzcombamax1\fR
+.IP
+Array, \fBDIMENSION\fR 2. The second maximum absolute value element and its global index. \fBv2\fR(1)=\fBamax\fR, \fBv2\fR(2)=\fBindx\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBv1\fR
+.NL
+(local). 
+.IP
+The first maximum absolute value element and its global index.  \fBv1\fR(1)=\fBamax\fR, \fBv1\fR(2)=\fBindx\fR. 

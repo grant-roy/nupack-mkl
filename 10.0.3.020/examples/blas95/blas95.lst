@@ -1,0 +1,7 @@
+SRC_F90 = dasumx daxpyix daxpyx dcopyx ddotix ddotx \
+          dgbmvx dgemmx dgemvx dgerx dgthrx dgthrzx \
+          dtbmvx dtbsvx dtpmvx dtpsvx dtrmmx dtrmvx \
+          dtrsmx dtrsvx dnrm2x drotgx drotix drotmx  \
+          drotmgx drotx dzasumx dznrm2x dspr2x dsprx \
+          dsyr2kx dsyr2x dsyrkx dsyrx
+IFACE_F90 = mkl_blas

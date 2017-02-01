@@ -1,0 +1,67 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasrt2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasrt2 \- Sorts numbers in increasing or decreasing order.
+.SH SYNOPSIS
+.PP
+\fBcall slasrt2\fR(\fIid\fR, \fIn\fR, \fId\fR, \fIkey\fR, \fIinfo\fR)
+.PP
+\fBcall dlasrt2\fR(\fIid\fR, \fIn\fR, \fId\fR, \fIkey\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBid\fR
+.NL
+\fBCHARACTER*1\fR.
+.IP
+= \fB\'I\'\fR: sort \fId\fR in increasing order; 
+.IP
+= \fB\'D\'\fR: sort \fId\fR in decreasing order.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The length of the array \fId\fR.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasrt2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasrt2\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+On entry, the array to be sorted.
+.TP 10
+\fBkey\fR
+.NL
+\fBINTEGER\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+On entry, \fIkey\fR contains a key to each of the entries in \fId\fR(). 
+.IP
+Typically, \fIkey\fR(\fIi\fR) = \fIi\fR for all \fIi\fR .
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBD\fR
+.NL
+On exit, \fId\fR has been sorted into increasing order 
+.IP
+(\fId\fR(1) \(<= ... \(<=\fI d\fR(\fIn\fR) ) or into decreasing order
+.IP
+(\fId\fR(1) \(>= ... \(>=\fI d\fR(\fIn\fR) ), depending on \fIid\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR.
+.IP
+= 0:  successful exit 
+.IP
+< 0:  if \fIinfo\fR = -i, the \fIi\fR-th argument had an illegal value.
+.TP 10
+\fBkey\fR
+.NL
+On exit, \fIkey\fR is permuted in exactly the same manner as \fId\fR() was permuted from input to output. Therefore, if \fIkey\fR(\fIi\fR) = \fIi\fR for all \fIi\fR upon input, then\fId\fR\(ulout(\fIi\fR) = \fId\fR\(ulin(\fIkey\fR(\fIi\fR)).

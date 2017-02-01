@@ -1,0 +1,81 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?potrf 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?potrf \- Computes the Cholesky factorization of a symmetric (Hermitian) positive-definite matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall spotrf\fR( \fI uplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIinfo\fR)
+.PP
+\fBcall dpotrf\fR( \fI uplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIinfo\fR)
+.PP
+\fBcall cpotrf\fR( \fI uplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIinfo\fR)
+.PP
+\fBcall zpotrf\fR( \fI uplo\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall potrf\fR( \fI a\fR[, \fIuplo\fR] [,\fIinfo\fR]  )
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR.  Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+Indicates whether the upper or lower triangular part of \fIA\fR is stored and how \fIA\fR is factored: 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the array \fIa\fR stores the upper triangular part of the matrix \fIA\fR, and  \fIA\fR is factored as \fIU\fR**\fIH\fR\fI*U\fR.
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, the array \fIa\fR stores the lower triangular part of the matrix \fIA\fR;  \fIA\fR is factored as \fIL*L\fR**\fIH\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.  The order of matrix \fIA\fR; \fIn\fR\(>= 0.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBspotrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdpotrf\fR
+.IP
+\fBCOMPLEX\fR for \fBcpotrf\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzpotrf\fR.
+.IP
+Array, \fBDIMENSION\fR(\fIlda\fR,*). The array \fIa\fR contains either the upper or the lower triangular part of the matrix \fIA\fR (see \fIuplo\fR). The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR.  The first dimension of \fIa\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+The upper or lower triangular part of \fIa\fR is overwritten by the Cholesky factor \fIU\fR or \fIL\fR, as specified by \fIuplo\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. If \fIinfo\fR=0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value. 
+.IP
+If \fIinfo\fR = \fIi\fR, the leading minor of order \fIi\fR (and therefore the matrix \fIA\fR itself) is not positive-definite, and the factorization could not be completed.  This may indicate an error in forming the matrix \fIA\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77  counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBpotrf\fR interface are as follows:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.

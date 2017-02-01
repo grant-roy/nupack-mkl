@@ -1,0 +1,286 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gesvx 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gesvx \- Computes the solution to the system of linear equations with a square matrix A and multiple right-hand sides, and provides error bounds on the solution.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgesvx\fR( \fIfact\fR, \fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIaf\fR, \fIldaf\fR, \fIipiv\fR, \fIequed\fR, \fIr\fR, \fIc\fR, \fIb\fR, \fIldb\fR, \fIx\fR, \fIldx\fR, \fIrcond\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dgesvx\fR( \fIfact\fR, \fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIaf\fR, \fIldaf\fR, \fIipiv\fR, \fIequed\fR, \fIr\fR, \fIc\fR, \fIb\fR, \fIldb\fR, \fIx\fR, \fIldx\fR, \fIrcond\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall cgesvx\fR( \fIfact\fR, \fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIaf\fR, \fIldaf\fR, \fIipiv\fR, \fIequed\fR, \fIr\fR, \fIc\fR, \fIb\fR, \fIldb\fR, \fIx\fR, \fIldx\fR, \fIrcond\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+\fBcall zgesvx\fR( \fIfact\fR, \fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIlda\fR, \fIaf\fR, \fIldaf\fR, \fIipiv\fR, \fIequed\fR, \fIr\fR, \fIc\fR, \fIb\fR, \fIldb\fR, \fIx\fR, \fIldx\fR, \fIrcond\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+.PP
+\fBcall gesvx\fR( \fIa\fR, \fIb\fR, \fIx\fR[,\fIaf\fR] [,\fIipiv\fR] [,\fIfact\fR] [,\fItrans\fR] [,\fIequed\fR] [,\fIr\fR] [,\fIc\fR] [,\fIferr\fR] [,\fIberr\fR] [,\fIrcond\fR] [,\fIrpvgrw\fR] [,\fIinfo\fR] )
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBfact\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'F\'\fR, \fB\'N\'\fR, or \fB\'E\'\fR.
+.IP
+Specifies whether or not the factored form of the matrix \fIA\fR is supplied on entry, and if not, whether the matrix \fIA\fR should be equilibrated before it is factored.
+.IP
+If \fIfact\fR = \fB\'F\'\fR:  on entry, \fIaf\fR and \fIipiv\fR contain the factored form of \fIA\fR. If \fIequed\fR is not \fB\'N\'\fR, the matrix \fIA\fR has been equilibrated with scaling factors given by \fIr\fR and \fIc\fR.\fI a\fR, \fIaf\fR, and \fIipiv\fR are not modified.
+.IP
+If \fIfact\fR = \fB\'N\'\fR, the matrix \fIA\fR will be copied to \fIaf\fR and factored.
+.IP
+If \fIfact\fR = \fB\'E\'\fR, the matrix \fIA\fR will be equilibrated if necessary, then copied to \fIaf\fR and factored.
+.TP 10
+\fBtrans\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'T\'\fR, or \fB\'C\'\fR.
+.IP
+Specifies the form of the system of equations:
+.IP
+If \fItrans\fR = \fB\'N\'\fR, the system has the form \fIA\fR\fI*X\fR = \fIB\fR (No transpose).
+.IP
+If \fItrans\fR = \fB\'T\'\fR, the system has the form \fIA\fR**\fIT\fR\fI*X\fR = \fIB\fR (Transpose).
+.IP
+If \fItrans\fR = \fB\'C\'\fR, the system has the form \fIA\fR**\fIH\fR\fI*X\fR = \fIB\fR (Transpose for real flavors, conjugate transpose for complex flavors).
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of linear equations;  the order of the matrix \fIA\fR; \fIn\fR\(>= 0.
+.TP 10
+\fBnrhs\fR
+.NL
+\fBINTEGER\fR. The number of right hand sides; the number of columns of the matrices \fIB\fR and \fIX\fR; \fInrhs\fR\(>= 0.
+.TP 10
+\fBa\fR,\fBaf\fR,\fBb\fR,\fBwork\fR
+.NL
+\fBREAL\fR for \fBsgesvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgesvx\fR
+.IP
+\fBCOMPLEX\fR for \fBcgesvx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgesvx\fR.
+.IP
+Arrays: \fIa\fR(\fIlda\fR,*), \fIaf\fR(\fIldaf\fR,*), \fIb\fR(\fIldb\fR,*), \fIwork\fR(*).
+.IP
+The array \fIa\fR contains the matrix \fIA\fR. If \fIfact\fR = \fB\'F\'\fR and \fIequed\fR is not \fB\'N\'\fR, then \fIA\fR must have been equilibrated by the scaling factors in \fIr\fR and/or \fIc\fR. The second dimension of \fIa\fR must be at least max(1,\fIn\fR). 
+.IP
+The array \fIaf\fR is an input argument if \fIfact\fR = \fB\'F\'\fR. It contains the factored form of the matrix \fIA\fR, that is, the factors \fIL\fR and \fIU\fR from the factorization \fIA\fR = \fIP*L*U\fR as computed by \fB?getrf\fR. If \fIequed\fR is not \fB\'N\'\fR, then \fIaf\fR is the factored form of the equilibrated matrix \fIA\fR. The second dimension of \fIaf\fR must be at least max(1,\fIn\fR). 
+.IP
+The array \fIb\fR contains the matrix \fIB\fR whose columns are the right-hand sides for the systems of equations. The second dimension of \fIb\fR must be at least max(1, \fInrhs\fR).
+.IP
+\fIwork(*)\fR is a workspace array. The dimension of \fIwork\fR must be at least max(1,4*\fIn\fR) for real flavors, and at least max(1,2*\fIn\fR) for complex flavors.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR.  The first dimension of \fIa\fR; \fIlda\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldaf\fR
+.NL
+\fBINTEGER\fR.  The first dimension of \fIaf\fR; \fIldaf\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR.  The first dimension of \fIb\fR; \fIldb\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBipiv\fR
+.NL
+\fBINTEGER\fR.
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). The array \fIipiv\fR is an input argument if \fIfact\fR = \fB\'F\'\fR. It contains  the pivot indices from the factorization \fIA\fR = \fIP*L*U\fR as computed by \fB?getrf\fR;  row \fIi\fR of the matrix was interchanged with row \fIipiv\fR(\fIi\fR).
+.TP 10
+\fBequed\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'R\'\fR, \fB\'C\'\fR, or \fB\'B\'\fR.
+.IP
+\fIequed\fR is an input argument if \fIfact\fR = \fB\'F\'\fR. It specifies the form of equilibration that was done: 
+.IP
+If \fIequed\fR = \fB\'N\'\fR, no equilibration was done (always true if \fIfact\fR = \fB\'N\'\fR).
+.IP
+If \fIequed\fR = \fB\'R\'\fR, row equilibration was done, that is, \fIA\fR has been premultiplied by \fIdiag\fR(\fIr\fR).
+.IP
+If \fIequed\fR = \fB\'C\'\fR, column equilibration was done, that is, \fIA\fR has been postmultiplied by \fIdiag\fR(\fIc\fR).
+.IP
+If \fIequed\fR = \fB\'B\'\fR, both row and column equilibration was done, that is, \fIA\fR has been replaced by \fIdiag\fR(\fIr\fR)*\fIA\fR*\fIdiag\fR(\fIc\fR).
+.TP 10
+\fBr\fR, \fBc\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Arrays: \fIr\fR(\fIn\fR), \fIc\fR(\fIn\fR). The array \fIr\fR contains the row scale factors for \fIA\fR, and the array \fIc\fR contains the column scale factors for \fIA\fR. These arrays are input arguments if \fIfact\fR = \fB\'F\'\fR only; otherwise they are output arguments. 
+.IP
+If \fIequed\fR = \fB\'R\'\fR or \fB\'B\'\fR, \fIA\fR is multiplied on the left by \fIdiag\fR(\fIr\fR); if \fIequed\fR = \fB\'N\'\fR or \fB\'C\'\fR, \fBr\fR is not accessed. 
+.IP
+If \fIfact\fR = \fB\'F\'\fR and \fIequed\fR = \fB\'R\'\fR or \fB\'B\'\fR, each element of \fIr\fR must be positive.
+.IP
+If \fIequed\fR = \fB\'C\'\fR or \fB\'B\'\fR, \fIA\fR is multiplied on the right by \fIdiag\fR(\fIc\fR); if \fIequed\fR = \fB\'N\'\fR or \fB\'R\'\fR, \fIc\fR is not accessed. 
+.IP
+If \fIfact\fR = \fB\'F\'\fR and \fIequed\fR = \fB\'C\'\fR or \fB\'B\'\fR, each element of \fIc\fR must be positive.
+.TP 10
+\fBldx\fR
+.NL
+\fBINTEGER\fR.  The first dimension of the output array \fIx\fR; \fIldx\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR.  Workspace array, \fBDIMENSION\fR at least max(1, \fIn\fR); used in real flavors only. 
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, 2*\fIn\fR); used in complex flavors only. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsgesvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgesvx\fR
+.IP
+\fBCOMPLEX\fR for \fBcgesvx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgesvx\fR.
+.IP
+Array, \fBDIMENSION\fR(\fIldx\fR,*).
+.IP
+If \fIinfo\fR = 0 or \fIinfo\fR = \fIn\fR+1, the array \fIx\fR contains the solution matrix \fIX\fR to the \fIoriginal\fRsystem of equations.  Note that \fIA\fR and \fIB\fR are modified on exit if \fIequed\fR\(!=\fB\'N\'\fR, and the solution to the 
+.IP
+\fIdiag\fR(\fIC\fR)*\fIX\fR, if \fItrans\fR = \fB\'N\'\fR and \fIequed\fR = \fB\'C\'\fR or \fB\'B\'\fR; \fIdiag\fR(\fIR\fR)*\fIX\fR, if \fItrans\fR = \fB\'T\'\fR or \fB\'C\'\fR and \fIequed\fR = \fB\'R\'\fR or \fB\'B\'\fR. The second dimension of \fIx\fR must be at least max(1,\fInrhs\fR).
+.TP 10
+\fBa\fR
+.NL
+Array \fIa\fR is not modified on exit if \fIfact\fR = \fB\'F\'\fR or \fB\'N\'\fR, or if \fIfact\fR = \fB\'E\'\fR and \fIequed\fR = \fB\'N\'\fR. If \fIequed\fR\(!=\fB\'N\'\fR, \fIA\fR is scaled on exit as follows:
+.IP
+\fIequed\fR = \fB\'R\'\fR:   \fIA\fR = \fIdiag\fR(\fIR\fR)*\fIA\fR
+.IP
+\fIequed\fR = \fB\'C\'\fR:  \fIA\fR = \fIA\fR*\fIdiag\fR(\fIc\fR)
+.IP
+\fIequed\fR = \fB\'B\'\fR:   \fIA\fR = \fIdiag\fR(\fIR\fR)*\fIA\fR*\fIdiag\fR(\fIc\fR).
+.TP 10
+\fBaf\fR
+.NL
+If \fIfact\fR = \fB\'N\'\fR or \fB\'E\'\fR, then \fIaf\fR is an output argument and on exit returns the factors \fIL\fR and \fIU\fR from the factorization \fIA\fR = \fIPLU\fR of the original matrix \fIA\fR (if \fIfact\fR = \fB\'N\'\fR) or of the equilibrated matrix \fIA\fR (if \fIfact\fR = \fB\'E\'\fR). See the description of \fIa\fR for the form of the equilibrated matrix.
+.TP 10
+\fBb\fR
+.NL
+Overwritten by \fIdiag\fR(\fIr\fR)*\fIB\fR if \fItrans\fR = \fB\'N\'\fR and \fIequed\fR = \fB\'R\'\fRor \fB\'B\'\fR; 
+.IP
+overwritten by \fIdiag\fR(\fIc\fR)*\fIB\fR  if \fItrans\fR = \fB\'T\'\fR or \fB\'C\'\fRand \fIequed\fR = \fB\'C\'\fR or \fB\'B\'\fR; 
+.IP
+not changed  if  \fIequed\fR = \fB\'N\'\fR.
+.TP 10
+\fBr\fR, \fBc\fR
+.NL
+These arrays are output arguments if \fIfact\fR\(!=\fB\'F\'\fR. See the description of \fIr\fR, \fIc\fR in \fIInput Arguments\fRsection.
+.TP 10
+\fBrcond\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors.
+.IP
+An estimate of the reciprocal condition number of the matrix \fIA\fR after equilibration (if done). If \fIrcond\fR is less than the machine precision, in particular, if \fIrcond\fR = 0, the matrix is singular to working precision. This condition is indicated by a return code of \fBinfo\fR > 0.
+.TP 10
+\fBferr\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors.
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fInrhs\fR). Contains the estimated forward error bound for each solution vector \fIx\fR(\fIj\fR) (the \fIj\fR-th column of the solution matrix \fIX\fR).   If \fIxtrue\fR is the true solution corresponding to \fIx\fR(\fIj\fR), \fIferr\fR(\fIj\fR)  is an estimated upper bound for the magnitude of the largest element in (\fIx\fR(\fIj\fR) - \fIxtrue\fR) divided by the magnitude of the largest element in \fIx\fR(\fIj\fR). The estimate is as reliable as the estimate for \fBrcond\fR, and is almost always a slight overestimate of the true error.
+.TP 10
+\fBberr\fR
+.NL
+\fBREAL\fR for single precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors.
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fInrhs\fR). Contains the component-wise relative backward error for each solution vector \fIx\fR(\fIj\fR), that is, the smallest relative chnage in any element of \fIA\fR or \fIB\fR that makes \fIx\fR(\fIj\fR)an exact solution.
+.TP 10
+\fBipiv\fR
+.NL
+If \fIfact\fR = \fB\'N\'\fRor \fB\'E\'\fR, then \fIipiv\fR is an output argument  and on exit contains the pivot indices from the factorization \fIA\fR = \fIP*L*U\fR of the original matrix \fIA \fR(if \fIfact\fR = \fB\'N\'\fR) or of the equilibrated matrix \fIA\fR (if \fIfact\fR = \fB\'E\'\fR). 
+.TP 10
+\fBequed\fR
+.NL
+If \fIfact\fR\(!=\fB\'F\'\fR , then \fIequed\fR is an output argument. It specifies the form of equilibration that was done (see the description of \fIequed\fR in \fIInput Arguments\fRsection). 
+.TP 10
+\fBwork\fR, \fBrwork\fR
+.NL
+On exit, \fIwork\fR(1) for real flavors, or \fIrwork\fR(1) for complex flavors, contains the reciprocal pivot growth factor norm(\fIA\fR)/norm(\fIU\fR). The "max absolute element" norm is used. If \fIwork\fR(1) for real flavors, or \fIrwork\fR(1) for complex flavors is much less than 1, then the stability of the \fILU\fR factorization of the (equilibrated) matrix \fIA\fR could be poor. This also means that the solution \fIx\fR, condition estimator \fIrcond\fR, and forward error bound \fIferr\fR could be unreliable. If factorization fails with 0 < \fIinfo\fR\(<=\fIn\fR, then \fIwork\fR(1) for real flavors, or \fIrwork\fR(1) for complex flavors contains the reciprocal pivot growth factor for the leading \fIinfo\fR columns of \fIA\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value. 
+.IP
+If \fIinfo\fR = \fIi\fR, and \fIi\fR\(<=\fIn\fR, then \fBU\fR(\fIi\fR, \fIi\fR) is exactly zero. The factorization has been completed, but the factor \fIU\fR is exactly singular, so the solution  and error bounds could not be computed; \fIrcond\fR = 0 is returned. 
+.IP
+If \fIinfo\fR = \fIi\fR, and \fIi\fR = \fIn\fR+1, then \fIU\fR is nonsingular, but \fIrcond\fR is less than machine precision, meaning that the matrix is singular to working precision. Nevertheless, the  solution and error bounds are computed because there are a number of situations where the  computed solution can be more accurate than the value of \fIrcond\fR would suggest.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77  counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBgesvx\fR interface are as follows:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn\fR,\fIn\fR).
+.TP 10
+\fBb\fR
+.NL
+Holds the matrix \fIB\fR of size (\fIn\fR,\fInrhs\fR).
+.TP 10
+\fBx\fR
+.NL
+Holds the matrix \fIX\fR of size (\fIn\fR,\fInrhs\fR).
+.TP 10
+\fBaf\fR
+.NL
+Holds the matrix \fIAF\fR of size (\fIn\fR,\fIn\fR).
+.TP 10
+\fBipiv\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBr\fR
+.NL
+Holds the vector of length (\fIn\fR). Default value for each element is \fIr\fR(\fIi\fR) = 1.0\(ulWP.
+.TP 10
+\fBc\fR
+.NL
+Holds the vector of length (\fIn\fR). Default value for each element is \fIc\fR(\fIi\fR) =  1.0\(ulWP.
+.TP 10
+\fBferr\fR
+.NL
+Holds the vector of length (\fInrhs\fR).
+.TP 10
+\fBberr\fR
+.NL
+Holds the vector of length (\fInrhs\fR).
+.TP 10
+\fBfact\fR
+.NL
+Must be \fB\'N\'\fR, \fB\'E\'\fR, or \fB\'F\'\fR. The default value is \fB\'N\'\fR. If \fIfact\fR = \fB\'F\'\fR, then both arguments \fIaf\fR and \fIipiv\fR must be present; otherwise, an error is returned.
+.TP 10
+\fBtrans\fR
+.NL
+Must be \fB\'N\'\fR, \fB\'C\'\fR, or \fB\'T\'\fR. The default value is \fB\'N\'\fR.
+.TP 10
+\fBequed\fR
+.NL
+Must be \fB\'N\'\fR, \fB\'B\'\fR, \fB\'C\'\fR, or \fB\'R\'\fR. The default value is \fB\'N\'\fR.
+.TP 10
+\fBrpvgrw\fR
+.NL
+Real value that contains the reciprocal pivot growth factor norm(\fIA\fR)/norm(\fIU\fR).

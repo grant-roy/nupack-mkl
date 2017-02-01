@@ -1,0 +1,145 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH SetErrorCallBack 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+SetErrorCallBack \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIoldcallback\fR= \fBvmlseterrorcallback\fR( \fIcallback\fR)
+.PP
+.B /* C */
+.PP
+\fIoldcallback\fR= \fBvmlSetErrorCallBack\fR( \fIcallback\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'2\'FORTRAN: \fBcallback\fR
+.br
+.SB Type
+.br
+\h\'11\'Address of the callback function.
+.br
+.SB Description
+.br
+\h\'11\'The callback function has the following format: 
+.br
+INTEGER FUNCTION ERRFUNC(par)
+.br
+.br
+TYPE (ERROR\(ulSTRUCTURE) par
+.br
+! ...
+.br
+! user error processing
+.br
+! ...
+.br
+ERRFUNC = 0
+.br
+! if ERRFUNC= 0 - standard VML error handler
+.br
+! is called after the callback
+.br
+! if ERRFUNC != 0 - standard VML error handler
+.br
+! is not called
+.br
+END
+.br
+\h\'11\'The passed error structure is defined as follows: 
+.br
+TYPE ERROR\(ulSTRUCTURE SEQUENCE
+.br
+.br
+INTEGER*4 ICODE
+.br
+INTEGER*4 IINDEX
+.br
+\fBREAL\fR*8 DBA1
+.br
+\fBREAL\fR*8 DBA2
+.br
+\fBREAL\fR*8 DBR1
+.br
+\fBREAL\fR*8 DBR2
+.br
+CHARACTER(64) CFUNCNAME
+.br
+INTEGER*4 IFUNCNAMELEN
+.br
+END TYPE ERROR\(ulSTRUCTURE
+.PP
+.SB Name
+.br
+\h\'2\'C:\h\'7\'\fBcallback\fR
+.br
+.SB Type
+.br
+\h\'11\'Pointer to the callback function.
+.br
+.SB Description
+.br
+\h\'11\'The callback function has the following format:  
+.br
+static int \(ul\(ulstdcall MyHandler(DefVmlErrorContext*
+.br
+.br
+pContext)
+.br
+{
+.br
+   /* Handler body */
+.br
+};
+.br
+\h\'11\'The passed error structure is defined as follows: 
+.br
+typedef struct \(ulDefVmlErrorContext
+.br
+.br
+{
+.br
+int iCode;/* Error status value */
+.br
+int iIndex;/* Index for bad array
+.br
+   element, or bad array
+.br
+   dimension, or bad
+.br
+   array pointer */
+.br
+double dbA1; /* Error argument 1 */
+.br
+double dbA2; /* Error argument 2 */
+.br
+double dbR1; /* Error result 1 */
+.br
+double dbR2; /* Error result 2 */
+.br
+char cFuncName[64]; /* Function name */
+.br
+int iFuncNameLen; /* Length of functionname*/
+.br
+} DefVmlErrorContext;
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBoldcallback\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Address of the former callback function.
+.br
+\h\'2\'C:\h\'7\'Pointer to the former callback function.

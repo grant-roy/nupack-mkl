@@ -1,0 +1,47 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasv2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasv2 \- Computes the singular value decomposition of a 2-by-2 triangular matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slasv2\fR( \fIf\fR, \fIg\fR, \fIh\fR, \fIssmin\fR, \fIssmax\fR, \fIsnr\fR, \fIcsr\fR, \fIsnl\fR, \fIcsl\fR)
+.PP
+\fBcall dlasv2\fR( \fIf\fR, \fIg\fR, \fIh\fR, \fIssmin\fR, \fIssmax\fR, \fIsnr\fR, \fIcsr\fR, \fIsnl\fR, \fIcsl\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBf\fR, \fBg\fR, \fBh\fR
+.NL
+\fBREAL\fR for \fBslasv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasv2\fR.
+.IP
+The (1,1), (1,2) and (2,2) elements of the 2-by-2 matrix, respectively.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBssmin\fR, \fBssmax\fR
+.NL
+\fBREAL\fR for \fBslasv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasv2\fR.
+.IP
+abs(\fIssmin\fR) and abs(\fIssmax\fR) is the smaller and the larger singular value, respectively.
+.TP 10
+\fBsnl\fR, \fBcsl\fR
+.NL
+\fBREAL\fR for \fBslasv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasv2\fR.
+.IP
+The vector (\fIcsl\fR, \fIsnl\fR) is a unit left singular vector for the singular value abs(\fIssmax\fR).
+.TP 10
+\fBsnr\fR, \fBcsr\fR
+.NL
+\fBREAL\fR for \fBslasv2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasv2\fR.
+.IP
+The vector (\fIcsr\fR, \fIsnr\fR) is a unit right singular vector for the singular value abs(\fIssmax\fR).

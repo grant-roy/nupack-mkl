@@ -1,0 +1,155 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larzb 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larzb \- Applies a block reflector or its transpose/conjugate-transpose to a general matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slarzb\fR( \fIside\fR, \fItrans\fR, \fIdirect\fR, \fIstorev\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIl\fR, \fIv\fR, \fIldv\fR, \fIt\fR, \fIldt\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIldwork\fR)
+.PP
+\fBcall dlarzb\fR( \fIside\fR, \fItrans\fR, \fIdirect\fR, \fIstorev\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIl\fR, \fIv\fR, \fIldv\fR, \fIt\fR, \fIldt\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIldwork\fR)
+.PP
+\fBcall clarzb\fR( \fIside\fR, \fItrans\fR, \fIdirect\fR, \fIstorev\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIl\fR, \fIv\fR, \fIldv\fR, \fIt\fR, \fIldt\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIldwork\fR)
+.PP
+\fBcall zlarzb\fR( \fIside\fR, \fItrans\fR, \fIdirect\fR, \fIstorev\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIl\fR, \fIv\fR, \fIldv\fR, \fIt\fR, \fIldt\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIldwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBside\fR
+.NL
+\fBCHARACTER*1\fR. 
+.IP
+If \fIside\fR = \fB\'L\'\fR: apply \fIH\fR or \fIH\fR**\fIT\fR/\fIH\fR**\fIH\fR from the left 
+.IP
+If \fIside\fR = \fB\'R\'\fR: apply \fIH\fR or \fIH\fR**\fIT\fR/\fIH\fR**\fIH\fR from the right
+.TP 10
+\fBtrans\fR
+.NL
+\fBCHARACTER*1\fR. 
+.IP
+If \fItrans\fR = \fB\'N\'\fR: apply \fIH\fR (No transpose) 
+.IP
+If \fItrans\fR=\fB\'C\'\fR: apply \fIH\fR**\fIT\fR/\fIH\fR**\fIH\fR (transpose/conjugate transpose)
+.TP 10
+\fBdirect\fR
+.NL
+\fBCHARACTER*1\fR. 
+.IP
+Indicates how \fIH\fR is formed from a product of elementary reflectors
+.IP
+= \fB\'F\'\fR: \fIH\fR =  \fIH\fR(1)*\fIH\fR(2)*...*\fIH\fR(\fIk\fR) (forward, not supported) 
+.IP
+= \fB\'B\'\fR: \fIH\fR =  \fIH\fR(\fIk\fR)*...*\fIH\fR(2)*\fIH\fR(1) (backward)
+.TP 10
+\fBstorev\fR
+.NL
+\fBCHARACTER*1\fR. 
+.IP
+Indicates how the vectors which define the elementary reflectors are stored:
+.IP
+= \fB\'C\'\fR: Column-wise (not supported) 
+.IP
+= \fB\'R\'\fR: Row-wise.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIC\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIC\fR.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIT\fR (equal to the number of elementary reflectors whose product defines the block reflector).
+.TP 10
+\fBl\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIV\fR containing the meaningful part of the Householder reflectors. 
+.IP
+If \fIside\fR = \fB\'L\'\fR, \fIm\fR\(>=\fBl\fR\(>= 0, if \fIside\fR = \fB\'R\'\fR, \fIn\fR\(>=\fBl\fR\(>= 0.
+.TP 10
+\fBv\fR
+.NL
+\fBREAL\fR for \fBslarzb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarzb\fR
+.IP
+\fBCOMPLEX\fR for \fBclarzb\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarzb\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldv\fR, \fBnv\fR). 
+.IP
+If \fIstorev\fR = \fB\'C\'\fR, \fBnv\fR = \fIk\fR;
+.IP
+if \fIstorev\fR = \fB\'R\'\fR, \fBnv\fR = \fIl\fR.
+.TP 10
+\fBldv\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIv\fR. 
+.IP
+If \fIstorev\fR = \fB\'C\'\fR, \fIldv\fR\(>=\fIl\fR; if \fIstorev\fR = \fB\'R\'\fR, \fIldv\fR\(>=\fIk\fR.
+.TP 10
+\fBt\fR
+.NL
+\fBREAL\fR for \fBslarzb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarzb\fR
+.IP
+\fBCOMPLEX\fR for \fBclarzb\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarzb\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldt\fR,\fIk\fR). The triangular \fIk\fR-by-\fIk\fR matrix \fIT\fR in the representation of the block reflector.
+.TP 10
+\fBldt\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIt\fR. 
+.IP
+\fIldt\fR\(>=\fIk\fR.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBslarzb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarzb\fR
+.IP
+\fBCOMPLEX\fR for \fBclarzb\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarzb\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldc\fR,\fIn\fR). On entry, the \fIm\fR-by-\fIn\fR matrix \fIC\fR.
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIc\fR. 
+.IP
+\fIldc\fR\(>= max(1,\fIm\fR).
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslarzb\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarzb\fR
+.IP
+\fBCOMPLEX\fR for \fBclarzb\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarzb\fR
+.IP
+Workspace array, \fBDIMENSION\fR (\fIldwork\fR, \fIk\fR). 
+.TP 10
+\fBldwork\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIwork\fR. 
+.IP
+If \fIside\fR = \fB\'L\'\fR, \fIldwork\fR\(>= max(1, \fIn\fR);
+.IP
+if \fIside\fR = \fB\'R\'\fR, \fIldwork\fR\(>= max(1, \fIm\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+On exit, \fIC\fR is overwritten by \fIH\fR*\fIC,\fR or \fIH\fR**\fIT\fR/\fIH\fR**\fIH\fR*\fIC,\fR or \fIC\fR*\fIH,\fR or \fIC\fR*\fIH\fR**\fIT\fR/\fIH\fR**\fIH\fR.

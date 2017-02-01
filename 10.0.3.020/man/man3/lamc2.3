@@ -1,0 +1,67 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lamc2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lamc2 \- Used by \fB?lamch\fR. Determines machine parameters specified in its arguments list.
+.SH SYNOPSIS
+.PP
+\fBcall slamc2\fR( \fIbeta\fR, \fIt\fR, \fIrnd\fR, \fIeps\fR, \fIemin\fR, \fIrmin\fR, \fIemax\fR, \fIrmax\fR)
+.PP
+\fBcall dlamc2\fR( \fIbeta\fR, \fIt\fR, \fIrnd\fR, \fIeps\fR, \fIemin\fR, \fIrmin\fR, \fIemax\fR, \fIrmax\fR)
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBbeta\fR
+.NL
+\fBINTEGER\fR. The base of the machine.
+.TP 10
+\fBt\fR
+.NL
+\fBINTEGER\fR. The number of (\fIbeta\fR) digits in the mantissa.
+.TP 10
+\fBrnd\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Specifies whether proper rounding  (\fIrnd\fR = \fB.TRUE.\fR)  or chopping  (\fIrnd\fR = \fB.FALSE.\fR) occurs in addition. This may not be a reliable guide to the way in which the machine performs its arithmetic.
+.TP 10
+\fBeps\fR
+.NL
+\fBREAL\fR for \fBslamc2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamc2\fR
+.IP
+The smallest positive number such that 
+.IP
+\fIfl\fR(1.0 - \fIeps\fR) < 1.0, 
+.IP
+where \fIfl\fR denotes the computed value.
+.TP 10
+\fBemin\fR
+.NL
+\fBINTEGER\fR. The minimum exponent before (gradual) underflow occurs.
+.TP 10
+\fIrmin\fR
+.NL
+\fBREAL\fR for \fBslamc2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamc2\fR
+.IP
+The smallest normalized number for the machine, given by 
+.IP
+\fIbase\fR**\fIemin\fR-1, 
+.IP
+where  \fIbase\fR is the floating point value of \fIbeta\fR.
+.TP 10
+\fBemax\fR
+.NL
+\fBINTEGER\fR.The maximum exponent before overflow occurs.
+.TP 10
+\fBrmax\fR
+.NL
+\fBREAL\fR for \fBslamc2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamc2\fR
+.IP
+The largest positive number for the machine, given by \fIbase\fR**\fIemax\fR(1 - \fIeps\fR), where \fIbase\fR  is the floating point value of \fIbeta\fR.

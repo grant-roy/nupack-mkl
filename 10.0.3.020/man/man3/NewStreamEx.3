@@ -1,0 +1,88 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH NewStreamEx 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+NewStreamEx \- Creates and initializes a random stream for generators with multiple initial conditions.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslnewstreamex\fR( \fIstream\fR, \fIbrng\fR, \fIn\fR, \fIparams\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslNewStreamEx\fR( \fI&stream\fR, \fIbrng\fR, \fIn\fR, \fIparams\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBbrng\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Index of the basic generator to initialize the stream.
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBunsigned int\fR
+.br
+.SB Description
+.br
+\h\'1\'Number of initial conditions contained in \fBparams\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBparams\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBconst unsigned int\fR
+.br
+.SB Description
+.br
+\h\'1\'Array of initial conditions necessary for the basic generator \fIbrng\fR to initialize the stream. In the case of a quasi-random number generator only the first element in \fBparams\fR parameter is used to set the dimension. If the dimension is greater than the dimension that \fIbrng\fR can support or is less than 1, then the dimension is assumed to be equal to 1.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(OUT)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr*\fR
+.br
+.SB Description
+.br
+\h\'1\'Stream state descriptor
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK, VSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulINVALID\(ulBRNG\(ulINDEX\fR
+.NL
+BRNG index is invalid.
+.TP 10
+\fBVSL\(ulERROR\(ulMEM\(ulFAILURE\fR
+.NL
+System cannot allocate memory for \fBstream\fR.

@@ -1,0 +1,233 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?geev 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?geev \- Computes the eigenvalues and left and right eigenvectors of a general matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgeev\fR(\fIjobvl\fR, \fIjobvr\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIwr\fR, \fIwi\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall dgeev\fR(\fIjobvl\fR, \fIjobvr\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIwr\fR, \fIwi\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall cgeev\fR(\fIjobvl\fR, \fIjobvr\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIw\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+\fBcall zgeev\fR(\fIjobvl\fR, \fIjobvr\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIw\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall geev\fR(\fIa\fR, \fIwr\fR, \fIwi\fR[,\fIvl\fR] [,\fIvr\fR] [,\fIinfo\fR])
+.PP
+\fBcall geev\fR(\fIa\fR, \fIw\fR[,\fIvl\fR] [,\fIvr\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobvl\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobvl\fR = \fB\'N\'\fR, then left eigenvectors of \fIA\fR are not computed. 
+.IP
+If \fIjobvl\fR = \fB\'V\'\fR, then left eigenvectors of \fIA\fR are computed.
+.TP 10
+\fBjobvr\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobvr\fR = \fB\'N\'\fR, then right eigenvectors of \fIA\fR are not computed. 
+.IP
+If \fIjobvr\fR = \fB\'V\'\fR, then right eigenvectors of \fIA\fR are computed.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsgeev\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgeev\fR
+.IP
+\fBCOMPLEX\fR for \fBcgeev\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgeev\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) is an array containing the \fIn\fR-by-\fIn\fR matrix \fIA\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIa\fR. Must be at least max(1, \fIn\fR).
+.TP 10
+\fBldvl\fR, \fBldvr\fR
+.NL
+\fBINTEGER\fR. The leading dimensions of the output arrays \fIvl\fR and \fIvr\fR, respectively. 
+.IP
+Constraints:
+.IP
+\fIldvl\fR\(>= 1; \fIldvr\fR\(>= 1. 
+.IP
+If \fIjobvl\fR = \fB\'V\'\fR, \fIldvl\fR\(>= max(1, \fIn\fR); 
+.IP
+If \fIjobvr\fR = \fB\'V\'\fR, \fIldvr\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR. 
+.IP
+Constraint: 
+.IP
+\fIlwork\fR\(>= max(1, 3\fIn\fR), and if \fIjobvl\fR = \fB\'V\'\fR or \fIjobvr\fR = \fB\'V\'\fR, \fIlwork\fR < max(1, 4\fIn\fR) (for real flavors); 
+.IP
+\fIlwork\fR < max(1, 2\fIn\fR) (for complex flavors).
+.IP
+For good performance, \fIlwork\fR must generally be larger. 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR.
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBcgeev\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzgeev\fR
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, 2\fIn\fR). Used in complex flavors only.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, this array is overwritten by intermediate results. 
+.TP 10
+\fBwr\fR, \fBwi\fR
+.NL
+\fBREAL\fR for \fBsgeev\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgeev\fR
+.IP
+Arrays, \fBDIMENSION\fR at least max (1, \fIn\fR) each. 
+.IP
+Contain the real and imaginary parts, respectively, of the computed eigenvalues. Complex conjugate pairs of eigenvalues appear consecutively with the eigenvalue having positive imaginary part first. 
+.TP 10
+\fBw\fR
+.NL
+\fBCOMPLEX\fR for \fBcgeev\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgeev\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). 
+.IP
+Contains the computed eigenvalues. 
+.TP 10
+\fBvl\fR, \fBvr\fR
+.NL
+\fBREAL\fR for \fBsgeev\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgeev\fR
+.IP
+\fBCOMPLEX\fR for \fBcgeev\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgeev\fR. 
+.IP
+Arrays:
+.IP
+\fIvl\fR(\fIldvl\fR,*);the second dimension of \fIvl\fR must be at least max(1, \fIn\fR).
+.IP
+If \fIjobvl\fR = \fB\'V\'\fR, the left eigenvectors \fIu\fR(j) are stored one after another in the columns of \fIvl\fR, in the same order as their eigenvalues. 
+.IP
+If \fIjobvl\fR = \fB\'N\'\fR, \fIvl\fR is not referenced. 
+.IP
+\fIFor real flavors\fR:
+.IP
+If the j-th eigenvalue is real, then \fIu\fR(j) = \fIvl\fR(:,j), the j-th column of \fIvl\fR. 
+.IP
+If the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then \fIu\fR(j) = \fIvl\fR(:,j) + \fIi\fR*\fIvl\fR(:,j+1) and \fIu\fR(j+1) = \fIvl\fR(:,j)- \fIi\fR*\fIvl\fR(:,j+1), where \fIi\fR = sqrt(-1).
+.IP
+\fIFor complex flavors\fR: 
+.IP
+\fIu\fR(j) = \fIvl\fR(:,j), the j-th column of \fIvl\fR.
+.IP
+\fIvr\fR(\fIldvr\fR,*); the second dimension of \fIvr\fR must be at least max(1, \fIn\fR).
+.IP
+If \fIjobvr\fR = \fB\'V\'\fR, the right eigenvectors \fIv\fR(j) are stored one after another in the columns of \fIvr\fR, in the same order as their eigenvalues. 
+.IP
+If \fIjobvr\fR = \fB\'N\'\fR, \fIvr\fR is not referenced. 
+.IP
+\fIFor real flavors\fR:
+.IP
+If the j-th eigenvalue is real, then \fIv\fR(j) = \fIvr\fR(:,j), the j-th column of \fIvr\fR. 
+.IP
+If the j-th and (j+1)-st eigenvalues form a complex conjugate pair, then \fIv\fR(j) = \fIvr\fR(:,j) + \fIi\fR*\fIvr\fR(:,j+1) and \fIv\fR(j+1) = \fIvr\fR(:,j) - \fIi\fR*\fIvr\fR(:,j+1), where \fIi\fR = sqrt(-1).
+.IP
+\fIFor complex flavors\fR: 
+.IP
+\fIv\fR(j) = \fIvr\fR(:,j), the j-th column of \fIvr\fR.
+.TP 10
+\fBwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIwork(1)\fR returns the required minimal size of \fIlwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fRth parameter had an illegal value.
+.IP
+If \fIinfo\fR = \fIi\fR, 	the \fIQR\fR algorithm failed to compute all the eigenvalues, and no eigenvectors have been computed; elements \fIi\fR+1:\fIn\fR of \fIwr\fR and \fIwi\fR (for real flavors) or \fIw\fR (for complex flavors) contain those eigenvalues which have converged.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBgeev\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBwr\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBwi\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBw\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in complex flavors only.
+.TP 10
+\fBvl\fR
+.NL
+Holds the matrix \fIVL\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBvr\fR
+.NL
+Holds the matrix \fIVR\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBjobvl\fR
+.NL
+Restored based on the presence of the argument \fIvl\fR as follows: 
+.IP
+\fIjobvl\fR = \fB\'V\'\fR, if \fIvl\fR is present, 
+.IP
+\fIjobvl\fR = \fB\'N\'\fR, if \fIvl\fR is omitted.
+.TP 10
+\fBjobvr\fR
+.NL
+Restored based on the presence of the argument \fIvr\fR as follows: 
+.IP
+\fIjobvr\fR = \fB\'V\'\fR, if \fIvr\fR is present, 
+.IP
+\fIjobvr\fR = \fB\'N\'\fR, if \fIvr\fR is omitted.

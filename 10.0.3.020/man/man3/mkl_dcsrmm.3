@@ -1,0 +1,148 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH mkl\(uldcsrmm 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+mkl\(uldcsrmm \- Computes matrix - matrix product of a sparse matrix stored in the CSR format.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall mkl\(uldcsrmm\fR(\fItransa\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIalpha\fR, \fImatdescra\fR, \fIval\fR, \fIindx\fR, \fIpntrb\fR, \fIpntre\fR, \fIb\fR, \fIldb\fR, \fIbeta\fR, \fIc\fR, \fIldc\fR)
+.PP
+.B /* C */
+.PP
+\fBmkl\(uldcsrmm\fR(\fI&transa\fR, \fI&m\fR, \fI&n\fR, \fI&k\fR, \fI&alpha\fR, \fImatdescra\fR, \fIval\fR, \fIindx\fR, \fIpntrb\fR, \fIpntre\fR, \fIb\fR, \fI&ldb\fR, \fI&beta\fR, \fIc\fR, \fI&ldc\fR);
+.SH INPUT PARAMETERS
+.PP
+Parameter descriptions are common for all implemented interfaces with the exception of data types that refer here to the Fortran 77 standard types. Data types specific to the different interfaces are described in the section \fB``Interfaces''\fR below.
+.TP 10
+\fBtransa\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the operation.
+.IP
+If \fItransa\fR = \fB\'N\'\fR or \fB\'n\'\fR, then  \fIC\fR := \fIalpha\fR*\fIA\fR*\fIB\fR + \fIbeta\fR*\fIC\fR
+.IP
+If \fItransa\fR = \fB\'T\'\fR or \fB\'t\'\fR or \fB\'C\'\fR or \fB\'c\'\fR, then  \fIC\fR := \fIalpha\fR*\fIA\'\fR*\fIB\fR + \fIbeta\fR*\fIC\fR,
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Number of rows of the matrix \fIA\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Number of columns of the matrix \fIC\fR.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. Number of columns of the matrix \fIA\fR.
+.TP 10
+\fBalpha\fR
+.NL
+\fBREAL*8\fR. Specifies the scalar \fIalpha\fR. 
+.TP 10
+\fBmatdescra\fR
+.NL
+\fBCHARACTER\fR. Array of six elements, specifies properties of the matrix used for operation. Only first four array elements are used, their possible values are given in the ``Possible Values of the Parameter \fImatdescra\fR (\fIdescra\fR)''.
+.TP 10
+\fBval\fR
+.NL
+\fBREAL*8\fR. Array containing non-zero elements of the matrix \fIA\fR. 
+.IP
+For one-based indexing its length is \fIpntre\fR(m) - \fBpntrb\fR(1).
+.IP
+For zero-based indexing its length is \fIpntre\fR(m-1) - \fBpntrb\fR(0).
+.IP
+Refer to \fIvalues\fR array description in CSR Format for more details.
+.TP 10
+\fBindx\fR
+.NL
+\fBINTEGER\fR. Array containing the column indices for each non-zero element of the matrix \fIA\fR. Its length is equal to length of the \fIval\fR array.
+.IP
+Refer to \fIcolumns\fR array description in CSR Format for more details.
+.TP 10
+\fBpntrb\fR
+.NL
+\fBINTEGER\fR. Array of length \fIm\fR. 
+.IP
+For one-based indexing this array contains row indices, such that \fIpntrb\fR(\fIi\fR) - \fIpntrb\fR(1)+1 is the first index of row \fIi\fR in the arrays \fIval\fR and \fIindx\fR. 
+.IP
+For zero-based indexing this array contains row indices, such that \fIpntrb\fR(\fIi\fR) - \fIpntrb\fR(0) is the first index of row \fIi\fR in the arrays \fIval\fR and \fIindx\fR. 
+.IP
+Refer to \fIpointerb\fR array description in CSR Format for more details.
+.TP 10
+\fBpntre\fR
+.NL
+\fBINTEGER\fR. Array of length \fIm\fR.
+.IP
+For one-based indexing this array contains row indices, such that \fIpntre\fR(\fIi\fR) - \fIpntrb\fR(1) is the last index of row \fIi\fR in the arrays \fIval\fR and \fIindx\fR. 
+.IP
+For zero-based indexing this array contains row indices, such that \fIpntre\fR(\fIi\fR) - \fIpntrb\fR(0)-1 is the last index of row \fIi\fR in the arrays \fIval\fR and \fIindx\fR.
+.IP
+Refer to \fIpointerE\fR array description in CSR Format for more details.
+.TP 10
+\fBb\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR(\fIldb\fR, \fIn\fR) for one-based indexing, and  (\fIm\fR, \fIldb\fR) for zero-based indexing.
+.IP
+On entry with \fItransa=\fR\fB\'N\'\fR or \fB\'n\'\fR, the leading \fIk\fR-by-\fIn\fR part of the array \fIb\fR must contain the matrix \fIB\fR, otherwise the leading \fIm\fR-by-\fIn\fR part of the array \fIb\fR must contain the matrix \fIB\fR.
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. Specifies the first dimension of \fIb\fR for one-based indexing, and the second dimension of \fIb\fR for zero-based indexing, as declared in the calling (sub)program.
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL*8\fR. Specifies the scalar \fIbeta\fR. 
+.TP 10
+\fBc\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIldc\fR, \fIn\fR) for one-based indexing, and  (\fIm\fR, \fIldc\fR) for zero-based indexing.
+.IP
+On entry, the leading \fIm\fR-by-\fIn\fR part of the array \fIc\fR must contain the matrix \fIC\fR, otherwise the leading \fIk\fR-by-\fIn\fR part of the array \fIc\fR must contain the matrix \fIC\fR.
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. Specifies the first dimension of \fIc\fR for one-based indexing, and the second dimension of \fIc\fR for zero-based indexing, as declared in the calling (sub)program.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+Overwritten by the matrix (\fIalpha\fR*\fIA\fR*\fIB\fR + \fIbeta\fR* \fIC\fR) or (\fIalpha\fR*\fIA\'\fR*\fIB\fR + \fIbeta\fR*\fIC\fR).
+.SH INTERFACES
+.PP
+
+.PP
+\fBFortran 77:\fR
+.br
+SUBROUTINE mkl\(uldcsrmm(transa, m, n, k, alpha, matdescra, val, indx,
+.br
+pntrb, pntre, b, ldb, beta, c, ldc)
+.br
+CHARACTER*1   transa
+.br
+CHARACTER     matdescra(*)
+.br
+INTEGER       m, n, k, ldb, ldc
+.br
+INTEGER       indx(*), pntrb(m), pntre(m)
+.br
+REAL*8        alpha, beta
+.br
+REAL*8        val(*), b(ldb,*), c(ldc,*)
+.PP
+\fBC:\fR
+.br
+.PP
+.br
+void mkl\(uldcsrmm(char \fI*transa\fR, int \fI*m\fR, int \fI*n\fR, int \fI*k\fR, double \fI*alpha\fR,
+.br
+.br
+char \fI*matdescra\fR, double  \fI*val\fR, int \fI*indx\fR, int \fI*pntrb\fR, int \fI*pntre\fR,
+.br
+double \fI*b\fR, int \fI*ldb\fR, double \fI*beta\fR, double \fI*c\fR, int \fI*ldc\fR,);

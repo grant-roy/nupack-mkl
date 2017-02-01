@@ -1,0 +1,91 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lascl 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lascl \- Multiplies a general rectangular matrix by a real scalar defined as  c(to)/c(from).
+.SH SYNOPSIS
+.PP
+\fBcall slascl\fR( \fItype\fR, \fIkl\fR, \fIku\fR, \fIcfrom\fR, \fIcto\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIinfo\fR)
+.PP
+\fBcall dlascl\fR( \fItype\fR, \fIkl\fR, \fIku\fR, \fIcfrom\fR, \fIcto\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIinfo\fR)
+.PP
+\fBcall clascl\fR( \fItype\fR, \fIkl\fR, \fIku\fR, \fIcfrom\fR, \fIcto\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIinfo\fR)
+.PP
+\fBcall zlascl\fR( \fItype\fR, \fIkl\fR, \fIku\fR, \fIcfrom\fR, \fIcto\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBtype\fR
+.NL
+\fBCHARACTER*1\fR. This parameter specifies the storage type of the input matrix.
+.IP
+= \fB\'G\'\fR: \fIA\fR is a full matrix.
+.IP
+= \fB\'L\'\fR: \fIA\fR is a lower triangular matrix.
+.IP
+= \fB\'U\'\fR: \fIA\fR is an upper triangular matrix.
+.IP
+= \fB\'H\'\fR: \fIA\fR is an upper Hessenberg matrix.
+.IP
+= \fB\'B\'\fR: \fIA\fR is a symmetric band matrix with lower bandwidth \fIkl\fR and upper bandwidth \fIku\fR and with the only the lower half stored
+.IP
+= \fB\'Q\'\fR: \fIA\fR is a symmetric band matrix with lower bandwidth \fIkl\fR and upper bandwidth \fIku\fR and with the only the upper half stored.
+.IP
+= \fB\'Z\'\fR: \fIA\fR is a band matrix with lower bandwidth \fIkl\fR and upper bandwidth \fIku\fR.
+.TP 10
+\fBkl\fR
+.NL
+\fBINTEGER\fR. The lower bandwidth of \fIA\fR. Referenced only if \fItype\fR = \fB\'B\'\fR, \fB\'Q\'\fR or \fB\'Z\'\fR.
+.TP 10
+\fBku\fR
+.NL
+\fBINTEGER\fR. The upper bandwidth of \fIA\fR. Referenced only if \fItype\fR = \fB\'B\'\fR, \fB\'Q\'\fR or \fB\'Z\'\fR.
+.TP 10
+\fBcfrom\fR, \fBcto\fR
+.NL
+\fBREAL\fR for \fBslascl\fR/\fBclascl\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlascl\fR/\fBzlascl\fR
+.IP
+The matrix \fIA\fR is multiplied by \fIcto\fR/\fIcfrom\fR. \fIA\fR(\fIi\fR,\fIj\fR) is computed without over/underflow if the final result \fIcto\fR*\fIA\fR(\fIi\fR,\fIj\fR)/\fIcfrom\fR can be represented without over/underflow. \fIcfrom\fR must be nonzero.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIA\fR. \fIm\fR\(>= 0.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIA\fR. \fIn\fR\(>= 0.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBslascl\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlascl\fR
+.IP
+\fBCOMPLEX\fR for \fBclascl\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlascl\fR
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR, \fIn\fR). The matrix to be multiplied by \fIcto\fR/\fIcfrom\fR. See \fItype\fR for the storage type.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIa\fR. 
+.IP
+\fIlda\fR\(>= max(1,\fIm\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+The multiplied matrix \fIA\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0 - successful exit 
+.IP
+If \fIinfo\fR = -\fIi\fR < 0, the \fIi\fR-th argument had an illegal value.

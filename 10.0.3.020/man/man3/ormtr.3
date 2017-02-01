@@ -1,0 +1,138 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?ormtr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?ormtr \- Multiplies a real matrix by the real orthogonal matrix \fIQ\fR determined by \fB?sytrd\fR.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sormtr\fR(\fIside\fR, \fIuplo\fR, \fItrans\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall dormtr\fR(\fIside\fR, \fIuplo\fR, \fItrans\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall ormtr\fR(\fIa\fR, \fItau\fR, \fIc\fR[,\fIside\fR] [,\fIuplo\fR] [,\fItrans\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+.PP
+In the descriptions below, \fIr\fR denotes the order of \fIQ\fR: 
+.PP
+If \fIside\fR = \fB\'L\'\fR, \fIr\fR = \fIm\fR; if \fIside\fR = \fB\'R\'\fR, \fIr\fR = \fIn\fR.
+.TP 10
+\fBside\fR
+.NL
+\fBCHARACTER*1\fR. Must be either \fB\'L\'\fR or \fB\'R\'\fR. 
+.IP
+If \fIside\fR = \fB\'L\'\fR, \fIQ\fR or \fIQ\fR**\fIT\fR is applied to \fIC\fR from the left. 
+.IP
+If \fIside\fR = \fB\'R\'\fR, \fIQ\fR or \fIQ\fR**\fIT\fR is applied to \fIC\fR from the right.
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+Use the same \fIuplo\fR as supplied to \fB?sytrd\fR.
+.TP 10
+\fBtrans\fR
+.NL
+\fBCHARACTER*1\fR. Must be either \fB\'N\'\fR or \fB\'T\'\fR. 
+.IP
+If \fItrans\fR = \fB\'N\'\fR, the routine multiplies \fIC\fR by \fIQ\fR. 
+.IP
+If \fItrans\fR = \fB\'T\'\fR, the routine multiplies \fIC\fR by \fIQ\fR**\fIT\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows in the matrix \fIC\fR (\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns in \fIC\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR, \fBc\fR, \fBtau\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsormtr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdormtr\fR
+.IP
+\fIa\fR(\fIlda\fR,*) and \fItau\fR are the arrays returned by \fB?sytrd\fR.
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIr\fR). 
+.IP
+The dimension of \fItau\fR must be at least max(1, \fIr\fR-1).
+.IP
+\fIc\fR(\fIldc\fR,*) contains the matrix \fIC\fR.
+.IP
+The second dimension of \fIc\fR must be at least max(1, \fIn\fR)\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR). 
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; \fIlda\fR\(>= max(1, \fIr\fR).
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIc\fR; \fIldc\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. The size of the \fIwork\fR array. Constraints: 
+.IP
+\fIlwork\fR\(>= max(1, \fIn\fR) if \fIside\fR = \fB\'L\'\fR;
+.IP
+\fIlwork\fR\(>= max(1, \fIm\fR) if \fIside\fR = \fB\'R\'\fR. 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+Overwritten by the product \fIQ\fR*\fIC\fR, \fIQ\fR**\fIT\fR*\fIC\fR, \fIC\fR*\fIQ\fR, or \fIC\fR*\fIQ\fR**\fIT\fR (as specified by \fIside\fR and \fItrans\fR).
+.TP 10
+\fBwork\fR(1)
+.NL
+If \fIinfo\fR = 0, on exit \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. Use this \fIlwork\fR for subsequent runs.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBormtr\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIr,r\fR).
+.IP
+\fIr\fR = \fIm\fR if \fIside\fR = \fB\'L\'\fR.
+.IP
+\fIr\fR = \fIn\fR if \fIside\fR = \fB\'R\'\fR.
+.TP 10
+\fBtau\fR
+.NL
+Holds the vector of length (\fIr-\fR1).
+.TP 10
+\fBc\fR
+.NL
+Holds the matrix \fIC\fR of size (\fIm,n\fR).
+.TP 10
+\fBside\fR
+.NL
+Must be \fB\'L\'\fR or \fB\'R\'\fR. The default value is \fB\'L\'\fR.
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.
+.TP 10
+\fBtrans\fR
+.NL
+Must be \fB\'N\'\fR or \fB\'T\'\fR. The default value is \fB\'N\'\fR.

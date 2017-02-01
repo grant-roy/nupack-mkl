@@ -1,0 +1,37 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH i?max1 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+i?max1 \- Finds the index of the vector element whose real part has maximum absolute value.
+.SH SYNOPSIS
+.PP
+\fIindex\fR= \fBicmax1\fR( \fIn\fR, \fIcx\fR, \fIincx\fR)
+.PP
+\fIindex\fR= \fBizmax1\fR( \fIn\fR, \fIcx\fR, \fIincx\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Specifies the number of elements in the vector \fIcx\fR. 
+.TP 10
+\fBcx\fR
+.NL
+\fBCOMPLEX\fR for \fBicmax1\fR
+.IP
+\fBCOMPLEX*16\fR for i\fBzmax1\fR
+.IP
+Array, \fBDIMENSION\fR at least (1+(\fIn\fR\fB-1)*abs\fR(\fIincx\fR)). 
+.IP
+Contains the input vector. 
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. Specifies the spacing between successive elements of \fIcx\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBindex\fR
+.NL
+\fBINTEGER\fR. Contains the index of the vector element whose real part has maximum absolute value.

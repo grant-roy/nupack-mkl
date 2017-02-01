@@ -1,0 +1,49 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH CopyDescriptor 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+CopyDescriptor \- Copies an existing descriptor.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiCopyDescriptor\fR( \fIDesc\(ulHandle\(ulOriginal\fR, \fIDesc\(ulHandle\(ulCopy\fR)
+.PP
+.B /* C */
+.PP
+\fBstatus\fR = \fBDftiCopyDescriptor\fR( \fIdesc\(ulhandle\(uloriginal\fR, \fI&desc\(ulhandle\(ulcopy\fR);
+.PP
+
+.br
+! Fortran interface
+.br
+INTERFACE DftiCopyDescriptor
+.br
+! Note that the body provided here is to illustrate the different
+.br
+!argument list and types of dummy arguments. The interface
+.br
+!does not guarantee what the actual function names are.
+.br
+!Users can only rely on the function name following the
+.br
+!keyword INTERFACE
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul2( Desc\(ulHandle\(ulOriginal,
+.br
+Desc\(ulHandle\(ulCopy )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul2
+.br
+TYPE(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle\(ulOriginal, Desc\(ulHandle\(ulCopy
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul2
+.br
+END INTERFACE DftiCopyDescriptor 
+.br
+   
+.br
+/* C prototype */
+.br
+long DftiCopyDescriptor( DFTI\(ulDESCRIPTOR\(ulHANLDE, DFTI\(ulDESCRIPTOR\(ulHANDLE * );

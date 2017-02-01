@@ -1,0 +1,213 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larrd 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larrd \- Computes the eigenvalues of a symmetric tridiagonal matrix to suitable accuracy.
+.SH SYNOPSIS
+.PP
+\fBcall slarrd\fR( \fIrange\fR, \fIorder\fR, \fIn\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIgers\fR, \fIreltol\fR, \fId\fR, \fIe\fR, \fIe2\fR, \fIpivmin\fR, \fInsplit\fR, \fIisplit\fR, \fIm\fR, \fIw\fR, \fIwerr\fR, \fIwl\fR, \fIwu\fR, \fIiblock\fR, \fIindexw\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlarrd\fR( \fIrange\fR, \fIorder\fR, \fIn\fR, \fIvl\fR, \fIvu\fR, \fIil\fR, \fIiu\fR, \fIgers\fR, \fIreltol\fR, \fId\fR, \fIe\fR, \fIe2\fR, \fIpivmin\fR, \fInsplit\fR, \fIisplit\fR, \fIm\fR, \fIw\fR, \fIwerr\fR, \fIwl\fR, \fIwu\fR, \fIiblock\fR, \fIindexw\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBrange\fR
+.NL
+\fBCHARACTER\fR. 
+.IP
+= \'A\':  ("All")    all eigenvalues will be found.
+.IP
+= \'V\':  ("Value") all eigenvalues in the half-open interval (\fBvl\fR, \fBvu\fR] will be found.
+.IP
+= \'I\':  ("Index")    the \fBil\fR-th through \fBiu\fR-th eigenvalues will be found.
+.TP 10
+\fBorder\fR
+.NL
+\fBCHARACTER\fR. 
+.IP
+= \'B\':  ("By block")    the eigenvalues will be grouped by split-off block (see \fBiblock\fR, \fBisplit\fR below) and ordered from smallest to largest within the block.
+.IP
+= \'E\':  ("Entire matrix") the eigenvalues for the entire matrix will be ordered from smallest to largest.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the tridiagonal matrix \fIT\fR (\fIn \fR\(>= 1).
+.TP 10
+\fBvl\fR,\fBvu\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+If  \fBrange\fR = \'V\':  the lower and upper bounds of the interval to be searched for eigenvalues.  Eigenvalues less than or equal to \fBvl\fR, or greater than \fBvu\fR, will not be returned.  \fBvl\fR < \fBvu\fR.
+.IP
+If  \fBrange\fR = \'A\' or \'I\': not referenced.
+.TP 10
+\fBil\fR,\fBiu\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If  \fBrange\fR = \'I\':  the indices (in ascending order) of the           smallest and largest eigenvalues to be returned. 1 \(<=\fB il \fR\(<=\fB iu \fR\(<=\fB n\fR, if \fBn\fR > 0; \fBil\fR=1 and \fBiu\fR=0 if \fBn\fR=0.
+.IP
+If  \fBrange\fR = \'A\' or \'V\': not referenced.
+.TP 10
+\fBgers\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+Array, \fBDIMENSION\fR (2*\fIn\fR). The \fBn\fR Gerschgorin intervals (the i-th Gerschgorin interval is (\fBgers\fR(2*i-1), \fBgers\fR(2*i)).
+.TP 10
+\fBreltol\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+The minimum relative width of an interval.  When an interval is narrower than \fBreltol\fR times the larger (in magnitude) endpoint, then it is considered to be sufficiently small, that is converged.  Note: this should always be at least \fIradix\fR*\fImachine epsilon\fR.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+Contains \fBn\fR diagonal elements of the tridiagonal matrix \fIT\fR.
+.TP 10
+\fBe\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). 
+.IP
+Contains (\fBn\fR-1) off-diagonal elements of the tridiagonal matrix \fIT\fR.
+.TP 10
+\fBe2\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1).
+.IP
+Contains (\fBn\fR-1) squared off-diagonal elements of the tridiagonal matrix \fIT\fR.
+.TP 10
+\fBpivmin\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+The minimum pivot in the Sturm sequence for the matrix  \fIT\fR.
+.TP 10
+\fBnsplit\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The number of diagonal blocks the matrix \fIT\fR . 1 \(<=\fB nsplit\fR \(<=\fB n\fR
+.TP 10
+\fBisplit\fR
+.NL
+\fBINTEGER\fR.
+.IP
+Arrays, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The splitting points, at which \fIT\fR breaks up into submatrices. The first submatrix consists of rows/columns 1 to \fBisplit\fR(1), the second of rows/columns \fBisplit\fR(1)+1 through \fBisplit\fR(2), and so on, and the \fBnsplit\fR-th consists of rows/columns  \fBisplit\fR(\fBnsplit\fR-1)+1 through \fBisplit\fR(\fBnsplit\fR)=\fBn\fR.
+.IP
+(Only the first \fBnsplit\fR elements actually is used, but since the user cannot know a priori value of \fBnsplit\fR, \fBn\fR words must be reserved for \fBisplit\fR.)
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+Workspace array, \fBDIMENSION\fR (4*\fIn\fR). 
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (4*\fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR.
+.IP
+The actual number of eigenvalues found. 0 \(<=\fB m\fR \(<= \fBn\fR. (See also the description of \fBinfo\fR=2,3.)
+.TP 10
+\fBw\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The first \fBm\fR elements of \fBw\fR contain the eigenvalue approximations. \fB?laprd\fR computes an interval           I = (a, b] that includes eigenvalue j. The eigenvalue approximation is given as the interval midpoint \fBw\fR(j)= (a+b)/2. The corresponding error is bounded by \fBwerr\fR(j) = abs(a-b)/2.
+.TP 10
+\fBwerr\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The error bound on the corresponding eigenvalue approximation in \fBw\fR.
+.TP 10
+\fBwl\fR, \fBwu\fR
+.NL
+\fBREAL\fR for \fBslarrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrd\fR
+.IP
+The interval (\fBwl\fR, \fBwu\fR] contains all the wanted eigenvalues. 
+.IP
+If  \fBrange\fR = \'V\':  then \fBwl\fR=\fBvl\fR and \fBwu\fR=\fBvu\fR.
+.IP
+If  \fBrange\fR = \'A\': then \fBwl\fR and \fBwu\fR are the global Gerschgorin bounds on the spectrum.
+.IP
+If  \fBrange\fR = \'I\': then \fBwl\fR and \fBwu\fR are computed by \fB?laebz\fR from the index range specified.
+.TP 10
+\fBiblock\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+At each row/column j where \fBe\fR(j) is zero or small, the matrix \fIT\fR is considered to split into a block diagonal matrix.  
+.IP
+If \fBinfo\fR = 0, then \fBiblock\fR(i) specifies to which block (from 1 to the number of blocks) the eigenvalue \fBw\fR(i) belongs.  (The routine may use the remaining \fBn\fR-\fBm\fR elements as workspace.)
+.TP 10
+\fBindexw\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The indices of the eigenvalues within each block (submatrix); for example, \fBindexw\fR(i)= j and \fBiblock\fR(i)=k imply that the i-th eigenvalue \fBw\fR(i) is the j-th eigenvalue in block k.  
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0:  successful exit. 
+.IP
+< 0:  if \fBinfo\fR = -i, the i-th argument has an illegal value
+.IP
+> 0:  some or all of the eigenvalues fail to converge or are not computed:
+.IP
+=1 or 3: bisection fail to converge for some eigenvalues; these eigenvalues are flagged by a negative block number.  The effect is that the eigenvalues may not be as accurate as the absolute and relative tolerances.
+.IP
+=2 or 3:\fBrange\fR=\'I\' only: not all of the eigenvalues \fBil\fR:\fBiu\fR are found. 
+.IP
+=4:    \fBrange\fR=\'I\', and the Gershgorin interval initially used is too small.  No eigenvalues are computed.

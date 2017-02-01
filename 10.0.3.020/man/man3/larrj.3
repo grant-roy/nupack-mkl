@@ -1,0 +1,123 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larrj 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larrj \- Performs  refinement of the initial estimates of the eigenvalues of the matrix \fIT\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slarrj\fR( \fIn\fR, \fId\fR, \fIe2\fR, \fIifirst\fR, \fIilast\fR, \fIrtol\fR, \fIoffset\fR, \fIw\fR, \fIwerr\fR, \fIwork\fR, \fIiwork\fR, \fIpivmin, spdiam\fR, \fIinfo\fR)
+.PP
+\fBcall dlarrj\fR( \fIn\fR, \fId\fR, \fIe2\fR, \fIifirst\fR, \fIilast\fR, \fIrtol\fR, \fIoffset\fR, \fIw\fR, \fIwerr\fR, \fIwork\fR, \fIiwork\fR, \fIpivmin, spdiam\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIT\fR.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslarrj\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrj\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+Contains \fBn\fR diagonal elements of the matrix \fIT\fR.
+.TP 10
+\fBe2\fR
+.NL
+\fBREAL\fR for \fBslarrj\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrj\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1).
+.IP
+Contains (\fBn\fR-1) squared sub-diagonal elements of the \fIT\fR.
+.TP 10
+\fBifirst\fR
+.NL
+\fBINTEGER\fR. The index of the first eigenvalue to be computed.
+.TP 10
+\fBilast\fR
+.NL
+\fBINTEGER\fR. The index of the last eigenvalue to be computed.
+.TP 10
+\fBrtol\fR
+.NL
+\fBREAL\fR for \fBslarrj\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrj\fR
+.IP
+Tolerance for the convergence of the bisection intervals.  An interval [a,b] is considered to be converged if (b-a) \(<= \fBrtol\fR*max(|a|,|b|).
+.TP 10
+\fBoffset\fR
+.NL
+\fBINTEGER\fR. Offset for the arrays \fBw\fR and \fBwerr\fR, that is the \fBifirst\fR-\fBoffset\fR through \fBilast\fR-\fBoffset\fR elements of these arrays are to be used.
+.TP 10
+\fBw\fR
+.NL
+\fBREAL\fR for \fBslarrj\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrj\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR).
+.IP
+On input, \fBw\fR(\fBifirst\fR-\fBoffset\fR) through \fBw\fR(\fBilast\fR-\fBoffset\fR) are estimates of the eigenvalues of \fIL\fR*\fID\fR*\fIL\fR**\fIT\fR indexed \fBifirst\fR through \fBilast\fR.
+.TP 10
+\fBwerr\fR
+.NL
+\fBREAL\fR for \fBslarrj\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrj\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+On input, \fBwerr\fR(\fBifirst\fR-\fBoffset\fR) through \fBwerr\fR(\fBilast\fR-\fBoffset\fR) are the errors in the estimates of the corresponding elements in \fBw\fR.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslarrj\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrj\fR
+.IP
+Workspace array, \fBDIMENSION\fR (2*\fIn\fR). 
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (2*\fIn\fR).
+.TP 10
+\fBpivmin\fR
+.NL
+\fBREAL\fR for \fBslarrj\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrj\fR
+.IP
+The minimum pivot in the Sturm sequence for the matrix  \fIT\fR.
+.TP 10
+\fBspdiam\fR
+.NL
+\fBREAL\fR for \fBslarrj\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrj\fR
+.IP
+The spectral diameter of the matrix  \fIT\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBw\fR
+.NL
+On exit, contains the refined estimates of the eigenvalues.
+.TP 10
+\fBwerr\fR
+.NL
+On exit, contains the refined errors in the estimates of the corresponding elements in \fBw\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Now it is not used and always is set to 0.

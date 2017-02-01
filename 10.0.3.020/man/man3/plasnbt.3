@@ -1,0 +1,29 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lasnbt 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lasnbt \- Computes the position of the sign bit of a floating-point number. (C interface function).
+.SH SYNOPSIS
+.PP
+\fBvoid pslasnbt\fR(\fBint\fR\fI *ieflag\fR);
+.PP
+\fBvoid pdlasnbt\fR(\fBint\fR\fI *ieflag\fR);
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBieflag\fR
+.NL
+\fBINTEGER\fR.
+.IP
+This flag indicates the position of the signbit of any single/double precision floating point number. 
+.IP
+\fIieflag\fR = 0, if the compile time flag \fBNO\(ulIEEE\fR indicates that the machine does not have IEEE arithmetic, or if \fBsizeof(int)\fR is different from 4 bytes. 
+.IP
+\fIieflag\fR = 1 indicates that the signbit is the 32-nd bit for a single precision routine. 
+.IP
+In the case of a double precision routine:
+.IP
+\fIieflag\fR = 1 indicates that the signbit is the 32-nd bit (Big Endian). 
+.IP
+\fIieflag\fR = 2 indicates that the signbit is the 64-th bit (Little Endian). 

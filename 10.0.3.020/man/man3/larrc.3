@@ -1,0 +1,81 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larrc 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larrc \- Computes the number of eigenvalues of the symmetric tridiagonal matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slarrc\fR( \fIjobt\fR, \fIn\fR, \fIvl\fR, \fIvu\fR, \fId\fR, \fIe\fR, \fIpivmin\fR, \fIeigcnt\fR, \fIlcnt\fR, \fIrcnt\fR, \fIinfo\fR)
+.PP
+\fBcall dlarrc\fR( \fIjobt\fR, \fIn\fR, \fIvl\fR, \fIvu\fR, \fId\fR, \fIe\fR, \fIpivmin\fR, \fIeigcnt\fR, \fIlcnt\fR, \fIrcnt\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobt\fR
+.NL
+\fBCHARACTER*1\fR.= \'T\':  computes Sturm count for matrix \fIT\fR.
+.IP
+= \'L\':  computes Sturm count for matrix \fIL\fR*\fID\fR*\fIL\fR**\fIT\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The order of the matrix. (\fIn \fR> 1).
+.TP 10
+\fBvl\fR,\fBvu\fR
+.NL
+\fBREAL\fR for \fBslarrc\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrc\fRThe lower and upper bounds for the eigenvalues.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslarrc\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrc\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+If \fBjobt\fR= \'T\': contains the \fBn\fR diagonal elements of the tridiagonal matrix \fIT\fR.
+.IP
+If \fBjobt\fR= \'L\': contains the \fBn\fR diagonal elements of the diagonal matrix \fID\fR.
+.TP 10
+\fBe\fR
+.NL
+\fBREAL\fR for \fBslarrc\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrc\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+If \fBjobt\fR= \'T\': contains the (\fBn\fR-1)offdiagonal elements of the matrix  \fIT\fR.
+.IP
+If \fBjobt\fR= \'L\': contains the (\fBn\fR-1)offdiagonal elements of the matrix \fIL\fR.
+.TP 10
+\fBpivmin\fR
+.NL
+\fBREAL\fR for \fBslarrc\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrc\fR
+.IP
+The minimum pivot in the Sturm sequence for the matrix  \fIT\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBeigcnt\fR
+.NL
+\fBINTEGER\fR. The number of eigenvalues of the symmetric tridiagonal matrix  \fIT\fR that are in the half-open interval (\fBvl\fR,\fBvu\fR]. 
+.TP 10
+\fBlcnt\fR,\fBrcnt\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The left and right negcounts of the interval.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Now it is not used and always is set to 0.

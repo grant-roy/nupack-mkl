@@ -1,0 +1,29 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH blacs\(ulpcoord 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+blacs\(ulpcoord \- Returns the row and column coordinates in the process grid.
+.SH SYNOPSIS
+.PP
+\fBcall blacs\(ulpcoord\fR( \fIicontxt\fR, \fIpnum\fR, \fIprow\fR, \fIpcol\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle that indicates the context.
+.TP 10
+\fBpnum\fR
+.NL
+\fBINTEGER\fR. Process number the coordinates of which are to be determined. This parameter stand for the process number of the underlying machine, that is, it is a \fBtid\fR for PVM.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBprow\fR
+.NL
+\fBINTEGER\fR.  Row coordinates of the \fBpnum\fR process in the BLACS grid.
+.TP 10
+\fBpcol\fR
+.NL
+\fBINTEGER\fR. Column coordinates of the \fBpnum\fR process in the BLACS grid.

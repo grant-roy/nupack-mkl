@@ -1,0 +1,19 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH blacs\(ulbarrier 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+blacs\(ulbarrier \- Holds up execution of all processes within the indicated scope.
+.SH SYNOPSIS
+.PP
+\fBcall blacs\(ulbarrier\fR( \fIicontxt\fR, \fIscope\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle that indicates the context.
+.TP 10
+\fBscope\fR
+.NL
+\fBCHARACTER*1\fR. Parameter that indicates whether a process row (\fIscope\fR=\'R\'), column (\'C\'), or entire grid (\'A\') will participate in the barrier.

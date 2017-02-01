@@ -1,0 +1,135 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?gebrd 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?gebrd \- Reduces a general matrix to bidiagonal form.
+.SH SYNOPSIS
+.PP
+\fBcall psgebrd\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItauq\fR, \fItaup\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdgebrd\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItauq\fR, \fItaup\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcgebrd\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItauq\fR, \fItaup\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzgebrd\fR(\fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fId\fR, \fIe\fR, \fItauq\fR, \fItaup\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. The number of rows in the distributed matrix sub(\fIA\fR) (\fIm\fR\(>=0). 
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The number of columns in the distributed matrix sub(\fIA\fR) (\fIn\fR\(>=0). 
+.TP 10
+\fBa\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgebrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgebrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgebrd\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgebrd\fR.
+.IP
+Real pointer into the local memory to an array of dimension (\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1)). On entry, this array contains the distributed matrix sub (\fIA\fR).
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix \fIA\fR, respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgebrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgebrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgebrd\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgebrd\fR. Workspace array of dimension \fIlwork\fR.
+.TP 10
+\fBlwork\fR
+.NL
+(local or global) \fBINTEGER\fR, dimension of \fIwork\fR, must be at least: 
+.IP
+\fIlwork\fR\(>=\fInb\fR*(\fImpa\fR0 + \fBnqa\fR0+1)+ \fInqa\fR0
+.IP
+where \fInb\fR = \fImb\(ula\fR =  \fInb\(ula\fR,
+.IP
+\fIiroffa\fR = \fBmod\fR(\fIia\fR-1, \fInb\fR), 
+.IP
+\fIicoffa\fR = \fBmod\fR(\fIja\fR-1, \fBnb\fR), 
+.IP
+\fIiarow\fR = \fBindxg2p\fR(\fIia\fR, \fInb\fR, \fBMYROW\fR, \fIrsrc\(ula\fR, \fBNPROW\fR), 
+.IP
+\fIiacol\fR = \fBindxg2p\fR (\fIja\fR, \fBnb\fR, \fBMYCOL\fR, \fIcsrc\(ula\fR, \fBNPCOL\fR), 
+.IP
+\fImpa\fR0 = \fBnumroc\fR(\fIm\fR +\fIiroffa\fR, \fBnb\fR, \fBMYROW\fR, iarow, \fBNPROW\fR), 
+.IP
+\fInqa\fR0 = \fBnumroc\fR(\fIn\fR +\fIicoffa\fR, \fBnb\fR, \fBMYCOL\fR, \fIiacol\fR, \fBNPCOL\fR), 
+.IP
+\fBindxg2p\fR and \fBnumroc\fR are ScaLAPACK tool functions; \fBMYROW\fR, \fBMYCOL\fR, \fBNPROW\fR and \fBNPCOL\fR can be determined by calling the subroutine \fBblacs\(ulgridinfo\fR. 
+.IP
+If \fIlwork\fR = -1, then \fIlwork\fR is global input and a workspace query is assumed; the routine only calculates the minimum and optimal size for all work arrays. Each of these values is returned in the first entry of the corresponding work array, and no error message is issued by \fBpxerbla\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, if \fIm\fR\(>=\fIn\fR, the diagonal and the first superdiagonal of sub(\fIA\fR) are overwritten with the upper bidiagonal matrix \fIB\fR; the elements below the diagonal, with the array \fItauq\fR, represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors, and the elements above the first superdiagonal, with the array \fItaup\fR, represent the orthogonal matrix \fIP\fR as a product of elementary reflectors. If \fIm\fR < \fIn\fR, the diagonal and the first subdiagonal are overwritten with the lower bidiagonal matrix \fIB\fR; the elements below the first subdiagonal, with the array \fItauq\fR, represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors, and the elements above the diagonal, with the array \fItaup\fR, represent the orthogonal matrix \fIP\fR as a product of elementary reflectors. 
+.TP 10
+\fBd\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. Array, \fBDIMENSION\fR\fILOCc\fR(\fIja\fR+\fBmin\fR(\fIm\fR,\fIn\fR)-1) if \fIm\fR\(>=\fIn\fR; \fILOCr\fR(\fIia\fR+\fBmin\fR(\fIm\fR,\fIn\fR)-1) otherwise. The distributed diagonal elements of the bidiagonal matrix \fIB\fR: \fId\fR(\fIi\fR) = \fIa\fR(\fIi\fR,\fIi\fR). 
+.IP
+\fId\fR is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBe\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. Array, \fBDIMENSION\fR\fILOCr\fR(\fIia\fR+min(\fIm\fR,\fIn\fR)-1) if \fIm\fR\(>=\fIn\fR; \fILOCc\fR(\fIja\fR+\fBmin\fR(\fIm\fR,\fIn\fR)-2) otherwise. The distributed off-diagonal elements of the bidiagonal distributed matrix \fIB\fR: 
+.IP
+If \fIm\fR\(>=\fIn\fR, \fIe\fR(\fIi\fR) = \fIa\fR(\fIi\fR,\fIi\fR+1) for \fIi\fR = 1,2,..., \fIn\fR-1; if \fIm\fR < \fIn\fR, \fIe\fR(\fIi\fR) = \fIa\fR(\fIi\fR+1, \fIi\fR) for \fIi\fR = 1,2,...,\fIm\fR-1. \fIe\fR is tied to the distributed matrix \fIA\fR. 
+.TP 10
+\fBtauq\fR, \fBtaup\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgebrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgebrd\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgebrd\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgebrd\fR. 
+.IP
+Arrays, \fBDIMENSION\fR\fILOCc\fR(\fIja\fR+\fBmin\fR(\fIm\fR,\fIn\fR)-1) for \fItauq\fR and \fILOCr\fR(\fIia\fR+\fBmin\fR(\fIm\fR,\fIn\fR)-1) for \fItaup\fR. Contain the scalar factors of the elementary reflectors which represent the orthogonal/unitary matrices \fIQ\fR and \fIP\fR, respectively. \fItauq\fR and \fItaup\fR are tied to the distributed matrix \fIA\fR. 
+.TP 10
+\fIwork\fR(1)
+.NL
+On exit \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. 
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+= 0: the execution is successful.
+.IP
+< 0: if the \fIi\fR-th argument is an array and the \fIj\fR-entry had an illegal value, then \fIinfo\fR = - (\fIi\fR*100+\fIj\fR), if the \fIi\fR-th argument is a scalar and had an illegal value, then \fIinfo\fR = -\fIi\fR. 

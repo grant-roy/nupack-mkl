@@ -1,0 +1,50 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH GetMode 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+GetMode \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fImod\fR= \fBvmlgetmode\fR()
+.PP
+.B /* C */
+.PP
+\fImod\fR= \fBvmlGetMode\fR( \fBvoid\fR );
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBmod\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies the packed \fImode\fR parameter.
+.PP
+\fBFortran: \fR
+.TP 10
+.NL
+mod = \fBvmlgetmode()\fR
+.br
+accm = IAND(mod, VML\(ulACCURACY\(ulMASK)
+.br
+fpum = IAND(mod, VML\(ulFPUMODE\(ulMASK)
+.br
+errm = IAND(mod, VML\(ulERRMODE\(ulMASK)
+.PP
+\fBC: \fR
+.TP 10
+.NL
+accm = vmlGetMode(void )& VML\(ulACCURACY\(ulMASK;
+.br
+fpum = vmlGetMode(void )& VML\(ulFPUMODE\(ulMASK;
+.br
+errm = vmlGetMode(void )& VML\(ulERRMODE\(ulMASK;

@@ -1,0 +1,59 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?rot 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?rot \- Applies a plane rotation with real cosine and complex sine to a pair of complex vectors.
+.SH SYNOPSIS
+.PP
+\fBcall crot\fR( \fIn\fR, \fIcx\fR, \fIincx\fR, \fIcy\fR, \fIincy\fR, \fIc\fR, \fIs\fR)
+.PP
+\fBcall zrot\fR( \fIn\fR, \fIcx\fR, \fIincx\fR, \fIcy\fR, \fIincy\fR, \fIc\fR, \fIs\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of elements in the vectors \fIcx\fR and \fIcy\fR. 
+.TP 10
+\fBcx\fR, \fBcy\fR
+.NL
+\fBCOMPLEX\fR for \fBcrot\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzrot\fR
+.IP
+Arrays of dimension (\fIn\fR), contain input vectors \fIx\fR and \fIy\fR, respectively. 
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. The increment between successive elements of \fIcx\fR. 
+.TP 10
+\fBincy\fR
+.NL
+\fBINTEGER\fR. The increment between successive elements of \fIcy\fR. 
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBcrot\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzrot\fR
+.TP 10
+\fBs\fR
+.NL
+\fBCOMPLEX\fR for \fBcrot\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzrot\fR
+.IP
+Values that define a rotation 
+.IP
+where \fIc\fR*\fIc\fR + \fIs\fR*conjg(\fIs\fR) = 1.0.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBcx\fR
+.NL
+On exit, overwritten with \fIc\fR*\fIx\fR + \fIs\fR*\fIy\fR.
+.TP 10
+\fBcy\fR
+.NL
+On exit, overwritten with -conjg(\fIs\fR)*\fIx\fR + \fIc\fR*\fIy\fR.

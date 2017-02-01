@@ -1,0 +1,30 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ClearErrStatus 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+ClearErrStatus \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIolderr\fR= \fBvmlclearerrstatus\fR( )
+.PP
+.B /* C */
+.PP
+\fIolderr\fR= \fBvmlClearErrStatus\fR( \fIvoid\fR);
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBolderr\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies the former VML error status.

@@ -1,0 +1,75 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH Atan2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+Atan2 \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall vsatan2\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+\fBcall vdatan2\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+.B /* C */
+.PP
+\fBvsAtan2\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.PP
+\fBvdAtan2\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies the number of elements to be calculated. 
+.PP
+.SB Name
+.br
+\h\'1\'\fBa\fR, \fBb\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvsatan2\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdatan2\fR
+.br
+\h\'2\'C:\h\'7\'\fBconst float*\fR for \fBvsAtan2\fR
+.br
+\h\'11\'\fBconst double*\fR for \fBvdAtan2\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Arrays, specify the input vectors \fBa\fR and \fBb\fR.
+.br
+\h\'2\'C:\h\'7\'Pointers to arrays that contain the input vectors \fBa\fR and \fBb\fR.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBy\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR for \fBvsatan2\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR for \fBvdatan2\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat*\fR for \fBvsAtan2\fR
+.br
+\h\'11\'\fBdouble*\fR for \fBvdAtan2\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Array, specifies the output vector \fBy\fR.
+.br
+\h\'2\'C:\h\'7\'Pointer to an array that contains the output vector \fBy\fR.

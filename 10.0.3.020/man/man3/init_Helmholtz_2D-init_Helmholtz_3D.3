@@ -1,0 +1,118 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?\(ulinit\(ulHelmholtz\(ul2D/?\(ulinit\(ulHelmholtz\(ul3D 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+\- Initializes basic data structures of the Fast 2D/3D Helmholtz Solver.
+.SH SYNOPSIS
+.PP
+\fBvoid d\(ulinit\(ulHelmholtz\(ul2D\fR(\fBdouble* \fR\fIax\fR, \fBdouble* \fR\fIbx, \fR\fBdouble* \fR\fIay, \fR\fBdouble* \fR\fIby, \fR\fBint* \fR\fInx, \fR\fBint* \fR\fIny, \fR\fBchar* \fR\fIBCtype, \fR\fBdouble* \fR\fIq, \fR\fBint* \fR\fIipar, \fR\fBdouble* \fR\fIdpar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid s\(ulinit\(ulHelmholtz\(ul2D\fR(\fBfloat* \fR\fIax, \fR\fBfloat* \fR\fIbx, \fR\fBfloat* \fR\fIay, \fR\fBfloat* \fR\fIby, \fR\fBint* \fR\fInx, \fR\fBint* \fR\fIny, \fR\fBchar* \fR\fIBCtype, \fR\fBfloat* \fR\fIq, \fR\fBint* \fR\fIipar, \fR\fBfloat* \fR\fIspar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid d\(ulinit\(ulHelmholtz\(ul3D\fR(\fBdouble* \fR\fIax, \fR\fBdouble* \fR\fIbx, \fR\fBdouble* \fR\fIay, \fR\fBdouble* \fR\fIby, \fR\fBdouble* \fR\fIaz, \fR\fBdouble* \fR\fIbz, \fR\fBint* \fR\fInx, \fR\fBint* \fR\fIny, \fR\fBint* \fR\fInz, \fR\fBchar* \fR\fIBCtype, \fR\fBdouble* \fR\fIq, \fR\fBint* \fR\fIipar, \fR\fBdouble* \fR\fIdpar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid s\(ulinit\(ulHelmholtz\(ul3D\fR(\fBfloat* \fR\fIax, \fR\fBfloat* \fR\fIbx, \fR\fBfloat* \fR\fIay, \fR\fBfloat* \fR\fIby, \fR\fBfloat* \fR\fIaz, \fR\fBfloat* \fR\fIbz, \fR\fBint* \fR\fInx, \fR\fBint* \fR\fIny, \fR\fIint* \fR\fInz, \fR\fBchar* \fR\fIBCtype, \fR\fBfloat* \fR\fIq, \fR\fBint* \fR\fIipar, \fR\fBfloat* \fR\fIspar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBax\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulHelmholtz\(ul2D/d\(ulinit\(ulHelmholtz\(ul3D\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulHelmholtz\(ul2D/s\(ulinit\(ulHelmholtz\(ul3D\fR. 
+.IP
+The coordinate of the leftmost boundary of the domain along x-axis. 
+.TP 10
+\fBbx\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulHelmholtz\(ul2D/d\(ulinit\(ulHelmholtz\(ul3D\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulHelmholtz\(ul2D/s\(ulinit\(ulHelmholtz\(ul3D\fR. 
+.IP
+The coordinate of the rightmost boundary of the domain along x-axis. 
+.TP 10
+\fBay\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulHelmholtz\(ul2D/d\(ulinit\(ulHelmholtz\(ul3D\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulHelmholtz\(ul2D/s\(ulinit\(ulHelmholtz\(ul3D\fR. 
+.IP
+The coordinate of the leftmost boundary of the domain along y-axis. 
+.TP 10
+\fBby\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulHelmholtz\(ul2D/d\(ulinit\(ulHelmholtz\(ul3D\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulHelmholtz\(ul2D/s\(ulinit\(ulHelmholtz\(ul3D\fR. 
+.IP
+The coordinate of the rightmost boundary of the domain along y-axis. 
+.TP 10
+\fBaz\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulHelmholtz\(ul2D/d\(ulinit\(ulHelmholtz\(ul3D\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulHelmholtz\(ul2D/s\(ulinit\(ulHelmholtz\(ul3D\fR. 
+.IP
+The coordinate of the leftmost boundary of the domain along z-axis. This parameter is needed only for the \fB?\(ulinit\(ulHelmholtz\(ul3D\fR routine. 
+.TP 10
+\fBbz\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulHelmholtz\(ul2D/d\(ulinit\(ulHelmholtz\(ul3D\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulHelmholtz\(ul2D/s\(ulinit\(ulHelmholtz\(ul3D\fR. 
+.IP
+The coordinate of the rightmost boundary of the domain along z-axis. This parameter is needed only for the \fB?\(ulinit\(ulHelmholtz\(ul3D\fR routine. 
+.TP 10
+\fBnx\fR
+.NL
+\fBint*\fR. The number of mesh intervals along x-axis. 
+.TP 10
+\fBny\fR
+.NL
+\fBint*\fR. The number of mesh intervals along y-axis.
+.TP 10
+\fBnz\fR
+.NL
+\fBint*\fR. The number of mesh intervals along z-axis. This parameter is needed only for the \fB?\(ulinit\(ulHelmholtz\(ul3D\fR routine. 
+.TP 10
+\fBBCtype\fR
+.NL
+\fBchar*\fR. Contains the type of boundary conditions on each boundary. Must contain four characters for \fB?\(ulinit\(ulHelmholtz\(ul2D\fR and six characters for \fB?\(ulinit\(ulHelmholtz\(ul3D\fR. Each of the characters can be \'N\' (Neumann boundary condition) or \'D\' (Dirichlet boundary condition). Types of boundary conditions for the boundaries should be specified in the following order: \fIbd\(ula\fR(\fIx\fR), \fIbd\(ulb\fR(\fIx\fR), \fIbd\(ula\fR(\fIy\fR), \fIbd\(ulb\fR(\fIy\fR), \fIbd\(ula\fR(\fIz\fR), \fIbd\(ulb\fR(\fIz\fR). Boundary condition types for the last two boundaries should be specified only in the 3D case. 
+.TP 10
+\fBq\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulHelmholtz\(ul2D/d\(ulinit\(ulHelmholtz\(ul3D\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulHelmholtz\(ul2D/s\(ulinit\(ulHelmholtz\(ul3D\fR  . 
+.IP
+The constant Helmholtz coefficient. Note that to solve Poisson or Laplace problem, you should set the value of \fBq\fR to 0. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBipar\fR
+.NL
+\fBint\fR array of size 128. Contains integer data to be used by Fast Helmholtz Solver (for details, refer to Common Parameters). 
+.TP 10
+\fBdpar\fR
+.NL
+\fBdouble\fR array of size 5*\fBnx\fR/2+7 in the 2D case or 5*(\fBnx\fR+\fBny\fR)/2+9 in the 3D case. Contains double-precision data to be used by Fast Helmholtz Solver (for details, refer to Common Parameters). 
+.TP 10
+\fBspar\fR
+.NL
+\fBfloat\fR array of size 5*\fBnx\fR/2+7 in the 2D case or 5*(\fBnx\fR+\fBny\fR)/2+9 in the 3D case. Contains single-precision data to be used by Fast Helmholtz Solver (for details, refer to Common Parameters). 
+.TP 10
+\fBstat\fR
+.NL
+\fBint*\fR. Routine completion status, which is also written to \fBipar[0]\fR. The status should be 0 to proceed to other PL routines. 
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBstat\fR= 0
+.NL
+The routine successfully completed the task. In general, to proceed with computations, the routine should complete with this \fBstat\fR value. 
+.TP 10
+\fBstat\fR= -99999
+.NL
+The routine failed to complete the task because of a fatal error. 

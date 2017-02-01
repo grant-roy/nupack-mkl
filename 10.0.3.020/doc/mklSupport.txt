@@ -1,0 +1,6 @@
+Please use the following information when submitting customer support requests
+
+Package ID: l_mkl_p_10.0.3.020
+Package Contents: Intel(R) Math Kernel Library 10.0 Update 3 for Linux*
+
+Please direct customer support requests through http://www.intel.com/software/products/support

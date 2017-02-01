@@ -1,0 +1,74 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lared2d 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lared2d \- Redistributes an array assuming that the input array \fIbyrow\fR is distributed across columns and that all process rows contain the same copy of \fIbyrow\fR.
+.SH SYNOPSIS
+.PP
+\fBcall pslared2d\fR(\fIn\fR, \fIia\fR, \fIja\fR, \fIdesc\fR, \fIbyrow\fR, \fIbyall\fR, \fIwork\fR, \fIlwork\fR)
+.PP
+\fBcall pdlared2d\fR(\fIn\fR, \fIia\fR, \fIja\fR, \fIdesc\fR, \fIbyrow\fR, \fIbyall\fR, \fIwork\fR, \fIlwork\fR)
+.SH INPUT PARAMETERS
+.PP
+\fInp\fR = Number of local rows in \fIbyrow\fR()
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of elements to be redistributed. \fIn\fR \(>= 0.
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  \fBia\fR, \fBja\fR must be equal to 1.
+.TP 10
+\fBdesc\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR). A 2D array descirptor, which describes \fIbyrow\fR.
+.TP 10
+\fBbyrow\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslared2d\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlared2d\fR
+.IP
+\fBCOMPLEX\fR for \fBpclared2d\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlared2d\fR. 
+.IP
+Distributed block cyclic array global \fBDIMENSION\fR (\fIn\fR), local \fBDIMENSION \fR\fInp\fR. \fIbycol\fR is distributed across the process columns. All process rows are assumed to contain the same value.
+.TP 10
+\fBwork\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslared2d\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlared2d\fR
+.IP
+\fBCOMPLEX\fR for \fBpclared2d\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlared2d\fR. \fB\fR
+.IP
+\fBDIMENSION\fR (\fIlwork\fR). Used to hold the buffers sent from one process to another.
+.TP 10
+\fBlwork\fR
+.NL
+(local).\fBINTEGER\fR. The size of the \fIwork\fR array. \fIlwork\fR \(>= \fBnumroc\fR(\fIn\fR, \fIdesc\fR( \fInb\(ul\fR ), 0, 0, \fInpcol\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBbyall\fR
+.NL
+(global). \fBREAL\fR for \fBpslared2d\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlared2d\fR
+.IP
+\fBCOMPLEX\fR for \fBpclared2d\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzlared2d\fR. 
+.IP
+Global \fBDIMENSION\fR(\fIn\fR), local \fBDIMENSION\fR (\fIn\fR). \fIbyall\fR is exactly duplicated on all processes. It contains the same values as \fIbycol\fR, but it is replicated across all processes rather than being distributed.

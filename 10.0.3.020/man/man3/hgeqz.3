@@ -1,0 +1,325 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?hgeqz 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?hgeqz \- Implements the QZ method for finding the generalized eigenvalues of the matrix pair (H,T).
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall shgeqz\fR(\fIjob\fR, \fIcompq\fR, \fIcompz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIh\fR, \fIldh\fR, \fIt\fR, \fIldt\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall dhgeqz\fR(\fIjob\fR, \fIcompq\fR, \fIcompz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIh\fR, \fIldh\fR, \fIt\fR, \fIldt\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall chgeqz\fR(\fIjob\fR, \fIcompq\fR, \fIcompz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIh\fR, \fIldh\fR, \fIt\fR, \fIldt\fR, \fIalpha\fR, \fIbeta\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+\fBcall zhgeqz\fR(\fIjob\fR, \fIcompq\fR, \fIcompz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIh\fR, \fIldh\fR, \fIt\fR, \fIldt\fR, \fIalpha\fR, \fIbeta\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall hgeqz\fR(\fIh\fR, \fIt\fR[,\fIilo\fR] [,\fIihi\fR] [,\fIalphar\fR] [,\fIalphai\fR] [,\fIbeta\fR] [,\fIq\fR] [,\fIz\fR] [,\fIjob\fR] [,\fIcompq\fR] [,\fIcompz\fR] [,\fIinfo\fR])
+.PP
+\fBcall hgeqz\fR(\fIh\fR, \fIt\fR[,\fIilo\fR] [,\fIihi\fR] [,\fIalpha\fR] [,\fIbeta\fR] [,\fIq\fR] [,\fIz\fR] [,\fIjob\fR] [,\fIcompq\fR] [, \fIcompz\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjob\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the operations to be performed. Must be \fB\'E\'\fR or \fB\'S\'\fR. 
+.IP
+If \fIjob\fR = \fB\'E\'\fR, then compute eigenvalues only;
+.IP
+If \fIjob\fR = \fB\'S\'\fR, then compute eigenvalues and the Schur form.
+.TP 10
+\fBcompq\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'I\'\fR, or \fB\'V\'\fR.
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, left Schur vectors (\fIq\fR) are not computed;
+.IP
+If \fIcompq\fR = \fB\'I\'\fR, \fIq\fR is initialized to the unit matrix and the matrix of left Schur vectors of (\fIH\fR,\fIT\fR) is returned;
+.IP
+If \fIcompq\fR = \fB\'V\'\fR, \fIq\fR must contain an orthogonal/unitary matrix \fIQ\fR1 on entry and the product \fIQ\fR1\fI*Q\fR is returned.
+.TP 10
+\fBcompz\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'I\'\fR, or \fB\'V\'\fR.
+.IP
+If \fIcompz\fR = \fB\'N\'\fR, right Schur vectors (\fIz\fR) are not computed;
+.IP
+If \fIcompz\fR = \fB\'I\'\fR, \fIz\fR is initialized to the unit matrix and the matrix of right Schur vectors of (\fIH\fR,\fIT\fR) is returned;
+.IP
+If \fIcompz\fR = \fB\'V\'\fR, \fIz\fR must contain an orthogonal/unitary matrix \fIZ\fR1 on entry and the product \fIZ\fR1\fI*Z\fR is returned.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrices \fIH\fR, \fIT\fR, \fIQ\fR, and \fIZ\fR
+.IP
+(\fIn\fR\(>= 0).
+.TP 10
+\fBilo\fR, \fBihi\fR
+.NL
+\fBINTEGER\fR. \fIilo\fR and \fIihi\fR mark the rows and columns of \fIH\fR which are in Hessenberg form. It is assumed that \fIH\fR is already upper triangular in rows and columns 1:\fIilo\fR-1 and \fIihi\fR+1:\fIn\fR. 
+.IP
+Constraint: 
+.IP
+If \fIn\fR > 0, then 1 \(<=\fIilo\fR\(<=\fIihi\fR\(<=\fIn\fR; 
+.IP
+if \fIn\fR = 0, then \fIilo\fR = 1 and \fIihi\fR = 0.
+.TP 10
+\fBh\fR, \fBt\fR, \fBq\fR, \fBz\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBshgeqz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdhgeqz\fR
+.IP
+\fBCOMPLEX\fR for \fBchgeqz\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzhgeqz\fR. 
+.IP
+Arrays: 
+.IP
+On entry, \fIh\fR(\fIldh\fR,*) contains the \fIn\fR-by-\fIn\fR upper Hessenberg matrix \fIH\fR. 
+.IP
+The second dimension of \fIh\fR must be at least max(1, \fIn\fR).
+.IP
+On entry, \fIt\fR(\fIldt\fR,*) contains the \fIn\fR-by-\fIn\fR upper triangular matrix \fIT\fR. 
+.IP
+The second dimension of \fIt\fR must be at least max(1, \fIn\fR).
+.IP
+\fIq\fR (\fIldq\fR,*):
+.IP
+On entry, if \fIcompq\fR = \fB\'V\'\fR, this array contains the orthogonal/unitary matrix \fIQ\fR1 used in the reduction of (\fIA\fR,\fIB\fR) to generalized Hessenberg form. 
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, then \fIq\fR is not referenced. 
+.IP
+The second dimension of \fIq\fR must be at least max(1, \fIn\fR).
+.IP
+\fIz\fR (\fIldz\fR,*): 
+.IP
+On entry, if \fIcompz\fR = \fB\'V\'\fR, this array contains the orthogonal/unitary matrix \fIZ\fR1 used in the reduction of (\fIA\fR,\fIB\fR) to generalized Hessenberg form. 
+.IP
+If \fIcompz\fR = \fB\'N\'\fR, then \fIz\fR is not referenced. 
+.IP
+The second dimension of \fIz\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBldh\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIh\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBldt\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIt\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBldq\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIq\fR; 
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, then \fIldq\fR\(>= 1. 
+.IP
+If \fIcompq\fR = \fB\'I\'\fRor \fB\'V\'\fR, then \fIldq\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIz\fR; 
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, then \fIldz\fR\(>= 1. 
+.IP
+If \fIcompq\fR = \fB\'I\'\fRor \fB\'V\'\fR, then \fIldz\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. The dimension of the array \fIwork\fR.
+.IP
+\fIlwork\fR\(>= max(1, \fIn\fR). 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR. 
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBchgeqz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzhgeqz\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, \fIn\fR). Used in complex flavors only.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBh\fR
+.NL
+\fIFor real flavors\fR:
+.IP
+If \fIjob\fR = \fB\'S\'\fR, then, on exit, \fIh\fR contains the upper quasi-triangular matrix \fIS\fR from the generalized Schur factorization; 2-by-2 diagonal blocks (corresponding to complex conjugate pairs of eigenvalues) are returned in standard form, with \fIh\fR(i,i) = \fIh\fR(i+1, i+1) and \fIh\fR(i+1, i) * \fIh\fR(i, i+1) < 0.
+.IP
+If \fIjob\fR = \fB\'E\'\fR, then on exit the diagonal blocks of \fIh\fR match those of \fIS\fR, but the rest of \fIh\fR is unspecified.
+.IP
+\fIFor complex flavors\fR:
+.IP
+If \fIjob\fR = \fB\'S\'\fR, then, on exit, \fIh\fR contains the upper triangular matrix \fIS\fR from the generalized Schur factorization.
+.IP
+If \fIjob\fR = \fB\'E\'\fR, then on exit the diagonal of \fIh\fR matches that of \fIS\fR, but the rest of \fIh\fR is unspecified.
+.TP 10
+\fBt\fR
+.NL
+If \fIjob\fR = \fB\'S\'\fR, then, on exit, \fIt\fR contains the upper triangular matrix \fIP\fR from the generalized Schur factorization.
+.IP
+\fIFor real flavors\fR:
+.IP
+2-by-2 diagonal blocks of \fIP\fR corresponding to 2-by-2 blocks of \fIS\fR are reduced to positive diagonal form, that is, if \fIh\fR(j+1,j) is non-zero, then \fIt\fR(j+1,j)=\fIt\fR(j,j+1)=0 and \fIt\fR(j,j) and \fIt\fR(j+1,j+1) will be positive.
+.IP
+If \fIjob\fR = \fB\'E\'\fR, then on exit the diagonal blocks of \fIt\fR match those of \fIP\fR, but the rest of \fIt\fR is unspecified.
+.IP
+\fIFor complex flavors\fR:
+.IP
+if \fIjob\fR = \fB\'E\'\fR, then on exit the diagonal of \fIt\fR matches that of \fIP\fR, but the rest of \fIt\fR is unspecified.
+.TP 10
+\fBalphar\fR, \fBalphai\fR
+.NL
+\fBREAL\fR for \fBshgeqz\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdhgeqz\fR. 
+.IP
+Arrays, \fBDIMENSION\fR at least max(1, \fIn\fR). The real and imaginary parts, respectively, of each scalar \fIalpha\fR defining an eigenvalue of GNEP.
+.IP
+If \fIalphai\fR(j) is zero, then the j-th eigenvalue is real; if positive, then the j-th and (j+1)-th eigenvalues are a complex conjugate pair, with 
+.IP
+\fIalphai\fR(j+1) = -\fIalphai\fR(j).
+.TP 10
+\fBalpha\fR
+.NL
+\fBCOMPLEX\fR for \fBchgeqz\fR;
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzhgeqz\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). 
+.IP
+The complex scalars \fIalpha\fR that define the eigenvalues of GNEP. \fIalphai\fR(i) = \fIS\fR(i,i) in the generalized Schur factorization.
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL\fR for \fBshgeqz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdhgeqz\fR
+.IP
+\fBCOMPLEX\fR for \fBchgeqz\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzhgeqz\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR).
+.IP
+\fIFor real flavors\fR:
+.IP
+The scalars \fIbeta\fR that define the eigenvalues of GNEP. 
+.IP
+Together, the quantities \fIalpha\fR = (\fIalphar\fR(j), \fIalphai\fR(j)) and \fIbeta\fR = \fIbeta\fR(j) represent the j-th eigenvalue of the matrix pair (\fIA\fR,\fIB\fR), in one of the forms \fIlambda\fR = \fIalpha\fR/\fIbeta\fR or \fImu\fR = \fIbeta\fR/\fIalpha\fR. Since either \fIlambda\fR or \fImu\fR may overflow, they should not, in general, be computed.
+.IP
+\fIFor complex flavors\fR:
+.IP
+The real non-negative scalars \fIbeta\fR that define the eigenvalues of GNEP. 
+.IP
+\fIbeta\fR(i) = \fIP\fR(i,i) in the generalized Schur factorization. Together, the quantities \fIalpha\fR = \fIalpha\fR(j) and \fIbeta\fR = \fIbeta\fR(j) represent the j-th eigenvalue of the matrix pair (\fIA\fR,\fIB\fR), in one of the forms \fIlambda\fR = \fIalpha\fR/\fIbeta\fR or \fImu\fR = \fIbeta\fR/\fIalpha\fR. Since either \fIlambda\fR or \fImu\fR may overflow, they should not, in general, be computed.
+.TP 10
+\fBq\fR
+.NL
+On exit, if \fIcompq\fR = \fB\'I\'\fR, \fIq\fR is overwritten by the orthogonal/unitary matrix of left Schur vectors of the pair (\fIH\fR,\fIT\fR), and if \fIcompq\fR = \fB\'V\'\fR, \fIq\fR is overwritten by the orthogonal/unitary matrix of left Schur vectors of (\fIA\fR,\fIB\fR).
+.TP 10
+\fBz\fR
+.NL
+On exit, if \fIcompz\fR = \fB\'I\'\fR, \fIz\fR is overwritten by the orthogonal/unitary matrix of right Schur vectors of the pair (\fIH\fR,\fIT\fR), and if \fIcompz\fR = \fB\'V\'\fR, \fIz\fR is overwritten by the orthogonal/unitary matrix of right Schur vectors of (\fIA\fR,\fIB\fR).
+.TP 10
+\fBwork\fR(1)
+.NL
+If \fIinfo\fR\(>= 0, on exit, \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. Use this \fIlwork\fR for subsequent runs.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value. 
+.IP
+If \fIinfo\fR = 1,..., \fIn\fR, the \fIQZ\fR iteration did not converge.
+.IP
+(\fIH\fR,\fIT\fR) is not in Schur form, but \fIalphar\fR(i), \fIalphai\fR(i) (for real flavors), \fIalpha\fR(i) (for complex flavors), and \fIbeta\fR(i), i=\fIinfo\fR+1,..., \fIn\fR should be correct.
+.IP
+If \fIinfo\fR = \fIn\fR+1,...,2\fIn\fR, the shift calculation failed.
+.IP
+(\fIH\fR,\fIT\fR) is not in Schur form, but \fIalphar\fR(i), \fIalphai\fR(i) (for real flavors), \fIalpha\fR(i) (for complex flavors), and \fIbeta\fR(i), i =\fIinfo\fR-\fIn\fR+1,..., \fIn\fR should be correct.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBhgeqz\fR interface are the following:
+.TP 10
+\fBh\fR
+.NL
+Holds the matrix \fIH\fR of size (\fIn,n\fR).
+.TP 10
+\fBt\fR
+.NL
+Holds the matrix \fIT\fR of size (\fIn,n\fR).
+.TP 10
+\fBalphar\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBalphai\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBalpha\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in complex flavors only.
+.TP 10
+\fBbeta\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBq\fR
+.NL
+Holds the matrix \fIQ\fR of size (\fIn,n\fR).
+.TP 10
+\fBz\fR
+.NL
+Holds the matrix \fIZ\fR of size (\fIn,n\fR).
+.TP 10
+\fBilo\fR
+.NL
+Default value for this argument is \fIilo\fR = 1.
+.TP 10
+\fBihi\fR
+.NL
+Default value for this argument is \fIihi\fR = \fIn\fR.
+.TP 10
+\fBjob\fR
+.NL
+Must be \fB\'E\'\fR or \fB\'S\'\fR. The default value is \fB\'E\'\fR.
+.TP 10
+\fBcompq\fR
+.NL
+If omitted, this argument is restored based on the presence of argument \fIq\fR as follows: 
+.IP
+\fIcompq\fR = \fB\'I\'\fR, if \fIq\fR is present, 
+.IP
+\fIcompq\fR = \fB\'N\'\fR, if \fIq\fR is omitted. 
+.IP
+If present, \fIcompq\fR must be equal to \fB\'I\'\fR or \fB\'V\'\fR and the argument \fIq\fR must also be present. 
+.IP
+Note that there will be an error condition if \fIcompq\fR is present and \fIq\fR omitted.
+.TP 10
+\fBcompz\fR
+.NL
+If omitted, this argument is restored based on the presence of argument \fIz\fR as follows: 
+.IP
+\fIcompz\fR = \fB\'I\'\fR, if \fIz\fR is present, 
+.IP
+\fIcompz\fR = \fB\'N\'\fR, if \fIz\fR is omitted. 
+.IP
+If present, \fIcompz\fR must be equal to \fB\'I\'\fR or \fB\'V\'\fR and the argument \fIz\fR must also be present. 
+.IP
+Note an error condition if \fIcompz\fR is present and \fIz\fR is omitted.

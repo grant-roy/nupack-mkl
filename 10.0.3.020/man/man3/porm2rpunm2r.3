@@ -1,0 +1,220 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?orm2r/p?unm2r 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?orm2r/p?unm2r \- Multiplies a general matrix by the orthogonal/unitary matrix from a QR factorization determined by \fBp?geqrf\fR (unblocked algorithm).
+.SH SYNOPSIS
+.PP
+\fBcall psorm2r\fR(\fIside\fR, \fItrans\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIc\fR, \fIic\fR, \fIjc\fR, \fIdescc\fR, \fIwork\fR, \fIl\fR\fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdorm2r\fR(\fIside\fR, \fItrans\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIc\fR, \fIic\fR, \fIjc\fR, \fIdescc\fR, \fIwork\fR, \fIl\fR\fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcunm2r\fR(\fIside\fR, \fItrans\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIc\fR, \fIic\fR, \fIjc\fR, \fIdescc\fR, \fIwork\fR, \fIl\fR\fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzunm2r\fR(\fIside\fR, \fItrans\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fItau\fR, \fIc\fR, \fIic\fR, \fIjc\fR, \fIdescc\fR, \fIwork\fR, \fIl\fR\fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBside\fR
+.NL
+(global) \fBCHARACTER\fR. 
+.IP
+= \fB\'L\'\fR: apply \fIQ\fR or \fIQ\fR**\fIT\fR for real flavors (\fIQ\fR**\fIH\fR for complex flavors) from the left,
+.IP
+= \fB\'R\'\fR: apply \fIQ\fR or \fIQ\fR**\fIT\fR for real flavors (\fIQ\fR**\fIH\fR for complex flavors) from the right.
+.TP 10
+\fBtrans\fR
+.NL
+(global) \fBCHARACTER\fR. 
+.IP
+= \fB\'N\'\fR: apply \fIQ\fR (no transpose)
+.IP
+= \fB\'T\'\fR: apply \fIQ\fR**\fIT\fR (transpose, for real flavors)
+.IP
+= \fB\'C\'\fR: apply \fIQ\fR**\fIH\fR (conjugate transpose, for complex flavors)
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of rows to be operated on, that is, the number of rows of the distributed submatrix sub(\fIC\fR). \fIm\fR \(>= 0.
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of columns to be operated on, that is, the number of columns of the distributed submatrix sub(\fIC\fR). \fIn \fR\(>= 0.
+.TP 10
+\fBk\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The number of elementary reflectors whose product defines the matrix \fIQ\fR. 
+.IP
+If \fIside\fR = \fB\'L\'\fR, \fIm\fR \(>=\fI k \fR\(>=  0;
+.IP
+if \fIside\fR = \fB\'R\'\fR, \fIn \fR\(>= \fIk \fR\(>= 0.
+.TP 10
+\fBa\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsorm2r\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdorm2r\fR
+.IP
+\fBCOMPLEX\fR for \fBpcunm2r\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzunm2r\fR. 
+.IP
+Pointer into the local memory to an array, \fBDIMENSION\fR(\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIk\fR-1). 
+.IP
+On entry, the \fIj\fR-th column must contain the vector that defines the elementary reflector \fIH\fR(\fIj\fR), \fIja\fR \(<= \fIj\fR \(<=\fI ja\fR+\fIk\fR-1, as returned by  in the \fIk\fR columns of its distributed matrix argument \fIA\fR(\fIia\fR:*,\fIja\fR:\fIja\fR+\fIk\fR-1). The argument \fIA\fR(\fIia\fR:*,\fIja\fR:\fIja\fR+\fIk\fR-1) is modified by the routine but restored on exit. 
+.IP
+If \fIside\fR = \fB\'L\'\fR, lld\(ula \(>= max(1, \fILOCr\fR(\fIia\fR+\fIm\fR-1)), 
+.IP
+if \fIside\fR = \fB\'R\'\fR, lld\(ula \(>= max(1, \fILOCr\fR(\fIia\fR+\fIn\fR-1)).
+.TP 10
+\fBia\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The row index in the global array \fIA\fR indicating the first row of sub(\fIA\fR).
+.TP 10
+\fBja\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The column index in the global array \fIA\fR indicating the first column of sub(\fIA\fR).
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array of \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix \fIA\fR. 
+.TP 10
+\fBtau\fR
+.NL
+(local) 
+.IP
+\fBREAL\fR for \fBpsorm2r\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdorm2r\fR
+.IP
+\fBCOMPLEX\fR for \fBpcunm2r\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzunm2r\fR. 
+.IP
+Array, \fBDIMENSION\fR\fI LOCc\fR(\fIja\fR+\fIk\fR-1). This array contains the scalar factors \fItau\fR(\fIj\fR) of the elementary reflector \fIH\fR(\fIj\fR), as returned by . This array is tied to the distributed matrix \fIA\fR.
+.TP 10
+\fBc\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsorm2r\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdorm2r\fR
+.IP
+\fBCOMPLEX\fR for \fBpcunm2r\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzunm2r\fR. 
+.IP
+Pointer into the local memory to an array, \fBDIMENSION\fR(\fIlld\(ulc\fR, \fILOCc\fR(\fIjc\fR+\fIn\fR-1)). 
+.IP
+On entry, the local pieces of the distributed matrix sub (\fIC\fR).
+.TP 10
+\fBic\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The row index in the global array \fIC\fR indicating the first row of sub(\fIC\fR).
+.TP 10
+\fBjc\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+The column index in the global array \fIC\fR indicating the first column of sub(\fIC\fR).
+.TP 10
+\fBdescc\fR
+.NL
+(global and local) \fBINTEGER\fR array of \fBDIMENSION\fR (\fIdlen\(ul\fR). 
+.IP
+The array descriptor for the distributed matrix \fIC\fR. 
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsorm2r\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdorm2r\fR
+.IP
+\fBCOMPLEX\fR for \fBpcunm2r\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzunm2r\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR (\fIlwork\fR).
+.TP 10
+\fBlwork\fR
+.NL
+(local or global) \fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR. 
+.IP
+\fIlwork\fR is local input and must be at least 
+.IP
+if \fIside\fR = \fB\'L\'\fR, \fIlwork\fR \(>=\fI mpc\fR0 + max(1, \fInqc\fR0), 
+.IP
+if \fIside\fR = \fB\'R\'\fR, \fIlwork\fR \(>= \fInqc\fR0 + max(max(1, \fImpc\fR0), \fBnumroc\fR(\fBnumroc\fR(\fIn\fR+\fIicoffc\fR, \fInb\(ula\fR, 0, 0, \fInpcol\fR), \fInb\(ula\fR, 0, 0, \fIlcmq\fR)),
+.IP
+where \fI\fR
+.IP
+\fIlcmq\fR = \fIlcm\fR/\fInpcol\fR ,
+.IP
+\fIlcm\fR = \fIiclm\fR(\fInprow\fR, \fInpcol\fR),
+.IP
+\fIiroffc\fR = mod(\fIic-1\fR, \fImb\(ulc\fR), \fI\fR
+.IP
+\fIicoffc\fR = mod(\fIjc-1\fR, \fInb\(ulc\fR), 
+.IP
+\fIicrow\fR = \fBindxg2p\fR(\fIic\fR, \fImb\(ulc\fR, \fImyrow\fR, \fIrsrc\(ulc\fR, \fInprow\fR), 
+.IP
+\fIiccol\fR = \fBindxg2p\fR(\fIjc\fR, \fInb\(ulc\fR, \fImycol\fR, \fIcsrc\(ulc\fR, \fInpcol\fR), 
+.IP
+\fIMqc0\fR = \fBnumroc\fR(\fIm\fR+\fIicoffc\fR, \fInb\(ulc\fR, \fImycol\fR, \fIicrow\fR, \fInprow\fR), 
+.IP
+\fINpc0\fR = \fBnumroc\fR(\fIn\fR+\fIiroffc\fR, \fImb\(ulc\fR, \fImyrow\fR, \fIiccol\fR, \fInpcol\fR),
+.IP
+\fBilcm\fR, \fBindxg2p\fR and \fBnumroc\fR are ScaLAPACK tool functions; \fImyrow\fR, \fImycol\fR, \fInprow\fR, and \fInpcol\fR can be determined by calling the subroutine \fBblacs\(ulgridinfo\fR. 
+.IP
+If \fIlwork\fR = -1, then \fIlwork\fR is global input and a workspace query is assumed; the routine only calculates the minimum and optimal size for all work arrays. Each of these values is returned in the first entry of the corresponding work array, and no error message is issued by . 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+On exit, \fIc\fR is overwritten by \fIQ\fR*sub(\fIC\fR), or \fI\fR\fIQ\fR**\fIT\fR*sub(\fIC\fR)/ \fIQ\fR**\fIH\fR*sub(\fIC\fR),  or sub(\fIC\fR)*\fIQ\fR, or sub(\fIC\fR)*\fIQ\fR**\fIT\fR / sub(\fIC\fR)*\fIQ\fR**\fIH\fR
+.TP 10
+\fBwork\fR
+.NL
+On exit, \fIwork\fR(1) returns the minimal and optimal \fIlwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+(local) \fBINTEGER\fR.
+.IP
+= 0: successful exit 
+.IP
+< 0: if the \fIi\fR-th argument is an array and the \fIj\fR-entry had an illegal value,
+.IP
+then \fIinfo\fR = - (\fIi\fR*100+\fIj\fR),
+.IP
+if the \fIi\fR-th argument is a scalar and had an illegal value,
+.IP
+then \fIinfo\fR = -\fIi\fR.
+.PP
+.B NOTE:
+The distributed submatrices \fIA\fR(\fIia\fR:*, \fIja\fR:*) and \fIC\fR(\fIic\fR:\fIic\fR+\fIm\fR-1, \fIjc\fR:\fIjc\fR+\fIn\fR-1) must verify some alignment properties, namely the following expressions should be true:
+.PP
+If \fIside\fR = \fB\'L\'\fR, (\fImb\(ula\fR.eq.\fImb\(ulc\fR .AND. \fIiroffa\fR.eq.\fIiroffc\fR .AND. \fIiarow\fR.eq.\fIicrow\fR)
+.PP
+If \fIside\fR = \fB\'R\'\fR, (\fImb\(ula\fR.eq.\fInb\(ulc\fR .AND. \fIiroffa\fR.eq.\fIiroffc\fR).

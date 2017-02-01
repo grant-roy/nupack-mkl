@@ -1,0 +1,29 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ilaver 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+ilaver \- Returns the version of the Lapack library.
+.SH SYNOPSIS
+.PP
+\fBcall ilaver\fR( vers\(ulmajor, \fIvers\(ulminor\fR, vers\(ulpatch )
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBvers\(ulmajor\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Returns the major version of the LAPACK library.
+.TP 10
+\fBvers\(ulminor\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Returns the minor version from the major version of the LAPACK library.
+.TP 10
+\fBvers\(ulpatch\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Returns the patch version from the minor version of the LAPACK library.

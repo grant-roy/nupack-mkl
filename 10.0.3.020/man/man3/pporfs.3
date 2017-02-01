@@ -1,0 +1,187 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?porfs 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?porfs \- Improves the computed solution to a system of linear equations with symmetric/Hermitian positive definite distributed matrix and provides error bounds and backward error estimates for the solution.
+.SH SYNOPSIS
+.PP
+\fBcall psporfs\fR(\fIuplo\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIiaf\fR, \fIjaf\fR, \fIdescaf\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdporfs\fR(\fIuplo\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIiaf\fR, \fIjaf\fR, \fIdescaf\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcporfs\fR(\fIuplo\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIiaf\fR, \fIjaf\fR, \fIdescaf\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIlrwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzporfs\fR(\fIuplo\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIiaf\fR, \fIjaf\fR, \fIdescaf\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIlrwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+(global) \fBCHARACTER*1\fR.  Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+Specifies whether the upper or lower triangular part of the symmetric/Hermitian matrix sub(\fIA\fR) is stored.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, sub(\fIA\fR) is upper triangular. If \fIuplo\fR = \fB\'L\'\fR, sub(\fIA\fR) is lower triangular.
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The order of the distributed matrix sub(\fIA\fR) (\fIn\fR\(>=0). 
+.TP 10
+\fBnrhs\fR
+.NL
+(global) \fBINTEGER\fR. The number of right-hand sides, i.e., the number of columns of the matrices sub(\fIB\fR) and sub(\fIX\fR) (\fInrhs\fR\(>=0). 
+.TP 10
+\fBa\fR, \fBaf\fR, \fBb\fR, \fBx\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsporfs\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdporfs\fR
+.IP
+\fBCOMPLEX\fR for \fBpcporfs\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzporfs\fR. 
+.IP
+Pointers into the local memory to arrays of local dimension 
+.IP
+\fIa\fR(\fIlld\(ula\fR,\fILOCc\fR(\fIja\fR+\fIn\fR-1)), \fIaf\fR(\fIlld\(ulaf\fR,\fILOCc\fR(\fIja\fR+\fIn\fR-1)), \fIb\fR(\fIlld\(ulb\fR,\fILOCc\fR(\fIjb+nrhs-1\fR)), and \fIx\fR(\fIlld\(ulx\fR,\fILOCc\fR(\fIjx+nrhs-1\fR)), respectively.
+.IP
+The array \fIa\fR contains the local pieces of the \fIn\fR-by-\fIn\fR symmetric/Hermitian distributed matrix sub(\fIA\fR). 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the leading \fIn\fR-by-\fIn\fR upper triangular part of sub(\fIA\fR) contains the upper triangular part of the matrix, and its strictly lower triangular part is not referenced.
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, the leading \fIn\fR-by-\fIn\fR lower triangular part of sub(\fIA\fR) contains the lower triangular part of the distributed matrix, and its strictly upper triangular part is not referenced.
+.IP
+The array \fIaf\fR contains the factors \fIL\fR or \fIU\fR from the Cholesky factorization sub(\fIA\fR)  = \fIL*L\fR**\fIH\fR or sub(\fIA\fR) = \fIU\fR**\fIH\fR\fI*U\fR, as computed by \fBp?potrf\fR. 
+.IP
+On entry, the array \fIb\fR contains the local pieces of the distributed matrix of right hand sides sub(\fIB\fR).
+.IP
+On entry, the array \fIx\fR contains the local pieces of the solution vectors sub(\fIX\fR).
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIA\fR indicating the first row and the first column of the submatrix sub(\fIA\fR), respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBiaf\fR, \fBjaf\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIAF\fR indicating the first row and the first column of the submatrix sub(\fIAF\fR), respectively.
+.TP 10
+\fBdescaf\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIAF\fR.
+.TP 10
+\fBib\fR, \fBjb\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIB\fR indicating the first row and the first column of the submatrix sub(\fIB\fR), respectively.
+.TP 10
+\fBdescb\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIB\fR.
+.TP 10
+\fBix\fR, \fBjx\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIX\fR indicating the first row and the first column of the submatrix sub(\fIX\fR), respectively.
+.TP 10
+\fBdescx\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIX\fR.
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsporfs\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdporfs\fR
+.IP
+\fBCOMPLEX\fR for \fBpcporfs\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzporfs\fR. 
+.IP
+The array \fIwork\fR of dimension (\fIlwork\fR) is a workspace array.
+.TP 10
+\fBlwork\fR
+.NL
+(local) \fBINTEGER\fR.  The dimension of the array \fIwork\fR. 
+.IP
+\fIFor real flavors:\fR
+.IP
+\fIlwork\fR must be at least 
+.IP
+\fIlwork\fR\(>= 3*\fILOCr\fR(\fIn\fR+mod(\fIia\fR-1,\fImb\(ula\fR))
+.IP
+\fIFor complex flavors:\fR
+.IP
+\fIlwork\fR must be at least 
+.IP
+\fIlwork\fR\(>= 2*\fILOCr\fR(\fIn\fR+mod(\fIia\fR-1,\fImb\(ula\fR))
+.TP 10
+\fBiwork\fR
+.NL
+(local) \fBINTEGER\fR. Workspace array, \fBDIMENSION\fR  (\fIliwork\fR). Used in real flavors only.
+.TP 10
+\fBliwork\fR
+.NL
+(local or global) \fBINTEGER\fR. The dimension of the array \fIiwork\fR; used in real flavors only. Must be at least
+.IP
+\fIliwork\fR\(>=\fILOCr\fR(\fIn\fR+mod(\fIib\fR-1,\fImb\(ulb\fR)).
+.TP 10
+\fBrwork\fR
+.NL
+(local) \fBREAL\fR for \fBpcporfs\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpzporfs\fR
+.IP
+Workspace array, \fBDIMENSION\fR  (\fIlrwork\fR). Used in complex flavors only. 
+.TP 10
+\fBlrwork\fR
+.NL
+(local or global) \fBINTEGER\fR. The dimension of the array \fIrwork\fR; used in complex flavors only. Must be at least \fIlrwork\fR\(>=\fILOCr\fR(\fIn\fR+mod(\fIib\fR-1,\fImb\(ulb\fR))).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+On exit, contains the improved solution vectors.
+.TP 10
+\fBferr\fR, \fBberr\fR
+.NL
+\fBREAL\fR for single precision flavors. 
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Arrays, dimension \fILOCc\fR(\fIjb+nrhs-1\fR) each. 
+.IP
+The array \fIferr\fR contains the estimated forward error bound for each solution vector of sub(\fIX\fR). 
+.IP
+If \fBXTRUE\fR is the true solution corresponding to sub(\fIX\fR), \fIferr\fR is an estimated upper bound for the magnitude of the largest element in (sub(\fIX\fR) - \fBXTRUE\fR)divided by the magnitude of the largest element in sub(\fIX\fR). The estimate is as reliable as the estimate for \fBrcond\fR, and is almost always a slight overestimate of the true error. 
+.IP
+This array is tied to the distributed matrix \fIX\fR.
+.IP
+The array \fIberr\fR contains the component-wise relative backward error of each solution vector (that is, the smallest relative change in any entry of sub(\fIA\fR) or sub(\fIB\fR) that makes sub(\fIX\fR) an exact solution). This array is tied to the distributed matrix \fIX\fR.
+.TP 10
+\fIwork\fR(1)
+.NL
+On exit, \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance.
+.TP 10
+\fIiwork\fR(1)
+.NL
+On exit, \fIiwork\fR(1) contains the minimum value of \fIliwork\fR required for optimum performance (for real flavors).
+.TP 10
+\fIrwork\fR(1)
+.NL
+On exit, \fIrwork\fR(1) contains the minimum value of \fIlrwork\fR required for optimum performance (for complex flavors).
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. If \fIinfo\fR=0, the execution is successful.
+.IP
+\fIinfo\fR < 0: 
+.IP
+If the \fIi\fR-th argument is an array and the \fIj-\fRth entry had an illegal value, then \fIinfo\fR = -(\fIi\fR*100+\fIj\fR); if the \fIi-\fRth argument is a scalar and had an illegal value, then \fIinfo\fR = \fI-i\fR.

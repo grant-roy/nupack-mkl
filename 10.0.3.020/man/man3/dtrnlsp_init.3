@@ -1,0 +1,63 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dtrnlsp\(ulinit 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dtrnlsp\(ulinit \- Initializes the solver of nonlinear least  squares problem.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIres\fR= \fBdtrnlsp\(ulinit\fR(\fIhandle\fR, \fIn\fR, \fIm\fR, \fIx\fR, \fIeps\fR, \fIiter1\fR, \fIiter2\fR, \fIrs\fR)
+.PP
+.B /* C */
+.PP
+\fIres\fR= \fBdtrnlsp\(ulinit\fR(\fI&handle\fR, \fI&n\fR, \fI&m\fR, \fIx\fR, \fIeps\fR, \fI&iter1\fR, \fI&iter2\fR, \fI&rs\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.  Length of \fIX\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Length of \fIF\fR(\fIx\fR).
+.TP 10
+\fBx\fR
+.NL
+\fBDOUBLE PRECISION\fR.  Array of size \fIn\fR. Initial guess.
+.TP 10
+\fBeps\fR
+.NL
+\fBDOUBLE PRECISION\fR.  Array of size 6; contains stopping tests. 
+.TP 10
+\fBiter1\fR
+.NL
+\fBINTEGER\fR.  Specifies the maximum number of iterations.
+.TP 10
+\fBiter2\fR
+.NL
+\fBINTEGER\fR. Specifies the maximum number of iterations of trial-step calculation.
+.IP
+
+.TP 10
+\fBrs\fR
+.NL
+\fBDOUBLE PRECISION\fR.  Positive input variable used in determining the initial step bound. In most cases the factor should lie within the interval (0.1, 100.0). The generally recommended value is 100.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fB\(ulTRNSP\(ulHANDLE\(ult\fR type in C/C++ and \fBINTEGER*8\fR in FORTRAN.
+.TP 10
+\fBres\fR
+.NL
+\fBINTEGER\fR. Informs about the task completion. 
+.IP
+\fBres\fR = \fBTR\(ulSUCCESS\fR means the routine completed the task normally.
+.IP
+\fBres\fR = \fBTR\(ulINVALID\(ulOPTION\fR means an error in the input parameters.
+.IP
+\fBres\fR = \fBTR\(ulOUT\(ulOF\(ulMEMORY\fR means a memory error.

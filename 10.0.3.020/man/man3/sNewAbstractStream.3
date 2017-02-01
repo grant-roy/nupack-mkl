@@ -1,0 +1,147 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH sNewAbstractStream 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+sNewAbstractStream \- Creates and initializes an abstract random stream for single precision floating-point arrays.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslsnewabstractstream\fR( \fIstream\fR, \fIn\fR, \fIsbuf\fR, \fIa\fR, \fIb\fR, \fIscallback\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslsNewAbstractStream\fR( \fI&stream\fR, \fIn\fR, \fIsbuf\fR, \fIa\fR, \fIb\fR, \fIscallback\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Size of the array \fIsbuf\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBsbuf\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat*\fR
+.br
+.SB Description
+.br
+\h\'1\'Array of \fIn\fR single precision floating-point random numbers with uniform distribution over interval (\fIa\fR,\fIb\fR)
+.PP
+.SB Name
+.br
+\h\'1\'\fBa\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat\fR
+.br
+.SB Description
+.br
+\h\'1\'Left boundary \fIa\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBb\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat\fR
+.br
+.SB Description
+.br
+\h\'1\'Right boundary \fIb\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBscallback\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: See \fINote\fRbelow
+.br
+\h\'2\'C:\h\'7\'See \fINote\fRbelow
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN:  Address of the callback function used for update of the array \fIsbuf\fR
+.br
+\h\'2\'C:\h\'7\'Pointer to the callback function used for update of the array \fIsbuf\fR
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(OUT)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr*\fR
+.br
+.SB Description
+.br
+\h\'1\'Descriptor of the stream state structure
+.PP
+.B NOTE:
+Format of the callback function in Fortran: 
+.br
+INTEGER FUNCTION SUPDATEFUNC[C]( stream, n, sbuf, nmin, nmax, idx )
+.br
+.br
+TYPE(VSL\(ulSTREAM\(ulSTATE),POINTER :: stream[reference]
+.br
+INTEGER(KIND=4),INTENT(IN)     :: n[reference]
+.br
+REAL(KIND=4),   INTENT(OUT)    :: sbuf[reference](0:n-1)
+.br
+INTEGER(KIND=4),INTENT(IN)     :: nmin[reference]
+.br
+INTEGER(KIND=4),INTENT(IN)     :: nmax[reference]
+.br
+INTEGER(KIND=4),INTENT(IN)     :: idx[reference]
+.PP
+Format of the callback function in C: 
+.br
+int sUpdateFunc( VSLStreamStatePtr \fBstream\fR, int* \fBn\fR, float \fBsbuf\fR[], int* \fBnmin\fR, int* \fBnmax\fR, int* \fBidx\fR );
+.br
+.PP
+The callback function returns the number of elements in the array actually updated by the function.
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK\fR, \fBVSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulARG\fR
+.NL
+Parameter \fBn\fR is not positive.
+.TP 10
+\fBVSL\(ulERROR\(ulMEM\(ulFAILURE\fR
+.NL
+System cannot allocate memory for \fBstream\fR.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+Either buffer or callback function parameter is a \fBNULL\fR pointer.

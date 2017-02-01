@@ -1,0 +1,49 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH SetErrStatus 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+SetErrStatus \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIolderr\fR= \fBvmlseterrstatus\fR( \fIerr\fR)
+.PP
+.B /* C */
+.PP
+\fIolderr\fR= \fBvmlSetErrStatus\fR( \fIerr\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBerr\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies the VML error status to be set.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBolderr\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies the former VML error status.
+.br
+\fBvmlSetErrStatus\fR( \fBVML\(ulSTATUS\(ulERRDOM\fR );
+.br
+\fBvmlSetErrStatus\fR( \fBVML\(ulSTATUS\(ulUNDERFLOW\fR );

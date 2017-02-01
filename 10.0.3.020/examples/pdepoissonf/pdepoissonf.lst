@@ -1,0 +1,24 @@
+PDE_POISSON_F = \
+d_Helmholtz_2D_f \
+d_Helmholtz_3D_f \
+d_Laplace_2D_f \
+d_Laplace_3D_f \
+d_Poisson_2D_f \
+d_Poisson_3D_f \
+s_Helmholtz_2D_f \
+s_Helmholtz_3D_f \
+s_Laplace_2D_f \
+s_Laplace_3D_f \
+s_Poisson_2D_f \
+s_Poisson_3D_f \
+d_sph_with_poles_f \
+d_sph_without_poles_p_f \
+s_sph_without_poles_np_f \
+d_sph_without_poles_np_f \
+s_sph_with_poles_f \
+s_sph_without_poles_p_f
+
+modules = \
+mkl_dfti \
+mkl_trig_transforms \
+mkl_poisson

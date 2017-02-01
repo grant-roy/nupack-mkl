@@ -1,0 +1,43 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?laiect 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?laiect \- Exploits IEEE arithmetic to accelerate the computations of eigenvalues. (C interface function).
+.SH SYNOPSIS
+.PP
+\fBvoid pslaiect\fR(\fBfloat\fR\fI *sigma\fR, \fBint\fR\fI *n\fR, \fBfloat\fR\fI *d\fR, \fBint\fR\fI *count\fR);
+.PP
+\fBvoid pdlaiectb\fR(\fBfloat\fR\fI *sigma\fR, \fBint\fR\fI *n\fR, \fBfloat\fR\fI *d\fR, \fBint\fR\fI *count\fR);
+.PP
+\fBvoid pdlaiectl\fR(\fBfloat\fR\fI *sigma\fR, \fBint\fR\fI *n\fR, \fBfloat\fR\fI *d\fR, \fBint\fR\fI *count\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBsigma\fR
+.NL
+\fBReal\fRfor \fBpslaiect\fR
+.IP
+\fBDOUBLE PRECISION\fRfor \fBpdlaiectb/pdlaiectl\fR. 
+.IP
+The shift. \fBp?laiect\fR finds the number of eigenvalues less than equal to \fIsigma\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the tridiagonal matrix \fIT\fR. \fIn\fR\(>= 1.
+.TP 10
+\fBd\fR
+.NL
+\fBReal \fRfor \fBpslaiect\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlaiectb/pdlaiectl\fR.
+.IP
+Array of \fBDIMENSION\fR(2\fIn\fR -1). 
+.IP
+On entry, this array contains the diagonals and the squares of the off-diagonal elements of the tridiagonal matrix \fIT\fR. These elements are assumed to be interleaved in memory for better cache performance. The diagonal entries of \fIT\fR are in the entries \fId\fR(1), \fId\fR(3),..., \fId\fR(2\fIn\fR-1), while the squares of the off-diagonal entries are \fId\fR(2), \fId\fR(4), ..., \fId\fR(2\fIn\fR-2). To avoid overflow, the matrix must be scaled so that its largest entry is no greater than \fIoverflow\fR**(1/2) * \fIunderflow\fR**(1/4) in absolute value, and for greatest accuracy, it should not be much smaller than that.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The count of the number of eigenvalues of \fIT\fR less than or equal to \fIsigma\fR.

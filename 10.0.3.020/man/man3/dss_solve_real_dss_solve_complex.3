@@ -1,0 +1,53 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dss\(ulsolve\(ulreal 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dss\(ulsolve\(ulreal \- Compute the corresponding solutions vector and place it in the output array.
+.SH SYNOPSIS
+.PP
+\fBdss\(ulsolve\(ulreal\fR(\fIhandle\fR, \fIopt\fR, \fIrRhsValues\fR, \fInRhs\fR, \fIrSolValues\fR)
+.PP
+\fBdss\(ulsolve\(ulcomplex\fR(\fIhandle\fR, \fIopt\fR, \fIcRhsValues\fR, \fInRhs\fR, \fIcSolValues\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fBMKL\(ulDSS\(ulHANDLE\fR type (see Interface Description).
+.TP 10
+\fBopt\fR
+.NL
+\fBINTEGER\fR. Options passing argument.
+.TP 10
+\fBnRhs\fR
+.NL
+\fBINTEGER\fR. Number of the right-hand sides in the linear equation.
+.TP 10
+\fBrRhsValues\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array of size \fInRows\fR by \fInRhs\fR. Contains real right-hand side vectors.
+.TP 10
+\fBcRhsValues\fR
+.NL
+\fBDOUBLE COMPLEX\fR. Array of size \fInRows\fR by \fInRhs\fR. Contains complex right-hand side vectors.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBrSolValues\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array of size \fInCols\fR by \fInRhs\fR. Contains real solution vectors.
+.TP 10
+\fBcSolValues\fR
+.NL
+\fBDOUBLE COMPLEX\fR. Array of size \fInCols\fR by \fInRhs\fR. Contains complex solution vectors.
+.SH RETURN VALUES
+.PP
+.PP
+\fBMKL\(ulDSS\(ulSUCCESS\fR
+.PP
+\fBMKL\(ulDSS\(ulSTATE\(ulERR\fR
+.PP
+\fBMKL\(ulDSS\(ulINVALID\(ulOPTION\fR
+.PP
+\fBMKL\(ulDSS\(ulOUT\(ulOF\(ulMEMORY\fR

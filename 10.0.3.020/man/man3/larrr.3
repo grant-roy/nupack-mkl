@@ -1,0 +1,47 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larrr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larrr \- Performs tests to decide whether the symmetric tridiagonal matrix \fIT\fR warrants expensive computations which guarantee high relative accuracy in the eigenvalues.
+.SH SYNOPSIS
+.PP
+\fBcall slarrr\fR( \fIn\fR, \fId\fR, \fIe\fR, \fIinfo\fR)
+.PP
+\fBcall dlarrr\fR( \fIn\fR, \fId\fR, \fIe\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIT\fR. (\fIn\fR> 0).
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslarrr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrr\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+Contains \fBn\fR diagonal elements of the matrix \fIT\fR.
+.TP 10
+\fBe\fR
+.NL
+\fBREAL\fR for \fBslarrr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrr\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR).
+.IP
+The first (\fBn\fR-1) entries contain sub-diagonal elements of the tridiagonal matrix \fIT\fR; \fBe\fR(\fBn\fR) is set to 0.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0:        the matrix warrants computations preserving relative accuracy (default value).
+.IP
+= -1:      the matrix warrants computations guaranteeing only absolute accuracy.

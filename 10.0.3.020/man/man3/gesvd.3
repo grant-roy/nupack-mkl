@@ -1,0 +1,245 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gesvd 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gesvd \- Computes the singular value decomposition of a general rectangular matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgesvd\fR(\fIjobu\fR, \fIjobvt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIs\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall dgesvd\fR(\fIjobu\fR, \fIjobvt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIs\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall cgesvd\fR(\fIjobu\fR, \fIjobvt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIs\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+\fBcall zgesvd\fR(\fIjobu\fR, \fIjobvt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIs\fR, \fIu\fR, \fIldu\fR, \fIvt\fR, \fIldvt\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall gesvd\fR(\fIa\fR, \fIs\fR[,\fIu\fR] [,\fIvt\fR] [,\fIww\fR] [,\fIjob\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobu\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'A\'\fR, \fB\'S\'\fR, \fB\'O\'\fR, or \fB\'N\'\fR. Specifies options for computing all or part of the matrix \fIU\fR.
+.IP
+If \fIjobu\fR = \fB\'A\'\fR, all \fIm\fR columns of \fIU\fR are returned in the array \fIu\fR; 
+.IP
+if \fIjobu\fR = \fB\'S\'\fR, the first min(\fIm\fR, \fIn\fR) columns of \fIU\fR (the left singular vectors) are returned in the array \fIu\fR; 
+.IP
+if \fIjobu\fR = \fB\'O\'\fR, the first min(\fIm\fR, \fIn\fR) columns of \fIU\fR (the left singular vectors) are overwritten on the array \fIa\fR; 
+.IP
+if \fIjobu\fR = \fB\'N\'\fR, no columns of \fIU\fR (no left singular vectors) are computed.
+.TP 10
+\fBjobvt\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'A\'\fR, \fB\'S\'\fR, \fB\'O\'\fR, or \fB\'N\'\fR. Specifies options for computing all or part of the matrix \fIV\fR**\fIH\fR.
+.IP
+If \fIjobvt\fR = \fB\'A\'\fR, all \fIn\fR rows of \fIV\fR**\fIH\fR are returned in the array \fIvt\fR; 
+.IP
+if \fIjobvt\fR = \fB\'S\'\fR, the first min(\fIm\fR,\fIn\fR) rows of \fIV\fR**\fIH\fR (the right singular vectors) are returned in the array \fIvt\fR; 
+.IP
+if \fIjobvt\fR = \fB\'O\'\fR, the first min(\fIm\fR,\fIn\fR) rows of \fIV\fR**\fIH\fR (the right singular vectors) are overwritten on the array \fIa\fR; 
+.IP
+if \fIjobvt\fR = \fB\'N\'\fR, no rows of \fIV\fR**\fIH\fR (no right singular vectors) are computed.
+.IP
+\fIjobvt\fR and \fIjobu\fR cannot both be \fB\'O\'\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIA\fR (\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns in \fIA\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsgesvd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgesvd\fR
+.IP
+\fBCOMPLEX\fR for \fBcgesvd\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgesvd\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) is an array containing the \fIm\fR-by-\fIn\fR matrix \fIA\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIa\fR. 
+.IP
+Must be at least max(1, \fIm\fR).
+.TP 10
+\fBldu\fR, \fBldvt\fR
+.NL
+\fBINTEGER\fR. The leading dimensions of the output arrays \fIu\fR and \fIvt\fR, respectively. 
+.IP
+Constraints:
+.IP
+\fIldu\fR\(>= 1; \fIldvt\fR < 1. 
+.IP
+If \fIjobu\fR = \fB\'S\'\fR or \fB\'A\'\fR, \fIldu\fR\(>=\fIm\fR; 
+.IP
+If \fIjobvt\fR = \fB\'A\'\fR, \fIldvt\fR\(>=\fIn\fR;
+.IP
+If \fIjobvt\fR = \fB\'S\'\fR, \fIldvt\fR\(>= min(\fIm\fR, \fIn\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR; \fIlwork\fR\(>= 1. 
+.IP
+Constraints: 
+.IP
+\fIlwork\fR\(>= max(3*min(\fIm\fR, \fIn\fR)+max(\fIm\fR, \fIn\fR), 5*min(\fIm\fR,\fIn\fR)) (for real flavors); 
+.IP
+\fIlwork\fR\(>= 2*min(\fIm\fR, \fIn\fR)+max(\fIm\fR, \fIn\fR) (for complex flavors). 
+.IP
+For good performance, \fIlwork\fR must generally be larger. 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR. 
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBcgesvd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzgesvd\fR
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, 5*min(\fIm\fR, \fIn\fR)). Used in complex flavors only.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, 
+.IP
+If \fIjobu\fR = \fB\'O\'\fR, \fIa\fR is overwritten with the first min(\fIm\fR,\fIn\fR) columns of \fIU\fR (the left singular vectors, stored columnwise);
+.IP
+If \fIjobvt\fR = \fB\'O\'\fR, \fIa\fR is overwritten with the first min(\fIm\fR, \fIn\fR) rows of \fIV\fR**\fIH\fR (the right singular vectors, stored rowwise);
+.IP
+If \fIjobu\fR\(!=\fB\'O\'\fR and \fIjobvt\fR\(!=\fB\'O\'\fR, the contents of \fIa\fR are destroyed.
+.TP 10
+\fBs\fR
+.NL
+\fBREAL\fR for single precision flavors \fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, min(\fIm\fR,\fIn\fR)). Contains the singular values of \fIA\fR sorted so that \fIs\fR(i) < \fIs\fR(i+1).
+.TP 10
+\fBu\fR, \fBvt\fR
+.NL
+\fBREAL\fR for \fBsgesvd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgesvd\fR
+.IP
+\fBCOMPLEX\fR for \fBcgesvd\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgesvd\fR. 
+.IP
+Arrays:
+.IP
+\fIu\fR(\fIldu\fR,*); the second dimension of \fIu\fR must be at least max(1, \fIm\fR) if \fIjobu\fR = \fB\'A\'\fR, and at least max(1, min(\fIm\fR, \fIn\fR)) if \fIjobu\fR = \fB\'S\'\fR.
+.IP
+If \fIjobu\fR = \fB\'A\'\fR, \fIu\fR contains the \fIm\fR-by-\fIm\fR orthogonal/unitary matrix \fBU\fR.
+.IP
+If \fIjobu\fR = \fB\'S\'\fR, \fIu\fR contains the first min(\fIm\fR, \fIn\fR) columns of \fIU\fR (the left singular vectors, stored columnwise). 
+.IP
+If \fIjobu\fR = \fB\'N\'\fR or \fB\'O\'\fR, \fIu\fR is not referenced.
+.IP
+\fIvt\fR(\fIldvt\fR,*); the second dimension of \fIvt\fR must be at least max(1, \fIn\fR).
+.IP
+If \fIjobvt\fR = \fB\'A\'\fR, \fIvt\fR contains the \fIn\fR-by-\fIn\fR orthogonal/unitary matrix \fIV\fR.
+.IP
+If \fIjobvt\fR = \fB\'S\'\fR, \fIvt\fR contains the first min(\fIm\fR, \fIn\fR) rows of \fIV\fR**\fIH\fR (the right singular vectors, stored rowwise). 
+.IP
+If \fIjobvt\fR = \fB\'N\'\fRor \fB\'O\'\fR, \fIvt\fR is not referenced.
+.TP 10
+\fBwork\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIwork(1)\fR returns the required minimal size of \fIlwork\fR.
+.IP
+\fIFor real flavors\fR:
+.IP
+If \fIinfo\fR > 0, \fIwork\fR(2:min(\fIm\fR,\fIn\fR)) contains the unconverged superdiagonal elements of an upper bidiagonal matrix \fIB\fR whose diagonal is in \fIs\fR (not necessarily sorted). \fIB\fR satisfies \fIA\fR=\fIu\fR*\fIB\fR*\fIvt\fR, so it has the same singular values as \fIA\fR, and singular vectors related by \fIu\fR and \fIvt\fR.
+.TP 10
+\fBrwork\fR
+.NL
+On exit (for complex flavors), if \fIinfo\fR > 0, \fIrwork\fR(1:min(\fIm\fR,\fIn\fR)-1) contains the unconverged superdiagonal elements of an upper bidiagonal matrix \fIB\fR whose diagonal is in \fIs\fR (not necessarily sorted). \fIB\fR satisfies \fIA\fR = \fIu\fR*\fIB\fR*\fIvt\fR, so it has the same singular values as \fIA\fR, and singular vectors related by \fIu\fR and \fIvt\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.IP
+If \fIinfo\fR = \fIi\fR, then if \fB?bdsqr\fR did not converge, \fIi\fR specifies how many superdiagonals of the intermediate bidiagonal form \fIB\fR did not converge to zero.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBgesvd\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIm\fR, \fIn\fR).
+.TP 10
+\fBs\fR
+.NL
+Holds the vector of length min(\fIm\fR, \fIn\fR).
+.TP 10
+\fBu\fR
+.NL
+Holds the matrix \fIU\fR of size (\fIm\fR,min(\fIm\fR, \fIn\fR)).
+.TP 10
+\fBvt\fR
+.NL
+Holds the matrix \fIVT\fR of size (min(\fIm\fR, \fIn\fR)\fI,n\fR).
+.TP 10
+\fBww\fR
+.NL
+Holds the vector of length min(\fIm\fR, \fIn\fR)-1. \fBww\fR contains the unconverged superdiagonal elements of an upper bidiagonal matrix \fIB\fR whose diagonal is in \fIs\fR (not necessarily sorted). \fIB\fR satisfies \fIA\fR = \fIU\fR*\fIB\fR*\fIVT\fR, so it has the same singular values as \fIA\fR, and singular vectors related by \fIU\fR and \fIVT\fR.
+.TP 10
+\fBjob\fR
+.NL
+Must be either \fB\'N\'\fR, or \fB\'U\'\fR, or \fB\'V\'\fR. The default value is \fB\'N\'\fR. 
+.IP
+If \fIjob\fR = \fB\'U\'\fR, and \fIu\fR is not present, then \fIu\fR is returned in the array \fIa\fR. 
+.IP
+If \fIjob\fR = \fB\'V\'\fR, and \fIvt\fR is not present, then \fIvt\fR is returned in the array \fIa\fR.
+.TP 10
+\fBjobu\fR
+.NL
+Restored based on the presence of the argument \fIu\fR, value of \fIjob\fR and sizes of arrays \fIu\fR and \fIa\fR as follows: 
+.IP
+\fIjobu\fR = \fB\'A\'\fR, if \fIu\fR is present and the number of columns in \fIu\fR is equal to the number of rows in \fIa\fR, 
+.IP
+\fIjobu\fR = \fB\'S\'\fR, if \fIu\fR is present and the number of columns in \fIu\fR is not equal to the number of rows in \fIa\fR, 
+.IP
+\fIjobu\fR = \fB\'O\'\fR, if \fIu\fR is not present and \fIjob\fR is equal to \fB\'U\'\fR, 
+.IP
+\fIjobu\fR = \fB\'N\'\fR, if \fIu\fR is not present and \fIjob\fR is not equal to \fB\'U\'\fR.
+.TP 10
+\fBjobvt\fR
+.NL
+Restored based on the presence of the argument \fIvt\fR, value of \fIjob\fR and sizes of arrays \fIvt\fR and \fIa\fR as follows: 
+.IP
+\fIjobvt\fR = \fB\'A\'\fR, if \fIvt\fR is present and the number of columns in \fIvt\fR is equal to the number of rows in \fIa\fR, 
+.IP
+\fIjobvt\fR = \fB\'S\'\fR, if \fIvt\fR is present and the number of columns in \fIvt\fR is not equal to the number of rows in \fIa\fR, 
+.IP
+\fIjobvt\fR = \fB\'O\'\fR, if \fIvt\fR is not present and \fIjob\fR is equal to \fB\'V\'\fR, 
+.IP
+\fIjobvt\fR = \fB\'N\'\fR, if \fIvt\fR is not present and \fIjob\fR is not equal to \fB\'V\'\fR,

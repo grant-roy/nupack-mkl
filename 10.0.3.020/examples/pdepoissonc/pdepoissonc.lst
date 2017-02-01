@@ -1,0 +1,19 @@
+PDE_POISSON_C = \
+d_Helmholtz_2D_c \
+d_Helmholtz_3D_c \
+d_Laplace_2D_c \
+d_Laplace_3D_c \
+d_Poisson_2D_c \
+d_Poisson_3D_c \
+s_Helmholtz_2D_c \
+s_Helmholtz_3D_c \
+s_Laplace_2D_c \
+s_Laplace_3D_c \
+s_Poisson_2D_c \
+s_Poisson_3D_c \
+d_sph_with_poles_c \
+d_sph_without_poles_p_c \
+s_sph_without_poles_np_c \
+d_sph_without_poles_np_c \
+s_sph_with_poles_c \
+s_sph_without_poles_p_c

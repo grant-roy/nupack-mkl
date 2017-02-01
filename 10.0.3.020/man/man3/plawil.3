@@ -1,0 +1,71 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lawil 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lawil \- Forms the Wilkinson transform.
+.SH SYNOPSIS
+.PP
+\fBcall pslawil\fR(\fIii\fR, \fIjj\fR, \fIm\fR, \fIa\fR, \fIdesca\fR, \fIh44\fR, \fIh33\fR, \fIh43h34\fR, \fIv\fR)
+.PP
+\fBcall pdlawil\fR(\fIii\fR, \fIjj\fR, \fIm\fR, \fIa\fR, \fIdesca\fR, \fIh44\fR, \fIh33\fR, \fIh43h34\fR, \fIv\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBii\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+Row owner of \fIh\fR(\fIm\fR+2, \fIm\fR+2).
+.TP 10
+\fBjj\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+Column owner of \fIh\fR(\fIm\fR+2, \fIm\fR+2).
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+On entry, the location from where the transform starts (row \fIm\fR). Unchanged on exit. 
+.TP 10
+\fBa\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBpslawil\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlawil\fR
+.IP
+Array, \fBDIMENSION\fR (\fIdesca(lld\(ul)\fR,*). 
+.IP
+On entry, the Hessenberg matrix. Unchanged on exit.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR
+.IP
+Array of \fBDIMENSION\fR (\fIdlen\(ul\fR). The array descriptor for the distributed matrix \fIA\fR. Unchanged on exit.
+.TP 10
+\fBh44\fR, \fBh33\fR, \fBh43h34\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBpslawil\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlawil\fR
+.IP
+These three values are for the double shift \fIQR\fR iteration. Unchanged on exit.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBv\fR
+.NL
+(global)
+.IP
+\fBREAL\fR for \fBpslawil\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlawil\fR
+.IP
+Array of size 3 that contains the transform on output.

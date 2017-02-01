@@ -1,0 +1,31 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lamc4 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lamc4 \- This is a service routine for \fB?lamc2\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slamc4\fR( \fIemin\fR, \fIstart\fR, \fIbase\fR)
+.PP
+\fBcall dlamc4\fR( \fIemin\fR, \fIstart\fR, \fIbase\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBstart\fR
+.NL
+\fBREAL\fR for \fBslamc4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlamc4\fR
+.IP
+The starting point for determining \fIemin\fR.
+.TP 10
+\fBbase\fR
+.NL
+\fBINTEGER\fR. The base of the machine.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBemin\fR
+.NL
+\fBINTEGER\fR. The minimum exponent before (gradual) underflow, computed by  setting \fIa\fR = \fIstart\fR and dividing by \fIbase\fR until the previous \fIa\fR can not be recovered.

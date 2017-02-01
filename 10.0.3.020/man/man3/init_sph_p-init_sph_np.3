@@ -1,0 +1,94 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?\(ulinit\(ulsph\(ulp/?\(ulinit\(ulsph\(ulnp 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+\- Initializes basic data structures of the Fast periodic and non-periodic Helmholtz Solver on a sphere.
+.SH SYNOPSIS
+.PP
+\fBvoid d\(ulinit\(ulsph\(ulp\fR(\fBdouble* \fR\fIap\fR, \fBdouble* \fR\fIat\fR, \fBdouble* \fR\fIbp, \fR\fBdouble* \fR\fIbt, \fR\fBint* \fR\fInp, \fR\fBint* \fR\fInt, \fR\fBdouble* \fR\fIq, \fR\fBint* \fR\fIipar, \fR\fBdouble* \fR\fIdpar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid s\(ulinit\(ulsph\(ulnp\fR(\fBfloat* \fR\fIap, \fR\fBfloat* \fR\fIat, \fR\fBfloat* \fR\fIbp, \fR\fBfloat* \fR\fIbt, \fR\fBint* \fR\fInp, \fR\fBint* \fR\fInt, \fR\fBfloat* \fR\fIq, \fR\fBint* \fR\fIipar, \fR\fBfloat* \fR\fIspar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid d\(ulinit\(ulsph\(ulnp\fR(\fBdouble* \fR\fIap, \fR\fBdouble* \fR\fIat, \fR\fBdouble* \fR\fIbp, \fR\fBdouble* \fR\fIbt, \fR\fBint* \fR\fInp, \fR\fBint* \fR\fInt, \fR\fBdouble* \fR\fIq, \fR\fBint* \fR\fIipar, \fR\fBdouble* \fR\fIdpar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid s\(ulinit\(ulsph\(ulnp\fR(\fBfloat* \fR\fIap, \fR\fBfloat* \fR\fIat, \fR\fBfloat* \fR\fIbp, \fR\fBfloat* \fR\fIbt, \fR\fBint* \fR\fInp, \fR\fBint* \fR\fInt, \fR\fBfloat* \fR\fIq, \fR\fBint* \fR\fIipar, \fR\fBfloat* \fR\fIspar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBap\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulsph\(ulp/d\(ulinit\(ulsph\(ulnp\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulsph\(ulp/s\(ulinit\(ulsph\(ulnp\fR. 
+.IP
+The coordinate (angle) of the leftmost boundary of the domain along \(*f-axis. 
+.TP 10
+\fBbp\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulsph\(ulp/d\(ulinit\(ulsph\(ulnp\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulsph\(ulp/s\(ulinit\(ulsph\(ulnp\fR. 
+.IP
+The coordinate (angle) of the rightmost boundary of the domain along \(*f-axis. 
+.TP 10
+\fBat\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulsph\(ulp/d\(ulinit\(ulsph\(ulnp\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulsph\(ulp/s\(ulinit\(ulsph\(ulnp\fR. 
+.IP
+The coordinate (angle) of the leftmost boundary of the domain along \(*h-axis. 
+.TP 10
+\fBbt\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulsph\(ulp/d\(ulinit\(ulsph\(ulnp\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulsph\(ulp/s\(ulinit\(ulsph\(ulnp\fR. 
+.IP
+The coordinate (angle) of the rightmost boundary of the domain along \(*h-axis. 
+.TP 10
+\fBnp\fR
+.NL
+\fBint*\fR. The number of mesh intervals along \(*f-axis. Must be even in the periodic case. 
+.TP 10
+\fBnt\fR
+.NL
+\fBint*\fR. The number of mesh intervals along \(*h-axis. 
+.TP 10
+\fBq\fR
+.NL
+\fBdouble*\fR for \fBd\(ulinit\(ulsph\(ulp/d\(ulinit\(ulsph\(ulnp\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulinit\(ulsph\(ulp/s\(ulinit\(ulsph\(ulnp\fR. 
+.IP
+The constant Helmholtz coefficient. Note that to solve Poisson problem, you should set the value of \fBq\fR to 0. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBipar\fR
+.NL
+\fBint\fR array of size 128. Contains integer data to be used by Fast Helmholtz Solver on a sphere (for details, refer to Common Parameters). 
+.TP 10
+\fBdpar\fR
+.NL
+\fBdouble\fR array of size 5*\fBnp\fR/2+\fBnt\fR+10. Contains double-precision data to be used by Fast Helmholtz Solver on a sphere (for details, refer to Common Parameters). 
+.TP 10
+\fBspar\fR
+.NL
+\fBfloat\fR array of size 5*\fBnp\fR/2+\fBnt\fR+10. Contains single-precision data to be used by Fast Helmholtz Solver on a sphere (for details, refer to Common Parameters). 
+.TP 10
+\fBstat\fR
+.NL
+\fBint*\fR. Routine completion status, which is also written to \fBipar[0]\fR. The status should be 0 to proceed to other PL routines. 
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBstat\fR= 0
+.NL
+The routine successfully completed the task. In general, to proceed with computations, the routine should complete with this \fBstat\fR value. 
+.TP 10
+\fBstat\fR= -99999
+.NL
+The routine failed to complete the task because of fatal error. 

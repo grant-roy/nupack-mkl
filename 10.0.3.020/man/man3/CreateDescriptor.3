@@ -1,0 +1,83 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH CreateDescriptor 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+CreateDescriptor \- Allocates memory for the descriptor data structure and preliminarily initializes it.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiCreateDescriptor\fR( \fIDesc\(ulHandle\fR, & 
+.PP
+\fIPrecision\fR, & 
+.PP
+\fIForward\(ulDomain\fR, & 
+.PP
+\fIDimension\fR, & 
+.PP
+\fILength\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBDftiCreateDescriptor\fR( \fI&desc\(ulhandle\fR, \fIprecision\fR, \fIforward\(uldomain\fR, \fIdimension\fR, \fIlength\fR);
+.PP
+
+.br
+!Fortran interface.
+.br
+INTERFACE DftiCreateDescriptor
+.br
+!Note that the body provided here is to illustrate the different
+.br
+!argument list and types of dummy arguments. The interface
+.br
+!does not guarantee what the actual function names are.
+.br
+!Users can only rely on the function name following the keyword INTERFACE
+.br
+FUNCTION some\(ulactual\(ulfunction\(ul1D( Desc\(ulHandle, Prec, Dom, Dim, Length )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ul1D
+.br
+   
+.br
+TYPE(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+INTEGER, INTENT(IN) :: Prec, Dom
+.br
+INTEGER, INTENT(IN) :: Dim, Length
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ul1D 
+.br
+FUNCTION some\(ulactual\(ulfunction\(ulHIGHD( Desc\(ulHandle, Prec, Dom, Dim, Length )
+.br
+INTEGER :: some\(ulactual\(ulfunction\(ulHIGHD
+.br
+TYPE(DFTI\(ulDESCRIPTOR), POINTER :: Desc\(ulHandle
+.br
+INTEGER, INTENT(IN) :: Prec, Dom
+.br
+INTEGER, INTENT(IN) :: Dim, Length(*)
+.br
+END FUNCTION some\(ulactual\(ulfunction\(ulHIGHD
+.br
+END INTERFACE DftiCreateDescriptor
+.br
+   
+.PP
+Note that the function is overloaded as the actual argument for Length can be a scalar or a a rank-one array. 
+.br
+/* C prototype */
+.br
+long DftiCreateDescriptor( DFTI\(ulDESCRIPTOR\(ulHANDLE *,
+.br
+DFTI\(ulCONFIG\(ulPARAM ,
+.br
+DFTI\(ulCONFIG\(ulPARAM ,
+.br
+long , ... );
+.br
+   
+.PP
+The variable arguments facility is used to cope with the argument for lengths that can be a scalar (\fBlong\fR), or an array (\fBlong *\fR).

@@ -1,0 +1,92 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dss\(ulstatistics 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dss\(ulstatistics \- Returns statistics about various phases of the solving process.
+.SH SYNOPSIS
+.PP
+\fBdss\(ulstatistics\fR(\fIhandle\fR, \fIopt\fR, \fIstatArr\fR, \fIretValues\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fBMKL\(ulDSS\(ulHANDLE\fR type (see Interface Description).
+.TP 10
+\fBopt\fR
+.NL
+\fBINTEGER\fR. Options passing argument.
+.TP 10
+\fBstatArr\fR
+.NL
+\fBSTRING\fR. Input string that defines the type of the returned statistics. The parameter can include one or more of the following string constants (case of the input string has no effect):
+.sp
+\fBReorderTime \fRAmount of time taken to do the reordering.
+.sp
+\fBFactorTime \fRAmount of time taken to do the factorization.
+.sp
+\fBSolveTime \fRAmount of time taken to solve the problem after factorization.
+.sp
+\fBDeterminant \fRDeterminant of the matrix \fIA\fR. 
+.IP
+For real matrices:  the determinant is returned as \fIdet\(ulpow\fR, \fIdet\(ulbase\fR in two consecutive return array locations, where 1.0 \(<=abs(\fIdet\(ulbase\fR) < 10.0 and \fBdeterminant\fR = \fIdet\(ulbase\fR*10**(\fIdet\(ulpow\fR).
+.IP
+For complex matrices: the determinant is returned as \fIdet\(ulpow\fR, \fIdet\(ulre\fR, \fIdet\(ulim\fR in three consecutive return array locations, where 1.0 \(<=abs(\fIdet\(ulre\fR) + abs(\fIdet\(ulim\fR) < 10.0 and \fBdeterminant\fR = \fIdet\(ulre\fR, \fIdet\(ulim\fR*10**(\fIdet\(ulpow\fR).
+.sp
+\fBInertia\fRInertia of a real symmetric matrix is defined as a triplet of nonnegative integers (\fIp\fR,\fIn\fR,\fIz\fR), where \fIp\fR is the number of positive eigenvalues, \fIn\fR is the number of negative eigenvalues, and \fIz\fR is the number of zero eigenvalues.
+.IP
+\fBInertia\fR is returned as three consecutive return array locations as \fIp\fR, \fIn\fR, \fIz\fR.
+.IP
+Computing \fBInertia\fR is recommended only for stable matrices. Unstable matrices can lead to incorrect results.
+.IP
+\fBInertia\fR of a \fIk\fR-by-\fBk\fR real symmetric positive definite matrix is always (\fIk\fR, 0, 0). Therefore \fBInertia\fR is returned only in cases of real symmetric indefinite matrices. For all other matrix types, an error message is returned.
+.sp
+\fBFlops\fRNumber of floating point operations performed during the factorization.
+.sp
+\fBPeakmem\fRTotal peak memory in KBytes that the solver needs during the analysis and symbolic factorization phase.
+.sp
+\fBFactormem\fRPermanent memory in KBytes that the solver needs from the analysis and symbolic factorization phase in the factorization and solve phases.
+.sp
+\fBSolvemem\fRTotal double precision memory consumption (KBytes) of the solver for the factorization and solve phases.
+.PP
+.B NOTE:
+To avoid problems in passing strings from Fortran to C, Fortran users must call the \fBmkl\(ulcvt\(ulto\(ulnull\(ulterminated\(ulstr\fR routine before calling \fBdss\(ulstatistics\fR. Refer to the description of mkl\(ulcvt\(ulto\(ulnull\(ulterminated\(ulstr for details.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBretValues\fR
+.NL
+\fBDOUBLE PRECISION\fR. Value of the statistics returned.
+.PP
+The example below illustrates the use of the \fBdss\(ulstatistics\fR routine.
+.PP
+To find the above values, call \fBdss\(ulstatistics\fR(\fIhandle\fR, \fIopt\fR, \fIstatArr\fR, \fIretValues\fR), where \fIstatArr\fR is ``\fBReorderTime\fR,\fBInertia\fR''
+.PP
+In this example, \fIretValues\fR has the following values:
+.TP 10
+\fI\fBretValue\fR[0]\fR
+.NL
+Time to reorder.
+.TP 10
+\fI\fBretValue\fR[1]\fR
+.NL
+Positive Eigenvalues.
+.TP 10
+\fI\fBretValue\fR[2]\fR
+.NL
+Negative Eigenvalues.
+.TP 10
+\fI\fBretValue\fR[3]\fR
+.NL
+Zero Eigenvalues.
+.SH RETURN VALUES
+.PP
+.PP
+\fBMKL\(ulDSS\(ulSUCCESS\fR
+.PP
+\fBMKL\(ulDSS\(ulSTATISTICS\(ulINVALID\(ulMATRIX\fR
+.PP
+\fBMKL\(ulDSS\(ulSTATISTICS\(ulINVALID\(ulSTATE\fR
+.PP
+\fBMKL\(ulDSS\(ulSTATISTICS\(ulINVALID\(ulSTRING\fR

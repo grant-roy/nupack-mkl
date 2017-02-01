@@ -1,0 +1,77 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?lacp3 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?lacp3 \- Copies from a global parallel array into a local replicated array or vice versa.
+.SH SYNOPSIS
+.PP
+\fBcall pslacp3\fR(\fIm\fR, \fIi\fR, \fIa\fR, \fIdesca\fR, \fIb\fR, \fIldb\fR, \fIii\fR, \fIjj\fR, \fIrev\fR)
+.PP
+\fBcall pdlacp3\fR(\fIm\fR, \fIi\fR, \fIa\fR, \fIdesca\fR, \fIb\fR, \fIldb\fR, \fIii\fR, \fIjj\fR, \fIrev\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR.
+.IP
+\fIm\fR is the order of the square submatrix that is copied.
+.IP
+\fIm\fR\(>= 0. Unchanged on exit.
+.TP 10
+\fBi\fR
+.NL
+(global) \fBINTEGER\fR. \fIA\fR(\fIi\fR, \fIi\fR) is the global location that the copying starts from. Unchanged on exit.
+.TP 10
+\fBa\fR
+.NL
+(global). \fBREAL\fR for \fBpslacp3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlacp3\fR
+.IP
+Array, \fBDIMENSION\fR (\fIdesca\fR(\fIlld\(ul\fR),*). On entry, the parallel matrix to be copied into or from.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, \fBDIMENSION\fR (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix A.
+.TP 10
+\fBb\fR
+.NL
+(local). 
+.IP
+\fBREAL\fR for \fBpslacp3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdlacp3\fR
+.IP
+Array, \fBDIMENSION\fR (\fIldb\fR, \fIm\fR). If \fIrev\fR = 0, this is the global portion of the array \fIA\fR(\fIi\fR:\fIi\fR+\fIm\fR-1, \fIi\fR:\fIi\fR+\fIm\fR-1). If \fIrev\fR = 1, this is the unchanged on exit.
+.TP 10
+\fBldb\fR
+.NL
+(local) 
+.IP
+\fBINTEGER\fR. 
+.IP
+The leading dimension of \fIB\fR.
+.TP 10
+\fBii\fR
+.NL
+(global) \fBINTEGER. \fRBy using \fIrev\fR 0 and 1, data can be sent out and returned again. If \fIrev\fR = 0, then \fIii\fR is destination row index for the node(s) receiving the replicated \fIB\fR. If \fIii \fR\(>= 0, \fIjj\fR \(>= 0, then node (\fIii\fR, \fIjj\fR) receives the data. If \fIii\fR = -1, \fIjj \fR\(>= 0, then all rows in column \fIjj\fR receive the data. If \fIii \fR\(>= 0, \fIjj\fR = -1, then all cols in row \fIii\fR receive the data. f \fIii\fR = -1, \fIjj\fR = -1, then all nodes receive the data. If \fIrev\fR !=0, then \fIii\fR is the source row index for the node(s) sending the replicated \fIB\fR.
+.TP 10
+\fBjj\fR
+.NL
+(global) \fBINTEGER\fR. Similar description as \fIii\fR above.
+.TP 10
+\fBrev\fR
+.NL
+(global) \fBINTEGER\fR. Use \fIrev\fR = 0 to send global \fIA\fR into locally replicated \fIB\fR (on node (\fIii\fR, \fIjj\fR)). Use \fIrev\fR != 0 to send locally replicated \fIB\fR from node (\fIii\fR, \fIjj\fR) to its owner (which changes depending on its location in \fIA\fR) into the global \fIA\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+(global). On exit, if \fIrev\fR = 1, the copied data. Unchanged on exit if \fIrev\fR = 0.
+.TP 10
+\fBb\fR
+.NL
+(local).  If \fIrev\fR = 1, this is unchanged on exit.

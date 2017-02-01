@@ -1,0 +1,43 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dss\(ulfactor\(ulreal 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dss\(ulfactor\(ulreal \- Compute factorization of the matrix with previously specified location.
+.SH SYNOPSIS
+.PP
+\fBdss\(ulfactor\(ulreal\fR(\fIhandle\fR, \fIopt\fR, \fIrValues\fR)
+.PP
+\fBdss\(ulfactor\(ulcomplex\fR(\fIhandle\fR, \fIopt\fR, \fIcValues\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fBMKL\(ulDSS\(ulHANDLE\fR type (see Interface Description).
+.TP 10
+\fBopt\fR
+.NL
+\fBINTEGER\fR Options passing argument. The default option for the matrix type is \fBMKL\(ulDSS\(ulPOSITIVE\(ulDEFINITE.\fR
+.TP 10
+\fBrValues\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array of size \fInNonZeros\fR. Contains real non-zero elements of the matrix.
+.TP 10
+\fBcValues\fR
+.NL
+\fBDOUBLE COMPLEX\fR. Array of size \fBnNonZeros\fR. Contains complex non-zero elements of the matrix.
+.SH RETURN VALUES
+.PP
+.PP
+\fBMKL\(ulDSS\(ulSUCCESS\fR
+.PP
+\fBMKL\(ulDSS\(ulSTATE\(ulERR\fR
+.PP
+\fBMKL\(ulDSS\(ulINVALID\(ulOPTION\fR
+.PP
+\fBMKL\(ulDSS\(ulOPTION\(ulCONFLICT\fR
+.PP
+\fBMKL\(ulDSS\(ulOUT\(ulOF\(ulMEMORY\fR
+.PP
+\fBMKL\(ulDSS\(ulZERO\(ulPIVOT\fR

@@ -1,0 +1,45 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dtrnlsp\(ulget 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dtrnlsp\(ulget \- Retrieves the number of iterations, stop criterion, initial residual, and final residual.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIres\fR= \fBdtrnlsp\(ulget\fR(\fIhandle\fR, \fIiter\fR, \fIst\(ulcr\fR, \fIr1\fR, \fIr2\fR)
+.PP
+.B /* C */
+.PP
+\fIres\fR= \fBdtrnlsp\(ulget\fR(\fI&handle\fR, \fI&iter\fR, \fI&st\(ulcr\fR, \fI&r1\fR, \fI&r2\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fB\(ulTRNSP\(ulHANDLE\(ult\fR type in C/C++ and \fBINTEGER*8\fR in FORTRAN.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBiter\fR
+.NL
+\fBINTEGER\fR. Contains the current number of iterations.
+.TP 10
+\fBst\(ulcr\fR
+.NL
+\fBINTEGER\fR. Contains the stop criterion. 
+.TP 10
+\fBr1\fR
+.NL
+\fBDOUBLE PRECISION\fR. Contains the initial residual, that is, the value of the functional (||\fIy\fR - \fIf\fR(\fIx\fR)||) of the initial \fI&#1093;\fR set by the user.
+.TP 10
+\fBr2\fR
+.NL
+\fBDOUBLE PRECISION\fR. Contains the final residual, that is, the value of the functional (||\fIy\fR - \fIf\fR(\fIx\fR)||) of the final \fI&#1093;\fR resulting from the algorithm operation.
+.TP 10
+\fBres\fR
+.NL
+\fBINTEGER\fR. Informs about the task completion.
+.IP
+\fBres\fR = \fBTR\(ulSUCCESS\fR means the routine completed the task normally.

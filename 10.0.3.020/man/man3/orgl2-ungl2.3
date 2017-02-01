@@ -1,0 +1,85 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?orgl2/?ungl2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?orgl2/?ungl2 \- Generates all or part of the orthogonal/unitary matrix Q from an LQ factorization determined by \fB?gelqf\fR (unblocked algorithm).
+.SH SYNOPSIS
+.PP
+\fBcall sorgl2\fR( \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dorgl2\fR( \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall cungl2\fR( \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall zungl2\fR( \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIQ\fR. \fIm\fR\(>= 0.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIQ\fR. \fIn\fR\(>=\fIm\fR.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. The number of elementary reflectors whose product defines the matrix \fIQ\fR. \fIm\fR\(>=\fIk\fR\(>= 0.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBsorgl2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdorgl2\fR
+.IP
+\fBCOMPLEX\fR for \fBcungl2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzungl2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR, \fIn\fR). On entry, the \fIi\fR-th row must contain the vector which defines the elementary reflector \fIH\fR(\fIi\fR), for \fIi\fR = 1,2,..., \fIk\fR, as returned by \fB?gelqf\fR in the first \fIk\fR rows of its array argument \fIa\fR.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIa\fR. \fIlda\fR\(>= max(1,\fIm\fR).
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBsorgl2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdorgl2\fR
+.IP
+\fBCOMPLEX\fR for \fBcungl2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzungl2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIk\fR). 
+.IP
+\fItau\fR(\fIi\fR) must contain the scalar factor of the elementary reflector \fIH\fR(\fIi\fR), as returned by \fB?gelqf\fR.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBsorgl2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdorgl2\fR
+.IP
+\fBCOMPLEX\fR for \fBcungl2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzungl2\fR.
+.IP
+Workspace array, \fBDIMENSION\fR (\fIm\fR). 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, the \fIm\fR-by-\fIn\fR matrix \fIQ\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+= 0: successful exit
+.IP
+< 0: if \fIinfo\fR = -\fIi\fR, the \fIi\fR-th argument has an illegal value.

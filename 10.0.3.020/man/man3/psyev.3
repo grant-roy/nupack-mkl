@@ -1,0 +1,166 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?syev 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?syev \- Computes selected eigenvalues and eigenvectors of a symmetric matrix.
+.SH SYNOPSIS
+.PP
+\fBcall pssyev\fR( \fIjobz\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIw\fR, \fIz\fR, \fIiz\fR, \fIjz\fR, \fIdescz\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdsyev\fR( \fIjobz\fR, \fIuplo\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIw\fR, \fIz\fR, \fIiz\fR, \fIjz\fR, \fIdescz\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+.PP
+\fInp\fR = the number of rows local to a given process. 
+.PP
+\fInq\fR = the number of columns local to a given process. 
+.TP 10
+\fBjobz\fR
+.NL
+(global). \fBCHARACTER\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. Specifies if it is necessary to compute the eigenvectors: 
+.IP
+If \fIjobz\fR =\fB\'N\'\fR, then only eigenvalues are computed. 
+.IP
+If \fIjobz\fR =\fB\'V\'\fR, then eigenvalues and eigenvectors are computed.
+.TP 10
+\fBuplo\fR
+.NL
+(global). \fBCHARACTER\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR. Specifies whether the upper or lower triangular part of the symmetric matrix \fIA\fR is stored: 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, \fIa\fR stores the upper triangular part of \fIA\fR. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, \fIa\fR stores the lower triangular part of \fIA\fR.
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The number of rows and columns of the matrix \fIA\fR(\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpssyev\fR. 
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsyev\fR. 
+.IP
+Block cyclic array of global dimension (\fIn\fR, \fIn\fR) and local dimension (\fIlld\(ula\fR, \fILOC\fR\fIc\fR(\fIja\fR+\fIn\fR-1)). On entry, the symmetric matrix \fIA\fR. 
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, only the upper triangular part of \fIA\fR is used to define the elements of the symmetric matrix. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, only the lower triangular part of \fIA\fR is used to define the elements of the symmetric matrix. 
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix \fIA\fR, respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBiz\fR, \fBjz\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIz\fR indicating the first row and the first column of the submatrix \fIZ\fR, respectively.
+.TP 10
+\fBdescz\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIZ\fR.
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpssyev\fR. 
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsyev\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIlwork\fR). 
+.TP 10
+\fBlwork\fR
+.NL
+(local) \fBINTEGER\fR.  See below for definitions of variables used to define \fIlwork\fR. 
+.IP
+If no eigenvectors are requested (\fIjobz\fR = \fB\'N\'\fR), then \fIlwork\fR \(>= 5*\fIn\fR + \fIsizesytrd\fR + 1, 
+.IP
+where  \fIsizesytrd\fRis the workspace for \fBp?sytrd\fR and is \fBmax\fR(\fBNB\fR*(\fInp\fR +1), 3*\fBNB\fR). 
+.IP
+If eigenvectors are requested (\fIjobz\fR = \fB\'V\'\fR) then the amount of workspace required to guarantee that all eigenvectors are computed is: 
+.IP
+\fIqrmem\fR = 2*\fIn\fR-2
+.IP
+\fIlwmin\fR = 5*\fIn\fR + \fIn\fR*\fIldc\fR + \fBmax\fR(\fIsizemqrleft\fR, \fIqrmem\fR) + 1
+.IP
+Variable definitions: 
+.IP
+\fInb\fR = \fIdesca\fR(\fImb\fR\(ul) = \fIdesca\fR(\fInb\fR\(ul) = \fIdescz\fR(\fImb\(ul\fR) = \fIdescz\fR(\fInb\fR\(ul); 
+.IP
+\fInn\fR = \fBmax\fR(\fIn\fR, \fInb\fR, 2); 
+.IP
+\fIdesca\fR(\fIrsrc\(ul\fR) = \fIdesca\fR(\fIrsrc\(ul\fR) = \fIdescz\fR(\fIrsrc\(ul\fR) = \fIdescz\fR(\fIcsrc\(ul\fR) = 0
+.IP
+\fInp\fR = \fBnumroc\fR(\fInn\fR, \fInb\fR, 0, 0, \fBNPROW\fR) 
+.IP
+\fInq\fR = \fBnumroc\fR(\fBmax\fR(\fIn\fR, \fInb\fR, 2), \fInb\fR, 0, 0, \fBNPCOL\fR) 
+.IP
+\fInrc\fR = \fBnumroc\fR(\fIn\fR, \fInb\fR, \fImyprowc\fR, 0, \fBNPROCS\fR) 
+.IP
+\fIldc\fR = \fBmax\fR(1, \fInrc\fR) 
+.IP
+\fIsizemqrleft\fR is the workspace for \fBp?ormtr\fR when its \fIside\fR argument is \fB\'L\'\fR. 
+.IP
+\fImyprowc\fR is defined when a new context is created as follows: 
+.IP
+\fBcall blacs\(ulget\fR(\fIdesca\fR(\fIctxt\(ul\fR), 0, \fIcontextc\fR) 
+.IP
+call \fBblacs\(ulgridinit\fR(\fIcontextc\fR, \fB\'R\'\fR, \fBNPROCS\fR, 1) 
+.IP
+\fBcall \fR\fBblacs\(ulgridinfo\fR(\fIcontextc\fR, \fInprowc\fR, \fInpcolc\fR, \fImyprowc\fR, \fImypcolc\fR)
+.IP
+If \fIlwork\fR = -1, then \fIlwork\fR is global input and a workspace query is assumed; the routine only calculates the minimum and optimal size for all work arrays. Each of these values is returned in the first entry of the corresponding work array, and no error message is issued by \fBpxerbla\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, the lower triangle (if \fIuplo\fR=\fB\'L\'\fR) or the upper triangle (if \fIuplo\fR=\fB\'U\'\fR) of \fIA\fR, including the diagonal, is destroyed. 
+.TP 10
+\fBw\fR
+.NL
+(global). \fBREAL\fR for \fBpssyev\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsyev\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+On normal exit, the first \fIm\fR entries contain the selected eigenvalues in ascending order. 
+.TP 10
+\fBz\fR
+.NL
+(local). \fBREAL\fR for \fBpssyev\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdsyev\fR
+.IP
+Array, global dimension (\fIn\fR, \fIn\fR), local dimension (\fIlld\(ulz\fR, \fILOCc\fR(\fIjz\fR+\fIn\fR-1)). If \fIjobz\fR = \fB\'V\'\fR, then on normal exit the first \fIm\fR columns of \fIz\fR contain the orthonormal eigenvectors of the matrix corresponding to the selected eigenvalues. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR, then \fIz\fR is not referenced. 
+.TP 10
+\fBwork(1)\fR
+.NL
+On output, \fIwork\fR(1) returns the workspace needed to guarantee completion. If the input parameters are incorrect, \fIwork\fR(1) may also be incorrect. 
+.IP
+If \fIjobz\fR = \fB\'N\'\fR\fIwork\fR(1) = minimal (optimal) amount of workspace 
+.IP
+If \fIjobz\fR = \fB\'V\'\fR\fIwork\fR(1) = minimal workspace required to generate all the eigenvectors. 
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR < 0: If the \fIi\fR-th argument is an array and the \fIj\fR-entry had an illegal value, then \fIinfo\fR = -(\fIi\fR*100+\fIj\fR), if the \fIi\fR-th argument is a scalar and had an illegal value, then \fIinfo\fR = -\fIi\fR. 
+.IP
+If \fIinfo\fR > 0: 
+.IP
+If \fIinfo\fR= 1 through \fIn\fR, the \fIi\fR-th eigenvalue did not converge in \fB?steqr2\fR after a total of 30\fIn\fR iterations. 
+.IP
+If \fIinfo\fR= \fIn\fR+1, then \fBp?syev\fR has detected heterogeneity by finding that eigenvalues were not identical across the process grid. In this case, the accuracy of the results from \fBp?syev\fR cannot be guaranteed. 

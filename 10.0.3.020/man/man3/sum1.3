@@ -1,0 +1,41 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?sum1 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?sum1 \- Forms the 1-norm of the complex vector using the true absolute value.
+.SH SYNOPSIS
+.PP
+\fIres\fR= \fBscsum1\fR( \fIn\fR, \fIcx\fR, \fIincx\fR)
+.PP
+\fIres\fR= \fBdzsum1\fR( \fIn\fR, \fIcx\fR, \fIincx\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Specifies the number of elements in the vector \fIcx\fR. 
+.TP 10
+\fBcx\fR
+.NL
+\fBCOMPLEX\fR for \fBscsum1\fR
+.IP
+\fBCOMPLEX*16\fR for dzsum1
+.IP
+Array, \fBDIMENSION\fR at least (1+(\fIn\fR\fB-1)*abs\fR(\fIincx\fR)). 
+.IP
+Contains the input vector whose elements will be summed. 
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. Specifies the spacing between successive elements of \fIcx\fR (\fIincx\fR > 0).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBres\fR
+.NL
+\fBREAL\fR for \fBscsum1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdzsum1\fR
+.IP
+Contains the sum of absolute values.

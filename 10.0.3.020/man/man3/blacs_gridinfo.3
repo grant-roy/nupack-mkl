@@ -1,0 +1,33 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH blacs\(ulgridinfo 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+blacs\(ulgridinfo \- Returns information on the current grid. 
+.SH SYNOPSIS
+.PP
+\fBcall blacs\(ulgridinfo\fR( \fIicontxt\fR, \fInprow\fR, \fInpcol\fR, \fImyprow\fR, \fImypcol\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle that indicates the context.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBnprow\fR
+.NL
+\fBINTEGER\fR.  Number of process rows in the current process grid.
+.TP 10
+\fBnpcol\fR
+.NL
+\fBINTEGER\fR. Number of process columns in the current process grid.
+.TP 10
+\fBmyprow\fR
+.NL
+\fBINTEGER\fR.  Row coordinate of the calling process in the process grid.
+.TP 10
+\fBmypcol\fR
+.NL
+\fBINTEGER\fR. Column coordinate of the calling process in the process grid.

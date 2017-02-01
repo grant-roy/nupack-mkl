@@ -1,0 +1,67 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larnv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larnv \- Returns a vector of random numbers from a uniform or normal distribution.
+.SH SYNOPSIS
+.PP
+\fBcall slarnv\fR( \fIidist\fR, \fIiseed\fR, \fIn\fR, \fIx\fR)
+.PP
+\fBcall dlarnv\fR( \fIidist\fR, \fIiseed\fR, \fIn\fR, \fIx\fR)
+.PP
+\fBcall clarnv\fR( \fIidist\fR, \fIiseed\fR, \fIn\fR, \fIx\fR)
+.PP
+\fBcall zlarnv\fR( \fIidist\fR, \fIiseed\fR, \fIn\fR, \fIx\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBidist\fR
+.NL
+\fBINTEGER\fR. Specifies the distribution of the random numbers: for \fBslarnv\fR and \fBdlanrv\fR:
+.IP
+= 1:  uniform (0,1) 
+.IP
+= 2:  uniform (-1,1) 
+.IP
+= 3:  normal (0,1). 
+.IP
+for \fBclarnv\fR and \fBzlanrv\fR:
+.IP
+= 1:  real and imaginary parts each uniform (0,1) 
+.IP
+= 2:  real and imaginary parts each uniform (-1,1) 
+.IP
+= 3:  real and imaginary parts each normal (0,1) 
+.IP
+= 4:  uniformly distributed on the disc abs(z) < 1
+.IP
+= 5:  uniformly distributed on the circle abs(z) = 1
+.TP 10
+\fBiseed\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (4). 
+.IP
+On entry, the seed of the random number generator; the array elements must be between 0 and 4095, and \fIiseed\fR(4) must be odd.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of random numbers to be generated.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBslarnv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarnv\fR
+.IP
+\fBCOMPLEX\fR for \fBclarnv\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlarnv\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The generated random numbers.
+.TP 10
+\fBiseed\fR
+.NL
+On exit, the seed is updated.

@@ -1,0 +1,199 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lals0 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lals0 \- Applies back multiplying factors in solving the least squares problem using divide and conquer SVD approach. Used by \fB?gelsd\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slals0\fR( \fIicompq\fR, \fInl\fR, \fInr\fR, \fIsqre\fR, \fInrhs\fR, \fIb\fR, \fIldb\fR, \fIbx\fR, \fIldbx\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIldgcol\fR, \fIgivnum\fR, \fIldgnum\fR, \fIpoles\fR, \fIdifl\fR, \fIdifr\fR, \fIz\fR, \fIk\fR, \fIc\fR, \fIs\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlals0\fR( \fIicompq\fR, \fInl\fR, \fInr\fR, \fIsqre\fR, \fInrhs\fR, \fIb\fR, \fIldb\fR, \fIbx\fR, \fIldbx\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIldgcol\fR, \fIgivnum\fR, \fIldgnum\fR, \fIpoles\fR, \fIdifl\fR, \fIdifr\fR, \fIz\fR, \fIk\fR, \fIc\fR, \fIs\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall clals0\fR( \fIicompq\fR, \fInl\fR, \fInr\fR, \fIsqre\fR, \fInrhs\fR, \fIb\fR, \fIldb\fR, \fIbx\fR, \fIldbx\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIldgcol\fR, \fIgivnum\fR, \fIldgnum\fR, \fIpoles\fR, \fIdifl\fR, \fIdifr\fR, \fIz\fR, \fIk\fR, \fIc\fR, \fIs\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+\fBcall zlals0\fR( \fIicompq\fR, \fInl\fR, \fInr\fR, \fIsqre\fR, \fInrhs\fR, \fIb\fR, \fIldb\fR, \fIbx\fR, \fIldbx\fR, \fIperm\fR, \fIgivptr\fR, \fIgivcol\fR, \fIldgcol\fR, \fIgivnum\fR, \fIldgnum\fR, \fIpoles\fR, \fIdifl\fR, \fIdifr\fR, \fIz\fR, \fIk\fR, \fIc\fR, \fIs\fR, \fIrwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicompq\fR
+.NL
+\fBINTEGER\fR. Specifies whether singular vectors are to be computed in factored form: 
+.IP
+If \fIicompq\fR = 0: Left singular vector matrix. 
+.IP
+If \fIicompq\fR = 1: Right singular vector matrix.
+.TP 10
+\fBnl\fR
+.NL
+\fBINTEGER\fR. The row dimension of the upper block. 
+.IP
+\fInl\fR\(>= 1.
+.TP 10
+\fBnr\fR
+.NL
+\fBINTEGER\fR. The row dimension of the lower block. 
+.IP
+\fInr\fR\(>= 1.
+.TP 10
+\fBsqre\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIsqre\fR = 0: the lower block is an \fInr\fR-by-\fInr\fR square matrix. 
+.IP
+If \fIsqre\fR = 1: the lower block is an \fInr\fR-by-(\fInr\fR+1) rectangular matrix. The bidiagonal matrix has row dimension \fIn\fR = \fInl\fR + \fInr\fR + 1, and column dimension \fIm\fR = \fIn\fR + \fIsqre\fR.
+.TP 10
+\fBnrhs\fR
+.NL
+\fBINTEGER\fR. The number of columns of \fIB\fR and \fIbx\fR. 
+.IP
+Must be at least 1.
+.TP 10
+\fBb\fR
+.NL
+\fBREAL\fR for \fBslals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR
+.IP
+\fBCOMPLEX\fR for \fBclals0\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlals0\fR.
+.IP
+Array, \fBDIMENSION\fR ( \fIldb\fR, \fInrhs\fR ). 
+.IP
+Contains the right hand sides of the least squares problem in rows 1 through \fIm\fR.
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The leading dimension of \fIb\fR. 
+.IP
+Must be at least max(1,max( \fIm\fR, \fIn\fR )).
+.TP 10
+\fBbx\fR
+.NL
+\fBREAL\fR for \fBslals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR
+.IP
+\fBCOMPLEX\fR for \fBclals0\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlals0\fR.
+.IP
+Workspace array, \fBDIMENSION\fR ( \fIldbx\fR, \fInrhs\fR ). 
+.TP 10
+\fBldbx\fR
+.NL
+\fBINTEGER\fR. The leading dimension of \fIbx\fR.
+.TP 10
+\fBperm\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The permutations (from deflation and sorting) applied to the two blocks.
+.TP 10
+\fBgivptr\fR
+.NL
+\fBINTEGER\fR. The number of Givens rotations which took place in this subproblem.
+.TP 10
+\fBgivcol\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR ( \fIldgcol\fR, 2 ). Each pair of numbers indicates a pair of rows/columns involved in a Givens rotation.
+.TP 10
+\fBldgcol\fR
+.NL
+\fBINTEGER\fR. The leading dimension of \fIgivcol\fR, must be at least \fIn\fR.
+.TP 10
+\fBgivnum\fR
+.NL
+\fBREAL\fR for \fBslals0\fR/\fBclals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR/\fBzlals0\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIldgnum\fR, 2 ). Each number indicates the \fBc\fR or \fIs\fR value used in the corresponding Givens rotation.
+.TP 10
+\fBldgnum\fR
+.NL
+\fBINTEGER\fR. The leading dimension of arrays \fIdifr\fR, \fIpoles\fR and \fIgivnum\fR, must be at least \fIk\fR.
+.TP 10
+\fBpoles\fR
+.NL
+\fBREAL\fR for \fBslals0\fR/\fBclals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR/\fBzlals0\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIldgnum\fR, 2 ). On entry, \fIpoles\fR(1:\fIk\fR, 1) contains the new singular values obtained from solving the secular equation, and \fIpoles\fR(1:\fIk\fR, 2) is an array containing the poles in the secular equation.
+.TP 10
+\fBdifl\fR
+.NL
+\fBREAL\fR for \fBslals0\fR/\fBclals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR/\fBzlals0\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIk\fR ). On entry, \fIdifl\fR(\fIi\fR) is the distance between \fIi\fR-th updated (undeflated) singular value and the \fIi\fR-th (undeflated) old singular value.
+.TP 10
+\fBdifr\fR
+.NL
+\fBREAL\fR for \fBslals0\fR/\fBclals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR/\fBzlals0\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIldgnum\fR, 2 ). On entry, \fIdifr\fR(\fIi\fR, 1) contains the distances between \fIi\fR-th updated (undeflated) singular value and the \fIi\fR+\fI1\fR-th (undeflated) old singular value. And \fIdifr\fR(\fIi\fR, 2) is the normalizing factor for the \fIi\fR-th right singular vector.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslals0\fR/\fBclals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR/\fBzlals0\fR
+.IP
+Array, \fBDIMENSION\fR ( \fIk\fR ). Contains the components of the deflation-adjusted updating row vector.
+.TP 10
+\fBK\fR
+.NL
+\fBINTEGER\fR. Contains the dimension of the non-deflated matrix. This is the order of the related secular equation. 1 \(<= \fIk\fR \(<= \fIn\fR.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBslals0\fR/\fBclals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR/\fBzlals0\fR
+.IP
+Contains garbage if \fIsqre\fR =0 and the \fIc\fR value of a Givens rotation related to the right null space if \fIsqre\fR = 1.
+.TP 10
+\fBs\fR
+.NL
+\fBREAL\fR for \fBslals0\fR/\fBclals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR/\fBzlals0\fR
+.IP
+Contains garbage if \fIsqre\fR =0 and the \fIs\fR value of a Givens rotation related to the right null space if \fIsqre\fR = 1.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlals0\fR
+.IP
+Workspace array, \fBDIMENSION\fR ( \fIk\fR ). Used with real flavors only.
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBclals0\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzlals0\fR
+.IP
+Workspace array, \fBDIMENSION\fR (\fIk\fR*(1+\fInrhs\fR) + 2*\fInrhs\fR). Used with complex flavors only.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBb\fR
+.NL
+On exit, contains the solution \fIX\fR in rows 1 through \fIn\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0:  successful exit. 
+.IP
+If \fIinfo\fR =\fI -i\fR < 0, the \fIi\fR-th argument had an illegal value.

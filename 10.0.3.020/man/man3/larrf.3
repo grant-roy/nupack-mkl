@@ -1,0 +1,139 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?larrf 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?larrf \- Finds a new relatively robust representation such that at least one of the eigenvalues is relatively isolated.
+.SH SYNOPSIS
+.PP
+\fBcall slarrf\fR( \fIn\fR, \fId\fR, \fIl\fR, \fIld\fR, \fIclstrt\fR, \fIclend\fR, \fIw\fR, \fIwgap\fR, \fIwerr\fR, \fIspdiam\fR, \fIclgapl\fR, \fIclgapr\fR, \fIpivmin\fR, \fIsigma\fR, \fIdplus\fR, \fIlplus\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlarrf\fR( \fIn\fR, \fId\fR, \fIl\fR, \fIld\fR, \fIclstrt\fR, \fIclend\fR, \fIw\fR, \fIwgap\fR, \fIwerr\fR, \fIspdiam\fR, \fIclgapl\fR, \fIclgapr\fR, \fIpivmin\fR, \fIsigma\fR, \fIdplus\fR, \fIlplus\fR, \fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix (subblock, if the matrix is splitted).
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The \fIn\fR diagonal elements of the diagonal matrix \fID\fR.
+.TP 10
+\fBl\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). 
+.IP
+The (\fIn\fR-1) subdiagonal elements of the unit bidiagonal matrix \fIL\fR.
+.TP 10
+\fBld\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR-1). 
+.IP
+The \fIn\fR-1 elements \fIL\fR(i)*\fID\fR(i).
+.TP 10
+\fBclstrt\fR
+.NL
+\fBINTEGER\fR. The index of the first eigenvalue in the cluster.
+.TP 10
+\fBclend\fR
+.NL
+\fBINTEGER\fR. The index of the last eigenvalue in the cluster.
+.TP 10
+\fBw\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Array, \fBDIMENSION\fR \(>= (\fBclend\fR -\fBclstrt\fR+1). The eigenvalue approximations of \fIL*D*L\fR**\fIT\fR in ascending order. \fIw\fR(\fIclstrt\fR) through \fIw\fR(\fIclend\fR) form the cluster of relatively close eigenvalues. 
+.TP 10
+\fBwgap\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Array, \fBDIMENSION\fR \(>= (\fBclend\fR -\fBclstrt\fR+1). The separation from the right neighbor eigenvalue in \fIw\fR.
+.TP 10
+\fBwerr\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Array, \fBDIMENSION\fR \(>= (\fBclend\fR -\fBclstrt\fR+1). On input, \fIwerr\fR contains the semiwidth of the uncertaintyinterval of the corresponding eigenvalue approximation in \fIw\fR.
+.TP 10
+\fBspdiam\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Estimate of the spectral diameter obtained from the  Gerschgorin intervals. 
+.TP 10
+\fBclgapl\fR,  \fBclgapr\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Absolute gap on each end of the cluster. Set by the calling routine to protect against shifts too close to eigenvalues outside the cluster. 
+.TP 10
+\fBpivmin\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+The minimum pivot allowed in the Sturm sequence. 
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Workspace array, \fBDIMENSION\fR (2*\fIn\fR). 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBwgap\fR
+.NL
+On output, the gaps are refined.
+.TP 10
+\fBsigma\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+The shift used to form \fIL\fR(+)*\fID*\fR(+)*\fIL\fR(+)**\fIT\fR.
+.TP 10
+\fBdplus\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The \fIn\fR diagonal elements of the diagonal matrix \fID\fR(+).
+.TP 10
+\fBlplus\fR
+.NL
+\fBREAL\fR for \fBslarrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlarrf\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The first (\fIn\fR-1) elements of \fIlplus\fR contain the subdiagonal elements of the unit bidiagonal matrix \fIL\fR(+). 

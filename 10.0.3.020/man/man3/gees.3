@@ -1,0 +1,237 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gees 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gees \- Computes the eigenvalues and Schur factorization of a general matrix, and orders the factorization so that selected eigenvalues are at the top left of the Schur form.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgees\fR(\fIjobvs\fR, \fIsort\fR, \fIselect\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIsdim\fR, \fIwr\fR, \fIwi\fR, \fIvs\fR, \fIldvs\fR, \fIwork\fR, \fIlwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+\fBcall dgees\fR(\fIjobvs\fR, \fIsort\fR, \fIselect\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIsdim\fR, \fIwr\fR, \fIwi\fR, \fIvs\fR, \fIldvs\fR, \fIwork\fR, \fIlwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+\fBcall cgees\fR(\fIjobvs\fR, \fIsort\fR, \fIselect\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIsdim\fR, \fIw\fR, \fIvs\fR, \fIldvs\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+\fBcall zgees\fR(\fIjobvs\fR, \fIsort\fR, \fIselect\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIsdim\fR, \fIw\fR, \fIvs\fR, \fIldvs\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIbwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall gees\fR(\fIa\fR, \fIwr\fR, \fIwi\fR[,\fIvs\fR] [,\fIselect\fR] [,\fIsdim\fR] [,\fIinfo\fR])
+.PP
+\fBcall gees\fR(\fIa\fR, \fIw\fR[,\fIvs\fR] [,\fIselect\fR] [,\fIsdim\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjobvs\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'V\'\fR. 
+.IP
+If \fIjobvs\fR = \fB\'N\'\fR, then Schur vectors are not computed. 
+.IP
+If \fIjobvs\fR = \fB\'V\'\fR, then Schur vectors are computed.
+.TP 10
+\fBsort\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'S\'\fR. Specifies whether or not to order the eigenvalues on the diagonal of the Schur form.
+.IP
+If \fIsort\fR = \fB\'N\'\fR, then eigenvalues are not ordered. 
+.IP
+If \fIsort\fR = \fB\'S\'\fR, eigenvalues are ordered (see \fIselect\fR).
+.TP 10
+\fBselect\fR
+.NL
+\fBLOGICAL FUNCTION\fR of two \fBREAL\fR arguments for real flavors.
+.IP
+\fBLOGICAL FUNCTION\fR of one \fBCOMPLEX\fR argument for complex flavors.
+.IP
+\fIselect\fR must be declared \fBEXTERNAL\fR in the calling subroutine. 
+.IP
+If \fIsort\fR = \fB\'S\'\fR, \fIselect\fR is used to select eigenvalues to sort to the top left of the Schur form. 
+.IP
+If \fIsort\fR = \fB\'N\'\fR, \fIselect\fR is not referenced.
+.IP
+\fIFor real flavors\fR:
+.IP
+An eigenvalue \fIwr\fR(j)+sqrt(-1)*\fIwi\fR(j) is selected if \fIselect\fR(\fIwr\fR(j), \fIwi\fR(j)) is true; that is, if either one of a complex conjugate pair of eigenvalues is selected, then both complex eigenvalues are selected. 
+.IP
+Note that a selected complex eigenvalue may no longer satisfy \fIselect\fR(\fIwr\fR(j), \fIwi\fR(j))= \fB.TRUE.\fR after ordering, since ordering may change the value of complex eigenvalues (especially if the eigenvalue is ill-conditioned); in this case \fIinfo\fR may be set to \fIn\fR+2 (see \fIinfo\fR below).
+.IP
+\fIFor complex flavors:\fR
+.IP
+An eigenvalue \fIw\fR(j) is selected if \fIselect\fR(\fIw\fR(j)) is true.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsgees\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgees\fR
+.IP
+\fBCOMPLEX\fR for \fBcgees\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgees\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) is an array containing the \fIn\fR-by-\fIn\fR matrix \fIA\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of the array \fIa\fR. Must be at least max(1, \fIn\fR).
+.TP 10
+\fBldvs\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output array \fIvs\fR. Constraints:
+.IP
+\fIldvs\fR\(>= 1;
+.IP
+\fIldvs\fR\(>= max(1, \fIn\fR) if \fIjobvs\fR = \fB\'V\'\fR.
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the array \fIwork\fR. 
+.IP
+Constraint: 
+.IP
+\fIlwork\fR\(>= max(1, 3\fIn\fR) for real flavors; 
+.IP
+\fIlwork\fR\(>= max(1, 2\fIn\fR) for complex flavors. 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR.
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBcgees\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzgees\fR
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, \fIn\fR). Used in complex flavors only.
+.TP 10
+\fBbwork\fR
+.NL
+\fBLOGICAL\fR. Workspace array, \fBDIMENSION\fR at least max(1, \fIn\fR). Not referenced if \fIsort\fR = \fB\'N\'\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, this array is overwritten by the real-Schur/Schur form \fIT\fR. 
+.TP 10
+\fBsdim\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIsort\fR = \fB\'N\'\fR, \fIsdim\fR= 0. 
+.IP
+If \fIsort\fR = \fB\'S\'\fR, \fIsdim\fR is equal to the number of eigenvalues (after sorting) for which \fIselect\fR is true. 
+.IP
+Note that for real flavors complex conjugate pairs for which \fIselect\fR is true for either eigenvalue count as 2. 
+.TP 10
+\fBwr\fR, \fBwi\fR
+.NL
+\fBREAL\fR for \fBsgees\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgees\fR
+.IP
+Arrays, \fBDIMENSION\fR at least max (1, \fIn\fR) each. Contain the real and imaginary parts, respectively, of the computed eigenvalues, in the same order that they appear on the diagonal of the output real-Schur form \fIT\fR. Complex conjugate pairs of eigenvalues appear consecutively with the eigenvalue having positive imaginary part first. 
+.TP 10
+\fBw\fR
+.NL
+\fBCOMPLEX\fR for \fBcgees\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgees\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). Contains the computed eigenvalues. The eigenvalues are stored in the same order as they appear on the diagonal of the output Schur form \fIT\fR.
+.TP 10
+\fBvs\fR
+.NL
+\fBREAL\fR for \fBsgees\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgees\fR
+.IP
+\fBCOMPLEX\fR for \fBcgees\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgees\fR. 
+.IP
+Array \fIvs\fR(\fIldvs\fR,*);the second dimension of \fIvs\fR must be at least max(1, \fIn\fR).
+.IP
+If \fIjobvs\fR = \fB\'V\'\fR, \fIvs\fR contains the orthogonal/unitary matrix \fIZ\fR of Schur vectors. 
+.IP
+If \fIjobvs\fR = \fB\'N\'\fR, \fIvs\fR is not referenced.
+.TP 10
+\fBwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIwork(1)\fR returns the required minimal size of \fIlwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fRth parameter had an illegal value.
+.IP
+If \fIinfo\fR = \fIi\fR, and 
+.IP
+\fIi\fR\(<=\fIn\fR:
+.IP
+the \fIQR\fR algorithm failed to compute all the eigenvalues; elements 1:\fIilo\fR-1 and \fIi\fR+1:\fIn\fR of \fIwr\fR and \fIwi\fR (for real flavors) or \fIw\fR (for complex flavors) contain those eigenvalues which have converged; if \fIjobvs\fR = \fB\'V\'\fR, \fIvs\fR contains the matrix which reduces \fIA\fR to its partially converged Schur form;
+.IP
+\fIi\fR = \fIn\fR+1:
+.IP
+the eigenvalues could not be reordered because some eigenvalues were too close to separate (the problem is very ill-conditioned);
+.IP
+\fIi\fR = \fIn\fR+2:
+.IP
+after reordering, round-off changed values of some complex eigenvalues so that leading eigenvalues in the Schur form no longer satisfy \fIselect\fR = \fB.TRUE.\fR. This could also be caused by underflow due to scaling.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBgees\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBwr\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBwi\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBw\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in complex flavors only.
+.TP 10
+\fBvs\fR
+.NL
+Holds the matrix \fIVS\fR of size (\fIn\fR, \fIn\fR).
+.TP 10
+\fBjobvs\fR
+.NL
+Restored based on the presence of the argument \fIvs\fR as follows: 
+.IP
+\fIjobvs\fR = \fB\'V\'\fR, if \fIvs\fR is present, 
+.IP
+\fIjobvs\fR = \fB\'N\'\fR, if \fIvs\fR is omitted.
+.TP 10
+\fBsort\fR
+.NL
+Restored based on the presence of the argument \fIselect\fR as follows: 
+.IP
+\fIsort\fR = \fB\'S\'\fR, if \fIselect\fR is present, 
+.IP
+\fIsort\fR = \fB\'N\'\fR, if \fIselect\fR is omitted.

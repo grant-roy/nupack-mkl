@@ -1,0 +1,143 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH Hypergeometric 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+Hypergeometric \- Generates hypergeometrically distributed random values.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvirnghypergeometric\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIl\fR, \fIs\fR, \fIm\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBviRngHypergeometric\fR( \fImethod\fR, \fIstream\fR, \fIn\fR, \fIr\fR, \fIl\fR, \fIs\fR, \fIm\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBmethod\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Generation method. The specific value is as follows: 
+.br
+\fBVSL\(ulMETHOD\(ulIHYPERGEOMETRIC\(ulH2PE\fR
+.br
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE (VSL\(ulSTREAM\(ulSTATE)\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Descriptor of the stream state structure.
+.br
+\h\'2\'C:\h\'7\'Pointer to the stream state structure
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Number of random values to be generated
+.PP
+.SB Name
+.br
+\h\'1\'\fBl\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Lot size \fBl\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBs\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Size of sampling without replacement \fBs\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBm\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Number of marked elements \fBm\fR
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBr\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(OUT)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint*\fR
+.br
+.SB Description
+.br
+\h\'1\'Vector of \fIn\fR hypergeometrically distributed random values
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK\fR, \fBVSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+\fBstream\fR is a \fBNULL\fR pointer.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulSTREAM\fR
+.NL
+\fIstream\fR is not a valid random stream.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulUPDATE\fR
+.NL
+Callback function for an abstract BRNG returns an invalid number of updated entries in a buffer, that is, < 0 or > \fBnmax\fR.
+.TP 10
+\fBVSL\(ulERROR\(ulNO\(ulNUMBERS\fR
+.NL
+Callback function for an abstract BRNG returns 0 as the number of updated entries in a buffer.

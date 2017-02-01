@@ -1,0 +1,31 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?las2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?las2 \- Computes singular values of a 2-by-2 triangular matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slas2\fR( \fIf\fR, \fIg\fR, \fIh\fR, \fIssmin\fR, \fIssmax\fR)
+.PP
+\fBcall dlas2\fR( \fIf\fR, \fIg\fR, \fIh\fR, \fIssmin\fR, \fIssmax\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBf\fR, \fBg\fR, \fBh\fR
+.NL
+\fBREAL\fR for \fBslas2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlas2\fR
+.IP
+The (1,1), (1,2) and (2,2) elements of the 2-by-2 matrix, respectively.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBssmin\fR, \fBssmax\fR
+.NL
+\fBREAL\fR for \fBslas2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlas2\fR
+.IP
+The smaller and the larger singular values, respectively.

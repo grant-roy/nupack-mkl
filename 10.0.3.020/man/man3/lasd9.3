@@ -1,0 +1,121 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasd9 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasd9 \- Finds the square roots of the roots of the secular equation, and stores, for each  element in \fID\fR, the distance to its two nearest poles. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasd9\fR( \fIicompq\fR, \fIldu\fR, \fIk\fR, \fId\fR, \fIz\fR, \fIvf\fR, \fIvl\fR, \fIdifl\fR, \fIdifr\fR, \fIdsigma\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlasd9\fR( \fIicompq\fR, \fIldu\fR, \fIk\fR, \fId\fR, \fIz\fR, \fIvf\fR, \fIvl\fR, \fIdifl\fR, \fIdifr\fR, \fIdsigma\fR, \fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicompq\fR
+.NL
+\fBINTEGER\fR. Specifies whether singular vectors are to be computed in  factored form in the calling routine: 
+.IP
+If \fIicompq\fR = 0, compute singular values only; 
+.IP
+If \fIicompq\fR = 1, compute singular vector matrices  in factored form also.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. The number of terms in the rational function to be solved by \fBslasd4\fR. \fIk\fR\(>= 1.
+.TP 10
+\fBdsigma\fR
+.NL
+\fBREAL\fR for \fBslasd9\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd9\fR.
+.IP
+Array, \fBDIMENSION\fR(\fIk\fR). 
+.IP
+The first \fIk\fR elements of this array contain the old roots of the deflated updating problem. These are the poles of the secular equation.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslasd9\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd9\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIk\fR). The first \fIk\fR elements of this array contain the components of the deflation-adjusted updating row vector.
+.TP 10
+\fBvf\fR
+.NL
+\fBREAL\fR for \fBslasd9\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd9\fR.
+.IP
+Array, \fBDIMENSION\fR(\fIk\fR). On entry, \fIvf\fR contains  information passed through \fBsbede8\fR.
+.TP 10
+\fBvl\fR
+.NL
+\fBREAL\fR for \fBslasd9\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd9\fR.
+.IP
+Array, \fBDIMENSION\fR(\fIk\fR). On entry, \fIvl\fR contains  information passed through \fBsbede8\fR.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslasd9\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd9\fR.
+.IP
+Workspace array, \fBDIMENSION\fR at least (3\fIk\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasd9\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd9\fR.
+.IP
+Array, \fBDIMENSION\fR(\fIk\fR). \fId\fR(\fIi\fR) contains the updated singular values. 
+.TP 10
+\fBvf\fR
+.NL
+On exit, \fIvf\fR contains the first \fIk\fR components of the first components of all right singular vectors of the bidiagonal matrix.
+.TP 10
+\fBvl\fR
+.NL
+On exit, \fIvl\fR contains the first \fIk\fR components of the last components of all right singular vectors of the bidiagonal matrix.
+.TP 10
+\fBdifl\fR
+.NL
+\fBREAL\fR for \fBslasd9\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd9\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIk\fR). 
+.IP
+On exit, \fIdifl\fR(\fIi\fR) = \fId\fR(\fIi\fR) - \fIdsigma\fR(\fIi\fR).
+.TP 10
+\fBdifr\fR
+.NL
+\fBREAL\fR for \fBslasd9\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd9\fR.
+.IP
+Array, 
+.IP
+\fBDIMENSION\fR (\fIldu\fR, 2)  if \fIicompq\fR =1 and 
+.IP
+\fBDIMENSION\fR (\fIk\fR) if \fIicompq\fR = 0. 
+.IP
+On exit, \fIdifr\fR(\fIi\fR, 1) = \fId\fR(\fIi\fR) - \fIdsigma\fR(\fIi\fR+1), \fIdifr\fR(\fIk\fR, 1) is not defined and will not be referenced. 
+.IP
+If \fIicompq\fR = 1, \fIdifr\fR(1:\fIk\fR, 2) is an array containing the normalizing factors for the right singular vector matrix.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR.
+.IP
+= 0:  successful exit.
+.IP
+< 0:  if \fIinfo\fR = -\fIi\fR, the \fIi\fR-th argument had an illegal value.
+.IP
+> 0:  If \fIinfo\fR = 1, an singular value did not converge

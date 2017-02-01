@@ -1,0 +1,67 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH SetDecimation 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+SetDecimation \- Changes the value of the parameter \fIdecimation\fR in the convolution or correlation task descriptor.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslconvsetdecimation\fR(\fItask\fR, \fIdecimation\fR)
+.PP
+\fIstatus\fR= \fBvslcorrsetdecimation\fR(\fItask\fR, \fIdecimation\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslConvSetDecimation\fR(\fItask\fR, \fIdecimation\fR);
+.PP
+\fIstatus\fR= \fBvslCorrSetDecimation\fR(\fItask\fR, \fIdecimation\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBtask\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulCONV\(ulTASK)\fR for \fBvslconvsetdecimation\fR
+.br
+\h\'11\'\fBTYPE(VSL\(ulCORR\(ulTASK)\fR for \fBvslcorrsetdecimation\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLConvTaskPtr\fR for \fBvslConvSetDecimation\fR
+.br
+\h\'11\'\fBVSLCorrTaskPtr\fR for \fBvslCorrSetDecimation\fR
+.br
+.SB Description
+.br
+\h\'1\'Pointer to the task descriptor.
+.PP
+.SB Name
+.br
+\h\'1\'\fBdecimation\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER, DIMENSION (*)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint[]\fR
+.br
+.SB Description
+.br
+\h\'1\'New value of the parameter \fBdecimation\fR.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBstatus\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Current status of the task.

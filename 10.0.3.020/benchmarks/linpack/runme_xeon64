@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+export KMP_AFFINITY=compact
+ 
+echo "This is a SAMPLE run script.  Change it to reflect the correct number"
+echo "of CPUs/threads, problem input files, etc.."
+ 
+date
+date > lin_xeon64.txt
+./xlinpack_xeon64 lininput_xeon64 >> lin_xeon64.txt
+date >> lin_xeon64.txt
+echo -n "Done: "
+date

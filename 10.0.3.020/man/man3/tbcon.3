@@ -1,0 +1,125 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?tbcon 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?tbcon \- Estimates the reciprocal of the condition number of a triangular band matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall stbcon\fR( \fInorm\fR, \fIuplo\fR, \fIdiag\fR, \fIn\fR, \fIkd\fR, \fIab\fR, \fIldab\fR, \fIrcond\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall dtbcon\fR( \fInorm\fR, \fIuplo\fR, \fIdiag\fR, \fIn\fR, \fIkd\fR, \fIab\fR, \fIldab\fR, \fIrcond\fR, \fIwork\fR, \fIiwork\fR, \fIinfo\fR)
+.PP
+\fBcall ctbcon\fR( \fInorm\fR, \fIuplo\fR, \fIdiag\fR, \fIn\fR, \fIkd\fR, \fIab\fR, \fIldab\fR, \fIrcond\fR, \fIwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+\fBcall ztbcon\fR( \fInorm\fR, \fIuplo\fR, \fIdiag\fR, \fIn\fR, \fIkd\fR, \fIab\fR, \fIldab\fR, \fIrcond\fR, \fIwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall tbcon\fR( \fIa\fR, \fIrcond\fR[,\fIuplo\fR] [,\fIdiag\fR] [,\fInorm\fR] [,\fIinfo\fR] )
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnorm\fR
+.NL
+\fBCHARACTER*1\fR.  Must be \fB\'1\'\fR or \fB\'O\'\fR or \fB\'I\'\fR.
+.IP
+If \fInorm\fR = \fB\'1\'\fR or \fB\'O\'\fR, then the routine estimates the condition number of matrix \fIA\fR in 1-norm.
+.IP
+If \fInorm\fR = \fB\'I\'\fR, then the routine estimates the condition number of matrix \fIA\fR in infinity-norm.
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR.  Must be \fB\'U\'\fR or \fB\'L\'\fR. Indicates whether \fIA\fR is upper or lower triangular:
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, the array \fIap\fR stores the upper triangle of \fIA\fR in packed form.
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, the array \fIap\fR stores the lower triangle of \fIA\fR in packed form.
+.TP 10
+\fBdiag\fR
+.NL
+\fBCHARACTER*1\fR.  Must be \fB\'N\'\fR or \fB\'U\'\fR.
+.IP
+If \fIdiag\fR = \fB\'N\'\fR, then \fIA\fR is not a unit triangular matrix.
+.IP
+If \fIdiag\fR = \fB\'U\'\fR, then \fIA\fR is unit triangular: diagonal elements are assumed to be 1 and not referenced in the array \fIab\fR.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR; \fIn\fR\(>= 0.
+.TP 10
+\fBkd\fR
+.NL
+\fBINTEGER\fR.  The number of superdiagonals or subdiagonals in the matrix \fIA\fR; \fIkd\fR\(>= 0.
+.TP 10
+\fBab\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBstbcon\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdtbcon\fR
+.IP
+\fBCOMPLEX\fR for \fBctbcon\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBztbcon\fR. 
+.IP
+Arrays: \fIab\fR(\fIldab\fR,*), \fIwork\fR(*).
+.IP
+The array \fIab\fR contains the band matrix \fIA\fR. The second dimension of \fIab\fR must be at least max(1,\fIn\fR). The array \fIwork\fR is a workspace for the routine.
+.IP
+The dimension of \fIwork\fR must be at least max(1, 3*\fIn\fR) for real flavors and max(1, 2*\fIn\fR) for complex flavors.
+.TP 10
+\fBldab\fR
+.NL
+\fBINTEGER\fR.  The first dimension of the array \fIab\fR. (\fIldab\fR\(>=\fIkd\fR +1).
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace array, \fBDIMENSION\fR at least max(1, \fIn\fR).
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBctbcon\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBztbcon\fR. 
+.IP
+Workspace array, \fBDIMENSION\fR at least max(1, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBrcond\fR
+.NL
+\fBREAL\fR for single precision flavors.
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+An estimate of the reciprocal of the condition number. The routine sets \fIrcond\fR =0 if the estimate underflows; in this case the matrix is singular (to working precision). However, anytime \fIrcond\fR is small compared to 1.0, for the working precision, the matrix may be poorly conditioned or even singular.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77  counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBtbcon\fR interface are as follows:
+.TP 10
+\fBa\fR
+.NL
+Stands for argument \fIab\fR in Fortan 77 interface. Holds the array \fIA\fR of size (\fIkd\fR+1,\fIn\fR).
+.TP 10
+\fBnorm\fR
+.NL
+Must be \fB\'1\'\fR, \fB\'O\'\fR, or \fB\'I\'\fR. The default value is \fB\'1\'\fR.
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.
+.TP 10
+\fBdiag\fR
+.NL
+Must be \fB\'N\'\fR or \fB\'U\'\fR. The default value is \fB\'N\'\fR.

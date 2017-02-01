@@ -1,0 +1,295 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?hsein 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?hsein \- Computes selected eigenvectors of an upper Hessenberg matrix that correspond to specified eigenvalues.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall shsein\fR(\fIjob\fR, \fIeigsrc\fR, \fIinitv\fR, \fIselect\fR, \fIn\fR, \fIh\fR, \fIldh\fR, \fIwr\fR, \fIwi\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fImm\fR, \fIm\fR, \fIwork\fR, \fIifaill\fR, \fIifailr\fR, \fIinfo\fR)
+.PP
+\fBcall dhsein\fR(\fIjob\fR, \fIeigsrc\fR, \fIinitv\fR, \fIselect\fR, \fIn\fR, \fIh\fR, \fIldh\fR, \fIwr\fR, \fIwi\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fImm\fR, \fIm\fR, \fIwork\fR, \fIifaill\fR, \fIifailr\fR, \fIinfo\fR)
+.PP
+\fBcall chsein\fR(\fIjob\fR, \fIeigsrc\fR, \fIinitv\fR, \fIselect\fR, \fIn\fR, \fIh\fR, \fIldh\fR, \fIw\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fImm\fR, \fIm\fR, \fIwork\fR, \fIrwork\fR, \fIifaill\fR, \fIifailr\fR, \fIinfo\fR)
+.PP
+\fBcall zhsein\fR(\fIjob\fR, \fIeigsrc\fR, \fIinitv\fR, \fIselect\fR, \fIn\fR, \fIh\fR, \fIldh\fR, \fIw\fR, \fIvl\fR, \fIldvl\fR, \fIvr\fR, \fIldvr\fR, \fImm\fR, \fIm\fR, \fIwork\fR, \fIrwork\fR, \fIifaill\fR, \fIifailr\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall hsein\fR(\fIh\fR, \fIwr\fR, \fIwi\fR, \fIselect\fR[, \fIvl\fR] [,\fIvr\fR] [,\fIifaill\fR] [,\fIifailr\fR] [,\fIinitv\fR] [,\fIeigsrc\fR] [,\fIm\fR] [,\fIinfo\fR])
+.PP
+\fBcall hsein\fR(\fIh\fR, \fIw\fR, \fIselect\fR[,\fIvl\fR] [,\fIvr\fR] [,\fIifaill\fR] [,\fIifailr\fR] [,\fIinitv\fR] [,\fIeigsrc\fR] [,\fIm\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjob\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'R\'\fR or \fB\'L\'\fR or \fB\'B\'\fR. 
+.IP
+If \fIjob\fR = \fB\'R\'\fR, then only right eigenvectors are computed. 
+.IP
+If \fIjob\fR = \fB\'L\'\fR, then only left eigenvectors are computed. 
+.IP
+If \fIjob\fR = \fB\'B\'\fR, then all eigenvectors are computed.
+.TP 10
+\fBeigsrc\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'Q\'\fR or \fB\'N\'\fR. 
+.IP
+If \fIeigsrc\fR = \fB\'Q\'\fR, then the eigenvalues of \fIH\fR were found using \fB?hseqr\fR; thus if \fIH\fR has any zero sub-diagonal elements (and so is block triangular), then the \fIj-\fRth eigenvalue can be assumed to be an eigenvalue of the block containing the \fIj-\fRth row/column. This property allows the routine to perform inverse iteration on just one diagonal block. If \fIeigsrc\fR = \fB\'N\'\fR, then no such assumption is made and the routine performs inverse iteration using the whole matrix.
+.TP 10
+\fBinitv\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'U\'\fR. 
+.IP
+If \fIinitv\fR = \fB\'N\'\fR, then no initial estimates for the selected eigenvectors are supplied. 
+.IP
+If \fIinitv\fR = \fB\'U\'\fR, then initial estimates for the selected eigenvectors are supplied in \fIvl\fR and/or \fIvr\fR.
+.TP 10
+\fBselect\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max (1, \fIn\fR). Specifies which eigenvectors are to be computed.
+.IP
+\fIFor real flavors\fR:
+.IP
+To obtain the real eigenvector corresponding to the real eigenvalue \fIwr\fR(\fIj\fR), set \fIselect\fR(\fIj\fR) to \fB.TRUE.\fR
+.IP
+To select the complex eigenvector corresponding to the complex eigenvalue (\fIwr\fR(\fIj\fR), \fIwi\fR(\fIj\fR)) with complex conjugate (\fIwr\fR(\fIj\fR+1), \fIwi\fR(\fIj\fR+1)), set \fIselect\fR(\fIj\fR) and/or \fIselect\fR(\fIj\fR+1) to \fB.TRUE.\fR; the eigenvector corresponding to the first eigenvalue in the pair is computed. 
+.IP
+\fIFor complex flavors\fR:
+.IP
+To select the eigenvector corresponding to the eigenvalue \fIw\fR(\fIj\fR), set \fIselect\fR(\fIj\fR) to \fB.TRUE.\fR
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIH\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBh\fR, \fBvl\fR, \fBvr\fR, \fB\fR
+.NL
+\fBREAL\fR for \fBshsein\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdhsein\fR
+.IP
+\fBCOMPLEX\fR for \fBchsein\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzhsein\fR. 
+.IP
+Arrays: 
+.IP
+\fIh\fR(\fIldh\fR,*) The \fIn\fR-by-\fIn\fR upper Hessenberg matrix \fIH\fR. 
+.IP
+The second dimension of \fIh\fR must be at least max(1, \fIn\fR).
+.IP
+(\fIldvl\fR,*) 
+.IP
+If \fIinitv\fR = \fB\'V\'\fR and \fIjob\fR = \fB\'L\'\fR or \fB\'B\'\fR, then \fIvl\fR must contain starting vectors for inverse iteration for the left eigenvectors. Each starting vector must be stored in the same column or columns as will be used to store the corresponding eigenvector. 
+.IP
+If \fIinitv\fR = \fB\'N\'\fR, then \fIvl\fR need not be set. 
+.IP
+The second dimension of \fIvl\fR must be at least max(1, \fImm\fR) if \fIjob\fR = \fB\'L\'\fR or \fB\'B\'\fR and at least 1 if \fIjob\fR = \fB\'R\'\fR. 
+.IP
+The array \fIvl\fR is not referenced if \fIjob\fR = \fB\'R\'\fR.
+.IP
+\fIvr\fR(\fIldvr\fR,*) 
+.IP
+If \fIinitv\fR = \fB\'V\'\fR and \fIjob\fR = \fB\'R\'\fR or \fB\'B\'\fR, then \fIvr\fR must contain starting vectors for inverse iteration for the right eigenvectors. Each starting vector must be stored in the same column or columns as will be used to store the corresponding eigenvector. 
+.IP
+If \fIinitv\fR = \fB\'N\'\fR, then \fIvr\fR need not be set. 
+.IP
+The second dimension of \fIvr\fR must be at least max(1, \fImm\fR) if \fIjob\fR = \fB\'R\'\fR or \fB\'B\'\fR and at least 1 if \fIjob\fR = \fB\'L\'\fR. 
+.IP
+The array \fIvr\fR is not referenced if \fIjob\fR = \fB\'L\'\fR.
+.IP
+\fIwork\fR(*) is a workspace array.
+.IP
+\fBDIMENSION\fR at least max (1, \fIn\fR*(\fIn+2\fR)) for real flavors and at least max (1, \fIn\fR*\fIn\fR) for complex flavors.
+.TP 10
+\fBldh\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIh\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBw\fR
+.NL
+\fBCOMPLEX\fR for \fBchsein\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzhsein\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max (1, \fIn\fR). 
+.IP
+Contains the eigenvalues of the matrix \fIH\fR. 
+.IP
+If \fIeigsrc\fR = \fB\'Q\'\fR, the array must be exactly as returned by \fB?hseqr\fR.
+.TP 10
+\fBwr\fR, \fBwi\fR
+.NL
+\fBREAL\fR for \fBshsein\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdhsein\fR
+.IP
+Arrays, \fBDIMENSION\fR at least max (1, \fIn\fR) each. 
+.IP
+Contain the real and imaginary parts, respectively, of the eigenvalues of the matrix \fIH\fR. Complex conjugate pairs of values must be stored in consecutive elements of the arrays. If \fIeigsrc\fR = \fB\'Q\'\fR, the arrays must be exactly as returned by \fB?hseqr\fR.
+.TP 10
+\fBldvl\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIvl\fR. 
+.IP
+If \fIjob\fR = \fB\'L\'\fR or \fB\'B\'\fR, \fIldvl\fR\(>= max(1,\fIn\fR). 
+.IP
+If \fIjob\fR = \fB\'R\'\fR, \fIldvl\fR\(>= 1.
+.TP 10
+\fBldvr\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIvr\fR. 
+.IP
+If \fIjob\fR = \fB\'R\'\fR or \fB\'B\'\fR, \fIldvr\fR\(>= max(1,\fIn\fR). 
+.IP
+If \fIjob\fR = \fB\'L\'\fR, \fIldvr\fR\(>=1.
+.TP 10
+\fBmm\fR
+.NL
+\fBINTEGER\fR. The number of columns in \fIvl\fR and/or \fIvr\fR. 
+.IP
+Must be at least \fIm\fR, the actual number of columns required (see \fIOutput Parameters\fRbelow).
+.IP
+\fIFor real flavors\fR, \fIm\fR is obtained by counting 1 for each selected real eigenvector and 2 for each selected complex eigenvector (see \fIselect\fR).
+.IP
+\fIFor complex flavors\fR, \fIm\fR is the number of selected eigenvectors (see \fIselect\fR). 
+.IP
+Constraint: 
+.IP
+0 \(<=\fImm\fR\(<=\fIn\fR.
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBchsein\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzhsein\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max (1, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBselect\fR
+.NL
+Overwritten for real flavors only. 
+.IP
+If a complex eigenvector was selected as specified above, then \fIselect\fR(\fIj\fR) is set to \fB.TRUE.\fR and \fIselect\fR(\fIj\fR+1) to \fB.FALSE.\fR
+.TP 10
+\fBw\fR
+.NL
+The real parts of some elements of \fIw\fR may be modified, as close eigenvalues are perturbed slightly in searching for independent eigenvectors.
+.TP 10
+\fBwr\fR
+.NL
+Some elements of \fIwr\fR may be modified, as close eigenvalues are perturbed slightly in searching for independent eigenvectors.
+.TP 10
+\fBvl\fR, \fBvr\fR
+.NL
+If \fIjob\fR = \fB\'L\'\fR or \fB\'B\'\fR, \fIvl\fR contains the computed left eigenvectors (as specified by \fIselect\fR). 
+.IP
+If \fIjob\fR = \fB\'R\'\fR or \fB\'B\'\fR, \fIvr\fR contains the computed right eigenvectors (as specified by \fIselect\fR).
+.IP
+The eigenvectors are stored consecutively in the columns of the array, in the same order as their eigenvalues.
+.IP
+\fIFor real flavors\fR: a real eigenvector corresponding to a selected real eigenvalue occupies one column; a complex eigenvector corresponding to a selected complex eigenvalue occupies two columns: the first column holds the real part and the second column holds the imaginary part.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. \fIFor real flavors\fR: the number of columns of \fIvl\fR and/or \fIvr\fR required to store the selected eigenvectors.
+.IP
+\fIFor complex flavors\fR: the number of selected eigenvectors.
+.TP 10
+\fBifaill\fR, \fBifailr\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Arrays, \fBDIMENSION\fR at least max(1, \fImm\fR) each. 
+.IP
+\fIifaill\fR(\fIi\fR) = 0 if the \fIi\fRth column of \fIvl\fR converged; 
+.IP
+\fIifaill\fR(\fIi\fR) = \fIj\fR > 0 if the eigenvector stored in the \fIi-\fRth column of \fIvl\fR (corresponding to the \fIj\fRth eigenvalue) failed to converge. 
+.IP
+\fIifailr\fR(\fIi\fR) = 0 if the \fIi\fRth column of \fIvr\fR converged; 
+.IP
+\fIifailr\fR(\fIi\fR) = \fIj\fR > 0 if the eigenvector stored in the \fIi\fR-th column of \fIvr\fR (corresponding to the \fIj\fRth eigenvalue) failed to converge. 
+.IP
+\fIFor real flavors\fR: if the \fIi\fRth and (\fIi\fR+1)th columns of \fIvl\fR contain a selected complex eigenvector, then \fIifaill\fR(\fIi\fR) and \fIifaill\fR(\fIi\fR+1) are set to the same value. A similar rule holds for \fIvr\fR and \fIifailr\fR.
+.IP
+The array \fIifaill\fR is not referenced if \fIjob\fR = \fB\'R\'\fR. The array \fIifailr\fR is not referenced if \fIjob\fR = \fB\'L\'\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value. 
+.IP
+If \fIinfo\fR > 0, then \fIi\fR eigenvectors (as indicated by the parameters \fIifaill\fR and/or \fIifailr\fR above) failed to converge. The corresponding columns of \fIvl\fR and/or \fIvr\fR contain no useful information.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBhsein\fR interface are the following:
+.TP 10
+\fBh\fR
+.NL
+Holds the matrix \fIH\fR of size (\fIn,n\fR).
+.TP 10
+\fBwr\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBwi\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBw\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in complex flavors only.
+.TP 10
+\fBselect\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBvl\fR
+.NL
+Holds the matrix \fIVL\fR of size (\fIn,mm\fR).
+.TP 10
+\fBvr\fR
+.NL
+Holds the matrix \fIVR\fR of size (\fIn,mm\fR).
+.TP 10
+\fBifaill\fR
+.NL
+Holds the vector of length (\fImm\fR). Note that there will be an error condition if \fIifaill\fR is present and \fIvl\fR is omitted.
+.TP 10
+\fBifailr\fR
+.NL
+Holds the vector of length (\fImm\fR). Note that there will be an error condition if \fIifailr\fR is present and \fIvr\fR is omitted.
+.TP 10
+\fBinitv\fR
+.NL
+Must be \fB\'N\'\fR or \fB\'U\'\fR. The default value is \fB\'N\'\fR.
+.TP 10
+\fBeigsrc\fR
+.NL
+Must be \fB\'N\'\fR or \fB\'Q\'\fR. The default value is \fB\'N\'\fR.
+.TP 10
+\fBjob\fR
+.NL
+Restored based on the presence of arguments \fIvl\fR and \fIvr\fR as follows: 
+.IP
+\fIjob\fR = \fB\'B\'\fR, if both \fIvl\fR and \fIvr\fR are present, 
+.IP
+\fIjob\fR = \fB\'L\'\fR, if \fIvl\fR is present and \fIvr\fR omitted, 
+.IP
+\fIjob\fR = \fB\'R\'\fR, if \fIvl\fR is omitted and \fIvr\fR present, 
+.IP
+Note that there will be an error condition if both \fIvl\fR and \fIvr\fR are omitted.

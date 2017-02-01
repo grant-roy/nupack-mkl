@@ -1,0 +1,77 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?geql2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?geql2 \- Computes the QL factorization of a general rectangular matrix using an unblocked algorithm.
+.SH SYNOPSIS
+.PP
+\fBcall sgeql2\fR( \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dgeql2\fR( \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall cgeql2\fR( \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall zgeql2\fR( \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows in the matrix \fIA\fR (\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns in \fIA\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsgeql2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgeql2\fR
+.IP
+\fBCOMPLEX\fR for \fBcgeql2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzgeql2\fR.
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) contains the \fIm\fR-by-\fIn\fR matrix \fIA\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR(\fIm\fR) is a workspace array.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIm\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+Overwritten by the factorization data as follows:
+.IP
+on exit, if \fIm\fR\(>=\fIn\fR, the lower triangle of the subarray \fIa\fR(\fIm\fR-\fIn\fR+1:\fIm\fR, 1:\fIn\fR) contains the \fIn\fR-by-\fIn\fR lower triangular matrix \fIL\fR; if \fIm\fR < \fIn\fR, the elements on and below the (\fIn\fR-\fIm\fR)th superdiagonal contain the \fIm\fR-by-\fIn\fR lower trapezoidal matrix \fIL\fR; the remaining elements, with the array\fI tau\fR, represent the orthogonal/unitary matrix \fIQ\fR as a product of elementary reflectors.
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBsgeql2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgeql2\fR
+.IP
+\fBCOMPLEX\fR for \fBcgeql2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzgeql2\fR.
+.IP
+Array, \fBDIMENSION\fR at least max(1, min(\fIm\fR, \fIn\fR)). 
+.IP
+Contains scalar factors of the elementary reflectors.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value.

@@ -1,0 +1,109 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH mkl\(ulcspblas\(uldcootrsv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+mkl\(ulcspblas\(uldcootrsv \- Triangular solvers with simplified interface for a sparse matrix in the coordinate format with zero-based indexing.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall mkl\(ulcspblas\(uldcootrsv\fR(\fIuplo\fR, \fItransa\fR, \fIdiag\fR, \fIm\fR, \fIval\fR, \fIrowind\fR, \fIcolind\fR, \fInnz\fR, \fIx\fR, \fIy\fR)
+.PP
+.B /* C */
+.PP
+\fBmkl\(ulcspblas\(uldcootrsv\fR(\fI&uplo\fR, \fI&transa\fR, \fI&diag\fR, \fI&m\fR, \fIval\fR, \fIrowind\fR, \fIcolind\fR, \fI&nnz\fR, \fIx\fR, \fIy\fR);
+.SH INPUT PARAMETERS
+.PP
+Parameter descriptions are common for all implemented interfaces with the exception of data types that refer here to the Fortran 77 standard types. Data types specific to the different interfaces are described in the section \fB``Interfaces''\fR below.
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether the upper or low triangle of the matrix \fIA\fR is considered.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR or  \fB\'u\'\fR, then the upper triangle of the matrix \fIA\fR is used.
+.IP
+If \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, then the low triangle of the matrix \fIA\fR is used.
+.TP 10
+\fBtransa\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the system of linear equations.
+.IP
+If \fItransa\fR = \fB\'N\'\fR or \fB\'n\'\fR, then  \fIA\fR*\fIy\fR = \fIx\fR
+.IP
+If \fItransa\fR = \fB\'T\'\fR or \fB\'t\'\fR or \fB\'C\'\fR or \fB\'c\'\fR, then  \fI A\fR\'*\fIy\fR = \fIx\fR,
+.TP 10
+\fBdiag\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether \fIA\fR is unit triangular.
+.IP
+If \fIdiag\fR = \fB\'U\'\fR or \fB\'u\'\fR, then \fIA\fR is unit triangular.
+.IP
+If \fIdiag\fR = \fB\'N\'\fR or \fB\'n\'\fR, then \fIA\fR is not unit triangular.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Number of rows of the matrix \fIA\fR.
+.TP 10
+\fBval\fR
+.NL
+\fBREAL*8\fR. Array of length \fInnz\fR, contains non-zero elements of the matrix \fIA\fR in the arbitrary order.
+.IP
+Refer to \fIvalues\fR array description in Coordinate Format for more details.
+.TP 10
+\fBrowind\fR
+.NL
+\fBINTEGER\fR. Array of length \fBnnz\fR, contains the row indices for each non-zero element of the matrix \fIA\fR.
+.IP
+Refer to \fIrows\fR array description in Coordinate Format for more details.
+.TP 10
+\fBcolind\fR
+.NL
+\fBINTEGER\fR. Array of length \fInnz\fR, contains the column indices for each non-zero element of the matrix \fIA\fR. Refer to \fIcolumns\fR array description in Coordinate Format for more details.
+.TP 10
+\fBnnz\fR
+.NL
+\fBINTEGER\fR. Specifies the number of non-zero element of the matrix \fIA\fR.
+.IP
+Refer to \fInnz\fR description in Coordinate Format for more details.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR is \fIm\fR.
+.IP
+On entry, the array \fIx\fR must contain the vector \fIx\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBy\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR at least \fIm\fR.
+.IP
+Contains the vector \fIy\fR.
+.SH INTERFACES
+.PP
+
+.PP
+\fBFortran 77:\fR
+.br
+SUBROUTINE mkl\(ulcspblas\(uldcootrsv(uplo, transa, diag, m, val, rowind, colind, nnz, x, y)
+.br
+CHARACTER*1   uplo, transa, diag
+.br
+INTEGER       m, nnz
+.br
+INTEGER       rowind(*), colind(*)
+.br
+REAL*8        val(*), x(*), y(*)
+.PP
+\fBC:\fR
+.br
+void mkl\(ulcspblas\(uldcootrsv(char \fI*uplo\fR, char \fI*transa\fR, char \fI*diag\fR, int \fI*m\fR,
+.br
+double \fI*alpha\fR, char \fI*matdescra\fR, double  \fI*val\fR, int \fI*rowind\fR,
+.br
+int \fI*colind\fR, int \fI*nnz\fR, double \fI*x\fR, double \fI*y\fR);

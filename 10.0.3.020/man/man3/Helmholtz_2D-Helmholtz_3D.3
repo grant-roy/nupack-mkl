@@ -1,0 +1,175 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?\(ulHelmholtz\(ul2D/?\(ulHelmholtz\(ul3D 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+\- Computes the solution of 2D/3D Helmholtz problem specified by the parameters.
+.SH SYNOPSIS
+.PP
+\fBvoid d\(ulHelmholtz\(ul2D\fR(\fBdouble* \fR\fIf, \fR\fBdouble* \fR\fIbd\(ulax, \fR\fBdouble* \fR\fIbd\(ulbx, \fR\fBdouble* \fR\fIbd\(ulay, \fR\fBdouble* \fR\fIbd\(ulby, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIxhandle, \fR\fBint* \fR\fIipar, \fR\fBdouble* \fR\fIdpar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid s\(ulHelmholtz\(ul2D\fR (\fBfloat* \fR\fIf, \fR\fBfloat* \fR\fIbd\(ulax, \fR\fBfloat* \fR\fIbd\(ulbx, \fR\fBfloat* \fR\fIbd\(ulay, \fR\fBfloat* \fR\fIbd\(ulby, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIxhandle, \fR\fBint* \fR\fIipar, \fR\fBfloat* \fR\fIspar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid d\(ulHelmholtz\(ul3D\fR(\fBdouble* \fR\fIf, \fR\fBdouble* \fR\fIbd\(ulax, \fR\fBdouble* \fR\fIbd\(ulbx, \fR\fBdouble* \fR\fIbd\(ulay, \fR\fBdouble* \fR\fIbd\(ulby, \fR\fBdouble* \fR\fIbd\(ulaz, \fR\fBdouble* \fR\fIbd\(ulbz, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIxhandle, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIyhandle, \fR\fBint* \fR\fIipar, \fR\fBdouble* \fR\fIdpar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid s\(ulHelmholtz\(ul3D\fR(\fBfloat* \fR\fIf, \fR\fBfloat* \fR\fIbd\(ulax, \fR\fBfloat* \fR\fIbd\(ulbx, \fR\fBfloat* \fR\fIbd\(ulay, \fR\fBfloat* \fR\fIbd\(ulby, \fR\fBfloat* \fR\fIbd\(ulaz, \fR\fBfloat* \fR\fIbd\(ulbz, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIxhandle, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIyhandle, \fR\fBint* \fR\fIipar, \fR\fBfloat* \fR\fIspar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBf\fR
+.NL
+\fBdouble*\fR for \fBd\(ulHelmholtz\(ul2D/d\(ulHelmholtz\(ul3D\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulHelmholtz\(ul2D/s\(ulHelmholtz\(ul3D\fR. 
+.IP
+Contains the right-hand side of the problem packed in a single vector and modified by the appropriate  routine. Note that an attempt to substitute the original right-hand side vector at this point will result in a wrong solution. 
+.IP
+The size of the vector for the 2D problem is (\fBnx\fR+1)*(\fBny\fR+1). In this case, value of the right-hand side in the mesh point (\fIi, j\fR) is stored in \fBf\fR[\fIi+j\fR*(\fBnx\fR+1)] . The size of the vector for the 3D problem is (\fBnx\fR+1)*(\fBny\fR+1)*(\fBnz\fR+1). In this case, value of the right-hand side in the mesh point (\fIi, j, k\fR) is stored in \fBf\fR[\fIi+j\fR*(\fBnx\fR+1)+\fIk\fR*(\fBnx\fR+1)*(\fBny\fR+1)]. 
+.TP 10
+\fBxhandle, yhandle\fR
+.NL
+\fBDESCIPTOR\(ulHANDLE*\fR. Data structures used by the Intel MKL FFT interface (for details, refer to FFT Functions). \fByhandle\fR is used only by \fB?\(ulHelmholtz\(ul3D\fR. 
+.TP 10
+\fBipar\fR
+.NL
+\fBint\fR array of size 128. Contains integer data to be used by Fast Helmholtz Solver (for details, refer to Common Parameters). 
+.TP 10
+\fBdpar\fR
+.NL
+\fBdouble\fR array of size 5*\fBnx\fR/2+7 in the 2D case or 5*(\fBnx\fR+\fBny\fR)/2+9 in the 3D case. Contains double-precision data to be used by Fast Helmholtz Solver (for details, refer toCommon Parameters
+.TP 10
+\fBspar\fR
+.NL
+float array of size 5*\fBnx\fR/2+7 in the 2D case or 5*(\fBnx\fR+\fBny\fR)/2+9 in the 3D case. Contains single-precision data to be used by Fast Helmholtz Solver (for details, refer to Common Parameters). 
+.TP 10
+\fBbd\(ulax\fR
+.NL
+\fBdouble*\fR for \fBd\(ulHelmholtz\(ul2D/d\(ulHelmholtz\(ul3D\fR, \fB\fR
+.IP
+\fBfloat*\fR for \fBs\(ulHelmholtz\(ul2D/s\(ulHelmholtz\(ul3D\fR. 
+.IP
+Contains values of the boundary condition on the leftmost boundary of the domain along \fIx\fR-axis. 
+.IP
+For \fB?\(ulHelmholtz\(ul2D\fR, the size of the array is \fBny\fR+1. In case of the the Dirichlet boundary condition (value of \fBBCtype\fR[0] is \'D\'), it contains values of the function \fIG\fR(\fBax\fR, \fIy\fR(\fIj\fR)), \fIj\fR=0, ..., \fBny\fR. In case of the the Neumann boundary condition (value of \fBBCtype\fR[0] is \'N\'), it contains values of the function \fIg\fR(\fBax\fR, \fIy\fR(\fIj\fR)), \fIj\fR=0, ..., \fBny\fR. The value corresponding to the index \fIj\fR is placed in \fBbd\(ulax\fR[\fIj\fR]. 
+.IP
+For \fB?\(ulHelmholtz\(ul3D\fR, the size of the array is (\fBny\fR+1)*(\fBnz\fR+1). In case of the the Dirichlet boundary condition (value of \fBBCtype\fR[0] is \'D\'), it contains values of the function \fIG\fR(\fBax\fR, \fIy\fR(\fIj\fR), \fIz\fR(\fIk\fR)), \fIj\fR=0, ..., \fBny\fR, \fIk\fR=0, ..., \fBnz\fR. In case of the Neumann boundary condition (value of \fBBCtype\fR[0] is \'N\'), it contains the values of the function \fIg\fR(\fBax\fR, \fIy\fR(\fIj\fR), \fIz\fR(\fIk\fR)), \fIj\fR=0, ..., \fBny\fR, \fIk\fR=0, ..., \fBnz\fR. The values are packed in the array so that the value corresponding to indices \fI(j, k)\fR is placed in \fBbd\(ulax\fR[\fIj+k\fR*(\fBny\fR+1)]. 
+.TP 10
+\fBbd\(ulbx\fR
+.NL
+\fBdouble*\fR for \fBd\(ulHelmholtz\(ul2D/d\(ulHelmholtz\(ul3D\fR, \fB\fR
+.IP
+\fBfloat*\fR for \fBs\(ulHelmholtz\(ul2D/s\(ulHelmholtz\(ul3D\fR. 
+.IP
+Contains values of the boundary condition on the rightmost boundary of the domain along \fIx\fR-axis. 
+.IP
+For \fB?\(ulHelmholtz\(ul2D\fR, the size of the array is \fBny\fR+1. In case of the Dirichlet boundary condition (value of \fBBCtype\fR[1] is \'D\'), it contains values of the function \fIG\fR(\fBbx\fR, \fIy\fR(\fIj\fR)), \fIj\fR=0, ..., \fBny\fR. In case of the Neumann boundary condition (value of \fBBCtype\fR[1] is \'N\'), it contains values of the function \fIg\fR(\fBbx\fR, \fIy\fR(\fIj\fR)), \fIj\fR=0, ..., \fBny\fR. The value corresponding to the index \fIj\fR is placed in \fBbd\(ulbx\fR[\fIj\fR]. 
+.IP
+For \fB?\(ulHelmholtz\(ul3D\fR, the size of the array is (\fBny\fR+1)*(\fBnz\fR+1). In case of the Dirichlet boundary condition (value of \fBBCtype\fR[1] is \'D\'), it contains values of the function \fIG\fR(\fBbx\fR, \fIy\fR(\fIj\fR), \fIz\fR(\fIk\fR)), \fIj\fR=0, ..., \fBny\fR, \fIk\fR=0, ..., \fBnz\fR. In case of the Neumann boundary condition (value of \fBBCtype\fR[1] is \'N\'), it contains the values of the function \fIg\fR(\fBbx\fR, \fIy\fR(\fIj\fR), \fIz\fR(\fIk\fR)), \fIj\fR=0, ..., \fBny\fR, \fIk\fR=0, ..., \fBnz\fR. The values are packed in the array so that the value corresponding to indices \fI(j, k)\fR is placed in \fBbd\(ulbx\fR[\fIj+k\fR*(\fBny\fR+1)]. 
+.TP 10
+\fBbd\(ulay\fR
+.NL
+\fBdouble*\fR for \fBd\(ulHelmholtz\(ul2D/d\(ulHelmholtz\(ul3D\fR, \fB\fR
+.IP
+\fBfloat*\fR for \fBs\(ulHelmholtz\(ul2D/s\(ulHelmholtz\(ul3D\fR. 
+.IP
+Contains values of the boundary condition on the leftmost boundary of the domain along \fIy\fR-axis. 
+.IP
+For \fB?\(ulHelmholtz\(ul2D\fR, the size of the array is \fBnx\fR+1. In case of the Dirichlet boundary condition (value of \fBBCtype\fR[2] is \'D\'), it contains values of the function \fIG\fR(\fIx\fR(\fIi\fR), \fBay\fR), \fIi\fR=0, ..., \fBnx\fR. In case of the Neumann boundary condition (value of \fBBCtype\fR[2] is \'N\'), it contains values of the function \fIg\fR(\fIx\fR(\fIi\fR), \fBay\fR), \fIi\fR=0, ..., \fBnx\fR. The value corresponding to the index \fIi\fR is placed in \fBbd\(ulay\fR[\fIi\fR]. 
+.IP
+For \fB?\(ulHelmholtz\(ul3D\fR, the size of the array is (\fBnx\fR+1)*(\fBnz\fR+1). In case of the Dirichlet boundary condition (value of \fBBCtype\fR[2] is \'D\'), it contains values of the function \fIG\fR(\fIx\fR(\fIi\fR),\fBay\fR, \fIz\fR(\fIk\fR)), \fIi\fR=0, ..., \fBnx\fR, \fIk\fR=0, ..., \fBnz\fR. In case of the Neumann boundary condition (value of \fBBCtype\fR[2] is \'N\'), it contains the values of the function \fIg\fR(\fIx\fR(\fIi\fR),\fBay\fR, \fIz\fR(\fIk\fR)), \fIi\fR=0, ..., \fBnx\fR, \fIk\fR=0, ..., \fBnz\fR. The values are packed in the array so that the value corresponding to indices \fI(i, k)\fR is placed in \fBbd\(ulay\fR[\fIi+k\fR*(\fBnx\fR+1)]. 
+.TP 10
+\fBbd\(ulby\fR
+.NL
+\fBdouble*\fR for \fBd\(ulHelmholtz\(ul2D/d\(ulHelmholtz\(ul3D\fR, \fB\fR
+.IP
+\fBfloat*\fR for \fBs\(ulHelmholtz\(ul2D/s\(ulHelmholtz\(ul3D\fR. 
+.IP
+Contains values of the boundary condition on the rightmost boundary of the domain along \fIy\fR-axis. 
+.IP
+For \fB?\(ulHelmholtz\(ul2D\fR, the size of the array is \fBnx\fR+1. In case of the Dirichlet boundary condition (value of \fBBCtype\fR[3] is \'D\'), it contains values of the function \fIG\fR(\fIx\fR(\fIi\fR), \fBby\fR), \fIi\fR=0, ..., \fBnx\fR. In case of the Neumann boundary condition (value of \fBBCtype\fR[3] is \'N\'), it contains values of the function \fIg\fR(\fIx\fR(\fIi\fR), \fBby\fR), \fIi\fR=0, ..., \fBnx\fR. The value corresponding to the index \fIi\fR is placed in \fBbd\(ulby\fR[\fIi\fR]. 
+.IP
+For \fB?\(ulHelmholtz\(ul3D\fR, the size of the array is (\fBnx\fR+1)*(\fBnz\fR+1). In case of the Dirichlet boundary condition (value of \fBBCtype\fR[3] is \'D\'), it contains values of the function \fIG\fR(\fIx\fR(\fIi\fR),\fBby\fR, \fIz\fR(\fIk\fR)), \fIi\fR=0, ..., \fBnx\fR, \fIk\fR=0, ..., \fBnz\fR. In case of the Neumann boundary condition (value of \fBBCtype\fR[3] is \'N\'), it contains the values of the function \fIg\fR(\fIx\fR(\fIi\fR),\fBby\fR, \fIz\fR(\fIk\fR)), \fIi\fR=0, ..., \fBnx\fR, \fIk\fR=0, ..., \fBnz\fR. The values are packed in the array so that the value corresponding to indices \fI(i, k)\fR is placed in \fBbd\(ulby\fR[\fIi+k\fR*(\fBnx\fR+1)]. 
+.TP 10
+\fBbd\(ulaz\fR
+.NL
+\fBdouble*\fR for \fBd\(ulHelmholtz\(ul2D/d\(ulHelmholtz\(ul3D\fR, 
+.IP
+\fBfloat*\fR for \fBs\(ulHelmholtz\(ul2D/s\(ulHelmholtz\(ul3D\fR. 
+.IP
+This parameter is needed only for \fB?\(ulHelmholtz\(ul3D\fR. Contains values of the boundary condition on the leftmost boundary of the domain along \fIz\fR-axis. 
+.IP
+The size of the array is (\fBnx\fR+1)*(\fBny\fR+1). In case of the Dirichlet boundary condition (value of \fBBCtype\fR[4] is \'D\'), it contains values of the function \fIG\fR(\fIx\fR(\fIi\fR), \fIy\fR(\fIj\fR),\fBaz\fR), \fIi\fR=0, ..., \fBnx\fR, \fIj\fR=0, ..., \fBny\fR. In case of the Neumann boundary condition (value of \fBBCtype\fR[4] is \'N\'), it contains the values of the function \fIg\fR(\fIx\fR(\fIi\fR), \fIy\fR(\fIj\fR),\fBaz\fR), \fIi\fR=0, ..., \fBnx\fR, \fIj\fR=0, ..., \fBny\fR. The values are packed in the array so that the value corresponding to indices \fI(i, j)\fR is placed in \fBbd\(ulaz\fR[\fIi+j\fR*(\fBnx\fR+1)]. 
+.TP 10
+\fBbd\(ulbz\fR
+.NL
+\fBdouble*\fR for \fBd\(ulHelmholtz\(ul2D/d\(ulHelmholtz\(ul3D\fR, \fB\fR
+.IP
+\fBfloat*\fR for \fBs\(ulHelmholtz\(ul2D/s\(ulHelmholtz\(ul3D\fR. 
+.IP
+This parameter is needed only for \fB?\(ulHelmholtz\(ul3D\fR. Contains values of the boundary condition on the rightmost boundary of the domain along \fIz\fR-axis. 
+.IP
+The size of the array is (\fBnx\fR+1)*(\fBny\fR+1). In case of the Dirichlet boundary condition (value of \fBBCtype\fR[5] is \'D\'), it contains values of the function \fIG\fR(\fIx\fR(\fIi\fR), \fIy\fR(\fIj\fR),\fBbz\fR), \fIi\fR=0, ..., \fBnx\fR, \fIj\fR=0, ..., \fBny\fR. In case of the Neumann boundary condition (value of \fBBCtype\fR[5] is \'N\'), it contains the values of the function \fIg\fR(\fIx\fR(\fIi\fR), \fIy\fR(\fIj\fR),\fBbz\fR), \fIi\fR=0, ..., \fBnx\fR, \fIj\fR=0, ..., \fBny\fR. The values are packed in the array so that the value corresponding to indices \fI(i, j)\fR is placed in \fBbd\(ulbz\fR[\fIi+j\fR*(\fBnx\fR+1)]. 
+.PP
+.B NOTE:
+To avoid wrong computation results, do not change arrays \fBbd\(ulax\fR, \fBbd\(ulbx\fR, \fBbd\(ulay\fR, \fBbd\(ulby\fR, \fBbd\(ulaz\fR, \fBbd\(ulbz\fR between a call to the \fB?\(ulcommit\(ulHelmholtz\(ul2D/?\(ulcommit\(ulHelmholtz\(ul3D\fR routine and a subsequent call to the appropriate \fB?\(ulHelmholtz\(ul2D/?\(ulHelmholtz\(ul3D\fR routine. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBf\fR
+.NL
+On output, contains the approximate solution to the problem packed the same way as the right-hand side of the problem was packed on input. 
+.TP 10
+\fBxhandle, yhandle\fR
+.NL
+Data structures used by the Intel MKL FFT interface. 
+.TP 10
+\fBipar\fR
+.NL
+Contains integer data to be used by Fast Helmholtz Solver. Modified on output as explained in Common Parameters. 
+.TP 10
+\fBdpar\fR
+.NL
+Contains double-precision data to be used by Fast Helmholtz Solver. Modified on output as explained in Common Parameters
+.TP 10
+\fBspar\fR
+.NL
+Contains single-precision data to be used by Fast Helmholtz Solver. Modified on output as explained in Common Parameters. 
+.TP 10
+\fBstat\fR
+.NL
+\fBint*\fR. Routine completion status, which is also written to \fBipar[0]\fR. The status should be 0 to proceed to other PL routines. 
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBstat\fR= 1
+.NL
+The routine completed without errors and produced some warnings. 
+.TP 10
+\fBstat\fR= 0
+.NL
+The routine successfully completed the task. 
+.TP 10
+\fBstat\fR= -2
+.NL
+The routine stopped because division by zero occurred. It usually happens if the data in the \fBdpar\fR or \fBspar\fR array was altered by mistake. 
+.TP 10
+\fBstat\fR= -3
+.NL
+The routine stopped because the  memory was insufficient to complete the computations. 
+.TP 10
+\fBstat\fR= -100
+.NL
+The routine stopped because an error in the user\'s data was found or the data in the \fBdpar\fR, \fBspar\fR or \fBipar\fR array was altered by mistake. 
+.TP 10
+\fBstat\fR= -1000
+.NL
+The routine stopped because of the Intel MKL FFT or TT interface error. 
+.TP 10
+\fBstat\fR= -10000
+.NL
+The routine stopped because the initialization failed to complete or the parameter \fBipar\fR[0] was altered by mistake. 
+.TP 10
+\fBstat\fR= -99999
+.NL
+The routine failed to complete the task because of a fatal error. 

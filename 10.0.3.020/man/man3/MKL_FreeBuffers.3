@@ -1,0 +1,56 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH MKL\(ulFreeBuffers 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+MKL\(ulFreeBuffers \- Frees memory buffers.
+.SH SYNOPSIS
+.PP
+\fBvoid \fR\fBMKL\(ulFreeBuffers\fR(\fBvoid\fR)
+.PP
+----------------------------------------------------------------------------------------------DFTI\(ulDESCRIPTOR *hand1, *hand2;
+.br
+void MKL\(ulFreeBuffers(void);
+.br
+. . . . . .
+.br
+/* Using MKL FFT */
+.br
+Status = DftiCreateDescriptor(&hand1, DFTI\(ulSINGLE, DFTI\(ulCOMPLEX, dim, m1);
+.br
+Status = DftiCommitDescriptor(hand1);
+.br
+Status = DftiComputeForward(hand1, s\(ularray1);
+.br
+. . . . . .
+.br
+Status = DftiCreateDescriptor(&hand2, DFTI\(ulSINGLE, DFTI\(ulCOMPLEX, dim, m2);
+.br
+Status = DftiCommitDescriptor(hand2);
+.br
+. . . . . .
+.br
+Status = DftiFreeDescriptor(&hand1);
+.br
+/* Do not call MKL\(ulFreeBuffers() here as the hand2 descriptor will be destroyed!  */
+.br
+. . . . . .
+.br
+Status = DftiComputeBackward(hand2, s\(ularray2));
+.br
+Status = DftiFreeDescriptor(&hand2);
+.br
+.br
+/* Here user finishes the MKL FFT usage */
+.br
+/* Memory leak will be triggered by any memory control tool */
+.br
+.br
+/* Use MKL\(ulFreeBuffers() to avoid memory leaking */
+.br
+MKL\(ulFreeBuffers();
+.br
+.PP
+----------------------------------------------------------------------------------------------
+.PP
+If the memory space is sufficient, use \fBMKL\(ulFreeBuffers\fR after the last call of the MKL functions. Otherwise, a drop in performance can occur due to reallocation of buffers for the subsequent MKL functions.

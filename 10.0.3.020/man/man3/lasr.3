@@ -1,0 +1,95 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasr \- Applies a sequence of plane rotations to a general rectangular matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slasr\fR( \fIside\fR, \fIpivot\fR, \fIdirect\fR, \fIm\fR, \fIn\fR, \fIc\fR, \fIs\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall dlasr\fR( \fIside\fR, \fIpivot\fR, \fIdirect\fR, \fIm\fR, \fIn\fR, \fIc\fR, \fIs\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall clasr\fR( \fIside\fR, \fIpivot\fR, \fIdirect\fR, \fIm\fR, \fIn\fR, \fIc\fR, \fIs\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall zlasr\fR( \fIside\fR, \fIpivot\fR, \fIdirect\fR, \fIm\fR, \fIn\fR, \fIc\fR, \fIs\fR, \fIa\fR, \fIlda\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBside\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether the plane rotation matrix \fIP\fR is applied to \fIA\fR on the left or the right.
+.IP
+= \fB\'L\'\fR:  left, compute \fIA\fR := \fIP\fR*\fIA\fR
+.IP
+= \fB\'R\'\fR:  right, compute \fIA\fR:= \fIA\fR*\fIP\fR\'
+.TP 10
+\fBdirect\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether \fIP\fR is a forward or backward sequence of plane rotations.
+.IP
+= \fB\'F\'\fR:  forward, \fIP\fR = \fIP\fR(\fIz\fR-1)*...*\fIP\fR(2)*\fIP\fR(1)
+.IP
+= \fB\'B\'\fR:  backward, \fIP\fR = \fIP\fR(1)*\fIP\fR(2)*...*\fIP\fR(\fIz\fR-1)
+.TP 10
+\fBpivot\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the plane for which \fIP\fR(\fIk\fR) is a plane rotation matrix.
+.IP
+= \fB\'V\'\fR:  Variable pivot, the plane (\fIk\fR, \fIk\fR+1)
+.IP
+= \fB\'T\'\fR:  Top pivot, the plane (1, \fIk\fR+1)
+.IP
+= \fB\'B\'\fR:  Bottom pivot, the plane (\fIk\fR, \fIz\fR)
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows of the matrix \fIA\fR. 
+.IP
+If \fIm\fR \(<= 1, an immediate return is effected.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIA\fR. 
+.IP
+If \fIn\fR \(<= 1, an immediate return is effected.
+.TP 10
+\fBc\fR, \fBs\fR
+.NL
+\fBREAL\fR for \fBslasr\fR/\fBclasr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasr\fR/\fBzlasr\fR.
+.IP
+Arrays, \fBDIMENSION\fR
+.IP
+(\fIm\fR-1) if \fIside\fR = \fB\'L\'\fR, 
+.IP
+(\fIn\fR-1) if \fIside\fR = \fB\'R\'\fR . 
+.IP
+\fIc\fR(\fIk\fR) and \fIs\fR(\fIk\fR) contain the cosine and sine of the plane rotations respectively that define the 2-by-2 plane rotation part (\fIR\fR(\fIk\fR))  of the \fIP\fR(\fIk\fR) matrix . 
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBslasr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasr\fR
+.IP
+\fBCOMPLEX\fR for \fBclasr\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlasr\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIlda\fR, \fIn\fR). 
+.IP
+The \fIm\fR-by-\fIn\fR matrix \fIA\fR. 
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fIa\fR.
+.IP
+\fIlda\fR\(>= max(1,\fIm\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, \fIA\fR is overwritten by \fIP*A\fR if \fIside\fR = \fB\'R\',\fR or by \fIA*P\fR\' if \fIside\fR = \fB\'L\'\fR.

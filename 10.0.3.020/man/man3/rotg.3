@@ -1,0 +1,81 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?rotg 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?rotg \- Computes the parameters for a Givens rotation.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall srotg\fR(\fIa\fR, \fIb\fR, \fIc\fR, \fIs\fR)
+.PP
+\fBcall drotg\fR(\fIa\fR, \fIb\fR, \fIc\fR, \fIs\fR)
+.PP
+\fBcall crotg\fR(\fIa\fR, \fIb\fR, \fIc\fR, \fIs\fR)
+.PP
+\fBcall zrotg\fR(\fIa\fR, \fIb\fR, \fIc\fR, \fIs\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall rotg\fR(\fIa\fR, \fIb\fR, \fIc\fR, \fIs\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBsrotg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotg\fR
+.IP
+\fBCOMPLEX\fR for \fBcrotg\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzrotg\fR
+.IP
+Provides the \fIx\fR-coordinate of the point p.
+.TP 10
+\fBb\fR
+.NL
+\fBREAL\fR for \fBsrotg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotg\fR
+.IP
+\fBCOMPLEX\fR for \fBcrotg\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzrotg\fR
+.IP
+Provides the \fIy\fR-coordinate of the point p. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+Contains the parameter \fIr\fR associated with the Givens rotation.
+.TP 10
+\fBb\fR
+.NL
+Contains the parameter \fIz\fR associated with the Givens rotation.
+.TP 10
+\fBc\fR
+.NL
+\fBREAL\fR for \fBsrotg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotg\fR
+.IP
+\fBREAL\fR for \fBcrotg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBzrotg\fR
+.IP
+Contains the parameter \fIc\fR associated with the Givens rotation.
+.TP 10
+\fBs\fR
+.NL
+\fBREAL\fR for \fBsrotg\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdrotg\fR
+.IP
+\fBCOMPLEX\fR for \fBcrotg\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzrotg\fR
+.IP
+Contains the parameter \fIs\fR associated with the Givens rotation.

@@ -1,0 +1,67 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?nrm2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?nrm2 \- Computes the Euclidean norm of a vector.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fIres\fR= \fBsnrm2\fR(\fIn\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fIres\fR= \fBdnrm2\fR(\fIn\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fIres\fR= \fBscnrm2\fR(\fIn\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fIres\fR= \fBdznrm2\fR(\fIn\fR, \fIx\fR, \fIincx\fR)
+.PP
+.B Fortran 95
+.PP
+\fIres\fR= \fBnrm2\fR(\fIx\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR.  Specifies the order of vector \fIx\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsnrm2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdnrm2\fR
+.IP
+\fBCOMPLEX\fR for \fBscnrm2\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBdznrm2\fR
+.IP
+Array, \fBDIMENSION\fR at least (1 + (\fIn\fR -1)*abs (\fIincx\fR)).
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR.  Specifies the increment for the elements of \fIx\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBres\fR
+.NL
+\fBREAL\fR for \fBsnrm2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdnrm2\fR
+.IP
+\fBREAL\fR for \fBscnrm2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdznrm2\fR
+.IP
+Contains the Euclidean norm of the vector \fIx\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBnrm2\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fIn\fR).

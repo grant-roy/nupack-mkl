@@ -1,0 +1,81 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?potrs 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?potrs \- Solves a system of linear equations with a Cholesky-factored symmetric/Hermitian distributed positive-definite matrix.
+.SH SYNOPSIS
+.PP
+\fBcall pspotrs\fR(\fIuplo\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIinfo\fR)
+.PP
+\fBcall pdpotrs\fR(\fIuplo\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIinfo\fR)
+.PP
+\fBcall pcpotrs\fR(\fIuplo\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIinfo\fR)
+.PP
+\fBcall pzpotrs\fR(\fIuplo\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+(global) \fBCHARACTER*1\fR.  Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, upper triangle of sub(\fIA\fR) is stored;
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, lower triangle of sub(\fIA\fR) is stored.
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR.  The order of the distributed submatrix sub(\fIA\fR) (\fIn\fR\(>=0). 
+.TP 10
+\fBnrhs\fR
+.NL
+(global) \fBINTEGER\fR. The number of right hand sides; the number of columns of the distributed submatrix sub(\fIB\fR) (\fInrhs\fR\(>=0).
+.TP 10
+\fBa\fR, \fBb\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpspotrs\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdpotrs\fR
+.IP
+\fBCOMPLEX\fR for \fBpcpotrs\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzpotrs\fR. 
+.IP
+Pointers into the local memory  to arrays of local dimension
+.IP
+\fIa\fR(\fIlld\(ula\fR,\fILOCc\fR(\fIja\fR+\fIn\fR-1)) and \fIb\fR(\fIlld\(ulb\fR,\fILOCc\fR(\fIjb+nrhs-1\fR)), respectively.
+.IP
+The array \fIa\fR contains the factors \fIL\fR or \fIU\fR from the Cholesky factorization sub(\fIA\fR) = \fIL\fR*\fIL\fR**\fIH\fR or sub(\fIA\fR) = \fIU\fR**\fIH\fR\fI*U\fR, as computed by \fBp?potrf\fR.
+.IP
+On entry, the array \fIb\fR contains the local pieces of the right hand sides sub(\fIB\fR).
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIA\fR indicating the first row and the first column of the submatrix sub(\fIA\fR), respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBib\fR, \fBjb\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIB\fR indicating the first row and the first column of the submatrix sub(\fIB\fR), respectively.
+.TP 10
+\fBdescb\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIB\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBb\fR
+.NL
+Overwritten by the local pieces of the solution matrix \fIX\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. If \fIinfo\fR=0, the execution is successful. \fI\fR
+.IP
+\fIinfo\fR < 0: if the \fIi\fR-th argument is an array and the \fIj\fR-th entry had an illegal value, then \fIinfo\fR = -(\fIi\fR*100+\fIj\fR); if the \fIi\fR-th argument is a scalar and had an illegal value, then \fIinfo\fR = \fI-i\fR.

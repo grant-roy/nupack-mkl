@@ -1,0 +1,31 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lae2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lae2 \- Computes the eigenvalues of a 2-by-2 symmetric matrix.
+.SH SYNOPSIS
+.PP
+\fBcall slae2\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fIrt1\fR, \fIrt2\fR)
+.PP
+\fBcall dlae2\fR( \fIa\fR, \fIb\fR, \fIc\fR, \fIrt1\fR, \fIrt2\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR, \fBc\fR
+.NL
+\fBREAL\fR for \fBslae2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlae2\fR
+.IP
+The elements \fIa\fR, \fIb\fR, and \fIc\fR of the 2-by-2 matrix above.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBrt1\fR, \fBrt2\fR
+.NL
+\fBREAL\fR for \fBslae2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlae2\fR
+.IP
+The computed eigenvalues of larger and smaller absolute value, respectively.

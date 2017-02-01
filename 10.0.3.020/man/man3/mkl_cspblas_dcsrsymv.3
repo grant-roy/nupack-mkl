@@ -1,0 +1,85 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH mkl\(ulcspblas\(uldcsrsymv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+mkl\(ulcspblas\(uldcsrsymv \- Computes matrix - vector product of a sparse symmetrical matrix stored in the CSR format (PARDISO variation) with zero-based indexing.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall mkl\(ulcspblas\(uldcsrsymv\fR(\fIuplo\fR, \fIm\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIx\fR, \fIy\fR)
+.PP
+.B /* C */
+.PP
+\fBmkl\(ulcspblas\(uldcsrsymv\fR(\fI&uplo\fR, \fI&m\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIx\fR, \fIy\fR);
+.SH INPUT PARAMETERS
+.PP
+Parameter descriptions are common for all implemented interfaces with the exception of data types that refer here to the Fortran 77 standard types. Data types specific to the different interfaces are described in the section \fB``Interfaces''\fR below.
+.PP
+ 
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether the upper or low triangle of the matrix \fIA\fR is used.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, then the upper triangle of the matrix \fIA\fR is used.
+.IP
+If \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, then the low triangle of the matrix \fIA\fR is used.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Number of rows of the matrix \fIA\fR.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL*8\fR. Array containing non-zero elements of the matrix \fIA\fR. Its length is equal to the number of non-zero elements in the matrix \fIA\fR. Refer to \fIvalues\fR array description in Sparse Matrix Storage Formats for more details.
+.TP 10
+\fBia\fR
+.NL
+\fBINTEGER\fR. Array of length \fIm\fR + 1, containing indices of elements in the array \fIa\fR, such that \fIia\fR(\fIi\fR) is the index in the array \fIa\fR of the first non-zero element from the row \fIi\fR. The value of the last element \fIia\fR(\fIm\fR + 1) is equal to the number of non-zeros. Refer to \fIrowIndex\fR array description in Sparse Matrix Storage Formats for more details.
+.TP 10
+\fBja\fR
+.NL
+\fBREAL*8\fR. Array containing the column indices for each non-zero element of the matrix \fIA\fR.
+.IP
+Its length is equal to the length of the array \fIa\fR. Refer to \fIcolumns\fR array description in Sparse Matrix Storage Formats for more details.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR is \fIm\fR.
+.IP
+On entry, the array \fIx\fR must contain the vector \fIx\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBy\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR at least \fIm\fR.
+.IP
+On exit, the array \fIy\fR must contain the vector \fIy\fR. 
+.SH INTERFACES
+.PP
+
+.PP
+\fBFortran 77:\fR
+.br
+SUBROUTINE \fBmkl\(ulcspblas\(uldcsrsymv\fR(uplo, m, a, ia, ja, x, y)
+.br
+CHARACTER*1  uplo
+.br
+INTEGER      m
+.br
+INTEGER      ia(*), ja(*)
+.br
+REAL*8       a(*), x(*), y(*)
+.PP
+\fBC:\fR
+.br
+void mkl\(ulcspblas\(uldcsrsymv(char \fI*uplo\fR, int \fI*m\fR, double *\fIa\fR,
+.br
+int *\fIia\fR, int *\fIja\fR, double *\fIx\fR, double *\fIy\fR);

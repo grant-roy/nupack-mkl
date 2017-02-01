@@ -1,0 +1,89 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasq3 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasq3 \- Checks for deflation, computes a shift and calls \fIdqds\fR. Used by \fB?bdsqr\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasq3\fR( \fIi0\fR, \fIn0\fR, \fIz\fR, \fIpp\fR, \fIdmin\fR, \fIsigma\fR, \fIdesig\fR, \fIqmax\fR, \fInfail\fR, \fIiter\fR, \fIndiv\fR, \fIieee\fR)
+.PP
+\fBcall dlasq3\fR( \fIi0\fR, \fIn0\fR, \fIz\fR, \fIpp\fR, \fIdmin\fR, \fIsigma\fR, \fIdesig\fR, \fIqmax\fR, \fInfail\fR, \fIiter\fR, \fIndiv\fR, \fIieee\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBi0\fR
+.NL
+\fBINTEGER\fR. First index.
+.TP 10
+\fBn0\fR
+.NL
+\fBINTEGER\fR. Last index.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslasq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasq3\fR.
+.IP
+Array, \fBDIMENSION\fR (4\fIn\fR). \fIz\fR holds the \fIqd\fR array.
+.TP 10
+\fBpp\fR
+.NL
+\fBINTEGER\fR. \fIpp\fR=0 for ping, \fIpp\fR=1 for pong.
+.TP 10
+\fBdesig\fR
+.NL
+\fBREAL\fR for \fBslasq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasq3\fR.
+.IP
+Lower order part of \fIsigma\fR.
+.TP 10
+\fBqmax\fR
+.NL
+\fBREAL\fR for \fBslasq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasq3\fR.
+.IP
+Maximum value of \fIq\fR.
+.TP 10
+\fBieee\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Flag for ieee or non-ieee arithmetic (passed to \fB?lasq5\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBdmin\fR
+.NL
+\fBREAL\fR for \fBslasq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasq3\fR.
+.IP
+Minimum value of \fId\fR.
+.TP 10
+\fBsigma\fR
+.NL
+\fBREAL\fR for \fBslasq3\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasq3\fR.
+.IP
+Sum of shifts used in current segment.
+.TP 10
+\fBdesig\fR
+.NL
+Lower order part of \fIsigma\fR.
+.TP 10
+\fBnfail\fR
+.NL
+\fBINTEGER\fR. Number of times shift was too big.
+.TP 10
+\fBiter\fR
+.NL
+\fBINTEGER\fR. Number of iterations.
+.TP 10
+\fBndiv\fR
+.NL
+\fBINTEGER\fR. Number of divisions.

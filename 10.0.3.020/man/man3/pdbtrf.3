@@ -1,0 +1,117 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?dbtrf 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?dbtrf \- Computes the LU factorization of a n-by-n diagonally dominant-like banded distributed matrix.
+.SH SYNOPSIS
+.PP
+\fBcall psdbtrf\fR(\fIn\fR, \fIbwl\fR, \fIbwu\fR, \fIa\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIlaf\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pddbtrf\fR(\fIn\fR, \fIbwl\fR, \fIbwu\fR, \fIa\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIlaf\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcdbtrf\fR(\fIn\fR, \fIbwl\fR, \fIbwu\fR, \fIa\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIlaf\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzdbtrf\fR(\fIn\fR, \fIbwl\fR, \fIbwu\fR, \fIa\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIlaf\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR.  The number of rows and columns in the distributed submatrix \fIA\fR(1:\fIn\fR, \fIja\fR:\fIja\fR+\fIn\fR-1); \fIn\fR\(>= 0. 
+.TP 10
+\fBbwl\fR
+.NL
+(global) \fBINTEGER\fR.  The number of sub-diagonals within the band of \fIA\fR
+.IP
+(0 \(<= \fIbwl\fR  \(<= \fIn-1\fR). 
+.TP 10
+\fBbwu\fR
+.NL
+(global) \fBINTEGER\fR.  The number of super-diagonals within the band of \fIA\fR
+.IP
+(0 \(<= \fIbwu\fR \(<= \fIn-1\fR). 
+.TP 10
+\fBa\fR
+.NL
+(local) 
+.IP
+\fBREAL\fR for \fBpsdbtrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpddbtrf\fR
+.IP
+\fBCOMPLEX\fR for \fBpcdbtrf\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzdbtrf\fR. 
+.IP
+Pointer into the local memory  to an array of local dimension (\fIlld\(ula\fR,\fILOCc\fR(\fIja\fR+\fIn\fR-1)). 
+.IP
+Contains the local pieces of the \fIn\fR-by-\fIn\fR distributed banded matrix \fIA\fR(\fI1:n\fR, \fIja:ja+n-1\fR) to be factored. 
+.TP 10
+\fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The index in the global array \fIA\fR that points to the start of the matrix to be operated on ( which may be either all of \fIA\fR or a submatrix of \fIA\fR).
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR. 
+.IP
+If \fIdesca\fR(\fIdtype\(ul\fR) = 501, then \fIdlen\(ul\fR\(>= 7;
+.IP
+else if \fIdesca\fR(\fIdtype\(ul\fR) = 1, then \fIdlen\(ul\fR\(>= 9.
+.TP 10
+\fBlaf\fR
+.NL
+(local) \fBINTEGER\fR. The dimension of the array \fIaf\fR. 
+.IP
+Must be \fIlaf\fR\(>=\fBNB\fR*(\fIbwl\fR+\fIbwu\fR)+*(max(\fIbwl\fR,\fIbwu\fR))**2 .
+.IP
+If \fIlaf\fR is not large enough, an error code will be returned and the minimum acceptable size will be returned in \fIaf\fR(1).
+.TP 10
+\fBwork\fR
+.NL
+(local) Same type as \fIa\fR. Workspace array of dimension \fIlwork\fR.
+.TP 10
+\fBlwork\fR
+.NL
+(local or global) \fBINTEGER\fR.  The size of the \fIwork\fR array, must be \fIlwork\fR\(>= (max(\fIbwl\fR,\fIbwu\fR))**2. If \fIlwork\fR is too small, the minimal acceptable size will be returned in \fIwork\fR(1) and an error code is returned. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, this array contains details of the factorization.  Note that additional permutations are performed on the matrix, so that the factors returned are different from those returned by \fBLAPACK\fR. 
+.TP 10
+\fBaf\fR
+.NL
+(local) 
+.IP
+\fBREAL\fR for \fBpsdbtrf\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpddbtrf\fR
+.IP
+\fBCOMPLEX\fR for \fBpcdbtrf\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzdbtrf\fR.
+.IP
+Array, dimension (\fIlaf\fR). 
+.IP
+Auxiliary Fillin space. Fillin is created during the factorization routine \fBp?dbtrf\fR and this is stored in \fIaf\fR. 
+.IP
+Note that if a linear system is to be solved using \fBp?dbtrs\fR after the factorization routine, \fIaf\fR must not be altered after the factorization.
+.TP 10
+\fBwork\fR(1)
+.NL
+On exit, \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance.
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+If \fIinfo\fR=0, the execution is successful. 
+.IP
+\fIinfo\fR < 0: 
+.IP
+If the \fIi\fRth argument is an array and the \fIj-\fRth entry had an illegal value, then \fIinfo\fR = -(\fIi\fR*100+\fIj\fR); if the \fIi-\fRth argument is a scalar and had an illegal value, then \fIinfo\fR = \fI-i\fR. \fIinfo\fR> 0: 
+.IP
+If \fIinfo\fR = \fBk\fR \(<= \fBNPROCS\fR, the submatrix stored on processor \fIinfo\fR and factored locally was not diagonally dominant-like, and the factorization was not completed. If \fIinfo\fR = \fBk\fR > \fBNPROCS\fR, the submatrix stored on processor \fIinfo\fR-\fBNPROCS\fR representing interactions with other processors was not nonsingular, and the factorization was not completed.

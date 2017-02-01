@@ -1,0 +1,83 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gthrz 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gthrz \- Gathers a sparse vector\'s elements into compressed form, replacing them by zeros.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgthrz\fR(\fInz\fR, \fIy\fR, \fIx\fR, \fIindx\fR)
+.PP
+\fBcall dgthrz\fR(\fInz\fR, \fIy\fR, \fIx\fR, \fIindx\fR)
+.PP
+\fBcall cgthrz\fR(\fInz\fR, \fIy\fR, \fIx\fR, \fIindx\fR)
+.PP
+\fBcall zgthrz\fR(\fInz\fR, \fIy\fR, \fIx\fR, \fIindx\fR)
+.PP
+.B Fortran 95
+.PP
+\fIres\fR= \fBgthrz\fR(\fIx\fR, \fIindx\fR, \fIy\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnz\fR
+.NL
+\fBINTEGER\fR. The number of elements of \fIy\fR to be gathered.
+.TP 10
+\fBindx\fR
+.NL
+\fBINTEGER\fR.  Specifies indices of elements to be gathered.
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR.
+.TP 10
+\fBy\fR
+.NL
+\fBREAL\fR for \fBsgthrz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgthrz\fR
+.IP
+\fBCOMPLEX\fR for \fBcgthrz\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgthrz\fR
+.IP
+Array, \fBDIMENSION\fR at least max(\fIindx(i)\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsgthrz\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBd\fR\fBgthrz\fR
+.IP
+\fBCOMPLEX\fR for \fBcgthrz\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgthrz\fR
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR.
+.IP
+Contains the vector converted to the compressed form.
+.TP 10
+\fBy\fR
+.NL
+The updated vector \fIy\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBgthrz\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBindx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBy\fR
+.NL
+Holds the vector of length (\fInz\fR).

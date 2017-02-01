@@ -1,0 +1,15 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH blacs\(ulexit 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+blacs\(ulexit \- Frees all BLACS contexts and releases all allocated memory. 
+.SH SYNOPSIS
+.PP
+\fBcall blacs\(ulexit\fR( \fIcontinue\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBcontinue\fR
+.NL
+\fBINTEGER\fR.  Flag indicating whether message passing continues after the BLACS are done. If \fIcontinue\fR  is non-zero, the user is assumed to continue using the machine after completing the BLACS. Otherwise, no message passing is assumed after calling this routine.

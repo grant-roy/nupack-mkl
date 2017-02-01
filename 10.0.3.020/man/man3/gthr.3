@@ -1,0 +1,79 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gthr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gthr \- Gathers a full-storage sparse vector\'s elements into compressed form.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgthr\fR(\fInz\fR, \fIy\fR, \fIx\fR, \fIindx\fR)
+.PP
+\fBcall dgthr\fR(\fInz\fR, \fIy\fR, \fIx\fR, \fIindx\fR)
+.PP
+\fBcall cgthr\fR(\fInz\fR, \fIy\fR, \fIx\fR, \fIindx\fR)
+.PP
+\fBcall zgthr\fR(\fInz\fR, \fIy\fR, \fIx\fR, \fIindx\fR)
+.PP
+.B Fortran 95
+.PP
+\fIres\fR= \fBgthr\fR(\fIx\fR, \fIindx\fR, \fIy\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnz\fR
+.NL
+\fBINTEGER\fR. The number of elements of \fIy\fR to be gathered.
+.TP 10
+\fBindx\fR
+.NL
+\fBINTEGER\fR.  Specifies indices of elements to be gathered.
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR.
+.TP 10
+\fBy\fR
+.NL
+\fBREAL\fR for \fBsgthr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgthr\fR
+.IP
+\fBCOMPLEX\fR for \fBcgthr\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgthr\fR
+.IP
+Array, \fBDIMENSION\fR at least max(\fIindx(i)\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsgthr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgthr\fR
+.IP
+\fBCOMPLEX\fR for \fBcgthr\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgthr\fR
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR.
+.IP
+Contains the vector converted to the compressed form.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBgthr\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBindx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBy\fR
+.NL
+Holds the vector of length (\fInz\fR).

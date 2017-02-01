@@ -1,0 +1,347 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?tgsen 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?tgsen \- Reorders the generalized Schur decomposition of a pair of matrices (A,B) so that a selected cluster of eigenvalues appears in the leading diagonal blocks of (A,B).
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall stgsen\fR(\fIijob\fR, \fIwantq\fR, \fIwantz\fR, \fIselect\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIm\fR, \fIpl\fR, \fIpr\fR, \fIdif\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall dtgsen\fR(\fIijob\fR, \fIwantq\fR, \fIwantz\fR, \fIselect\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalphar\fR, \fIalphai\fR, \fIbeta\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIm\fR, \fIpl\fR, \fIpr\fR, \fIdif\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall ctgsen\fR(\fIijob\fR, \fIwantq\fR, \fIwantz\fR, \fIselect\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalpha\fR, \fIbeta\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIm\fR, \fIpl\fR, \fIpr\fR, \fIdif\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall ztgsen\fR(\fIijob\fR, \fIwantq\fR, \fIwantz\fR, \fIselect\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIalpha\fR, \fIbeta\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIm\fR, \fIpl\fR, \fIpr\fR, \fIdif\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall tgsen\fR(\fIa\fR, \fIb\fR, \fIselect\fR[,\fIalphar\fR] [,\fIalphai\fR] [,\fIbeta\fR] [,\fIijob\fR] [,\fIq\fR] [,\fIz\fR] [,\fIpl\fR] [,\fIpr\fR] [,\fIdif\fR] [,\fIm\fR] [,\fIinfo\fR])
+.PP
+\fBcall tgsen\fR(\fIa\fR, \fIb\fR, \fIselect\fR[,\fIalpha\fR] [,\fIbeta\fR] [,\fIijob\fR] [,\fIq\fR] [,\fIz\fR] [,\fIpl\fR] [,\fIpr\fR] [, \fIdif\fR] [,\fIm\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBijob\fR
+.NL
+\fBINTEGER\fR. Specifies whether condition numbers are required for the cluster of eigenvalues (\fIpl\fR and \fIpr\fR) or the deflating subspaces Difu and Difl.
+.IP
+If \fIijob\fR =0, only reorder with respect to \fIselect\fR;
+.IP
+If \fIijob\fR =1, reciprocal of norms of "projections" onto left and right eigenspaces with respect to the selected cluster (\fIpl\fR and \fIpr\fR);
+.IP
+If \fIijob\fR =2, compute upper bounds on Difu and Difl, using F-norm-based estimate (\fIdif\fR (1:2));
+.IP
+If \fIijob\fR =3, compute estimate of Difu and Difl, sing 1-norm-based estimate (\fIdif\fR (1:2)). This option is about 5 times as expensive as \fIijob\fR =2;
+.IP
+If \fIijob\fR =4,>compute \fIpl\fR, \fIpr\fR and \fIdif\fR (i.e., options 0, 1 and 2 above). This is an economic version to get it all;
+.IP
+If \fIijob\fR =5, compute \fIpl\fR, \fIpr\fR and \fIdif\fR (i.e., options 0, 1 and 3 above).
+.TP 10
+\fBwantq\fR, \fBwantz\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+If \fIwantq\fR = \fB.TRUE.\fR, update the left transformation matrix \fIQ\fR;
+.IP
+If \fIwantq\fR = \fB.FALSE.\fR, do not update \fIQ\fR;
+.IP
+If \fIwantz\fR = \fB.TRUE.\fR, update the right transformation matrix \fIZ\fR;
+.IP
+If \fIwantz\fR = \fB.FALSE.\fR, do not update \fIZ\fR.
+.TP 10
+\fBselect\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max (1, \fIn\fR). Specifies the eigenvalues in the selected cluster. 
+.IP
+To select an eigenvalue \fIomega\fR(\fIj\fR), \fIselect\fR(\fIj\fR) must be \fB.TRUE.\fR\fIFor real flavors\fR: to select a complex conjugate pair of eigenvalues \fIomega\fR(\fIj\fR) and \fIomega\fR(\fIj\fR+1) (corresponding 2 by 2 diagonal block), \fIselect\fR(\fIj\fR) and/or \fIselect\fR(\fIj\fR+1) must be set to \fB.TRUE.\fR; the complex conjugate \fIomega\fR(\fIj\fR) and \fIomega\fR(\fIj\fR+1) must be either both included in the cluster or both excluded.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrices \fIA\fR and \fIB\fR (\fIn\fR\(>= 0).
+.TP 10
+\fBa\fR, \fBb\fR, \fBq\fR, \fBz\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBstgsen\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdtgsen\fR
+.IP
+\fBCOMPLEX\fR for \fBctgsen\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBztgsen\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) contains the matrix \fIA\fR.
+.IP
+\fIFor real flavors\fR: \fIA\fR is upper quasi-triangular, with (\fIA\fR, \fIB\fR) in generalized real Schur canonical form.
+.IP
+\fIFor complex flavors\fR: \fIA\fR is upper triangular, in generalized Schur canonical form. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIb\fR(\fIldb\fR,*) contains the matrix \fIB\fR. 
+.IP
+\fIFor real flavors\fR: \fIB\fR is upper triangular, with (\fIA\fR, \fIB\fR) in generalized real Schur canonical form.
+.IP
+\fIFor complex flavors\fR: \fIB\fR is upper triangular, in generalized Schur canonical form. The second dimension of \fIb\fR must be at least max(1, \fIn\fR).
+.IP
+\fIq\fR (\fIldq\fR,*) 
+.IP
+If \fIwantq\fR = \fB.TRUE.\fR, then \fIq\fR is an \fIn\fR-by-\fIn\fR matrix;
+.IP
+If \fIwantq\fR = \fB.FALSE.\fR, then \fIq\fR is not referenced. 
+.IP
+The second dimension of \fIq\fR must be at least max(1, \fIn\fR).
+.IP
+\fIz\fR (\fIldz\fR,*) 
+.IP
+If \fIwantz\fR = \fB.TRUE.\fR, then \fIz\fR is an \fIn\fR-by-\fIn\fR matrix;
+.IP
+If \fIwantz\fR = \fB.FALSE.\fR, then \fIz\fR is not referenced. 
+.IP
+The second dimension of \fIz\fR must be at least max(1, \fIn\fR).\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIb\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBldq\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIq\fR; \fIldq\fR\(>= 1. 
+.IP
+If \fIwantq\fR = \fB.TRUE.\fR, then \fIldq\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIz\fR; \fIldz\fR\(>= 1. 
+.IP
+If \fIwantz\fR = \fB.TRUE.\fR, then \fIldz\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. The dimension of the array \fIwork\fR.
+.IP
+\fIFor real flavors\fR: 
+.IP
+If \fIijob\fR = 1, 2, or 4, \fIlwork\fR\(>= max(4\fIn\fR+16, 2\fIm\fR(\fIn\fR-\fIm\fR)). 
+.IP
+If \fIijob\fR = 3 or 5, \fIlwork\fR\(>= max(4\fIn\fR+16, 4\fIm\fR(\fIn\fR-\fIm\fR)).
+.IP
+\fIFor complex flavors\fR: 
+.IP
+If \fIijob\fR = 1, 2, or 4, \fIlwork\fR\(>= max(1, 2\fIm\fR(\fIn\fR-\fIm\fR)). 
+.IP
+If \fIijob\fR = 3 or 5, \fIlwork\fR\(>= max(1, 4\fIm\fR(\fIn\fR-\fIm\fR)).
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR. 
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace array, its dimension max(1, \fBliwork\fR).
+.IP
+If \fIijob\fR =0, \fIiwork\fR is not referenced.
+.TP 10
+\fBliwork\fR
+.NL
+\fBINTEGER\fR. The dimension of the array \fIiwork\fR.
+.IP
+\fIFor real flavors\fR: 
+.IP
+If \fIijob\fR = 1, 2, or 4, \fIliwork\fR\(>=\fIn\fR+6. 
+.IP
+If \fIijob\fR = 3 or 5, \fIliwork\fR\(>= max(\fIn\fR+6, 2\fIm\fR(\fIn\fR-\fIm\fR)).
+.IP
+\fIFor complex flavors\fR: 
+.IP
+If \fIijob\fR = 1, 2, or 4, \fIliwork\fR\(>=\fIn\fR+2. 
+.IP
+If \fIijob\fR = 3 or 5, \fIliwork\fR\(>= max(\fIn\fR+2, 2\fIm\fR(\fIn\fR-\fIm\fR)).
+.IP
+If \fIliwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIi\fR\fIwork\fR array, returns this value as the first entry of the \fIi\fR\fIwork\fR array, and no error message related to \fIliwork\fR is issued by \fBxerbla\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR, \fBb\fR
+.NL
+Overwritten by the reordered matrices \fIA\fR and \fIB\fR, respectively.
+.TP 10
+\fBalphar\fR, \fBalphai\fR
+.NL
+\fBREAL\fR for \fBstgsen\fR;
+.IP
+\fBDOUBLE PRECISION\fR for \fBdtgsen\fR. 
+.IP
+Arrays, \fBDIMENSION\fR at least max(1, \fIn\fR). Contain values that form generalized eigenvalues in real flavors. 
+.IP
+See \fIbeta\fR.
+.TP 10
+\fBalpha\fR
+.NL
+\fBCOMPLEX\fR for \fBctgsen\fR;
+.IP
+\fBDOUBLE COMPLEX\fR for \fBztgsen\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). Contain values that form generalized eigenvalues in complex flavors. 
+.IP
+See \fIbeta\fR.
+.TP 10
+\fBbeta\fR
+.NL
+\fBREAL\fR for \fBstgsen\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdtgsen\fR
+.IP
+\fBCOMPLEX\fR for \fBctgsen\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBztgsen\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR).
+.IP
+\fIFor real flavors\fR:
+.IP
+On exit, (\fIalphar\fR(j) + \fIalphai\fR(j)*i)/\fIbeta\fR(j), j=1,..., \fIn\fR, will be the generalized eigenvalues. 
+.IP
+\fIalphar\fR(j) + \fIalphai\fR(j)*i and \fIbeta\fR(j), j=1,..., \fIn\fR are the diagonals of the complex Schur form (\fIS\fR,\fIT\fR) that would result if the 2-by-2 diagonal blocks of the real generalized Schur form of (\fIA\fR,\fIB\fR) were further reduced to triangular form using complex unitary transformations. 
+.IP
+If \fIalphai\fR(j) is zero, then the j-th eigenvalue is real; if positive, then the j-th and (j+1)-st eigenvalues are a complex conjugate pair, with \fIalphai\fR(j+1) negative.
+.IP
+\fIFor complex flavors:\fR
+.IP
+The diagonal elements of \fIA\fR and \fIB\fR, respectively, when the pair (\fIA\fR,\fIB\fR) has been reduced to generalized Schur form. \fIalpha\fR(i)/\fIbeta\fR(i), i=1,..., \fIn\fR are the generalized eigenvalues. 
+.TP 10
+\fBq\fR
+.NL
+If \fIwantq\fR\fB=.TRUE.\fR, then, on exit, \fIQ\fR has been postmultiplied by the left orthogonal transformation matrix which reorder (\fIA\fR, \fIB\fR). The leading \fIm\fR columns of \fIQ\fR form orthonormal bases for the specified pair of left eigenspaces (deflating subspaces).
+.TP 10
+\fBz\fR
+.NL
+If \fIwantz\fR\fB=.TRUE.\fR, then, on exit, \fIZ\fR has been postmultiplied by the left orthogonal transformation matrix which reorder (\fIA\fR, \fIB\fR). The leading \fIm\fR columns of \fIZ\fR form orthonormal bases for the specified pair of left eigenspaces (deflating subspaces).
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The dimension of the specified pair of left and right eigen-spaces (deflating subspaces); 0 \(<=\fIm\fR\(<=\fIn\fR.
+.TP 10
+\fBpl\fR, \fBpr\fR
+.NL
+\fBREAL\fR for single precision flavors;
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+If \fIijob\fR = 1, 4, or 5, \fIpl\fR and \fIpr\fR are lower bounds on the reciprocal of the norm of "projections" onto left and right eigenspaces with respect to the selected cluster. 
+.IP
+0 < \fIpl\fR, \fIpr\fR\(<= 1. If \fIm\fR = 0 or \fIm\fR = \fIn\fR, \fIpl\fR = \fIpr\fR = 1. 
+.IP
+If \fIijob\fR = 0, 2 or 3, \fIpl\fR and \fIpr\fR are not referenced
+.TP 10
+\fBdif\fR
+.NL
+\fBREAL\fR for single precision flavors;\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Array, \fBDIMENSION\fR\fI\fR(2). 
+.IP
+If \fIijob\fR\(>= 2, \fIdif\fR(1:2) store the estimates of Difu and Difl. 
+.IP
+If \fIijob\fR = 2 or 4, \fIdif\fR(1:2) are F-norm-based upper bounds on Difu and Difl. 
+.IP
+If \fIijob\fR = 3 or 5, \fIdif\fR(1:2) are 1-norm-based estimates of Difu and Difl. 
+.IP
+If \fIm\fR = 0 or \fIn\fR, \fIdif\fR(1:2) = F-norm([\fIA\fR, \fIB\fR]). 
+.IP
+If \fIijob\fR = 0 or 1, \fIdif\fR is not referenced.
+.TP 10
+\fBwork\fR(1)
+.NL
+If \fIijob\fR is not 0 and \fIinfo\fR = 0, on exit, \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. Use this \fIlwork\fR for subsequent runs.
+.TP 10
+\fBiwork\fR(1)
+.NL
+If \fIijob\fR is not 0 and \fIinfo\fR = 0, on exit, \fIiwork\fR(1) contains the minimum value of \fIliwork\fR required for optimum performance. Use this \fIliwork\fR for subsequent runs.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value. 
+.IP
+If \fIinfo\fR = 1, Reordering of (\fIA\fR, \fIB\fR) failed because the transformed matrix pair (\fIA\fR, \fIB\fR) would be too far from generalized Schur form; the problem is very ill-conditioned. (\fIA\fR, \fIB\fR) may have been partially reordered. 
+.IP
+If requested, 0 is returned in \fIdif\fR(*), \fIpl\fR and \fIpr\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBtgsen\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn,n\fR).
+.TP 10
+\fBb\fR
+.NL
+Holds the matrix \fIB\fR of size (\fIn,n\fR).
+.TP 10
+\fBselect\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBalphar\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBalphai\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in real flavors only.
+.TP 10
+\fBalpha\fR
+.NL
+Holds the vector of length (\fIn\fR). Used in complex flavors only.
+.TP 10
+\fBbeta\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBq\fR
+.NL
+Holds the matrix \fIQ\fR of size (\fIn,n\fR).
+.TP 10
+\fBz\fR
+.NL
+Holds the matrix \fIZ\fR of size (\fIn,n\fR).
+.TP 10
+\fBdif\fR
+.NL
+Holds the vector of length (2).
+.TP 10
+\fBijob\fR
+.NL
+Must be 0, 1, 2, 3, 4, or 5. The default value is 0.
+.TP 10
+\fBwantq\fR
+.NL
+Restored based on the presence of the argument \fIq\fR as follows: 
+.IP
+\fIwantq\fR = \fB.TRUE\fR, if \fIq\fR is present, 
+.IP
+\fIwantq\fR = \fB.FALSE\fR, if \fIq\fR is omitted.
+.TP 10
+\fBwantz\fR
+.NL
+Restored based on the presence of the argument \fIz\fR as follows: 
+.IP
+\fIwantz\fR = \fB.TRUE\fR, if \fIz\fR is present, 
+.IP
+\fIwantz\fR = \fB.FALSE\fR, if z is omitted.

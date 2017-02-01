@@ -1,0 +1,7 @@
+Sample Intel(R) LINPACK data file (lininput_itanium)
+Intel(R) LINPACK data
+7                                             # number of tests
+40000 30000 24000 20000 15000 10000 8000      # problem sizes (equations)
+40016 30016 24016 20016 15000 10000 8016      # leading dimensions
+1 2 2 2 2 2 2                                 # times (trials) to run a test
+4 4 4 4 4 4 4                                 # alignment values (in KBytes)

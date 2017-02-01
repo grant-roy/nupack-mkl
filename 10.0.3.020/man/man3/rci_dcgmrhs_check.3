@@ -1,0 +1,68 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dcgmrhs\(ulcheck 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dcgmrhs\(ulcheck \- Checks consistency and correctness of the user defined data.
+.SH SYNOPSIS
+.PP
+\fBdcgmrhs\(ulcheck\fR(\fIn\fR, \fIx\fR, \fInrhs\fR, \fIb\fR, \fIRCI\(ulrequest\fR, \fIipar\fR, \fIdpar\fR, \fItmp\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Contains the size of the problem, and the sizes of arrays \fBx\fR and \fBb\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBDOUBLE PRECISION\fR matrix of size \fIn\fR by \fBnrhs\fR. Contains the initial approximation to the solution vectors. Normally it is equal to 0 or to \fBb\fR.
+.TP 10
+\fBnrhs\fR
+.NL
+\fBINTEGER\fR. This parameter sets the number of right-hand sides.
+.TP 10
+\fBb\fR
+.NL
+\fBDOUBLE PRECISION\fR matrix of size (\fBnrhs\fR,\fIn\fR). Contains the right-hand side vectors.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBRCI\(ulrequest\fR
+.NL
+\fBINTEGER\fR. Informs about result of work of theroutine.
+.TP 10
+\fBipar\fR
+.NL
+\fBINTEGER\fR array of size \fB(128+2*\fBnrhs\fR)\fR. Refer to the CG Common Parameters.
+.TP 10
+\fBdpar\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size \fB(128+2*\fBnrhs\fR)\fR. Refer to the CG Common Parameters.
+.TP 10
+\fBtmp\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size (\fIn\fR, 3+\fBnrhs\fR). Refer to the CG Common Parameters.
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBRCI\(ulrequest\fR= 0
+.NL
+The routine completes task normally.
+.TP 10
+\fBRCI\(ulrequest\fR= -1100
+.NL
+The routine is interrupted, errors occur.
+.TP 10
+\fBRCI\(ulrequest\fR= -1001
+.NL
+The routine returns some warning messages.
+.TP 10
+\fBRCI\(ulrequest\fR= -1010
+.NL
+The routine changes some parameters to make them consistent or correct.
+.TP 10
+\fBRCI\(ulrequest\fR= -1011
+.NL
+The routine returns some warning messages and changes some parameters.

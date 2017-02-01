@@ -1,0 +1,47 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH CommitDescriptorDM 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+CommitDescriptorDM \- Performs all initialization for the actual FFT computation.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiCommitDescriptorDM\fR(\fIhandle\fR)
+.PP
+.B /* C/C++ */
+.PP
+\fBstatus\fR = \fBDftiCommitDescriptorDM\fR(\fIhandle\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+The descriptor handle. Must be valid, that is, created in a call to \fBDftiCreateDescriptorDM\fR.
+.SH RETURN VALUES
+.PP
+.PP
+The function returns DFTI\(ulNO\(ulERROR when completes successfully. If the function fails, it returns a value of another  error class constant (for the list of constants, refer to Error Codes).
+.PP
+
+.br
+! Fortran Interface
+.br
+INTERFACE DftiCommitDescriptorDM
+.br
+   INTEGER(4) FUNCTION DftiCommitDescriptorDM(handle);
+.br
+TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: handle
+.br
+END FUNCTION
+.br
+END INTERFACE
+.br
+   
+.br
+/* C/C++ prototype */ 
+.br
+long DftiCommitDescriptorDM(DFTI\(ulDESCRIPTOR\(ulDM\(ulHANDLE handle);
+.br
+   

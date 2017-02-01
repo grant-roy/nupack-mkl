@@ -1,0 +1,89 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?roti 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?roti \- Applies Givens rotation to sparse vectors one of which is in compressed form.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sroti\fR(\fInz\fR, \fIx\fR, \fIindx\fR, \fIy\fR, \fIc\fR, \fIs\fR)
+.PP
+\fBcall droti\fR(\fInz\fR, \fIx\fR, \fIindx\fR, \fIy\fR, \fIc\fR, \fIs\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall roti\fR(\fIx\fR, \fIindx\fR, \fIy\fR[, \fIc\fR] [,\fIs\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnz\fR
+.NL
+\fBINTEGER\fR. The number of elements in \fIx\fR and \fIindx\fR.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBsroti\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdroti\fR
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR. 
+.TP 10
+\fBindx\fR
+.NL
+\fBINTEGER\fR.  Specifies the indices for the elements of \fIx\fR.
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR. 
+.TP 10
+\fBy\fR
+.NL
+\fBREAL\fR for \fBsroti\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdroti\fR
+.IP
+Array, \fBDIMENSION\fR at least max(\fIindx(i)\fR). 
+.TP 10
+\fBc\fR
+.NL
+A scalar:  \fBREAL\fR for \fBsroti\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdroti\fR.
+.TP 10
+\fBs\fR
+.NL
+A scalar:  \fBREAL\fR for \fBsroti\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdroti\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR and \fIy\fR
+.NL
+The updated arrays.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBroti\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBindx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBy\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBc\fR
+.NL
+The default value is 1.
+.TP 10
+\fBs\fR
+.NL
+The default value is 1.

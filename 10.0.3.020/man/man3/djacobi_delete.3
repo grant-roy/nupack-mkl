@@ -1,0 +1,29 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH djacobi\(uldelete 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+djacobi\(uldelete \- Removes the data object required by the Jacobian calculation.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIres\fR= \fBdjacobi\(uldelete\fR(\fIhandle\fR)
+.PP
+.B /* C */
+.PP
+\fIres\fR= \fBdjacobi\(uldelete\fR(\fI&handle\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fB\(ulJACOBIMATRIX\(ulHANDLE\(ult\fR type in C/C++ and \fBINTEGER*8\fR in FORTRAN.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBres\fR
+.NL
+\fBINTEGER\fR. Informs about the task completion. 
+.IP
+\fBres\fR = \fBTR\(ulSUCCESS\fR means the routine completed the task normally.

@@ -1,0 +1,159 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?tbmv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?tbmv \- Computes a matrix-vector product using a triangular band matrix.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall stbmv\fR(\fIuplo\fR, \fItrans\fR, \fIdiag\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fBcall dtbmv\fR(\fIuplo\fR, \fItrans\fR, \fIdiag\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fBcall ctbmv\fR(\fIuplo\fR, \fItrans\fR, \fIdiag\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fIx\fR, \fIincx\fR)
+.PP
+\fBcall ztbmv\fR(\fIuplo\fR, \fItrans\fR, \fIdiag\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fIx\fR, \fIincx\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall tbmv\fR(\fIa\fR, \fIx\fR[,\fIuplo\fR] [, \fItrans\fR] [,\fIdiag\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether the matrix \fIA\fR is an upper or lower triangular matrix: 
+.IP
+if \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, then the matrix is upper  triangular;
+.IP
+if \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, then the matrix is low  triangular.
+.TP 10
+\fBtrans\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the operation:
+.IP
+if \fBtrans\fR = \'N\' or \'n\', then \fIx\fR := \fIA\fR*\fIx\fR;
+.IP
+if \fBtrans \fR= \'T\' or \'t\', then \fIx\fR := \fIA\fR\'*\fIx\fR;
+.IP
+if \fBtrans\fR = \'C\' or \'c\', then \fIx\fR := conjg(\fIA\fR\')*\fIx\fR.
+.TP 10
+\fBdiag\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether the matrix \fIA\fR is unit triangular:
+.IP
+if \fIdiag\fR = \fB\'U\'\fR or \fB\'u\'\fR  then the matrix is unit triangular;
+.IP
+if \fIdiag\fR = \fB\'N\'\fR or \fB\'n\'\fR, then the matrix is not unit triangular.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Specifies the order of the matrix \fIA\fR. The value of \fIn\fR must be at least zero.
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. On entry with \fIuplo\fR = \fB\'U\'\fR or \fB\'u\'\fR, \fIk\fR specifies the number of super-diagonals of the matrix \fIA\fR. On entry with \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, \fIk\fR specifies the number of sub-diagonals of the matrix \fIa\fR.
+.IP
+The value of \fIk\fR must satisfy 0\(<=\fIk\fR. 
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBstbmv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdtbmv\fR
+.IP
+\fBCOMPLEX\fR for \fBctbmv\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBztbmv\fR
+.IP
+Array, \fBDIMENSION\fR(\fIlda\fR, \fIn\fR).
+.IP
+Before entry with \fIuplo\fR  = \fB\'U\'\fR or \fB\'u\'\fR, the leading (\fIk\fR + 1) by \fIn\fR part of the array \fIa\fR must contain the upper triangular band part of the matrix of coefficients, supplied column-by-column, with the leading diagonal of the matrix in row (\fIk\fR + 1) of the array, the first super-diagonal starting at position 2 in row \fIk\fR, and so on. The top left \fIk\fR by \fIk\fR triangle of the array \fIa\fR is not referenced. The following program segment transfers an upper triangular band matrix from conventional full matrix storage to band storage: 
+.br
+do 20, j = 1, n
+.br
+.br
+  m = k + 1 - j
+.br
+   do 10, i = max(1, j - k), j
+.br
+    a(m + i, j) = matrix(i, j)
+.br
+   10 continue
+.br
+20 continue
+.IP
+Before entry with \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, the leading (\fIk\fR + 1) by \fIn\fR part of the array \fIa\fR must contain the lower triangular band part of the matrix of coefficients, supplied column-by-column, with the leading diagonal of the matrix in row1 of the array, the first sub-diagonal starting at position 1 in row 2, and so on. The bottom right \fIk\fR by \fIk\fR triangle of the array \fIa\fR is not referenced. The following program segment transfers a lower triangular band matrix from conventional full matrix storage to band storage: 
+.br
+do 20, j = 1, n
+.br
+.br
+                m = 1 - j
+.br
+ do 10, i = j, min(n, j + k)
+.br
+  a(m + i, j) = matrix (i, j)
+.br
+ 10 continue
+.br
+20 continue
+.IP
+Note that when \fIdiag\fR = \fB\'U\'\fR or \fB\'u\'\fR, the elements of the array \fIa\fR corresponding to the diagonal elements of the matrix are not referenced, but are assumed to be unity.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. Specifies the first dimension of \fIa\fR as declared in the calling (sub)program. The value of \fIlda\fR must be at least (\fIk\fR + 1). 
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBstbmv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdtbmv\fR
+.IP
+\fBCOMPLEX\fR for \fBctbmv\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBztbmv\fR
+.IP
+Array, \fBDIMENSION\fR at least  (1 + (\fIn\fR - 1)*abs(\fIincx\fR)). Before entry, the incremented array \fIx\fR must contain the \fIn\fR-element vector \fIx\fR. 
+.TP 10
+\fBincx\fR
+.NL
+\fBINTEGER\fR. Specifies the increment for the elements of \fIx\fR.
+.IP
+The value of \fIincx\fR must not be zero.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+Overwritten with the transformed vector \fIx\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBtbmv\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the array \fIa\fR of size (\fIk+1,n\fR).
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.
+.TP 10
+\fBtrans\fR
+.NL
+Must be \fB\'N\'\fR, \fB\'C\'\fR, or \fB\'T\'\fR.
+.IP
+The default value is \fB\'N\'\fR.
+.TP 10
+\fBdiag\fR
+.NL
+Must be \fB\'N\'\fR or \fB\'U\'\fR. The default value is \fB\'N\'\fR.

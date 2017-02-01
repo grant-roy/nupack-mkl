@@ -1,0 +1,119 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH iNewAbstractStream 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+iNewAbstractStream \- Creates and initializes an abstract random stream for integer arrays.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslinewabstractstream\fR( \fIstream\fR, \fIn\fR, \fIibuf\fR, \fIicallback\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvsliNewAbstractStream\fR( \fI&stream\fR, \fIn\fR, \fIibuf\fR, \fIicallback\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Size of the array \fIibuf\fR
+.PP
+.SB Name
+.br
+\h\'1\'\fBibuf\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBunsigned int*\fR
+.br
+.SB Description
+.br
+\h\'1\'Array of \fIn\fR 32-bit integers
+.PP
+.SB Name
+.br
+\h\'1\'\fBicallback\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: See \fINote\fRbelow
+.br
+\h\'2\'C:\h\'7\'See \fINote\fRbelow
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Address of the callback function used for \fIibuf\fR update
+.br
+\h\'2\'C:\h\'7\'Pointer to the callback function used for \fIibuf\fR update
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBstream\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulSTREAM\(ulSTATE)\fR, \fBTINTENT(OUT)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLStreamStatePtr*\fR
+.br
+.SB Description
+.br
+\h\'1\'Descriptor of the stream state structure
+.PP
+.B NOTE:
+Format of the callback function in Fortran: 
+.br
+INTEGER FUNCTION IUPDATEFUNC[C]( stream, n, ibuf, nmin, nmax, idx )
+.br
+.br
+TYPE(VSL\(ulSTREAM\(ulSTATE),POINTER :: stream[reference]
+.br
+INTEGER(KIND=4),INTENT(IN)     :: n[reference]
+.br
+INTEGER(KIND=4),INTENT(OUT)    :: ibuf[reference](0:n-1)
+.br
+INTEGER(KIND=4),INTENT(IN)     :: nmin[reference]
+.br
+INTEGER(KIND=4),INTENT(IN)     :: nmax[reference]
+.br
+INTEGER(KIND=4),INTENT(IN)     :: idx[reference]
+.PP
+Format of the callback function in C: 
+.br
+int iUpdateFunc( \fBVSLStreamStatePtr\fR\fBstream\fR, int* \fBn\fR, unsigned int \fBibuf\fR[], int* \fBnmin\fR, int* \fBnmax\fR, int* \fBidx\fR );
+.br
+.PP
+The callback function returns the number of elements in the array actually updated by the function.
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK\fR, \fBVSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulBAD\(ulARG\fR
+.NL
+Parameter \fBn\fR is not positive.
+.TP 10
+\fBVSL\(ulERROR\(ulMEM\(ulFAILURE\fR
+.NL
+System cannot allocate memory for \fBstream\fR.
+.TP 10
+\fBVSL\(ulERROR\(ulNULL\(ulPTR\fR
+.NL
+Either buffer or callback function parameter is a \fBNULL\fR pointer.

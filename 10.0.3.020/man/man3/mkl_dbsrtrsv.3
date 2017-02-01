@@ -1,0 +1,103 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH mkl\(uldbsrtrsv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+mkl\(uldbsrtrsv \- Triangular solver with simplified interface for a sparse matrix stored in the BSR format (3-array variation) with one-based indexing.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall mkl\(uldbsrtrsv\fR(\fIuplo\fR, \fItransa\fR, \fIdiag\fR, \fIm\fR, \fIlb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIx\fR, \fIy\fR)
+.PP
+.B /* C */
+.PP
+\fBmkl\(uldbsrtrsv\fR(\fI&uplo\fR, \fI&transa\fR, \fI&diag\fR, \fI&m\fR, \fI&lb\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIx\fR, \fIy\fR);
+.SH INPUT PARAMETERS
+.PP
+Parameter descriptions are common for all implemented interfaces with the exception of data types that refer here to the Fortran 77 standard types. Data types specific to the different interfaces are described in the section \fB``Interfaces''\fR below.
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the upper or low triangle of the matrix \fIA\fR is used.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR or  \fB\'u\'\fR, then the upper triangle of the matrix \fIA\fR is used.
+.IP
+If \fIuplo\fR = \fB\'L\'\fR or \fB\'l\'\fR, then the low triangle of the matrix \fIA\fR is used.
+.TP 10
+\fBtransa\fR
+.NL
+\fBCHARACTER*1\fR. Specifies the operation.
+.IP
+If \fItransa\fR = \fB\'N\'\fR or \fB\'n\'\fR, then the matrix-vector product is computed as \fIy\fR := \fIA\fR*\fIx\fR
+.IP
+If \fItransa\fR = \fB\'T\'\fR or \fB\'t\'\fR or \fB\'C\'\fR or \fB\'c\'\fR, then the matrix-vector product is computed as \fIy\fR := \fIA\'\fR*\fIx\fR.
+.TP 10
+\fBdiag\fR
+.NL
+\fBCHARACTER*1\fR. Specifies whether \fIA\fR is a unit triangular matrix.
+.IP
+If \fIdiag\fR = \fB\'U\'\fR or \fB\'u\'\fR, then \fIA\fR is a unit triangular.
+.IP
+If \fIdiag\fR = \fB\'N\'\fR or \fB\'n\'\fR, then \fIA\fR is not a unit triangular.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. Number of block rows of the matrix \fIA\fR.
+.TP 10
+\fBlb\fR
+.NL
+\fBINTEGER\fR. Size of the block in the matrix \fIA\fR.
+.TP 10
+\fBa\fR
+.NL
+\fBREAL*8\fR. Array containing elements of non-zero blocks of the matrix \fIA\fR. Its length is equal to the number of non-zero blocks in the matrix \fIA\fR multiplied by \fBlb\fR*\fBlb\fR. Refer to \fIvalues\fR array description in BSR Format for more details.
+.TP 10
+\fBia\fR
+.NL
+\fBINTEGER\fR. Array of length (\fIm\fR + 1), containing indices of block in the array \fIa\fR, such that \fIia\fR(\fIi\fR) is the index in the array \fIa\fR of the first non-zero element from the row \fIi\fR. The value of the last element \fIia\fR(\fIm\fR + 1) is equal to the number of non-zero blocks plus one. Refer to \fIrowIndex\fR array description in BSR Format for more details.
+.TP 10
+\fBja\fR
+.NL
+\fBREAL*8\fR. Array containing the column indices for each non-zero block in the matrix \fIA\fR.
+.IP
+Its length is equal to the number of non-zero blocks of the matrix \fIA\fR. Refer to \fIcolumns\fR array description in  BSR Format for more details.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR(\fIm\fR*\fBlb\fR).
+.IP
+On entry, the array \fIx\fR must contain the vector \fIx\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBy\fR
+.NL
+\fBREAL*8\fR. 
+.IP
+Array, \fBDIMENSION\fR at least (\fIm\fR*\fBlb\fR).
+.IP
+On exit, the array \fIy\fR must contain the vector \fIy\fR. 
+.SH INTERFACES
+.PP
+
+.PP
+\fBFortran 77:\fR
+.br
+SUBROUTINE \fBmkl\(uldbsrtrsv\fR(uplo, transa, diag, m, lb, a, ia, ja, x, y)
+.br
+CHARACTER*1  uplo, transa, diag
+.br
+INTEGER      m, lb
+.br
+INTEGER      ia(*), ja(*)
+.br
+REAL*8       a(*), x(*), y(*)
+.PP
+\fBC:\fR
+.br
+void mkl\(uldbsrtrsv(char \fI*uplo\fR, char \fI*transa\fR, char \fI*diag\fR, int \fI*m\fR,
+.br
+int \fI*lb\fR, double *\fIa\fR, int *\fIia\fR, int *\fIja\fR, double *\fIx\fR, double *\fIy\fR);

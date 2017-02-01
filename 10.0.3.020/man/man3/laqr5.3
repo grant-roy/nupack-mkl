@@ -1,0 +1,197 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laqr5 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laqr5 \- Performs a single small-bulge multi-shift QR sweep.
+.SH SYNOPSIS
+.PP
+\fBcall slaqr5\fR(\fI wantt\fR, \fIwantz\fR, \fIkacc22\fR, \fIn\fR, \fIktop\fR, \fIkbot\fR, \fInshfts\fR, \fIsr, si, \fR\fIh\fR, \fIldh\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIldz\fR, v, ldv, u, ldu, nv, wv, \fIldwv, nh, wh, ldwh\fR)
+.PP
+\fBcall dlaqr5\fR(\fI wantt\fR, \fIwantz\fR, \fIkacc22\fR, \fIn\fR, \fIktop\fR, \fIkbot\fR, \fInshfts\fR, \fIsr, si, \fR\fIh\fR, \fIldh\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIldz\fR, v, ldv, u, ldu, nv, wv, \fIldwv, nh, wh, ldwh\fR)
+.PP
+\fBcall claqr5\fR(\fI wantt\fR, \fIwantz\fR, \fIkacc22\fR, \fIn\fR, \fIktop\fR, \fIkbot\fR, \fInshfts\fR, \fIs, \fR\fIh\fR, \fIldh\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIldz\fR, v, ldv, u, ldu, nv, wv, \fIldwv, nh, wh, ldwh\fR)
+.PP
+\fBcall zlaqr5\fR(\fI wantt\fR, \fIwantz\fR, \fIkacc22\fR, \fIn\fR, \fIktop\fR, \fIkbot\fR, \fInshfts\fR, \fIs, \fR\fIh\fR, \fIldh\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIldz\fR, v, ldv, u, ldu, nv, wv, \fIldwv, nh, wh, ldwh \fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBwantt\fR
+.NL
+\fBLOGICAL\fR.
+.IP
+\fIwantt\fR = \fB.TRUE.\fR if the quasi-triangular/triangular Schur factor is          computed.
+.IP
+\fIwantt \fRis set to \fB.FALSE.\fR otherwise.
+.TP 10
+\fBwantz\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+\fIwantz\fR = \fB.TRUE.\fR if the orthogonal/unitary Schur factor is          computed.
+.IP
+\fIwantz \fRis set to \fB.FALSE.\fR otherwise.
+.TP 10
+\fBkacc22\fR
+.NL
+\fBINTEGER\fR. Possible values are 0, 1, or 2.
+.IP
+Specifies the computation mode of far-from-diagonal orthogonal updates.
+.IP
+= 0: the routine does not accumulate reflections and does not             use matrix-matrix multiply to update far-from-diagonal matrix entries.
+.IP
+= 1: the routine accumulates reflections and uses matrix-matrix multiply to update the far-from-diagonal matrix entries.
+.IP
+= 2: the routine accumulates reflections, uses matrix-matrix multiply to update the far-from-diagonal matrix entries, and takes advantage of 2-by-2 block structure during matrix multiplies.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the Hessenberg matrix \fIH\fR upon which the routine operates.
+.TP 10
+\fBktop\fR, \fBkbot\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+It is assumed without a check that either \fBktop\fR=1 or \fBh\fR(\fBktop\fR,\fBktop-1\fR)=0, and either \fBkbot\fR=\fBn\fR or \fBh\fR(\fBkbot\fR+1,\fBkbot\fR)=0. 
+.TP 10
+\fBnshfts\fR
+.NL
+\fBINTEGER\fR.
+.IP
+Number of simultaneous shifts, must be positive and even.
+.TP 10
+\fBsr\fR, \fBsi\fR
+.NL
+\fBREAL\fR for \fBslaqr5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr5\fR
+.IP
+Arrays,\fB DIMENSION \fR(\fInshfts\fR) each. \fBsr\fR contains the real parts and \fBsi\fR contains the imaginary parts of the \fBnshfts\fR shifts of origin that define the multi-shift QR sweep.
+.TP 10
+\fBs\fR
+.NL
+\fBCOMPLEX\fR for \fBclaqr5\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr5\fR.
+.IP
+Arrays,\fB DIMENSION \fR(\fInshfts\fR). \fBs\fR contains the shifts of origin that define the multi-shift QR sweep.
+.TP 10
+\fBh\fR
+.NL
+\fBREAL\fR for \fBslaqr5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr5\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr5\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr5\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldh\fR, \fIn\fR), on input contains the Hessenberg matrix.
+.TP 10
+\fBldh\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fBh\fR just as declared in the calling routine. \fBldh\fR \(>= max(1, \fBn\fR).
+.TP 10
+\fBiloz\fR, \fBihiz\fR
+.NL
+\fBINTEGER\fR.  Specify the rows of \fIZ\fR to which transformations must be applied if \fIwantz\fR is \fB.TRUE.\fR. 1 \(<= \fIiloz\fR \(<= \fIihiz\fR \(<= \fIn\fR.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslaqr5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr5\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr5\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr5\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldz\fR, \fIihi\fR), contains the matrix \fIZ \fR if \fIwantz\fR is \fB.TRUE.\fR.  If \fIwantz\fR is \fB.FALSE.\fR, then \fIz\fR is not referenced.
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER.\fR The leading dimension of the array \fBz\fR just as declared in the calling routine.  \fBldz\fR \(>= \fBn\fR.
+.TP 10
+\fBv\fR
+.NL
+\fBREAL\fR for \fBslaqr5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr5\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr5\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr5\fR.
+.IP
+Workspace array with dimension (\fBldv\fR, \fBnshfts\fR/2).
+.TP 10
+\fBldv\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fBv\fR just as declared in the calling routine. \fBldv\fR \(>= 3.
+.TP 10
+\fBu\fR
+.NL
+\fBREAL\fR for \fBslaqr5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr5\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr5\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr5\fR.
+.IP
+Workspace array with dimension (\fBldu\fR, 3*\fBnshfts\fR-3). 
+.TP 10
+\fBldu\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fBu\fR just as declared in the calling routine. \fBldu\fR \(>= 3*\fBnshfts\fR-3.
+.TP 10
+\fBnh\fR
+.NL
+\fBINTEGER\fR. The number of column in the array \fBwh\fR available for workspace. \fBnh\fR \(>= 1.
+.TP 10
+\fBwh\fR
+.NL
+\fBREAL\fR for \fBslaqr5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr5\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr5\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr5\fR.
+.IP
+Workspace array with dimension (\fBldwh\fR, \fBnh\fR)
+.TP 10
+\fBldwh\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fBwh\fR just as declared in the calling routine. \fBldwh\fR \(>= 3*\fBnshfts\fR-3
+.TP 10
+\fBnv\fR
+.NL
+\fBINTEGER\fR. The number of rows of the array \fBwv\fR available for workspace. \fBnv\fR \(>= 1.
+.TP 10
+\fBwv\fR
+.NL
+\fBREAL\fR for \fBslaqr5\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr5\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr5\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr5\fR.
+.IP
+Workspace array with dimension (\fBldwv\fR, 3*\fBnshfts\fR-3). 
+.TP 10
+\fBldwv\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fBwv\fR just as declared in the calling routine. \fBldwv\fR \(>= \fBnv\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBh\fR
+.NL
+On output a multi-shift QR Sweep with shifts \fBsr\fR(j)+i*\fBsi\fR(j) or \fBs\fR(j) is applied to the isolated diagonal block in rows and columns \fBktop\fR through \fBkbot\fR.
+.TP 10
+\fBz\fR
+.NL
+If \fIwantz\fR is \fB.TRUE.\fR, then the QR Sweep orthogonal/unitary similarity transformation is accumulated into  \fI\fBz\fR(\fBiloz\fR:\fBihiz\fR, \fBilo\fR:\fBihi\fR)\fR from the right.
+.IP
+If \fIwantz\fR is \fB.FALSE.\fR, then \fIz\fR is unreferenced.

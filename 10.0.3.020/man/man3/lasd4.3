@@ -1,0 +1,93 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasd4 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasd4 \- Computes the square root of the \fIi\fR-th updated eigenvalue of a positive symmetric rank-one modification to a positive diagonal matrix. Used by \fB?bdsdc\fR.
+.SH SYNOPSIS
+.PP
+\fBcall slasd4\fR( \fIn\fR, \fIi\fR, \fId\fR, \fIz\fR, \fIdelta\fR, \fIrho\fR, \fIsigma\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dlasd4\fR( \fIn\fR, \fIi\fR, \fId\fR, \fIz\fR, \fIdelta\fR, \fIrho\fR, \fIsigma\fR, \fIwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The length of all arrays.
+.TP 10
+\fBi\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The index of the eigenvalue to be computed. 1 \(<= \fIi\fR \(<= \fIn\fR.
+.TP 10
+\fBd\fR
+.NL
+\fBREAL\fR for \fBslasd4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd4\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR).
+.IP
+The original eigenvalues. They must be in order, 0 \(<= \fId\fR(\fIi\fR) < \fId\fR(\fIj\fR)  for \fIi\fR < \fIj\fR.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslasd4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd4\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+The components of the updating vector.
+.TP 10
+\fBrho\fR
+.NL
+\fBREAL\fR for \fBslasd4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd4\fR
+.IP
+The scalar in the symmetric updating formula.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslasd4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd4\fR
+.IP
+Workspace array, \fBDIMENSION\fR (\fIn\fR ). 
+.IP
+If \fIn\fR\(!= 1, \fIwork\fR contains (\fId\fR(\fIj\fR) + \fIsigma\(uli\fR) in its \fIj\fR-th component. 
+.IP
+If \fIn\fR = 1, then \fIwork\fR( 1 ) = 1.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBdelta\fR
+.NL
+\fBREAL\fR for \fBslasd4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd4\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). 
+.IP
+If \fIn\fR\(!= 1, \fIdelta\fR contains (\fId\fR(\fIj\fR) - \fIsigma\(uli\fR) in its \fIj\fR-th component. 
+.IP
+If \fIn\fR = 1, then \fIdelta\fR (1) = 1. The vector \fIdelta\fR contains the information necessary to construct the (singular) eigenvectors.
+.TP 10
+\fBsigma\fR
+.NL
+\fBREAL\fR for \fBslasd4\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasd4\fR
+.IP
+The computed \fIsigma\(uli\fR, the \fIi\fR-th updated eigenvalue.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR.
+.IP
+= 0:  successful exit
+.IP
+> 0:  If \fIinfo\fR = 1, the updating process failed.

@@ -1,0 +1,53 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH DeleteTask 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+DeleteTask \- Destroys the task object and frees the memory.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIerrcode\fR= \fBvslconvdeletetask\fR(\fItask\fR)
+.PP
+\fIerrcode\fR= \fBvslcorrdeletetask\fR(\fItask\fR)
+.PP
+.B /* C */
+.PP
+\fIerrcode\fR= \fBvslConvDeleteTask\fR(\fItask\fR);
+.PP
+\fIerrcode\fR= \fBvslCorrDeleteTask\fR(\fItask\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBtask\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulCONV\(ulTASK)\fR for \fBvslconvdeletetask\fR
+.br
+\h\'1\'\fBTYPE(VSL\(ulCORR\(ulTASK)\fR for \fBvslcorrdeletetask\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLConvTaskPtr*\fR for \fBvslConvDeleteTask\fR
+.br
+\h\'1\'\fBVSLCorrTaskPtr*\fR for \fBvslCorrDeleteTask\fR
+.br
+.SB Description
+.br
+\h\'1\'Pointer to the task descriptor.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBerrcode\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Contains 0 if the task object is deleted successfully. Contains error code if an error occurred.

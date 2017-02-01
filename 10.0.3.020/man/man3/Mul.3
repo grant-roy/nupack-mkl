@@ -1,0 +1,99 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH Mul 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+Mul \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall vsmul\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+\fBcall vdmul\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+\fBcall vcmul\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+\fBcall vzmul\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR)
+.PP
+.B /* C */
+.PP
+\fBvsMul\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.PP
+\fBvdMul\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.PP
+\fBvcMul\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.PP
+\fBvzMul\fR( \fIn\fR, \fIa\fR, \fIb\fR, \fIy\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBn\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Specifies the number of elements to be calculated.
+.PP
+.SB Name
+.br
+\h\'1\'\fBa\fR, \fBb\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR, \fBINTENT(IN)\fR for \fBvsmul\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR, \fBINTENT(IN)\fR for \fBvdmul\fR
+.br
+\h\'11\'\fBCOMPLEX\fR, \fBINTENT(IN)\fR for \fBvcmul\fR
+.br
+\h\'11\'\fBDOUBLE COMPLEX\fR, \fBINTENT(IN)\fR for \fBvzmul\fR
+.br
+\h\'2\'C:\h\'7\'\fBconst float*\fR for \fBvsMul\fR
+.br
+\h\'11\'\fBconst double*\fR for \fBvdMul\fR
+.br
+\h\'11\'\fBconst MKL\(ulComplex8*\fR for \fBvcMul\fR
+.br
+\h\'11\'\fBconst MKL\(ulComplex16*\fR for \fBvzMul\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Arrays, specify the input vectors \fBa\fR and \fBb\fR.
+.br
+\h\'2\'C:\h\'7\'Pointers to arrays that contain the input vectors \fBa\fR and \fBb\fR.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBy\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBREAL\fR for \fBvsmul\fR
+.br
+\h\'11\'\fBDOUBLE PRECISION\fR for \fBvdmul\fR
+.br
+\h\'11\'\fBCOMPLEX\fR, for \fBvcmul\fR
+.br
+\h\'11\'\fBDOUBLE COMPLEX\fR for \fBvzmul\fR
+.br
+\h\'2\'C:\h\'7\'\fBfloat*\fR for \fBvsMul\fR
+.br
+\h\'11\'\fBdouble*\fR for \fBvdMul\fR
+.br
+\h\'11\'\fBMKL\(ulComplex8*\fR for \fBvcMul\fR
+.br
+\h\'11\'\fBMKL\(ulComplex16*\fR for \fBvzMul\fR
+.br
+.SB Description
+.br
+\h\'2\'FORTRAN: Array, specifies the output vector \fBy\fR.
+.br
+\h\'2\'C:\h\'7\'Pointer to an array that contains the output vector \fBy\fR.

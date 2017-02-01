@@ -1,0 +1,215 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laqr2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laqr2 \- Performs the orthogonal/unitary similarity transformation of a Hessenberg matrix to detect and deflate fully converged eigenvalues from a trailing principal submatrix (aggresive early deflation).
+.SH SYNOPSIS
+.PP
+\fBcall slaqr2\fR(\fI wantt\fR, \fIwantz\fR, \fIn\fR, \fIktop\fR, \fIkbot\fR, \fInw\fR, \fIh\fR, \fIldh\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIldz\fR, \fIns\fR, \fInd\fR, \fIsr\fR, \fIsi\fR, \fIv\fR, \fIldv\fR, \fInh\fR, \fIt\fR, \fIldt\fR, \fInv\fR, \fIwv\fR, \fIldwv\fR, \fIwork\fR, \fIlwork\fR)
+.PP
+\fBcall dlaqr2\fR(\fI wantt\fR, \fIwantz\fR, \fIn\fR, \fIktop\fR, \fIkbot\fR, \fInw\fR, \fIh\fR, \fIldh\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIldz\fR, \fIns\fR, \fInd\fR, \fIsr\fR, \fIsi\fR, \fIv\fR, \fIldv\fR, \fInh\fR, \fIt\fR, \fIldt\fR, \fInv\fR, \fIwv\fR, \fIldwv\fR, \fIwork\fR, \fIlwork\fR)
+.PP
+\fBcall claqr2\fR(\fI wantt\fR, \fIwantz\fR, \fIn\fR, \fIktop\fR, \fIkbot\fR, \fInw\fR, \fIh\fR, \fIldh\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIldz\fR, \fIns\fR, \fInd\fR, \fIsh\fR, \fIv\fR, \fIldv\fR, \fInh\fR, \fIt\fR, \fIldt\fR, \fInv\fR, \fIwv\fR, \fIldwv\fR, \fIwork\fR, \fIlwork\fR)
+.PP
+\fBcall zlaqr2\fR(\fI wantt\fR, \fIwantz\fR, \fIn\fR, \fIktop\fR, \fIkbot\fR, \fInw\fR, \fIh\fR, \fIldh\fR, \fIiloz\fR, \fIihiz\fR, \fIz\fR, \fIldz\fR, \fIns\fR, \fInd\fR, \fIsh\fR, \fIv\fR, \fIldv\fR, \fInh\fR, \fIt\fR, \fIldt\fR, \fInv\fR, \fIwv\fR, \fIldwv\fR, \fIwork\fR, \fIlwork\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBwantt\fR
+.NL
+\fBLOGICAL\fR.
+.IP
+If \fIwantt\fR = \fB.TRUE.\fR, then the Hessenberg matrix \fIH\fR is fully updated so that the quasi-triangular/triangular Schur factor may be computed (in cooperation with the calling subroutine).
+.IP
+If \fIwantt\fR = \fB.FALSE.\fR, then only enough of \fIH\fR is updated to preserve the eigenvalues.
+.TP 10
+\fBwantz\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+If \fIwantz\fR = \fB.TRUE.\fR, then the orthogonal/unitary matrix \fIZ\fR is updated so that the orthogonal/unitary Schur factor may be computed (in cooperation with the calling subroutine).  
+.IP
+If \fIwantz\fR = \fB.FALSE.\fR, then \fIZ\fR is not referenced. 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the Hessenberg matrix \fIH\fR and (if \fIwantz\fR = \fB.TRUE.\fR) the order of the orthogonal/unitary matrix \fIZ\fR. .
+.TP 10
+\fBktop\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+It is assumed that either \fBktop\fR=1 or \fBh\fR(\fBktop\fR,\fBktop-1\fR)=0.\fBktop\fR and \fBkbot\fR together determine an isolated block along the diagonal of the Hessenberg matrix. 
+.TP 10
+\fBkbot\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+It is assumed without a check that either \fBkbot\fR=\fBn\fR or \fBh\fR(\fBkbot\fR+1,\fBkbot\fR)=0.\fBktop\fR and \fBkbot\fR together determine an isolated block along the diagonal of the Hessenberg matrix.
+.TP 10
+\fBnw\fR
+.NL
+\fBINTEGER\fR.
+.IP
+Size of the deflation window. 1 \(<=\fI nw\fR \(<= (\fIkbot\fR-\fBktop\fR+1).
+.TP 10
+\fBh\fR
+.NL
+\fBREAL\fR for \fBslaqr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr2\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldh\fR, \fIn\fR), on input the initial \fBn\fR-by-\fBn\fR section of \fBh\fR stores the Hessenberg matrix \fIH\fR  undergoing aggressive early deflation.
+.TP 10
+\fBldh\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fBh\fR just as declared in the calling subroutine. \fBldh\fR\(>=\fBn\fR.
+.TP 10
+\fBiloz\fR, \fBihiz\fR
+.NL
+\fBINTEGER\fR.  Specify the rows of \fIZ\fR to which transformations must be applied if \fIwantz\fR is \fB.TRUE.\fR. 1 \(<=\fI iloz\fR \(<=\fI ihiz \fR\(<= \fIn\fR.
+.TP 10
+\fBz\fR
+.NL
+\fBREAL\fR for \fBslaqr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr2\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldz\fR, \fIihi\fR), contains the matrix \fIZ \fR if \fIwantz\fR is \fB.TRUE.\fR.  If \fIwantz\fR is \fB.FALSE.\fR, then \fIz\fR is not referenced.
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER.\fR The leading dimension of the array \fBz\fR just as declared in the calling subroutine.  \fBldz \fR\(>= 1.
+.TP 10
+\fBv\fR
+.NL
+\fBREAL\fR for \fBslaqr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr2\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr2\fR.
+.IP
+Workspace array with dimension (\fBldv\fR, \fBnw\fR). An \fBnw\fR-by-\fBnw\fR work array.
+.TP 10
+\fBldv\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fBv\fR just as declared in the calling subroutine. \fBldv \fR\(>=\fB nw\fR.
+.TP 10
+\fBnh\fR
+.NL
+\fBINTEGER\fR. The number of column of \fBt\fR. \fBnh \fR\(>=\fB nw\fR.
+.TP 10
+\fBt\fR
+.NL
+\fBREAL\fR for \fBslaqr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr2\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr2\fR.
+.IP
+Workspace array with dimension (\fBldt\fR, \fBnw\fR). 
+.TP 10
+\fBldt\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fBt\fR just as declared in the callingsubroutine. \fBldt\fR\(>=\fBnw\fR.
+.TP 10
+\fBnv\fR
+.NL
+\fBINTEGER\fR. The number of rows of work array \fBwv\fR available for workspace. \fBnv\fR\(>=\fBnw\fR.
+.TP 10
+\fBwv\fR
+.NL
+\fBREAL\fR for \fBslaqr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr2\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr2\fR.
+.IP
+Workspace array with dimension (\fBldwv\fR, \fBnw\fR). 
+.TP 10
+\fBldwv\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the array \fBwv\fR just as declared in the calling subroutine. \fBldwv\fR\(>=\fBnw\fR.
+.TP 10
+\fBwork\fR
+.NL
+\fBREAL\fR for \fBslaqr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr2\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr2\fR.
+.IP
+Workspace array with dimension \fIlwork\fR.
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. The dimension of the array \fIwork\fR.  \fI\fR
+.IP
+\fIlwork\fR=2*\fInw\fR) is sufficient, but for the optimal performance a greater workspace may be required. 
+.IP
+If \fBlwork\fR=-1,then the routine performs a workspace query: it estimates the optimal workspace size for the given values of the input parameters \fBn\fR, \fBnw\fR, \fBktop\fR, and \fBkbot\fR. The estimate is returned in \fBwork\fR(1). No error messages related to the \fBlwork\fR is issued by \fBxerbla\fR. Neither \fIH\fR nor \fIZ\fR are accessed.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBh\fR
+.NL
+On output \fBh\fR has been transformed by an orthogonal/unitary similarity transformation, perturbed, and the returned to Hessenberg form that (it is to be hoped) has some zero subdiagonal entries.
+.TP 10
+\fIwork\fR(1)
+.NL
+On exit \fIwork\fR(1) is set to an estimate of the optimal value of \fBlwork\fR for the given values of the input parameters \fBn\fR, \fBnw\fR, \fBktop\fR, and \fBkbot\fR. 
+.TP 10
+\fBz\fR
+.NL
+If \fIwantz\fR is \fB.TRUE.\fR, then the orthogonal/unitary similarity transformation is accumulated into  \fI\fBz\fR(\fBiloz\fR:\fBihiz\fR, \fBilo\fR:\fBihi\fR)\fR from the right.
+.IP
+If \fIwantz\fR is \fB.FALSE.\fR, then \fIz\fR is unreferenced.
+.TP 10
+\fBnd\fR
+.NL
+\fBINTEGER\fR. The number of converged eigenvalues uncovered by the routine.
+.TP 10
+\fBns\fR
+.NL
+\fBINTEGER\fR. The number of unconverged, that is approximate eigenvalues returned in \fBsr\fR, \fBsi\fR or in \fBsh\fR that may be used as shifts by the calling subroutine.
+.TP 10
+\fBsh\fR
+.NL
+\fBCOMPLEX\fR for \fBclaqr2\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr2\fR.
+.IP
+Arrays,\fB DIMENSION \fR(\fIkbot\fR). 
+.IP
+The approximate eigenvalues that may be used for shifts are stored in the  \fBsh\fR(\fBkbot\fR-\fBnd\fR-\fBns\fR+1)through the \fBsh\fR(\fBkbot\fR-\fBnd\fR).
+.IP
+The converged eigenvalues are stored in the  \fBsh\fR(\fBkbot\fR-\fBnd\fR+1)through the \fBsh\fR(\fBkbot\fR).
+.TP 10
+\fBsr\fR, \fBsi\fR
+.NL
+\fBREAL\fR for \fBslaqr2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr2\fR
+.IP
+Arrays,\fB DIMENSION \fR(\fIkbot\fR) each. 
+.IP
+The real and imaginary parts of the approximate eigenvalues that may be used for shifts are stored in the  \fBsr\fR(\fBkbot\fR-\fBnd\fR-\fBns\fR+1)through the \fBsr\fR(\fBkbot\fR-\fBnd\fR), and \fBsi\fR(\fBkbot\fR-\fBnd\fR-\fBns\fR+1) through the \fBsi\fR(\fBkbot\fR-\fBnd\fR), respectively.
+.IP
+The real and imaginary parts of converged eigenvalues are stored in the  \fBsr\fR(\fBkbot\fR-\fBnd\fR+1)through the \fBsr\fR(\fBkbot\fR), and \fBsi\fR(\fBkbot\fR-\fBnd\fR+1) through the \fBsi\fR(\fBkbot\fR), respectively.

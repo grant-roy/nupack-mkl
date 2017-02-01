@@ -1,0 +1,261 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?gesvx 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?gesvx \- Uses the \fILU\fR factorization to compute the solution to the system of linear equations with a square matrix \fIA\fR and multiple right-hand sides, and provides error bounds on the solution.
+.SH SYNOPSIS
+.PP
+\fBcall psgesvx\fR(\fIfact\fR, \fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIiaf\fR, \fIjaf\fR, \fIdescaf\fR, \fIipiv\fR, \fIequed\fR, \fIr\fR, \fIc\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIrcond\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdgesvx\fR(\fIfact\fR, \fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIiaf\fR, \fIjaf\fR, \fIdescaf\fR, \fIipiv\fR, \fIequed\fR, \fIr\fR, \fIc\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIrcond\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcgesvx\fR(\fIfact\fR, \fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIiaf\fR, \fIjaf\fR, \fIdescaf\fR, \fIipiv\fR, \fIequed\fR, \fIr\fR, \fIc\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIrcond\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIlrwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzgesvx\fR(\fIfact\fR, \fItrans\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIaf\fR, \fIiaf\fR, \fIjaf\fR, \fIdescaf\fR, \fIipiv\fR, \fIequed\fR, \fIr\fR, \fIc\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIx\fR, \fIix\fR, \fIjx\fR, \fIdescx\fR, \fIrcond\fR, \fIferr\fR, \fIberr\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIlrwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBfact\fR
+.NL
+(global) \fBCHARACTER*1\fR. Must be \fB\'F\'\fR, \fB\'N\'\fR, or \fB\'E\'\fR.
+.IP
+Specifies whether or not the factored form of the matrix \fIA\fR is supplied on entry, and if not, whether the matrix \fIA\fR should be equilibrated before it is factored.
+.IP
+If \fIfact\fR = \fB\'F\'\fR then, on entry, \fIaf\fR and \fIipiv\fR contain the factored form of \fIA\fR. If \fIequed\fR is not \fB\'N\'\fR, the matrix \fIA\fR has been equilibrated with scaling factors given by \fIr\fR and \fIc\fR. Arrays \fIa\fR, \fIaf\fR, and \fIipiv\fR are not modified.
+.IP
+If \fIfact\fR = \fB\'N\'\fR, the matrix \fIA\fR is copied to \fIaf\fR and factored. 
+.IP
+If \fIfact\fR = \fB\'E\'\fR, the matrix \fIA\fR is equilibrated if necessary, then copied to \fIaf\fR and factored.
+.TP 10
+\fBtrans\fR
+.NL
+(global) \fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'T\'\fR, or \fB\'C\'\fR.
+.IP
+Specifies the form of the system of equations:
+.IP
+If \fItrans\fR = \fB\'N\'\fR, the system has the form  \fIA\fR\fI*X\fR = \fIB\fR (No transpose);
+.IP
+If \fItrans\fR = \fB\'T\'\fR, the system has the form \fIA\fR**\fIT\fR*\fIX\fR = \fIB\fR  (Transpose);
+.IP
+If \fItrans\fR = \fB\'C\'\fR, the system has the form \fIA\fR**\fIH\fR\fI*X\fR = \fIB\fR  (Conjugate transpose);
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The number of linear equations;  the order of the submatrix \fIA\fR(\fIn\fR\(>= 0).
+.TP 10
+\fBnrhs\fR
+.NL
+(global) \fBINTEGER\fR. The number of right hand sides; the number of columns of the distributed submatrices \fIB\fR and \fIX\fR(\fInrhs\fR\(>= 0).
+.TP 10
+\fBa\fR, \fBaf\fR, \fBb\fR, \fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgesvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgesvx\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgesvx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgesvx\fR. 
+.IP
+Pointers into the local memory  to arrays of local dimension \fIa\fR(\fIlld\(ula\fR,\fILOCc\fR(\fIja\fR+\fIn\fR-1)), \fIaf\fR(\fIlld\(ulaf\fR,\fILOCc\fR(\fIja\fR+\fIn\fR-1)), \fIb\fR(\fIlld\(ulb\fR,\fILOCc\fR(\fIjb+nrhs-1\fR)), \fIwork(lwork\fR), respectively.
+.IP
+The array \fIa\fR contains the matrix \fIA\fR. If \fIfact\fR = \fB\'F\'\fR and \fIequed\fR is not \fB\'N\'\fR, then \fIA\fR must have been equilibrated by the scaling factors in \fIr\fR and/or \fIc\fR. 
+.IP
+The array \fIaf\fR is an input argument if \fIfact\fR = \fB\'F\'\fR. In this case it contains on entry the factored form of the matrix \fIA\fR, that is, the factors \fIL\fR and \fIU\fR from the factorization \fIA\fR = \fIP\fR*\fIL\fR*\fIU\fR as computed by \fBp?getrf\fR. If \fIequed\fR is not \fB\'N\'\fR, then \fIaf\fR is the factored form of the equilibrated matrix \fIA\fR. 
+.IP
+The array \fIb\fR contains on entry the matrix \fIB\fR whose columns are the right-hand sides for the systems of equations. 
+.IP
+\fIwork(*)\fR is a workspace array. The dimension of \fIwork\fR is (\fIlwork\fR).
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIA\fR indicating the first row and the first column of the submatrix \fIA\fR(\fIia:ia+n-1\fR, \fIja:ja+n-1\fR), respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBiaf\fR, \fBjaf\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIaf\fR indicating the first row and the first column of the subarray \fIaf\fR(\fIiaf:iaf+n-1\fR, \fIjaf:jaf+n-1\fR), respectively.
+.TP 10
+\fBdescaf\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIAF\fR.
+.TP 10
+\fBib\fR, \fBjb\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array B indicating the first row and the first column of the submatrix \fIB\fR(\fIib:ib+n-1\fR, \fIjb:jb+nrhs-1\fR), respectively.
+.TP 10
+\fBdescb\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIB\fR.
+.TP 10
+\fBipiv\fR
+.NL
+(local) \fBINTEGER\fR array. 
+.IP
+The dimension of \fIipiv\fR is (\fILOCr\fR(\fIm\(ula\fR\fB)+\fR\fImb\(ula\fR). 
+.IP
+The array \fIipiv\fR is an input argument if \fIfact\fR = \fB\'F\'\fR . 
+.IP
+On entry, it contains  the pivot indices from the factorization \fIA\fR = \fIP\fR*\fIL\fR*\fIU\fR as computed by \fBp?getrf\fR; (local) row \fBi\fR of the matrix was interchanged with the (global) row \fIipiv\fR(\fBi\fR). 
+.IP
+This array must be aligned with \fIA\fR(\fIia:ia+n-1\fR, \fI*\fR).
+.TP 10
+\fBequed\fR
+.NL
+(global) \fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'R\'\fR, \fB\'C\'\fR, or \fB\'B\'\fR. \fIequed\fR is an input argument if \fIfact\fR = \fB\'F\'\fR . It specifies the form of equilibration that was done: 
+.IP
+If \fIequed\fR = \fB\'N\'\fR, no equilibration was done (always true if \fIfact\fR = \fB\'N\'\fR);
+.IP
+If \fIequed\fR = \fB\'R\'\fR, row equilibration was done, that is, \fIA\fR has been premultiplied by diag(\fIr\fR);
+.IP
+If \fIequed\fR = \fB\'C\'\fR, column equilibration was done, that is, \fIA\fR has been postmultiplied by diag(\fIc\fR);
+.IP
+If \fIequed\fR = \fB\'B\'\fR, both row and column equilibration was done; \fIA\fR has been replaced by diag(\fIr\fR)*\fIA\fR*diag(\fIc\fR).
+.TP 10
+\fBr\fR, \fBc\fR
+.NL
+(local) \fBREAL\fR for single precision flavors;
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Arrays, dimension \fILOCr\fR\fB(m\(ula)\fR and \fILOCc\fR\fB(n\(ula)\fR, respectively. 
+.IP
+The array \fIr\fR contains the row scale factors for \fIA\fR, and the array \fIc\fR contains the column scale factors for \fIA\fR. These arrays are input arguments if \fIfact\fR = \fB\'F\'\fR only; otherwise they are output arguments. If \fIequed\fR = \fB\'R\'\fR or \fB\'B\'\fR, \fIA\fR is multiplied on the left by diag(\fIr\fR); if \fIequed\fR = \fB\'N\'\fR or \fB\'C\'\fR, \fIr\fR is not accessed.   
+.IP
+If \fIfact\fR = \fB\'F\'\fR and \fIequed\fR = \fB\'R\'\fR or \fB\'B\'\fR, each element of \fIr\fR must be positive.
+.IP
+If \fIequed\fR = \fB\'C\'\fR or \fB\'B\'\fR, \fIA\fR is multiplied on the right by diag(\fIc\fR); if \fIequed\fR = \fB\'N\'\fR or \fB\'R\'\fR, \fIc\fR is not accessed.   
+.IP
+If \fIfact\fR = \fB\'F\'\fR and \fIequed\fR = \fB\'C\'\fR or \fB\'B\'\fR, each element of \fIc\fR must be positive. Array \fIr\fR is replicated in every process column, and is aligned with the distributed matrix \fIA\fR. Array \fIc\fR is replicated in every process row, and is aligned with the distributed matrix \fIA\fR.
+.TP 10
+\fBix\fR, \fBjx\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIX\fR indicating the first row and the first column of the submatrix \fIX\fR(\fIix:ix+n-1\fR, \fIjx:jx+nrhs-1\fR), respectively.
+.TP 10
+\fBdescx\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIX\fR.
+.TP 10
+\fBlwork\fR
+.NL
+(local or global) \fBINTEGER\fR.  The dimension of the array \fIwork\fR ; must be at least max(\fBp?gecon\fR(\fIlwork\fR), \fBp?gerfs\fR(\fIlwork\fR))+\fILOCr\fR\fB(n\(ula)\fR.
+.TP 10
+\fBiwork\fR
+.NL
+(local, \fBpsgesvx/pdgesvx\fR only) \fBINTEGER\fR.  Workspace array. The dimension of \fIiwork\fR is (\fIliwork\fR).
+.TP 10
+\fBliwork\fR
+.NL
+(local, \fBpsgesvx/pdgesvx\fR only) \fBINTEGER\fR.  The dimension of the array \fIiwork\fR , must be at least \fILOCr\fR\fB(n\(ula)\fR .
+.TP 10
+\fBrwork\fR
+.NL
+(local) \fBREAL\fR for \fBpcgesvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpzgesvx\fR. 
+.IP
+Workspace array, used in complex flavors only. 
+.IP
+The dimension of \fIrwork\fR is (\fIlrwork\fR).
+.TP 10
+\fBlrwork\fR
+.NL
+(local or global, \fBpcgesvx/pzgesvx\fR only) \fBINTEGER\fR.  The dimension of the array \fIrwork\fR;must be at least 2\fI*\fR\fILOCc\fR\fB(n\(ula)\fR .
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+(local) 
+.IP
+\fBREAL\fR for \fBpsgesvx\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgesvx\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgesvx\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgesvx\fR. 
+.IP
+Pointer into the local memory to an array of local dimension \fIx\fR(\fBlld\(ulx\fR,\fILOCc\fR(\fIjx+nrhs-1\fR)).
+.IP
+If \fIinfo\fR = 0, the array \fIx\fR contains the solution matrix \fIX\fR to the 
+.IP
+diag(\fIC\fR)-1*\fIX\fR, if \fItrans\fR = \fB\'N\'\fR and \fIequed\fR = \fB\'C\'\fR or \fB\'B\'\fR;  and diag(\fIR\fR)-1*\fIX\fR, if \fItrans\fR = \fB\'T\'\fR or \fB\'C\'\fR and \fIequed\fR = \fB\'R\'\fR or \fB\'B\'\fR.
+.TP 10
+\fBa\fR
+.NL
+Array \fIa\fR is not modified on exit if \fIfact\fR = \fB\'F\'\fR or \fB\'N\'\fR, or if \fIfact\fR = \fB\'E\'\fR and \fIequed\fR = \fB\'N\'\fR. 
+.IP
+If \fIequed\fR\(!=\fB\'N\'\fR, \fIA\fR is scaled on exit as follows:
+.IP
+\fIequed\fR = \fB\'R\'\fR:  \fIA\fR = diag(\fIR\fR)*\fIA\fR
+.IP
+\fIequed\fR = \fB\'C\'\fR:  \fIA\fR = \fIA\fR*diag(\fIc\fR)
+.IP
+\fIequed\fR = \fB\'B\'\fR:  \fIA\fR = diag(\fIR\fR)*\fIA\fR*diag(\fIc\fR)
+.TP 10
+\fBaf\fR
+.NL
+If \fIfact\fR = \fB\'N\'\fR or \fB\'E\'\fR, then \fIaf\fR is an output argument  and on exit returns the factors \fIL\fR and \fIU\fR from the factorization \fIA\fR = \fIP\fR\fI*L\fR*\fIU\fR of the original matrix \fIA\fR (if \fIfact\fR = \fB\'N\'\fR) or of the equilibrated matrix \fIA\fR (if \fIfact\fR = \fB\'E\'\fR). See the description of \fIa\fR for the form of the equilibrated matrix.
+.TP 10
+\fBb\fR
+.NL
+Overwritten by diag(\fIR\fR)*\fIB\fR if \fItrans\fR = \fB\'N\'\fR and \fIequed\fR = \fB\'R\'\fR or \fB\'B\'\fR; 
+.IP
+overwritten by diag(\fIc\fR)*\fIB\fR if \fItrans\fR = \fB\'T\'\fR and \fIequed\fR = \fB\'C\'\fR or \fB\'B\'\fR; not changed  if \fIequed\fR = \fB\'N\'\fR.
+.TP 10
+\fBr\fR, \fBc\fR
+.NL
+These arrays are output arguments if \fIfact\fR\(!=\fB\'F\'\fR.
+.IP
+See the description of \fIr\fR, \fIc\fR in \fIInput Arguments\fRsection.
+.TP 10
+\fBrcond\fR
+.NL
+(global) \fBREAL\fR for single precision flavors. 
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+An estimate of the reciprocal condition number of the matrix \fIA\fR after equilibration (if done). The routine sets \fIrcond\fR =0 if the estimate underflows; in this case the matrix is singular (to working precision). However, anytime \fIrcond\fR is small compared to 1.0, for the working precision, the matrix may be poorly conditioned or even singular.
+.TP 10
+\fBferr\fR, \fBberr\fR
+.NL
+(local) \fBREAL\fR for single precision flavors 
+.IP
+\fBDOUBLE PRECISION\fR for double precision flavors. 
+.IP
+Arrays, \fBDIMENSION\fR\fILOCc\fR(\fBn\(ulb\fR) each. Contain the component-wise forward and relative backward errors, respectively, for each solution vector.
+.IP
+Arrays \fIferr\fR and \fIberr\fR are both replicated in every process row, and are aligned with the matrices \fIB\fR and \fIX\fR.
+.TP 10
+\fBipiv\fR
+.NL
+If \fIfact\fR = \fB\'N\'\fR or \fB\'E\'\fR, then \fIipiv\fR is an output argument  and on exit contains the pivot indices from the factorization \fIA\fR = \fIP\fR*\fIL\fR*\fIU\fR of the original matrix \fIA\fR (if \fIfact\fR = \fB\'N\'\fR) or of the equilibrated matrix \fIA\fR (if \fIfact\fR = \fB\'E\'\fR). 
+.TP 10
+\fBequed\fR
+.NL
+If \fIfact\fR\(!=\fB\'F\'\fR , then \fIequed\fR is an output argument. It specifies the form of equilibration that was done (see the description of \fIequed\fR in \fIInput Arguments\fRsection). 
+.TP 10
+\fIwork\fR(1)
+.NL
+If \fIinfo\fR=0, on exit \fIwork\fR(1) returns the minimum value of \fIlwork\fR required for optimum performance. 
+.TP 10
+\fIiwork\fR(1)
+.NL
+If \fIinfo\fR=0, on exit \fIiwork\fR(1) returns the minimum value of \fIliwork\fR required for optimum performance. 
+.TP 10
+\fIrwork\fR(1)
+.NL
+If \fIinfo\fR=0, on exit \fIrwork\fR(1) returns the minimum value of \fIlrwork\fR required for optimum performance. 
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. If \fIinfo\fR=0, the execution is successful.
+.IP
+\fIinfo\fR < 0: if the \fIi\fRth argument is an array and the \fIj\fRth entry had an illegal value, then \fIinfo\fR = -(\fIi\fR*100+\fIj\fR); if the \fIi\fRth argument is a scalar and had an illegal value, then \fIinfo\fR = \fI-i\fR. If \fIinfo\fR = \fIi\fR, and \fIi\fR \(<= \fIn\fR, then \fIU\fR(\fIi\fR,\fIi\fR) is exactly zero. The factorization has been completed, but the factor \fIU\fR is exactly singular, so the solution and error bounds could not be computed. If \fIinfo\fR = \fIi\fR, and \fIi\fR = \fIn\fR +1, then \fIU\fR is nonsingular, but \fIrcond\fR is less than machine precision. The factorization has been completed, but the matrix is singular to working precision and the solution and error bounds have not been computed.

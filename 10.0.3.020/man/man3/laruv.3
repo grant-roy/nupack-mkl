@@ -1,0 +1,35 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laruv 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laruv \- Returns a vector of \fIn\fR random real numbers from a uniform distribution.
+.SH SYNOPSIS
+.PP
+\fBcall slaruv\fR( \fIiseed\fR, \fIn\fR, \fIx\fR)
+.PP
+\fBcall dlaruv\fR( \fIiseed\fR, \fIn\fR, \fIx\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBiseed\fR
+.NL
+\fBINTEGER\fR. Array, \fBDIMENSION\fR (4). On entry, the seed of the random number generator; the array elements must be between 0 and 4095, and \fIiseed\fR(4) must be odd. 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of random numbers to be generated. \fIn\fR \(<= 128.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBslaruv\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaruv\fR
+.IP
+Array, \fBDIMENSION\fR (\fIn\fR). The generated random numbers.
+.TP 10
+\fBseed\fR
+.NL
+On exit, the seed is updated.

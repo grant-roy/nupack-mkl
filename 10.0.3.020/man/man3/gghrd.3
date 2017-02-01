@@ -1,0 +1,187 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gghrd 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gghrd \- Reduces a pair of matrices to generalized upper Hessenberg form using orthogonal/unitary transformations.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgghrd\fR(\fIcompq\fR, \fIcompz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIinfo\fR)
+.PP
+\fBcall dgghrd\fR(\fIcompq\fR, \fIcompz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIinfo\fR)
+.PP
+\fBcall cgghrd\fR(\fIcompq\fR, \fIcompz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIinfo\fR)
+.PP
+\fBcall zgghrd\fR(\fIcompq\fR, \fIcompz\fR, \fIn\fR, \fIilo\fR, \fIihi\fR, \fIa\fR, \fIlda\fR, \fIb\fR, \fIldb\fR, \fIq\fR, \fIldq\fR, \fIz\fR, \fIldz\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall gghrd\fR(\fIa\fR, \fIb\fR[,\fIilo\fR] [,\fIihi\fR] [,\fIq\fR] [,\fIz\fR] [,\fIcompq\fR] [,\fIcompz\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBcompq\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'I\'\fR, or \fB\'V\'\fR.
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, matrix \fIQ\fR is not computed.
+.IP
+If \fIcompq\fR = \fB\'I\'\fR, \fIQ\fR is initialized to the unit matrix, and the orthogonal/unitary matrix \fIQ\fR is returned;
+.IP
+If \fIcompq\fR = \fB\'V\'\fR, \fIQ\fR must contain an orthogonal/unitary matrix \fIQ\fR1 on entry, and the product \fIQ\fR1*\fIQ\fR is returned.
+.TP 10
+\fBcompz\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR, \fB\'I\'\fR, or \fB\'V\'\fR.
+.IP
+If \fIcompz\fR = \fB\'N\'\fR, matrix \fIZ\fR is not computed.
+.IP
+If \fIcompz\fR = \fB\'I\'\fR, \fIZ\fR is initialized to the unit matrix, and the orthogonal/unitary matrix \fIZ\fR is returned;
+.IP
+If \fIcompz\fR = \fB\'V\'\fR, \fIZ\fR must contain an orthogonal/unitary matrix \fIZ\fR1 on entry, and the product \fIZ\fR1*\fIZ\fR is returned.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrices \fIA\fR and \fIB\fR (\fIn\fR\(>= 0).
+.TP 10
+\fBilo\fR, \fBihi\fR
+.NL
+\fBINTEGER\fR. \fIilo\fR and \fIihi\fR mark the rows and columns of \fIA\fR which are to be reduced. It is assumed that \fIA\fR is already upper triangular in rows and columns 1:\fIilo\fR-1 and \fIihi\fR+1:\fIn\fR. Values of \fIilo\fR and \fIihi\fR are normally set by a previous call to \fB?ggbal\fR; otherwise they should be set to 1 and \fIn\fR respectively. 
+.IP
+Constraint: 
+.IP
+If \fIn\fR > 0, then 1 \(<=\fIilo\fR\(<=\fIihi\fR\(<=\fIn\fR; 
+.IP
+if \fIn\fR = 0, then \fIilo\fR = 1 and \fIihi\fR = 0.
+.TP 10
+\fBa\fR, \fBb\fR, \fBq\fR, \fBz\fR
+.NL
+\fBREAL\fR for \fBsgghrd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgghrd\fR
+.IP
+\fBCOMPLEX\fR for \fBcgghrd\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgghrd\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) contains the \fIn\fR-by-\fIn\fR general matrix \fIA\fR. The second dimension of \fIa\fR must be at least max(1, \fIn\fR).
+.IP
+\fIb\fR(\fIldb\fR,*) contains the \fIn\fR-by-\fIn\fR upper triangular matrix \fIB\fR. 
+.IP
+The second dimension of \fIb\fR must be at least max(1, \fIn\fR).
+.IP
+\fIq\fR (\fIldq\fR,*) 
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, then \fIq\fR is not referenced. 
+.IP
+If \fIcompq\fR = \fB\'V\'\fR, then \fIq\fR must contain the orthogonal/unitary matrix \fIQ\fR1, typically from the \fIQR\fR factorization of \fIB\fR. 
+.IP
+The second dimension of \fIq\fR must be at least max(1, \fIn\fR).
+.IP
+\fIz\fR (\fIldz\fR,*) 
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, then \fIz\fR is not referenced. 
+.IP
+If \fIcompq\fR = \fB\'V\'\fR, then \fIz\fR must contain the orthogonal/unitary matrix \fIZ\fR1. 
+.IP
+The second dimension of \fIz\fR must be at least max(1, \fIn\fR).
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIb\fR; at least max(1, \fIn\fR).
+.TP 10
+\fBldq\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIq\fR; 
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, then \fIldq\fR\(>= 1. 
+.IP
+If \fIcompq\fR = \fB\'I\'\fRor \fB\'V\'\fR, then \fIldq\fR\(>= max(1, \fIn\fR).
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIz\fR; 
+.IP
+If \fIcompq\fR = \fB\'N\'\fR, then \fIldz\fR\(>= 1. 
+.IP
+If \fIcompq\fR = \fB\'I\'\fRor \fB\'V\'\fR, then \fIldz\fR\(>= max(1, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, the upper triangle and the first subdiagonal of \fIA\fR are overwritten with the upper Hessenberg matrix \fIH\fR, and the rest is set to zero.
+.TP 10
+\fBb\fR
+.NL
+On exit, overwritten by the upper triangular matrix \fIT\fR = \fIQ\fR**\fIH\fR*\fIB*\fR\fIZ\fR. The elements below the diagonal are set to zero.
+.TP 10
+\fBq\fR
+.NL
+If \fIcompq\fR = \fB\'I\'\fR, then \fIq\fR contains the orthogonal/unitary matrix \fIQ\fR, ;
+.IP
+If \fIcompq\fR = \fB\'V\'\fR, then \fIq\fR is overwritten by the product \fIQ\fR1*\fIQ\fR.
+.TP 10
+\fBz\fR
+.NL
+If \fIcompq\fR = \fB\'I\'\fR, then \fIz\fR contains the orthogonal/unitary matrix \fIZ\fR;
+.IP
+If \fIcompq\fR = \fB\'V\'\fR, then \fIz\fR is overwritten by the product \fIZ\fR1*\fIZ\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful.
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBgghrd\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn,n\fR).
+.TP 10
+\fBb\fR
+.NL
+Holds the matrix \fIB\fR of size (\fIn,n\fR).
+.TP 10
+\fBq\fR
+.NL
+Holds the matrix \fIQ\fR of size (\fIn,n\fR).
+.TP 10
+\fBz\fR
+.NL
+Holds the matrix \fIZ\fR of size (\fIn,n\fR).
+.TP 10
+\fBilo\fR
+.NL
+Default value for this argument is \fIilo\fR = 1.
+.TP 10
+\fBihi\fR
+.NL
+Default value for this argument is \fIihi\fR = \fIn\fR.
+.TP 10
+\fBcompq\fR
+.NL
+If omitted, this argument is restored based on the presence of argument \fIq\fR as follows: \fIcompq\fR = \fB\'I\'\fR, if \fIq\fR is present, \fIcompq\fR = \fB\'N\'\fR, if \fIq\fR is omitted. 
+.IP
+If present, \fIcompq\fR must be equal to \fB\'I\'\fR or \fB\'V\'\fR and the argument \fIq\fR must also be present. Note that there will be an error condition if \fIcompq\fR is present and \fIq\fR omitted.
+.TP 10
+\fBcompz\fR
+.NL
+If omitted, this argument is restored based on the presence of argument \fIz\fR as follows: \fIcompz\fR = \fB\'I\'\fR, if \fIz\fR is present, \fIcompz\fR = \fB\'N\'\fR, if \fIz\fR is omitted. 
+.IP
+If present, \fIcompz\fR must be equal to \fB\'I\'\fR or \fB\'V\'\fR and the argument \fIz\fR must also be present. Note that there will be an error condition if \fIcompz\fR is present and \fIz\fR omitted.

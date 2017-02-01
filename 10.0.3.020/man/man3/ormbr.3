@@ -1,0 +1,174 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?ormbr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?ormbr \- Multiplies an arbitrary real matrix by the real orthogonal matrix \fIQ \fRor \fIP\fR**\fIT\fR determined by \fB?gebrd\fR.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sormbr\fR(\fIvect\fR, \fIside\fR, \fItrans\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall dormbr\fR(\fIvect\fR, \fIside\fR, \fItrans\fR, \fIm\fR, \fIn\fR, \fIk\fR, \fIa\fR, \fIlda\fR, \fItau\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall ormbr\fR(\fIa\fR, \fItau\fR, \fIc\fR[,\fIvect\fR] [,\fIside\fR] [,\fItrans\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+.PP
+In the descriptions below, \fIr\fR denotes the order of \fIQ\fR or \fIP\fR**\fIT\fR: 
+.PP
+If \fIside\fR = \fB\'L\'\fR, \fIr\fR = \fIm\fR; if \fIside\fR = \fB\'R\'\fR, \fIr\fR = \fIn\fR.
+.TP 10
+\fBvect\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'Q\'\fR or \fB\'P\'\fR. 
+.IP
+If \fIvect\fR = \fB\'Q\'\fR, then \fIQ\fR or \fIQ\fR**\fIT\fR is applied to \fIC\fR. 
+.IP
+If \fIvect\fR = \fB\'P\'\fR, then \fIP\fR or \fIP\fR is applied to \fIC\fR.
+.TP 10
+\fBside\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'L\'\fR or \fB\'R\'\fR. 
+.IP
+If \fIside\fR = \fB\'L\'\fR, multipliers are applied to \fIC\fR from the left. 
+.IP
+If \fIside\fR = \fB\'R\'\fR, they are applied to \fIC\fR from the right.
+.TP 10
+\fBtrans\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'T\'\fR. 
+.IP
+If \fItrans\fR = \fB\'N\'\fR, then \fIQ\fR or \fIP\fR is applied to \fIC\fR. 
+.IP
+If \fItrans\fR = \fB\'T\'\fR, then \fIQ\fR**\fIT\fR or \fIP\fR**\fIT\fR is applied to \fIC\fR.
+.TP 10
+\fBm\fR
+.NL
+\fBINTEGER\fR. The number of rows in \fIC\fR. 
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The number of columns in \fIC\fR. 
+.TP 10
+\fBk\fR
+.NL
+\fBINTEGER\fR. One of the dimensions of \fIA\fR in \fB?gebrd\fR:
+.IP
+If \fIvect\fR = \fB\'Q\'\fR, the number of columns in \fIA\fR;
+.IP
+If \fIvect\fR = \fB\'P\'\fR, the number of rows in \fIA\fR.
+.IP
+Constraints: \fIm\fR\(>= 0, \fIn\fR\(>= 0, \fIk\fR\(>= 0.
+.TP 10
+\fBa\fR, \fBc\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsormbr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdormbr\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR(\fIlda\fR,*) is the array \fIa\fR as returned by \fB?gebrd\fR. 
+.IP
+Its second dimension must be at least max(1, min(\fIr\fR,\fIk\fR)) for \fIvect\fR = \fB\'Q\'\fR, or max(1, \fIr\fR)) for \fIvect\fR = \fB\'P\'\fR.
+.IP
+\fIc\fR(\fIldc\fR,*) holds the matrix \fIC\fR. 
+.IP
+Its second dimension must be at least max(1, \fIn\fR).
+.IP
+\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR). 
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR. Constraints:
+.IP
+\fIlda\fR\(>= max(1, \fIr\fR) if \fIvect\fR = \fB\'Q\'\fR;
+.IP
+\fIlda\fR\(>= max(1, min(\fIr\fR,\fIk\fR)) if \fIvect\fR = \fB\'P\'\fR.
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIc\fR; \fIldc\fR\(>= max(1, \fIm\fR).
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBsormbr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdormbr\fR. 
+.IP
+Array, \fBDIMENSION\fR at least max (1, min(\fIr\fR, \fIk\fR)). 
+.IP
+For \fIvect\fR = \fB\'Q\'\fR, the array \fItauq\fR as returned by \fB?gebrd\fR. For \fIvect\fR = \fB\'P\'\fR, the array \fItaup\fR as returned by \fB?gebrd\fR.
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. The size of the \fIwork\fR array. Constraints: 
+.IP
+\fIlwork\fR\(>= max(1, \fIn\fR) if \fIside\fR = \fB\'L\'\fR;
+.IP
+\fIlwork\fR\(>= max(1, \fIm\fR) if \fIside\fR = \fB\'R\'\fR. 
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR array, returns this value as the first entry of the \fIwork\fR array, and no error message related to \fIlwork\fR is issued by \fBxerbla\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBc\fR
+.NL
+Overwritten by the product \fIQ\fR*\fIC\fR, \fIQ\fR**\fIT\fR*\fIC\fR, \fIC\fR*\fIQ\fR,  \fIC\fR*\fIQ,\fR**\fIT\fR,  \fIP\fR*\fIC\fR, \fIP\fR**\fIT\fR*\fIC\fR, \fIC\fR*\fIP\fR, or  \fIC\fR*\fIP\fR**\fIT\fR, as specified by \fIvect\fR, \fIside\fR, and \fItrans\fR.
+.TP 10
+\fBwork\fR(1)
+.NL
+If \fIinfo\fR = 0, on exit \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. Use this \fIlwork\fR for subsequent runs.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBormbr\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIr\fR,min\fI(nq,k)\fR) where
+.IP
+\fIr\fR = \fInq\fR, if \fIvect\fR = \fB\'Q\'\fR, 
+.IP
+\fIr\fR = min(\fInq,k\fR), if \fIvect\fR = \fB\'P\'\fR, 
+.IP
+\fInq\fR = \fIm\fR, if \fIside\fR = \fB\'L\'\fR, 
+.IP
+\fInq\fR = \fIn\fR, if \fIside\fR = \fB\'R\'\fR, 
+.IP
+\fIk\fR = \fIm\fR, if \fIvect\fR = \fB\'P\'\fR, 
+.IP
+\fIk\fR = \fIn\fR, if \fIvect\fR = \fB\'Q\'\fR.
+.TP 10
+\fBtau\fR
+.NL
+Holds the vector of length min(\fInq,k\fR).
+.TP 10
+\fBc\fR
+.NL
+Holds the matrix \fIC\fR of size (\fIm,n\fR).
+.TP 10
+\fBvect\fR
+.NL
+Must be \fB\'Q\'\fR or \fB\'P\'\fR. The default value is \fB\'Q\'\fR.
+.TP 10
+\fBside\fR
+.NL
+Must be \fB\'L\'\fR or \fB\'R\'\fR. The default value is \fB\'L\'\fR.
+.TP 10
+\fBtrans\fR
+.NL
+Must be \fB\'N\'\fR or \fB\'T\'\fR. The default value is \fB\'N\'\fR.

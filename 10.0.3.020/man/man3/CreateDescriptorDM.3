@@ -1,0 +1,89 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH CreateDescriptorDM 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+CreateDescriptorDM \- Allocates memory for the descriptor data structure and preliminarily initializes it.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBStatus\fR = \fBDftiCreateDescriptorDM\fR(\fIcomm\fR, \fIhandle\fR, \fIv1\fR, \fIv2\fR, \fIdim\fR, \fIsize\fR)
+.PP
+\fBStatus\fR = \fBDftiCreateDescriptorDM\fR(\fIcomm\fR, \fIhandle\fR, \fIv1\fR, \fIv2\fR, \fIdim\fR, \fIsizes\fR)
+.PP
+.B /* C/C++ */
+.PP
+\fBstatus\fR = \fBDftiCreateDescriptorDM\fR(\fIcomm\fR, \fI&handle\fR, \fIv1\fR, \fIv2\fR, \fIdim\fR, \fIsize\fR);
+.PP
+\fBstatus\fR = \fBDftiCreateDescriptorDM\fR(\fIcomm\fR, \fI&handle\fR, \fIv1\fR, \fIv2\fR, \fIdim\fR, \fIsizes\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBcomm\fR
+.NL
+MPI communicator, e.g. \fBMPI\(ulCOMM\(ulWORLD\fR.
+.TP 10
+\fBv1\fR
+.NL
+Precision of the transform.
+.TP 10
+\fBv2\fR
+.NL
+Type of the forward domain. Must be DFTI\(ulCOMPLEX for the current version.
+.TP 10
+\fBdim\fR
+.NL
+Dimension of the transform.
+.TP 10
+\fBsize\fR
+.NL
+Length of the transform in a one-dimensional case.
+.TP 10
+\fBsizes\fR
+.NL
+Lengths of the transform in a multi-dimensional case.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Pointer to the descriptor handle of transform. If the function completes successfully, the pointer to the created handle is stored in the variable.
+.SH RETURN VALUES
+.PP
+.PP
+The function returns DFTI\(ulNO\(ulERROR when completes successfully. In this case, the pointer to the created descriptor handle is stored in \fBhandle\fR. If the function fails, it returns a value of another  error class constant 
+.PP
+
+.br
+! Fortran Interface
+.br
+INTERFACE DftiCreateDescriptorDM
+.br
+INTEGER(4) FUNCTION DftiCreateDescriptorDMn(C,H,P1,P2,D,L)
+.br
+TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: H
+.br
+INTEGER(4) C,P1,P2,D,L(*)
+.br
+END FUNCTION
+.br
+INTEGER(4) FUNCTION DftiCreateDescriptorDM1(C,H,P1,P2,D,L)
+.br
+TYPE(DFTI\(ulDESCRIPTOR\(ulDM), POINTER :: H
+.br
+INTEGER(4) C,P1,P2,D,L
+.br
+END FUNCTION
+.br
+END INTERFACE
+.br
+   
+.br
+/* C/C++ prototype */
+.br
+long DftiCreateDescriptorDM(MPI\(ulComm,DFTI\(ulDESCRIPTOR\(ulDM\(ulHANDLE*,
+.br
+   enum DFTI\(ulCONFIG\(ulVALUE,enum DFTI\(ulCONFIG\(ulVALUE,long,...);
+.br
+   

@@ -1,0 +1,168 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dcsrilut 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dcsrilut \- ILUT preconditioner based on the incomplete LU factorization with a threshold of a sparse matrix.
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fBcall dcsrilut\fR(\fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIbilut\fR, \fIbilut\fR, \fIibilut\fR, \fIjbilut\fR, \fItol\fR, \fImaxfil\fR, \fIipar\fR, \fIdpar\fR, \fIierr\fR)
+.PP
+.B /* C */
+.PP
+\fBdcsrilut\fR(\fI&n\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIbilut\fR, \fIbilut\fR, \fIibilut\fR, \fIjbilut\fR, \fI&tol\fR, \fI&maxfil\fR, \fIipar\fR, \fIdpar\fR, \fI&ierr\fR);
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. Size (number of rows or columns) of the original square \fBn\fR-by-\fBn\fR matrix \fIA\fR.
+.TP 10
+\fBa\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array containing all non-zero elements of the matrix \fIA\fR. The length of the array is equal to their number. Refer to \fBvalues\fR array description in the Sparse Matrix Storage Format section for more details.
+.TP 10
+\fBia\fR
+.NL
+\fBINTEGER\fR. Array of size (\fIn\fR+1) containing indices of non-zero elements in the array \fIA\fR. \fBia\fR(I)is the index of the first non-zero element from the row I. The value of the last element \fBia\fR(\fBn\fR+1) is equal to the number of non-zeros in the matrix \fIA\fR plus one. Refer to the \fBrowIndex\fR array description in the Sparse Matrix Storage Format section for more details.
+.TP 10
+\fBja\fR
+.NL
+\fBINTEGER\fR. Array of size equal to the size of the array \fBa\fR. This array contains the column numbers for each non-zero element of the matrix \fIA\fR. Refer to the \fBcolumns\fR array description in the Sparse Matrix Storage Format section for more details.
+.TP 10
+.BR
+.B NOTE:
+Column numbers must be in increasing order for each row of matrix.
+.TP 10
+\fBtol\fR
+.NL
+\fBDOUBLE PRECISION\fR. Tolerance for threshold criterion for the resulting entries of the preconditioner.
+.TP 10
+\fBmaxfil\fR
+.NL
+\fBINTEGER\fR.  Maximum fill-in, half of the preconditioner bandwidth.  The number of non-zero elements in the rows of the preconditioner can not exceed (2*\fBmaxfil\fR+1).
+.TP 10
+\fBipar\fR
+.NL
+\fBINTEGER\fR array of size \fB128\fR.  This parameter is used to specify the integer set of data for both the ILUT and RCIFGMRES computations. Refer to the \fBipar\fR array description in the FGMRES Common Parameters for more details on FGMRES parameter entries. The  entries specific to ILUT are listed below.
+.sp
+\fBipar\fR\fB(31)\fR- specifies how the routine operates if the value of the computed diagonal  element is less than the current matrix row norm multiplied by the value of the parameter \fBtol\fR. If \fBipar\fR(31) = 0, then the calculation is stopped and the routine returns non-zero error value. Otherwise, the value of the diagonal element is set to the certain value  (see description of the parameter  \fBdpar\fR\fB(31) \fRbelow), and the calculation continues.
+.sp
+.TP 10
+.BR
+.B NOTE:
+There is no default value for  \fBipar\fR(31) entry even if the preconditioner is used within the RCI ISS context. Always set the value of this entry.
+.sp
+
+.IP
+
+.TP 10
+\fBdpar\fR
+.NL
+\fBDOUBLE PRECISION\fR array of size \fB128\fR.  This parameter specifies the double precision set of data for both ILUT and RCIFGMRES computations. Refer to the \fBdpar\fR array description in the FGMRES Common Parameters for more details on FGMRES parameter entries. The  entries that are specific to ILUT are listed below.
+.sp
+\fBdpar\fR\fB(31)\fR- specifies the value that being multiplied by the matrix row norm is assigned to those diagonal elements whose value is less than the matrix row norm multiplied by the value of the parameter \fBtol\fR, if the calculation is not stopped in accordance with \fBipar\fR\fB(31)\fR.
+.TP 10
+.BR
+.B NOTE:
+There is no default value for  \fBdpar\fR(31) entry even if the preconditioner is used within RCI ISS context. Always set the value of this entry.
+.sp
+
+.IP
+
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBbilut\fR
+.NL
+\fBDOUBLE PRECISION\fR. Array  \fIB\fR containing non-zero elements of the resulting preconditioning matrix, stored format accepted in the direct sparse solvers. Refer to the \fBvalues\fR array description in the Sparse Matrix Storage Format section for more details. The size of the array is equal to (2*\fBmaxfil\fR+1)*\fBn\fR-\fBmaxfil\fR*(\fBmaxfil\fR+1)+1.
+.TP 10
+.BR
+.B NOTE:
+Provide enough memory for this array before calling the roitune. Otherwise, the routine may fail to complete successfully with a correct result.
+.TP 10
+\fBibilut\fR
+.NL
+\fBINTEGER\fR. Array of size (\fBn\fR+1) containing indices of non-zero elements in the array \fIB\fR. \fBibilut\fR(I) is the index of the first non-zero element from the row I. The value of the last element \fBibilut\fR(\fBn\fR+1) is equal to the number of non-zeros in the matrix \fIB\fR plus one. Refer to the \fBrowIndex\fR array description in the Sparse Matrix Storage Format section for more details..
+.TP 10
+\fBjbilut\fR
+.NL
+\fBINTEGER\fR.  Array, its size is equal to the size of the array \fBbilut\fR. This array contains the column numbers for each non-zero element of the matrix \fIB\fR. Refer to the \fBcolumns\fR array description in the Sparse Matrix Storage Format section for more details.
+.TP 10
+\fBierr\fR
+.NL
+\fBINTEGER\fR. Error flag, informs about the routine completion.
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBierr\fR=0
+.NL
+The routine completes the task normally.
+.TP 10
+\fBierr\fR=-101
+.NL
+The routine is interrupted, the error occurs: the number of elements in some matrix row specified in the sparse format is equal to or less than 0. 
+.TP 10
+\fBierr\fR=-102
+.NL
+The routine is interrupted because the value of the computed diagonal element is less than the product of the given tolerance and the current matrix row norm, and it cannot be replaced as \fBipar\fR\fB(31)\fR=0. 
+.TP 10
+\fBierr\fR=-103
+.NL
+The routine is interrupted, the error occurs: the element \fBia\fR(I+1) is less than or equal to the element \fBia\fR(I) (see Sparse Matrix Storage Format section).
+.TP 10
+\fBierr\fR=-104
+.NL
+The routine is interrupted because the memory is insufficient for the internal work arrays.
+.TP 10
+\fBierr\fR=-105
+.NL
+The routine is interrupted because the input value of \fBmaxfil\fR is less than 0.
+.TP 10
+\fBierr\fR=-106
+.NL
+The routine is interrupted because the size \fBn\fR of the input matrix is less than 0.
+.TP 10
+\fBierr\fR=-107
+.NL
+The routine is interrupted, the error occurs: an element of the array \fBja\fR is less than 0, or greater than \fBn\fR (see Sparse Matrix Storage Format section).
+.TP 10
+\fBierr\fR=101
+.NL
+The value of \fBmaxfil\fR is greater than or equal to \fBn\fR. The calculation is performed with the value of \fBmaxfil\fR set to (\fBn\fR-1).
+.TP 10
+\fBierr\fR=102
+.NL
+The value of \fBtol\fR is less than 0. The calculation is performed with the value of the parameter set to (-\fBtol\fR)
+.TP 10
+\fBierr\fR=103
+.NL
+The absolute value of \fBtol\fR is greater than value of \fBdpar\fR\fB(31)\fR; it can result  in instability of the calculation.
+.TP 10
+\fBierr\fR=104
+.NL
+The value of \fBdpar\fR\fB(31)\fR is equal to 0. It can cause the fail of the calculations.
+.SH INTERFACES
+.PP
+
+.PP
+\fBFortran 77 and Fortran 95:\fR
+.br
+SUBROUTINE dcsrilut (n, a, ia, ja, bilut, ibilut, jbilut, tol, maxfil, ipar, dpar, ierr)
+.br
+INTEGER n, ierr, ipar(*), maxfil
+.br
+INTEGER ia(*), ja(*), ibilut(*), jbilut(*)
+.br
+DOUBLE PRECISION a(*), bilut(*), dpar(*), tol
+.PP
+\fBC:\fR
+.br
+.PP
+.br
+void dcsrilut (int \fI*n\fR, double \fI*a\fR, int \fI*ia\fR, int \fI*ja\fR, double \fB*bilut\fR, int \fB*ibilut\fR, int \fB*jbilut\fR, double \fB*tol\fR, int \fB*maxfil\fR, int \fI*ipar\fR, double \fI*dpar\fR, int \fI*ierr\fR);
+.br
+

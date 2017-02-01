@@ -1,0 +1,833 @@
+#!/usr/bin/perl 
+# if your copy of perl is not in /usr/bin, please adjust the line above
+# Copyright (C) 2005-2006, Intel Corporation. All rights reserved.
+
+use strict;
+use warnings;
+use FindBin;
+use File::Spec;
+use File::Temp qw/tempfile/;
+use English qw/-no_match_vars/; 
+use Time::Local;
+use POSIX qw/strftime/;
+use Class::Struct;
+
+struct Lic => {
+    support_type    => '$', # COM, ACAD and etc
+    exp_date        => '$', # expiration date
+    mnt_date        => '$', # maintenance date 
+    lic_path        => '$', # path to license
+};
+
+
+# globals. i don't like them, though.
+my %g_config_opts;        # options from config file
+my $g_config_file;        # path to config file
+my @g_default_lics_dir;   # default licenses location 
+my @g_search_path;        # path to search licenses in
+my $g_verbose;            # verbose if true
+my $g_chklic;             # path to chklic utility
+my $g_package_id;         # package_id
+my $g_product_name;       # product name
+my @g_lics;               # list of Lic with licenses information
+my $g_version = "1.0.4";  # version
+my $g_print_reg_info = 0; # indicates whether to print registration info or not
+
+
+# reads config file and stores configuration options in %g_config_opts hash 
+# @in: 
+# $fname - path to configuration file
+sub read_cfg_file {
+    my $fname = shift;
+    open my $fh, '<', "$fname" or
+        die "Can't open config file $fname: $!";
+        
+    while (<$fh>) {
+        chomp;              # no newline
+        s/#.*//;            # no comments
+        s/^\s+//;           # no leading white
+        s/\s+$//;           # no trailing white
+        next unless length; # anything left?
+        my ($var, $value) = split(/\s*=\s*/, $_, 2);
+        $var = lc $var;     # variable names are case insensitive
+        $g_config_opts{$var} = $value;
+    }
+    close $fh;
+}
+
+
+# portably converts to absolute form a path relative to the iplid script 
+# location 
+# @in:
+# $rel_path - a relative path
+# @out: absolute path
+sub relative_path_to_abs {
+    my $rel_path = shift;
+    my $abs_path = File::Spec->rel2abs($rel_path, $FindBin::Bin);
+    unless (-f $abs_path or -d $abs_path) {
+        warn "Warning: Can't convert to absolute form path $rel_path " .
+             "relative to $FindBin::Bin\n";
+        return '';             
+    }
+    $abs_path = File::Spec->canonpath($abs_path);
+    return $abs_path;
+   
+}
+
+
+# returns the machine hardware name. 
+# so far, it works on Linux*, Microsoft(R) Windows(R) and Darwin*
+# returns false if the machine hardware name is unknown.
+# hardware names: ia32, em64t, ia64, Mac.ia32 
+# @out: machine hardware name
+sub get_arch {
+    my $arch;
+    
+    # Linux*
+    if ($OSNAME eq "linux") {
+        $_ = `uname -m`;
+        if (/^i\d86$/) {
+            $arch = "ia32";
+        } elsif (/^x86_64$/) {
+            $arch = "em64t";
+        } elsif (/^ia64$/) {
+            $arch = "ia64";
+        }
+        return $arch;
+    }
+
+    # Windows*
+    if ($OSNAME =~  /MSWin/) {
+        # if it's a 32-bit process let's examine PROCESSOR_ARCHITEW6432
+        if (exists $ENV{PROCESSOR_ARCHITEW6432}) {
+            if ($ENV{PROCESSOR_ARCHITEW6432} eq "IA64") {
+                return  "ia64";
+            } elsif ($ENV{PROCESSOR_ARCHITEW6432} eq "AMD64") {
+                return "em64t";
+            }
+        }
+
+        if (exists $ENV{PROCESSOR_ARCHITECTURE}) { 
+            if ($ENV{PROCESSOR_ARCHITECTURE} eq "IA64") {
+                return  "ia64";
+            } elsif ($ENV{PROCESSOR_ARCHITECTURE} eq "AMD64") {
+                return "em64t";
+            } elsif ($ENV{PROCESSOR_ARCHITECTURE} eq "x86") { 
+                return "ia32";
+            }
+        }       
+    }
+
+    # MacOS*
+    if ($OSNAME eq "darwin") {
+        $_ = `uname -m`;
+        if (/^i\d86$/) {
+            $arch = "Mac.ia32";
+        } else {    
+            # dunno
+        }
+    }
+
+    defined($arch) ? return $arch : return '';
+}
+
+
+# remove leading or/and trailing whitespaces
+# @in:
+# $str -string
+# return modified string
+sub trim {
+    my $str = shift;
+    $str =~ s/^\s+//g;
+    $str =~ s/\s+$//g;
+    return $str;
+}
+
+
+# remove leading or trailing quotation marks from the directory name
+# @in:
+# array of directories
+sub remove_quotation_marks {
+    for my $dir (@_) {
+        $dir = trim($dir);
+        # remove leading or trailing quotation marks
+        $dir =~ s/^\"//;
+        $dir =~ s/^\'//;
+        $dir =~ s/\"$//;
+        $dir =~ s/\'$//;  
+        $dir = trim($dir);
+        $dir = File::Spec->canonpath($dir);
+    }
+}
+
+     
+# it fills @g_search_path list with directories to search licenses in:
+# directory specified in the config file, directories specified by 
+# $INTEL_LICENSE_FILE environment variable, default dirs, current dir 
+# and iplid dir.
+sub init_search_path {
+
+    # add dir specified in the config file
+    if (exists $g_config_opts{licenses_dir}) {
+        remove_quotation_marks($g_config_opts{licenses_dir});
+        my $abs_path = relative_path_to_abs($g_config_opts{licenses_dir});
+        push @g_search_path, $abs_path if $abs_path;
+    }
+
+    # check if INTEL_LICENSE_FILE defined 
+    if ($ENV{INTEL_LICENSE_FILE}) {
+        my $env_value = $ENV{INTEL_LICENSE_FILE};
+        my $delimiter; 
+        
+        # on Unix* directories are delimited by ":"
+        $delimiter = ":";
+        
+        # on windows* directories are delimited by ";" 
+        $delimiter = ";" if $OSNAME =~ /MSWin/;
+
+        my @directories =  split /$delimiter/, $env_value;
+        remove_quotation_marks(@directories);
+        
+        for my $dir (@directories) {
+            if (-d $dir) {
+                # add this dir
+                push @g_search_path, $dir;
+            }
+#            else {
+#                warn "Warning: unable to access the directory '$dir' specified " .
+#                     'by $INTEL_LICENSE_FILE environment variable';
+#            }
+        }
+    }
+
+    # add default search directories
+    remove_quotation_marks(@g_default_lics_dir);
+    push @g_search_path, @g_default_lics_dir;
+    
+    # add current dir
+    push @g_search_path, File::Spec->rel2abs( File::Spec->curdir() );
+    
+    # add iplid dir
+    push @g_search_path, File::Spec->canonpath($FindBin::Bin);
+
+    # remove duplicates from @g_search_path
+    my %seen;
+    @g_search_path = grep { ! $seen{$_}++ } @g_search_path; 
+}
+
+
+# initialize package_id and product name
+sub init_product_info {
+    die "Error: support_file is not defined" unless $g_config_opts{support_file};
+    $g_config_opts{support_file} = relative_path_to_abs($g_config_opts{support_file});
+    unless ($g_config_opts{support_file}) {
+        die "Error: Can't find support file";
+    }
+    print "support file=$g_config_opts{support_file}\n" if $g_verbose;
+    
+    open my $fh, '<', $g_config_opts{support_file} or
+        die "Error: Can't open support file $g_config_opts{support_file}: $!";
+
+    # slurp support file    
+    {
+        local $/ = undef;
+        my $support_file = <$fh>;
+        if ($support_file =~ /Package ID:\s*(\S+)\s*$/m) {
+            $g_package_id = $1;
+        } else {
+            die "Error: Can't retrive Package ID from support file " .
+                "$g_config_opts{support_file}";
+        }
+        print "Package ID: $g_package_id\n" if $g_verbose;
+
+        $g_product_name = '';
+        if ($g_config_opts{product_name}) {
+            $g_product_name = $g_config_opts{product_name};
+        } elsif ($support_file =~ /Package Contents:(.*)$/m) {
+            $g_product_name = $1;
+            $g_product_name = trim($g_product_name);
+        } 
+        die "Error: Product Name is unknown" unless $g_product_name;
+        print "Product Name: $g_product_name\n" if $g_verbose;
+    }                                         
+}
+
+
+# simple helper subroutine. it returns the name of chklic 
+# utility on the underlying operation system
+sub get_chklic_name {
+    # let's guess the name of chklic        
+    my $arch = get_arch();
+    my $chklic;
+    if ($OSNAME eq 'linux') {
+        if ($arch eq "ia32") {
+            $chklic = "chklic.x32";
+        } elsif ($arch eq "em64t") {
+            $chklic = "chklic.em64t";
+        } elsif ($arch eq "ia64") {
+            $chklic = "chklic.x64";
+        }
+    } elsif ($OSNAME =~ /MSWin/) {
+        $chklic = "chklic.exe";
+    } elsif ($OSNAME eq "darwin") {
+        $chklic = "chklic.Mac.ia32"
+    }
+    return $chklic;
+}
+
+
+# init path to chklic utility
+sub init_chklic {
+    my ($path, $file);
+    
+    # if path to chklic was specified in the config file
+    if ($g_config_opts{chklic}) {
+        $path = $g_config_opts{chklic};
+        $path = relative_path_to_abs($path);
+        unless ($path) {
+            die "Error: Can't find chklic utility";
+        }
+
+        # if $g_config_opts{chklic} is a directory
+        if (-d $path) {
+            $file = get_chklic_name();
+            $path = File::Spec->catfile($path, $file);    
+        }                         
+    } else {    
+        # chklic option was not set. let's guess where chklic is.
+        $file = get_chklic_name();
+        $path = relative_path_to_abs($file);
+    }
+
+                                                       
+    if (-x $path) {
+        # ok
+        $g_chklic = $path;
+        return;
+    } else {
+        die "Error: Icorrect permissions or $g_chklic doesn't exist";
+    }
+}
+
+
+# run chklic for $dir. all magic starts here.
+# @in: $dir directory to search licenses in
+sub run_chklic {
+    my $dir = shift;
+
+    # create temporary file
+    my ($fh, $file) = tempfile( "iplid_XXXXXXXX", 
+                                SUFFIX=>".txt",
+                                DIR=> File::Spec->tmpdir()
+                               );
+    die "Error: Unable to create temporary file" if (not $fh or not $file);
+    close $fh;
+    
+              
+    print "\n\nRunning chklic for $dir\n" if $g_verbose;
+    print "temporary file: $file\n" if $g_verbose;
+    my $path_to_chklic = $g_chklic;
+    
+    # enclose path to chklic in "" if it contains whitespaces
+    if ($path_to_chklic =~ /\s+/) {
+        $path_to_chklic = qq|"$path_to_chklic| if $path_to_chklic !~ /^\"/;
+        $path_to_chklic = qq|$path_to_chklic"| if $path_to_chklic !~ /\"$/;
+    }
+
+    my $feature_names_joined = join("", map{"-f$_ ";} split(";", $g_config_opts{feature_name}));
+    my $cmd = qq|$path_to_chklic $feature_names_joined -c$dir > $file|;
+    my $rc = system($cmd);
+    print "cmd=$cmd\n" if $g_verbose;
+    $rc >>= 8; # get actual exit code
+    print "return code=$rc\n" if $g_verbose;
+
+    parse_chklic_output($file);
+
+    # clean up        
+    unlink $file;
+}
+
+
+# read n lines from open filehandle
+# @in: $fh - open filehandle to read from 
+#      $n  - number of lines to read
+# return the n-th line  
+sub read_n_lines {
+    my $fh = shift;
+    my $n = shift;
+    my $line;
+    while (defined($line = <$fh>) and --$n) {};
+    return $line;
+}
+
+
+# convert license expiration date to Epoch seconds value
+# @in:  $date - license expiration date
+# @out: $epoch_seconds - Epoch seconds ('perpetual' is a valid value)
+#       returns '' in case of failure
+sub convert_expiration_date {
+    my $date = shift;
+    if ($date eq 'perpetual') {
+        print "convert_maintenance_date: perpetual\n" if $g_verbose;
+        return 'perpetual'; 
+    }
+
+    return '' unless $date;
+
+    my %month = (
+        'jan' => 0,     'feb' => 1,     'mar' => 2,
+        'apr' => 3,     'may' => 4,     'jun' => 5,
+        'jul' => 6,     'aug' => 7,     'sep' => 8,
+        'oct' => 9,     'nov' => 10,    'dec' => 11
+    );
+    my ($dd, $mm, $yyyy) = $date =~ /(\d{1,2})-(\w{3})-(\d{4})/;
+    unless ($dd and $mm and $yyyy) {
+        if ($g_verbose) {
+            print "convert_expiration_date: ERROR parsing $date !";
+        }
+        return '';
+    }
+    my $mn = exists $month{$mm} ? $month{$mm} : '';
+    unless ($mm) {
+        if ($g_verbose) {
+            print "convert_expiration_date: ERROR parsing $date !";
+            print "convert_expiration_date: month = $mm";
+        }
+        return '';
+    }
+    my $epoch_seconds = timelocal(0, 0, 0, $dd, $mn, $yyyy);
+    if ($g_verbose) {
+        print "convert_expiration_date (month - 1) !: $mn $dd $yyyy -> $epoch_seconds\n";
+    }
+    return $epoch_seconds;
+};
+
+
+# convert license maintenance expiration date to Epoch seconds value
+# @in:  $date - license maintenance expiration date
+# @out: $epoch_seconds - Epoch seconds ('perpetual' is a valid value)
+#       returns '' in case of failure
+sub convert_maintenance_date {
+    my $date = shift;
+    if ($date eq 'perpetual') {
+        print "convert_maintenance_date: perpetual\n" if $g_verbose;
+        return 'perpetual'; 
+    }
+
+    return '' unless $date;
+    
+    my ($yyyy, $mm, $dd) = $date =~ /(\d{4})\.(\d{2})(\d{2})/;
+    unless ($dd and $mm and $yyyy) {
+        if ($g_verbose) {
+            print "convert_maintenance_date: ERROR parsing $date !\n";
+        }
+        return '';
+    }
+
+    # month -1 to please timelocal
+    --$mm;
+
+    if ($mm < 0 or $mm > 11) {
+        if ($g_verbose) {
+            print "convert_maintenance_date: month. invalid range: $mm !\n";
+            print "convert_maintenance_date: month. should be (0 .. 11)\n";
+        }
+        return '';
+    }
+    
+    my $epoch_seconds = timelocal(0, 0, 0, $dd, $mm, $yyyy);
+    if ($g_verbose) {
+        print "convert_maintenance_date (month - 1) !: $mm $dd $yyyy -> $epoch_seconds\n";
+    }
+    return $epoch_seconds;
+};
+
+
+# convert date in Epoch seconds to human readable date 
+# ('perpetual' is a valid value)
+# @in: $date - date in Epoch seconds
+# @out $hrdate - human readable date
+sub convert_epoch_to_human_readable {
+    my $epoch_seconds = shift;
+    if ($epoch_seconds eq 'perpetual') {
+        print "convert_epoch_to_human_readable: perpetual\n" if $g_verbose;
+        return 'perpetual'; 
+    }
+
+    my $hrdate = strftime("%b-%d-%Y", localtime($epoch_seconds));
+    if ($g_verbose) {
+        print "convert_epoch_to_human_readable: $epoch_seconds -> $hrdate\n", 
+    }
+    return $hrdate;
+};
+
+
+# compare dates in Epoch seconds ('perpetual' is a valid value)
+# @in: $a - date1   $b - date2
+# return:
+# -1 a < b
+#  0 a == b 
+#  1 a > b
+sub compare_dates {
+    # both dates are 'perpetual'
+    return 0 if ($a eq $b and $b eq 'perpetual');
+
+    # $a wins
+    return 1 if ($a eq 'perpetual' and $b ne 'perpetual');
+
+    # $b wins
+    return -1 if ($b eq 'perpetual' and $a ne 'perpetual');
+
+    # ok. now all dates are numerical values.
+    return $a <=> $b;
+}
+
+
+# the function checks whether the license has expired or not
+# @in: $date - license expiration date
+# return true if the license expired. return false otherwise.
+sub lic_expired {
+    my $date = shift;
+    my $today = timelocal(0, 0, 0, (localtime)[3, 4, 5]);
+    $today > $date ? return 1 : return 0;
+}
+
+
+# check if a license with the same expiration date, maintenance expiration
+# date and support type already exists in the @g_lic list
+# @in: $lic (type Lic)
+# return true if exist. false otherwise
+sub lic_already_exists {
+    my $lic = shift;
+    for my $exist_lic (@g_lics) {
+        if ($lic->exp_date eq $exist_lic->exp_date &&
+            $lic->mnt_date eq $exist_lic->mnt_date &&
+            $lic->support_type eq $exist_lic->support_type
+            ) {
+            return 1;
+        }  
+    }
+    return 0;
+}
+
+# parse chklic output. borring, borring parser.
+# @in: $file chklic output
+sub parse_chklic_output {
+    my $file = shift;
+    my $fh;
+    unless (open $fh, '<', $file) {
+        warn "Warning: Can't open file $file for reading: $!";
+        return; 
+    }
+
+    # main parser's loop
+    while (<$fh>) {
+        my $line; # read in this variable
+        my $lic = Lic->new(); # struct with license info
+        my $date;
+        
+        next unless /^License file = <(.*)>/; 
+        $lic->lic_path($1);
+        unless (-f $lic->lic_path) {
+            # sometimes, for an unknown reason chklic displays directories 
+            # instead of file names or 'fake' filenames
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }
+        printf "\nFound license %s\n", $lic->lic_path if $g_verbose;
+
+         
+        # read 3 lines until 'feature name'
+        $line = read_n_lines($fh, 3);
+        unless ($line and $line =~ /^\s+feature name:\s+(\S+).*$/) {
+            print "Missing: feature name: <name>\n" if $g_verbose;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }
+        print "feature_name=$1\n" if $g_verbose;
+	my $cond = "^".join("\$|^",split(";",$g_config_opts{feature_name}))."\$";
+    	unless ($1 =~ /${cond}/i) {
+            # i think we won't be here
+            print "Internal Error: feature name mismatch\n" if $g_verbose;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }
+
+        #  (license is valid, i.e., has a valid signature)
+        $line = read_n_lines($fh, 1);
+        unless ($line and $line =~ /^\s+\(license is valid, i\.e\., has a valid signature\)\s+$/) {
+            print "Missing: (license is valid, i.e., has a valid signature)\n" if $g_verbose;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }
+
+        # license expires: <date>
+        $line = read_n_lines($fh, 2);
+        unless ($line and $line =~ /^\s+license expires:\s+(\S+).*$/) {
+            print "Missing: license expires: <date>\n" if $g_verbose;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }
+        $date = defined($1) ? $1 : '';
+        if ($date) {
+            printf "Expiration date: %s\n", $date if $g_verbose;
+        } else {
+            print "Error parsing expiration date.\n" if $g_verbose;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }   
+        $date = convert_expiration_date($date);
+        unless ($date) {
+            print "Error parsing expiration date $date.\n" if $g_verbose;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }   
+        $lic->exp_date($date);
+        
+        # license maintenance expires: <date>
+        $line = read_n_lines($fh, 1);
+        unless ($line and $line =~ /^\s+license maintenance expires:\s+(\S+).*$/) {
+            print "Missing: license maintenance expires: <date>\n" if $g_verbose;;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }
+        $date = defined($1) ? $1 : '';
+        if ($date) {
+            printf "Expiration date: %s\n", $date if $g_verbose;
+        } else {
+            print "Error parsing maintenance expiration date.\n" if $g_verbose;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }   
+        $date = convert_maintenance_date($date);
+        unless ($date) {
+            print "Error parsing maintenance expiration date $date.\n" if $g_verbose;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }   
+        $lic->mnt_date($date);
+
+        # SUPPORT=<TYPE>
+        1 while (defined($line = <$fh>) and $line !~ /VENDOR_STRING/);
+        unless ($line) {
+            print "Missing: VENDOR_STRING \n" if $g_verbose;;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }
+        $line = read_n_lines($fh, 1); 
+        $line = read_n_lines($fh, 1) if $line and ($line =~ /^\s+EVAL\s+$/ or $line =~ /^\s+BETA\s+$/);
+        unless ($line and $line =~ /^\s+SUPPORT=<(\w+)>\s+$/) {
+            print "Missing: SUPPORT=<TYPE>\n" if $g_verbose;;
+            printf "Skipping %s\n", $lic->lic_path if $g_verbose;
+            next;
+        }
+        $lic->support_type($1);
+        printf "Support type: %s\n", $lic->support_type if $g_verbose;
+
+        if (not lic_already_exists($lic)) {
+            print_lic_info($lic);
+            push @g_lics, $lic; 
+        } else {
+            if ($g_verbose) {
+                print "A license with the same expiration date, maintenance ",
+                      "expiration date and support type already exists\n";  
+                printf "Skipping %s\n", $lic->lic_path;      
+            }
+        }
+        
+    } # while (<$fh>) { main parser's loop
+    
+}
+
+
+# print license information ib human readable form
+# @in: $lic (type Lic)
+sub print_lic_info {
+    my $lic = shift;
+    my $date_str;
+    
+
+    print "Valid License Key found:\n";
+    print "--------------------------\n";
+    printf "License: %s\n", $lic->lic_path;
+    
+    if ($lic->exp_date eq 'perpetual') {
+        $date_str = 'never expire';
+    } elsif (lic_expired($lic->exp_date)){
+        $date_str = sprintf "expired on %s or is not yet active.*", 
+                            convert_epoch_to_human_readable($lic->exp_date);
+        $g_print_reg_info = 1;
+    } else {
+        $date_str = sprintf "%s", 
+                            convert_epoch_to_human_readable($lic->exp_date);
+    }
+    printf "License Expiration Date: %s\n", $date_str;
+
+    if ($lic->mnt_date eq 'perpetual') {
+        $date_str = 'never expire';
+    } elsif (lic_expired($lic->mnt_date)){
+        $date_str = sprintf "expired on %s or is not yet active.*", 
+                            convert_epoch_to_human_readable($lic->mnt_date);
+        $g_print_reg_info = 1;
+    } else {
+        $date_str = sprintf "%s", 
+                            convert_epoch_to_human_readable($lic->mnt_date);
+    }
+    print "Support Services Expiration Date: $date_str\n";
+
+    printf "Support Type: %s\n\n", $lic->support_type;
+}
+
+# print registration info
+sub print_reg_info {
+    print <<EOL;
+ * If you recently purchased this product, please complete the registration
+   to activate these services providing technical support and product updates.
+   Please refer to the release notes for information on how to register.
+
+ * If your support services have expired, you can purchase a renewal to 
+   continue receiving technical support and product updates. Please refer to
+   http://www.intel.com/software/products for this product for more information.
+   
+EOL
+}
+
+
+# display usage info
+sub usage {
+    print <<EOF;
+Usage:
+search installed licenses:
+iplid [-V|--verbose|-verbose] [<config_file>] 
+    -V|--verbose|-verbose                  verbose output
+    <config_file>                          iplid config file. by default, it's 
+                                           iplid.cfg in the iplid directory 
+print version:
+iplid -v|--version|-version|-ver
+
+print this page:
+iplid -h|--help|-H|-h|/?|\\?|-help|-sos 
+                                
+EOF
+    exit;
+};
+
+
+# obvious
+sub print_version_and_exit {
+    print "version=$g_version\n";
+    exit;
+}
+
+
+# init global variables
+sub init {
+    
+    if ($#ARGV > 1) {
+        usage();
+    } 
+
+    # parse command line parameters
+    while (@ARGV) {
+        $_ = shift @ARGV; 
+        
+        if (/^-h$/i or /^-{1,2}help$/ or m#^[/\\]\?$# or /^-sos$/) {
+            usage();
+        } elsif (/^-v$/ or /^-{1,2}ver(sion)?$/){ 
+            print_version_and_exit();
+        } elsif (/^-V$/ or /^-{1, 2}verbose$/) {
+            $g_verbose = 1;
+            # config file ?
+            next unless $_ = shift @ARGV;
+            if (not /^-.*$/ and not m#^[/\\]\?$#) {
+                $g_config_file = $_;
+            } else {
+                usage();
+            }
+        } elsif (not /^-.*$/ and not m#^[/\\]\?$#) {
+            # config file
+            $g_config_file = $_;
+            usage() if @ARGV;
+        } else { 
+            usage();
+        }
+    } # while (@ARGV)
+
+    # parse config file
+    $g_config_file = relative_path_to_abs("iplid.cfg") unless $g_config_file;
+    print "g_config_file=$g_config_file\n" if $g_verbose;
+    read_cfg_file($g_config_file);
+
+    unless ($g_config_opts{feature_name}) {
+        die "Error: feature_name is not defined !";
+    } else {
+        print "feature_name=$g_config_opts{feature_name}\n"  if $g_verbose;
+    }
+
+    # print hardware info
+    my $arch = get_arch();
+    print "arch=$arch\n" if $g_verbose;
+                              
+    # init product information
+    init_product_info();
+
+    # init default licenses dir
+    print "osname=$OSNAME\n" if $g_verbose;
+    if ($OSNAME eq "linux") {
+        @g_default_lics_dir = ("/opt/intel/licenses");
+    } elsif ($OSNAME =~ /MSWin/) {
+        @g_default_lics_dir = ('C:\Program Files\Common Files\Intel\Licenses', 
+                               'C:\Program Files (x86)\Common Files\Intel\Licenses',
+                              ); 
+    }
+    if ($g_verbose) {
+        print "g_default_lics_dir=@g_default_lics_dir\n";
+    }
+
+
+    # initialize @g_search_path list, that contains directories to
+    # search licenses in.
+    init_search_path();
+    if ($g_verbose) {
+        print "g_search_path:\n";
+        print "\t$_\n" for (@g_search_path); 
+    }
+
+    # init path to chklic utility
+    init_chklic();
+    print "chklic=$g_chklic\n" if $g_verbose;
+}    
+
+    
+# script entry point
+sub main {
+    init();
+
+    print "=" x 80 . "\n";
+    print "Please use the following information when submitting customer support\n";
+    print "requests.\n\n";
+
+    print "$g_product_name\n";
+    print "Support Package ID: $g_package_id\n";
+    print "=" x 80 . "\n";
+    
+    for my $dir (@g_search_path) {
+        # enclose dir in "" if it contains spaces
+        if ($dir =~ /\s+/) {
+            $dir = qq|"$dir| if $dir !~ /^\"/; 
+            $dir = qq|$dir"| if $dir !~ /\"$/; 
+        } 
+        
+        run_chklic($dir);
+    }
+
+    unless (@g_lics) {
+        print "\nNo valid license keys found\n" unless @g_lics;
+    } elsif ($g_print_reg_info) {
+        print_reg_info();
+    }
+    
+}
+
+
+main();

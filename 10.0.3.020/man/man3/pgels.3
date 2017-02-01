@@ -1,0 +1,173 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?gels 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?gels \- Solves overdetermined or underdetermined linear systems involving a matrix of full rank.
+.SH SYNOPSIS
+.PP
+\fBcall psgels\fR(\fItrans\fR, \fIm\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdgels\fR(\fItrans\fR, \fIm\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcgels\fR(\fItrans\fR, \fIm\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzgels\fR(\fItrans\fR, \fIm\fR, \fIn\fR, \fInrhs\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIb\fR, \fIib\fR, \fIjb\fR, \fIdescb\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBtrans\fR
+.NL
+(global) \fBCHARACTER\fR. Must be \fB\'N\'\fR, or \fB\'T\'\fR. 
+.IP
+If \fItrans\fR = \fB\'N\'\fR, the linear system involves matrix sub(\fIA\fR);
+.IP
+If \fItrans\fR = \fB\'T\'\fR, the linear system involves the transposed matrix \fIA\fR**\fIT\fR (for real flavors only).
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. The number of rows in the distributed submatrix sub (\fIA\fR) (\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The number of columns in the distributed submatrix sub (\fIA\fR) (\fIn\fR\(>= 0).
+.TP 10
+\fBnrhs\fR
+.NL
+(global) \fBINTEGER\fR. The number of right-hand sides; the number of columns in the distributed submatrices sub(\fIB\fR) and \fIX\fR. (\fInrhs\fR\(>= 0). 
+.TP 10
+\fBa\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgels\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgels\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgels\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgels\fR. 
+.IP
+Pointer into the local memory to an array of dimension (\fIlld\(ula\fR, \fILOCc\fR(\fIja\fR+\fIn\fR-1)). On entry, contains the \fIm\fR-by-\fIn\fR matrix \fIA\fR.
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix \fIA\fR, respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBb\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgels\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgels\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgels\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgels\fR. 
+.IP
+Pointer into the local memory to an array of local dimension (\fIlld\(ulb\fR, \fILOCc\fR(\fIjb\fR+\fInrhs\fR-1)). On entry, this array contains the local pieces of the distributed matrix \fIB\fR of right-hand side vectors, stored columnwise; sub(\fIB\fR) is \fIm\fR-by-\fInrhs\fR if \fItrans\fR=\fB\'N\'\fR, and \fIn\fR-by-\fInrhs\fR otherwise.
+.TP 10
+\fBib\fR, \fBjb\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIb\fR indicating the first row and the first column of the submatrix \fIB\fR, respectively.
+.TP 10
+\fBdescb\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIB\fR.
+.TP 10
+\fBwork\fR
+.NL
+(local)
+.IP
+\fBREAL\fR for \fBpsgels\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgels\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgels\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBpzgels\fR.
+.IP
+Workspace array with dimension \fIlwork\fR.
+.TP 10
+\fBlwork\fR
+.NL
+(local or global) \fBINTEGER\fR.
+.IP
+The dimension of the array \fIwork\fR\fIlwork\fR is local input and must be at least \fIlwork\fR \(>= \fIltau\fR + \fBmax\fR(\fIlwf\fR, \fIlws\fR), where if \fIm\fR > \fIn\fR, then
+.IP
+\fIltau\fR = \fBnumroc\fR(\fIja\fR+\fBmin\fR(\fIm\fR,\fIn\fR)-1, \fInb\(ula\fR, \fBMYCOL\fR, \fIcsrc\(ula\fR, \fBNPCOL\fR), 
+.IP
+\fIlwf\fR = \fInb\(ula\fR*(\fImpa\fR0 + \fInqa\fR0 + \fInb\(ula\fR)
+.IP
+\fIlws\fR = \fBmax\fR((\fInb\(ula\fR*(\fInb\(ula\fR-1))/2, (\fInrhsqb\fR0 + \fImpb\fR0)*\fInb\(ula\fR) + \fInb\(ula\fR*\fInb\(ula\fR
+.IP
+else
+.IP
+\fIltau\fR = \fBnumroc\fR(\fIia\fR+\fBmin\fR(\fIm\fR,\fIn\fR)-1, \fImb\(ula\fR, \fBMYROW\fR, \fIrsrc\(ula\fR, \fBNPROW\fR), 
+.IP
+\fIlwf\fR = \fImb\(ula\fR * (\fImpa\fR0 + \fInqa\fR0 + \fImb\(ula\fR)
+.IP
+\fIlws\fR = \fBmax\fR((\fImb\(ula\fR*(\fImb\(ula\fR-1))/2, (\fInpb\fR0 + \fBmax\fR(\fInqa\fR0 + \fBnumroc\fR(\fBnumroc\fR(\fIn\fR+\fIiroffb\fR, \fImb\(ula\fR, 0, 0, \fBNPROW\fR), \fImb\(ula\fR, 0, 0, \fIlcmp\fR), \fInrhsqb\fR0))*\fImb\(ula\fR) + \fImb\(ula\fR*\fImb\(ula\fR
+.IP
+end if,
+.IP
+where \fIlcmp\fR = \fIlcm\fR/\fBNPROW\fR with \fIlcm\fR = \fBilcm\fR(\fBNPROW\fR, \fBNPCOL\fR),
+.IP
+\fIiroffa\fR = \fBmod\fR(\fIia\fR-1, \fImb\(ula\fR), 
+.IP
+\fIicoffa\fR = \fBmod\fR(\fIja\fR-1, \fInb\(ula\fR), 
+.IP
+\fIiarow\fR = \fBindxg2p\fR(\fIia\fR, \fImb\(ula\fR, \fBMYROW\fR, \fIrsrc\(ula\fR, \fBNPROW\fR), 
+.IP
+\fIiacol\fR= \fBindxg2p\fR(\fIja\fR, \fInb\(ula\fR, \fBMYROW\fR, \fIrsrc\(ula\fR, \fBNPROW\fR)
+.IP
+\fImpa\fR0 = \fBnumroc\fR(\fIm\fR+\fIiroffa\fR, \fImb\(ula\fR, \fBMYROW\fR, \fIiarow\fR, \fBNPROW\fR), 
+.IP
+\fInqa\fR0 = \fBnumroc\fR(\fIn\fR+\fIicoffa\fR, \fInb\(ula\fR, \fBMYCOL\fR, \fIiacol\fR, \fBNPCOL\fR), 
+.IP
+\fIiroffb\fR = \fBmod\fR(\fIib\fR-1, \fImb\(ulb\fR), 
+.IP
+\fIicoffb\fR = \fBmod\fR(\fIjb\fR-1, \fInb\(ulb\fR), 
+.IP
+\fIibrow\fR = \fBindxg2p\fR(\fIib\fR, \fImb\(ulb\fR, \fBMYROW\fR, \fIrsrc\(ulb\fR, \fBNPROW\fR), 
+.IP
+\fIibcol\fR = \fBindxg2p\fR(\fIjb\fR, \fInb\(ulb\fR, \fBMYCOL\fR, \fIcsrc\(ulb\fR, \fBNPCOL\fR), 
+.IP
+\fImpb\fR0 = \fBnumroc\fR(\fIm\fR+\fIiroffb\fR, \fImb\(ulb\fR, \fBMYROW\fR, \fIicrow\fR, \fBNPROW\fR), 
+.IP
+\fInqb\fR0 = \fBnumroc\fR(\fIn\fR+\fIicoffb\fR, \fInb\(ulb\fR, \fBMYCOL\fR, \fIibcol\fR, \fBNPCOL\fR),
+.IP
+\fBilcm\fR, \fBindxg2p\fR and \fBnumroc\fR are ScaLAPACK tool functions; \fBMYROW\fR, \fBMYCOL\fR, \fBNPROW\fR, and \fBNPCOL\fR can be determined by calling the subroutine \fBblacs\(ulgridinfo\fR.
+.IP
+If \fIlwork\fR = -1, then \fIlwork\fR is global input and a workspace query is assumed; the routine only calculates the minimum and optimal size for all work arrays. Each of these values is returned in the first entry of the corresponding work array, and no error message is issued by \fBpxerbla\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, If \fIm\fR\(>=\fIn\fR, sub(\fIA\fR) is overwritten by the details of its \fIQR\fR factorization as returned by \fBp?geqrf\fR; if \fIm\fR < \fIn\fR, sub(\fIA\fR) is overwritten by details of its \fILQ\fR factorization as returned by \fBp?gelqf\fR. 
+.TP 10
+\fBb\fR
+.NL
+On exit, sub(\fIB\fR) is overwritten by the solution vectors, stored columnwise: if \fItrans\fR = \fB\'N\'\fR and \fIm\fR\(>=\fIn\fR, rows 1 to \fIn\fR of sub(\fIB\fR) contain the least squares solution vectors; the residual sum of squares for the solution in each column is given by the sum of squares of elements \fIn\fR+1 to \fIm\fR in that column; 
+.IP
+If \fItrans\fR = \fB\'N\'\fR and \fIm\fR < \fIn\fR, rows 1 to \fIn\fR of sub(\fIB\fR) contain the minimum norm solution vectors;
+.IP
+If \fItrans\fR = \fB\'T\'\fR and \fIm\fR\(>=\fIn\fR, rows 1 to \fIm\fR of sub(\fIB\fR) contain the minimum norm solution vectors; if \fItrans\fR = \fB\'T\'\fR and \fIm\fR < \fIn\fR, rows 1 to \fIm\fR of sub(\fIB\fR) contain the least squares solution vectors; the residual sum of squares for the solution in each column is given by the sum of squares of elements \fIm\fR+1 to \fIn\fR in that column. 
+.TP 10
+\fBwork\fR(1)
+.NL
+On exit, \fIwork\fR(1) contains the minimum value of \fIlwork\fR required for optimum performance. 
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+= 0: the execution is successful.
+.IP
+< 0: if the \fIi\fR-th argument is an array and the \fIj\fR-entry had an illegal value, then \fIinfo\fR = - (\fIi\fR* 100+\fIj\fR), if the \fIi\fR-th argument is a scalar and had an illegal value, then \fIinfo\fR = -\fIi\fR. 

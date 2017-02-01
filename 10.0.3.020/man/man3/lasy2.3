@@ -1,0 +1,134 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?lasy2 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?lasy2 \- Solves the Sylvester matrix equation where the matrices are of order 1 or 2. 
+.SH SYNOPSIS
+.PP
+\fBcall slasy2\fR( \fIltranl\fR, \fIltranr\fR, \fIisgn\fR, \fIn1\fR, \fIn2\fR, \fItl\fR, \fIldtl\fR, \fItr\fR, \fIldtr\fR, \fIb\fR, \fIldb\fR, \fIscale\fR, \fIx\fR, \fIldx\fR, \fIxnorm\fR, \fIinfo\fR)
+.PP
+\fBcall dlasy2\fR( \fIltranl\fR, \fIltranr\fR, \fIisgn\fR, \fIn1\fR, \fIn2\fR, \fItl\fR, \fIldtl\fR, \fItr\fR, \fIldtr\fR, \fIb\fR, \fIldb\fR, \fIscale\fR, \fIx\fR, \fIldx\fR, \fIxnorm\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBltranl\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+On entry, \fIltranl\fR specifies the op(\fITL\fR):
+.IP
+= \fB.FALSE.\fR, op(\fITL\fR) = \fITL\fR, 
+.IP
+= \fB.TRUE.\fR, op(\fITL\fR) = (\fITL\fR)**\fIT\fR.
+.TP 10
+\fBltranr\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+On entry, \fIltranr\fR specifies the op(\fITR\fR):
+.IP
+= \fB.FALSE.\fR, op(\fITR\fR) = \fITR\fR, 
+.IP
+= \fB.TRUE.\fR, op(\fITR\fR) = (\fITR\fR)**\fIT\fR.
+.TP 10
+\fBisgn\fR
+.NL
+\fBINTEGER\fR. On entry, \fIisgn\fR specifies the sign of the equation as described before. \fIisgn\fR may only be 1 or -1.
+.TP 10
+\fBn1\fR
+.NL
+\fBINTEGER\fR. On entry, \fIn1\fR specifies the order of matrix \fITL\fR. 
+.IP
+\fIn1\fR may only be 0, 1 or 2.
+.TP 10
+\fBn2\fR
+.NL
+\fBINTEGER\fR. On entry, \fIn2\fR specifies the order of matrix \fITR\fR. 
+.IP
+\fIn2\fR may only be 0, 1 or 2.
+.TP 10
+\fBtl\fR
+.NL
+\fBREAL\fR for \fBslasy2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasy2\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIldtl\fR,2).
+.IP
+On entry, \fItl\fR contains an \fIn1\fR-by-\fIn1\fR matrix \fITL\fR.
+.TP 10
+\fBldtl\fR
+.NL
+\fBINTEGER\fR.The leading dimension of the matrix \fITL\fR. 
+.IP
+\fIldtl\fR\(>= max(1,\fIn1\fR).
+.TP 10
+\fBtr\fR
+.NL
+\fBREAL\fR for \fBslasy2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasy2\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIldtr\fR,2). On entry, \fItr\fR contains an \fIn2\fR-by-\fIn2\fR matrix \fITR\fR.
+.TP 10
+\fBldtr\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the matrix \fITR\fR. 
+.IP
+\fIldtr\fR\(>= max(1,\fIn2\fR).
+.TP 10
+\fBb\fR
+.NL
+\fBREAL\fR for \fBslasy2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasy2\fR. 
+.IP
+Array, \fBDIMENSION\fR (\fIldb\fR,2). On entry, the \fIn1\fR-by-\fIn2\fR matrix \fIB\fR contains the right-hand side of the equation.
+.TP 10
+\fBldb\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the matrix \fIB\fR. 
+.IP
+\fIldb\fR\(>= max(1,\fIn1\fR).
+.TP 10
+\fBldx\fR
+.NL
+\fBINTEGER\fR. The leading dimension of the output matrix \fIX\fR. 
+.IP
+\fIldx\fR\(>= max(1,\fIn1\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBscale\fR
+.NL
+\fBREAL\fR for \fBslasy2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasy2\fR. 
+.IP
+On exit, \fIscale\fR contains the scale factor. 
+.IP
+\fIscale\fR is chosen less than or equal to 1 to prevent the solution overflowing.
+.TP 10
+\fBx\fR
+.NL
+\fBREAL\fR for \fBslasy2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasy2\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldx\fR,2). On exit, \fIx\fR contains the \fIn1\fR-by-\fIn2\fR solution.
+.TP 10
+\fBxnorm\fR
+.NL
+\fBREAL\fR for \fBslasy2\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlasy2\fR.
+.IP
+On exit, \fIxnorm\fR is the infinity-norm of the solution.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. On exit, \fIinfo\fR is set to 0: successful exit. 1: \fITL\fR and \fITR\fR have too close eigenvalues, so \fITL\fR or \fITR\fR is perturbed to get a nonsingular equation.
+.PP
+.B NOTE:
+For higher speed, this routine does not check the inputs for errors.

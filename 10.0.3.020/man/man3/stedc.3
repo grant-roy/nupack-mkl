@@ -1,0 +1,183 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?stedc 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?stedc \- Computes all eigenvalues and eigenvectors of a symmetric tridiagonal matrix using the divide and conquer method.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sstedc\fR(\fIcompz\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall dstedc\fR(\fIcompz\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall cstedc\fR(\fIcompz\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIlrwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+\fBcall zstedc\fR(\fIcompz\fR, \fIn\fR, \fId\fR, \fIe\fR, \fIz\fR, \fIldz\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIlrwork\fR, \fIiwork\fR, \fIliwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall rstedc\fR(\fId\fR, \fIe\fR[,\fIz\fR] [,\fIcompz\fR] [,\fIinfo\fR])
+.PP
+\fBcall stedc\fR(\fId\fR, \fIe\fR[,\fIz\fR] [,\fIcompz\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBcompz\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'I\'\fR or \fB\'V\'\fR.
+.IP
+If \fIcompz\fR = \fB\'N\'\fR, the routine computes eigenvalues only. 
+.IP
+If \fIcompz\fR = \fB\'I\'\fR, the routine computes the eigenvalues and eigenvectors of the tridiagonal matrix. 
+.IP
+If \fIcompz\fR = \fB\'V\'\fR, the routine computes the eigenvalues and eigenvectors of original symmetric/Hermitian matrix. On entry, the array \fIz\fR must contain the orthogonal/unitary matrix used to reduce the original matrix to tridiagonal form.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the symmetric tridiagonal matrix \fI\fR(\fIn\fR\(>= 0). 
+.TP 10
+\fBd\fR, \fBe\fR, \fBrwork\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+Arrays: 
+.IP
+\fId\fR(*) contains the diagonal elements of the tridiagonal matrix. 
+.IP
+The dimension of \fId\fR must be at least max(1, \fIn\fR).
+.IP
+\fIe\fR(*) contains the subdiagonal elements of the tridiagonal matrix. 
+.IP
+The dimension of \fIe\fR must be at least max(1, \fIn\fR-1).\fIrwork\fR is a workspace array, its dimension max(1, \fBlrwork\fR).
+.TP 10
+\fBz\fR, \fBwork\fR
+.NL
+\fBREAL\fR for \fBsstedc\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdstedc\fR
+.IP
+\fBCOMPLEX\fR for \fBcstedc\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzstedc\fR. 
+.IP
+Arrays: \fIz\fR(\fIldz\fR, *), \fIwork\fR(*\fI\fR). 
+.IP
+If \fIcompz\fR = \fB\'V\'\fR, then, on entry, \fIz\fR must contain the orthogonal/unitary matrix used to reduce the original matrix to tridiagonal form. 
+.IP
+The second dimension of \fIz\fR must be at least max(1, \fIn\fR).\fIwork\fR is a workspace array, its dimension max(1, \fBlwork\fR).
+.TP 10
+\fBldz\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIz\fR. Constraints:
+.IP
+\fIldz\fR\(>= 1 if \fIcompz\fR = \fB\'N\'\fR;
+.IP
+\fIldz\fR\(>= max(1, \fIn\fR) if \fIcompz\fR = \fB\'V\'\fR or \fB\'I\'\fR.
+.TP 10
+\fBlwork\fR
+.NL
+\fBINTEGER\fR. The dimension of the array \fIwork\fR. 
+.IP
+If \fIcompz\fR = \fB\'N\'\fRor \fB\'I\'\fR, or \fIn\fR \(<= 1, \fIlwork\fR must be at least 1.
+.IP
+If \fIcompz\fR = \fB\'V\'\fR and \fIn\fR > 1, \fIlwork\fR must be at least \fIn\fR*\fIn\fR. Note that for  \fIcompz\fR = \fB\'V\'\fR, and  if \fIn\fR is less than or equal to the minimum divide size, usually 25, then \fIlwork\fR need only be 1.
+.IP
+If \fIlwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR, \fIrwork\fR and \fIiwork\fR arrays, returns these values as the first entries of the \fIwork\fR, \fIrwork\fR and \fIiwork\fR arrays, and no error message related to \fIlwork\fR or \fIlrwork\fR or \fIliwork\fR is issued by \fBxerbla\fR. 
+.TP 10
+\fBlrwork\fR
+.NL
+\fBINTEGER\fR. The dimension of the array \fIrwork\fR (used for complex flavors only). 
+.IP
+If \fIcompz\fR = \fB\'N\'\fR, or \fIn\fR \(<= 1, \fIlrwork\fR must be at least 1.
+.IP
+If \fIcompz\fR = \fB\'V\'\fR and \fIn\fR > 1, \fIlrwork\fR must be at least (1+3*\fIn\fR+2*\fIn\fR*lg(\fIn\fR)+3*\fIn\fR*\fIn\fR), where  lg(\fIn\fR)is the smallest integer \fIk\fR such that 2**\fIk\fR\(>=\fIn\fR.
+.IP
+If \fIcompz\fR = \fB\'I\'\fR and \fIn\fR > 1, \fIlrwork\fR must be at least (1+4*\fIn\fR+2*\fIn\fR*\fIn\fR).
+.IP
+Note that for  \fIcompz\fR = \fB\'V\'\fRor \fB\'I\'\fR, and  if \fIn\fR is less than or equal to the minimum divide size, usually 25, then \fIlrwork\fR need only be max(1, 2*(\fIn\fR-1)).
+.IP
+If \fIlrwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR, \fIrwork\fR and \fIiwork\fR arrays, returns these values as the first entries of the \fIwork\fR, \fIrwork\fR and \fIiwork\fR arrays, and no error message related to \fIlwork\fR or \fIlrwork\fR or \fIliwork\fR is issued by \fBxerbla\fR. 
+.TP 10
+\fBiwork\fR
+.NL
+\fBINTEGER\fR. Workspace array, its dimension max(1, \fBliwork\fR). 
+.TP 10
+\fBliwork\fR
+.NL
+\fBINTEGER\fR. The dimension of the array \fIiwork\fR. 
+.IP
+If \fIcompz\fR = \fB\'N\'\fR, or \fIn\fR \(<= 1, \fIliwork\fR must be at least 1.
+.IP
+If \fIcompz\fR = \fB\'V\'\fR and \fIn\fR > 1, \fIliwork\fR must be at least (6+6*\fIn\fR+5*\fIn\fR*lg(\fIn\fR), where  lg(\fIn\fR)is the smallest integer \fIk\fR such that 2**\fIk\fR\(>=\fIn\fR.
+.IP
+If \fIcompz\fR = \fB\'I\'\fR and \fIn\fR > 1, \fIliwork\fR must be at least (3+5*\fIn\fR).
+.IP
+Note that for  \fIcompz\fR = \fB\'V\'\fRor \fB\'I\'\fR, and  if \fIn\fR is less than or equal to the minimum divide size, usually 25, then \fIliwork\fR need only be 1.
+.IP
+If \fIliwork\fR = -1, then a workspace query is assumed; the routine only calculates the optimal size of the \fIwork\fR, \fIrwork\fR and \fIiwork\fR arrays, returns these values as the first entries of the \fIwork\fR, \fIrwork\fR and \fIiwork\fR arrays, and no error message related to \fIlwork\fR or \fIlrwork\fR or \fIliwork\fR is issued by \fBxerbla\fR. 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+The \fIn\fR eigenvalues in ascending order, unless \fIinfo\fR\(!= 0. 
+.IP
+See also \fIinfo\fR.
+.TP 10
+\fBe\fR
+.NL
+On exit, the array is overwritten; see \fIinfo\fR.
+.TP 10
+\fBz\fR
+.NL
+If \fIinfo\fR = 0, then if \fIcompz\fR = \fB\'V\'\fR, \fIz\fR contains the orthonormal eigenvectors of the original symmetric/Hermitian matrix, and if \fIcompz\fR = \fB\'I\'\fR, \fIz\fR contains the orthonormal eigenvectors of the symmetric tridiagonal matrix. If \fIcompz\fR = \fB\'N\'\fR, \fIz\fR is not referenced.
+.TP 10
+\fBwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIwork(1)\fR returns the optimal \fIlwork\fR.
+.TP 10
+\fBrwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIrwork(1)\fR returns the optimal \fIlrwork\fR (for complex flavors only).
+.TP 10
+\fBiwork(1)\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIiwork(1)\fR returns the optimal \fIliwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi-\fRth parameter had an illegal value. If \fIinfo\fR = \fIi\fR, the algorithm failed to compute an eigenvalue while working on the submatrix lying in rows and columns \fIi\fR/(\fIn\fR+1) through mod(\fIi\fR, \fIn\fR+1).
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBstedc\fR interface are the following:
+.TP 10
+\fBd\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBe\fR
+.NL
+Holds the vector of length (\fIn-\fR1).
+.TP 10
+\fBz\fR
+.NL
+Holds the matrix \fIZ\fR of size (\fIn,n\fR).
+.TP 10
+\fBcompz\fR
+.NL
+If omitted, this argument is restored based on the presence of argument \fIz\fR as follows: \fIcompz\fR = \fB\'I\'\fR, if \fIz\fR is present, \fIcompz\fR = \fB\'N\'\fR, if \fIz\fR is omitted. 
+.IP
+If present, \fIcompz\fR must be equal to \fB\'I\'\fR or \fB\'V\'\fR and the argument \fIz\fR must also be present. Note that there will be an error condition if \fIcompz\fR is present and \fIz\fR omitted.
+.PP
+Note that two variants of Fortran 95 interface for \fBstedc\fR routine are needed because of an ambiguous choice between real and complex cases appear when \fIz\fR and \fIwork\fR are omitted. Thus, the name \fBrstedc\fR is used in real cases (single or double precision), and the name \fBstedc\fR is used in complex cases (single or double precision).

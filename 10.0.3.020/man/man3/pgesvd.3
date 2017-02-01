@@ -1,0 +1,236 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH p?gesvd 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+p?gesvd \- Computes the singular value decomposition of a general matrix, optionally computing the left and/or right singular vectors.
+.SH SYNOPSIS
+.PP
+\fBcall psgesvd\fR( \fIjobu\fR, \fIjobvt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIs\fR, \fIu\fR, \fIiu\fR, \fIju\fR, \fIdescu\fR, \fIvt\fR, \fIivt\fR, \fIjvt\fR, \fIdescvt\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pdgesvd\fR( \fIjobu\fR, \fIjobvt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIs\fR, \fIu\fR, \fIiu\fR, \fIju\fR, \fIdescu\fR, \fIvt\fR, \fIivt\fR, \fIjvt\fR, \fIdescvt\fR, \fIwork\fR, \fIlwork\fR, \fIinfo\fR)
+.PP
+\fBcall pcgesvd\fR( \fIjobu\fR, \fIjobvt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIs\fR, \fIu\fR, \fIiu\fR, \fIju\fR, \fIdescu\fR, \fIvt\fR, \fIivt\fR, \fIjvt\fR, \fIdescvt\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIinfo\fR)
+.PP
+\fBcall pzgesvd\fR( \fIjobu\fR, \fIjobvt\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIia\fR, \fIja\fR, \fIdesca\fR, \fIs\fR, \fIu\fR, \fIiu\fR, \fIju\fR, \fIdescu\fR, \fIvt\fR, \fIivt\fR, \fIjvt\fR, \fIdescvt\fR, \fIwork\fR, \fIlwork\fR, \fIrwork\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+.PP
+\fImp\fR = number of local rows in \fIA\fR and \fIU\fR
+.PP
+\fInq\fR = number of local columns in \fIA\fR and \fIVT\fR
+.PP
+\fIsize\fR = min(\fIm\fR, \fIn\fR) 
+.PP
+\fIsizeq\fR = number of local columns in \fIU\fR
+.PP
+\fIsizep\fR = number of local rows in \fIVT\fR
+.TP 10
+\fBjobu\fR
+.NL
+(global). \fBCHARACTER*1\fR. Specifies options for computing all or part of the matrix \fIU\fR.
+.IP
+If \fIjobu\fR = \fB\'V\'\fR, the first \fIsize\fR columns of \fIU\fR (the left singular vectors) are returned in the array \fIu\fR; 
+.IP
+If \fIjobu\fR =\fB\'N\'\fR, no columns of \fIU\fR (no left singular vectors)are computed.
+.TP 10
+\fBjobvt\fR
+.NL
+(global) \fBCHARACTER*1\fR. 
+.IP
+Specifies options for computing all or part of the matrix \fIV\fR**\fIT\fR.
+.IP
+If \fIjobvt\fR = \fB\'V\'\fR, the first \fIsize\fR rows of \fIV\fR**\fIT\fR (the right singular vectors) are returned in the array \fIvt\fR; 
+.IP
+If \fIjobvt\fR = \fB\'N\'\fR, no rows of \fIV\fR**\fIT\fR(no right singular vectors) are computed.
+.TP 10
+\fBm\fR
+.NL
+(global) \fBINTEGER\fR. The number of rows of the matrix \fIA\fR(\fIm\fR\(>= 0). 
+.TP 10
+\fBn\fR
+.NL
+(global) \fBINTEGER\fR. The number of columns in \fIA\fR(\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR
+.NL
+(local). \fBREAL\fR for \fBpsgesvd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgesvd\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgesvd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzgesvd\fR
+.IP
+Block cyclic array, global dimension (\fIm\fR, \fIn\fR), local dimension (\fImp\fR, \fInq\fR). 
+.IP
+\fIwork\fR(\fIlwork\fR) is a workspace array.
+.TP 10
+\fBia\fR, \fBja\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix \fIA\fR, respectively.
+.TP 10
+\fBdesca\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIA\fR.
+.TP 10
+\fBiu\fR, \fBju\fR
+.NL
+(global) \fBINTEGER\fR.  The row and column indices in the global array \fIa\fR indicating the first row and the first column of the submatrix \fIU\fR, respectively.
+.TP 10
+\fBdescu\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIU\fR.
+.TP 10
+\fBivt\fR, \fBjvt\fR
+.NL
+(global) \fBINTEGER\fR. The row and column indices in the global array \fBvt\fR indicating the first row and the first column of the submatrix \fIVT\fR, respectively.
+.TP 10
+\fBdescvt\fR
+.NL
+(global and local) \fBINTEGER\fR array, dimension (\fIdlen\(ul\fR).  The array descriptor for the distributed matrix \fIVT\fR.
+.TP 10
+\fBwork\fR
+.NL
+(local). \fBREAL\fR for \fBpsgesvd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgesvd\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgesvd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzgesvd\fR
+.IP
+Workspace array, dimension (\fIlwork\fR)
+.TP 10
+\fBlwork\fR
+.NL
+(local) \fBINTEGER\fR. The dimension of the array \fIwork\fR;
+.IP
+\fIlwork\fR > 2 + 6*\fIsizeb\fR + \fBmax\fR(\fIwatobd\fR, \fIwbdtosvd\fR), 
+.IP
+where \fIsizeb\fR = \fBmax\fR(\fIm\fR, \fIn\fR), and \fIwatobd\fR and \fIwbdtosvd\fR refer, respectively, to the workspace required to bidiagonalize the matrix \fIA\fR and to go from the bidiagonal matrix to the singular value decomposition \fIU\fR\fIS\fR\fIVT\fR.
+.IP
+For \fIwatobd\fR, the following holds:
+.IP
+\fIwatobd\fR =  \fBmax\fR(\fBmax\fR(\fIwp?lange\fR,\fIwp?gebrd\fR), \fBmax\fR(\fIwp?lared2d\fR, \fIwp?lared1d\fR)), 
+.IP
+where \fIwp?lange\fR, \fIwp?lared1d\fR, \fIwp?lared2d\fR, \fIwp?gebrd\fR are the workspaces required respectively for the subprograms \fBp?lange\fR, \fBp?lared1d\fR, \fBp?lared2d\fR, \fBp?gebrd\fR. Using the standard notation 
+.IP
+\fImp\fR = \fBnumroc\fR(\fIm\fR, \fImb\fR, \fBMYROW\fR, \fIdesca\fR(\fIctxt\(ul\fR), \fBNPROW\fR), 
+.IP
+\fInq\fR = \fBnumroc\fR(\fIn\fR, \fInb\fR, \fBMYCOL\fR, \fIdesca\fR(\fIlld\(ul\fR), \fBNPCOL\fR),
+.IP
+the workspaces required for the above subprograms are
+.IP
+\fIwp?lange\fR = \fImp\fR, 
+.IP
+\fIwp?lared1d\fR = \fInq\fR0, 
+.IP
+\fIwp?lared2d\fR = \fImp\fR0, 
+.IP
+\fIwp?gebrd\fR = \fInb\fR*(\fImp\fR + \fInq\fR + 1) + \fInq\fR, 
+.IP
+where \fInq\fR0 and \fImp\fR0 refer, respectively, to the values obtained at \fBMYCOL\fR = 0 and \fBMYROW\fR = 0. In general, the upper limit for the workspace is given by a workspace required on processor (0,0): 
+.IP
+\fIwatobd\fR \(<= \fInb\fR*(\fImp\fR0 + \fInq\fR0 + 1) + \fInq\fR0.
+.IP
+In case of a homogeneous process grid this upper limit can be used as an estimate of the minimum workspace for every processor.
+.IP
+For \fIwbdtosvd\fR, the following holds:
+.IP
+\fIwbdtosvd\fR = \fIsize\fR*(\fIwantu\fR*\fInru\fR + \fIwantvt\fR*\fIncvt\fR) + \fBmax\fR(\fIw?bdsqr\fR, \fBmax\fR(\fIwantu\fR*\fIwp?ormbrqln\fR, \fIwantvt\fR*\fIwp?ormbrprt\fR)), 
+.IP
+where 
+.IP
+\fIwantu\fR(\fIwantvt\fR) = 1, if left/right singular vectors are wanted, and \fIwantu\fR(\fIwantvt\fR) = 0, otherwise. \fIw?bdsqr\fR, \fIwp?ormbrqln\fR, and \fIwp?ormbrprt\fR refer respectively to the workspace required for the subprograms  \fB?bdsqr\fR, \fBp?ormbr\fR(\fIqln\fR), and \fBp?ormbr\fR(\fIprt\fR), where \fIqln\fR and \fIprt\fR are the values of the arguments \fIvect\fR, \fIside\fR, and \fItrans\fR in the call to \fBp?ormbr\fR. \fInru\fR is equal to the local number of rows of the matrix \fIU\fR when distributed 1-dimensional "column" of processes. Analogously, \fIncvt\fR is equal to the local number of columns of the matrix \fIVT\fR when distributed across 1-dimensional "row" of processes. Calling the LAPACK procedure \fB?bdsqr\fR requires 
+.IP
+\fIw?bdsqr\fR = \fBmax\fR(1, 2*\fIsize\fR + (2*\fIsize\fR - 4)* \fBmax\fR(\fIwantu\fR, \fIwantvt\fR))
+.IP
+on every processor. Finally, 
+.IP
+\fIwp?ormbrqln\fR = \fBmax\fR((\fInb\fR*(\fInb\fR-1))/2, (\fIsizeq\fR+\fImp\fR)*\fInb\fR)+\fI\fR\fInb\fR*\fInb\fR, 
+.IP
+\fIwp?ormbrprt\fR = \fBmax\fR((\fImb\fR*(\fImb\fR-1))/2, (\fIsizep\fR+\fInq\fR)*\fImb\fR)+\fImb\fR*\fImb\fR, 
+.IP
+If \fIlwork\fR = -1, then \fIlwork\fR is global input and a workspace query is assumed; the routine only calculates the minimum size for the work array. The required workspace is returned as the first element of \fIwork\fR and no error message is issued by \fBpxerbla\fR. 
+.TP 10
+\fBrwork\fR
+.NL
+\fBREAL\fR for \fBpsgesvd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgesvd\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgesvd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzgesvd\fR
+.IP
+Workspace array, dimension (1 + 4*\fIsizeb\fR)
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+On exit, the contents of \fIa\fR are destroyed.
+.TP 10
+\fBs\fR
+.NL
+(global). \fBREAL\fR for \fBpsgesvd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgesvd\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgesvd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzgesvd\fR
+.IP
+Array, \fBDIMENSION\fR (\fIsize\fR). 
+.IP
+Contains the singular values of \fIA\fR sorted so that \fIs\fR(i) \(>=\fIs\fR(i+1).
+.TP 10
+\fBu\fR
+.NL
+(local). \fBREAL\fR for \fBpsgesvd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgesvd\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgesvd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzgesvd\fR
+.IP
+local dimension (\fImp\fR, \fIsizeq\fR), global dimension (\fIm\fR, \fIsize\fR) 
+.IP
+If \fIjobu\fR = \fB\'V\'\fR, \fIu\fR contains the first min(\fIm\fR, \fIn\fR) columns of \fIU\fR. 
+.IP
+If \fIjobu\fR = \fB\'N\'\fR or \fB\'O\'\fR, \fIu\fR is not referenced.
+.TP 10
+\fBvt\fR
+.NL
+(local). \fBREAL\fR for \fBpsgesvd\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBpdgesvd\fR
+.IP
+\fBCOMPLEX\fR for \fBpcgesvd\fR
+.IP
+\fBCOMPLEX*16\fR for \fBpzgesvd\fR
+.IP
+local dimension (\fIsizep\fR, \fInq\fR), global dimension (\fIsize\fR, \fIn\fR) 
+.IP
+If \fIjobvt\fR = \fB\'V\'\fR, \fIvt\fR contains the first \fIsize\fR rows of \fIV\fR**\fIT\fRif \fIjobu\fR = \fB\'N\'\fR, \fIvt\fR is not referenced.
+.TP 10
+\fBwork\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIwork\fR(1) returns the required minimal size of \fIlwork\fR.
+.TP 10
+\fBrwork\fR
+.NL
+On exit, if \fIinfo\fR = 0, then \fIrwork\fR(1) returns the required size of \fIrwork\fR.
+.TP 10
+\fBinfo\fR
+.NL
+(global) \fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR < 0, If \fIinfo\fR = \fI-i\fR, the \fIi\fRth parameter had an illegal value. 
+.IP
+If \fIinfo\fR > 0 \fIi\fR, then if \fB?bdsqr\fR did not converge, 
+.IP
+If \fIinfo\fR = min(\fIm\fR,\fIn\fR) + 1, then \fBp?gesvd\fR has detected heterogeneity by finding that eigenvalues were not identical across the process grid. In this case, the accuracy of the results from \fBp?gesvd\fR cannot be guaranteed. 

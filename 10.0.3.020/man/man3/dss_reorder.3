@@ -1,0 +1,35 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH dss\(ulreorder 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+dss\(ulreorder \- Computes permutation vector that minimizes the fill-in during the factorization phase.
+.SH SYNOPSIS
+.PP
+\fBdss\(ulreorder\fR(\fIhandle\fR, \fIopt\fR, \fIperm\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBopt\fR
+.NL
+\fBINTEGER\fR. Option passing argument. The default option for the permutation type is \fBMKL\(ulDSS\(ulAUTO\(ulORDER.\fR
+.TP 10
+\fBperm\fR
+.NL
+\fBINTEGER\fR. Array of length \fInRows\fR. Contains a user-defined permutation vector (accessed only if \fIopt\fR contains \fBMKL\(ulDSS\(ulMY\(ulORDER)\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBhandle\fR
+.NL
+Data object of the \fBMKL\(ulDSS\(ulHANDLE\fR type (see Interface Description).
+.SH RETURN VALUES
+.PP
+.PP
+\fBMKL\(ulDSS\(ulSUCCESS\fR
+.PP
+\fBMKL\(ulDSS\(ulSTATE\(ulERR\fR
+.PP
+\fBMKL\(ulDSS\(ulINVALID\(ulOPTION\fR
+.PP
+\fBMKL\(ulDSS\(ulOUT\(ulOF\(ulMEMORY\fR

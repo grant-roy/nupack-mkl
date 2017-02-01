@@ -1,0 +1,71 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laqr1 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laqr1 \- Sets a scalar multiple of the first column of the product of 2-by-2 or 3-by-3 matrix \fIH\fR and specified shifts.
+.SH SYNOPSIS
+.PP
+\fBcall slaqr1\fR( \fIn\fR, \fIh\fR, \fIldh\fR,\fI sr1\fR,\fI si1\fR,\fI sr2\fR, si2, v )
+.PP
+\fBcall dlaqr1\fR( \fIn\fR, \fIh\fR, \fIldh\fR,\fI sr1\fR,\fI si1\fR,\fI sr2\fR, si2, \fIv \fR)
+.PP
+\fBcall claqr1\fR( \fIn\fR, \fIh\fR, \fIldh\fR,\fI s1\fR,\fI s2\fR,\fI v \fR)
+.PP
+\fBcall zlaqr1\fR( \fIn\fR, \fIh\fR, \fIldh\fR,\fI s1\fR,\fI s2\fR,\fI v \fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The order of the matrix \fIH\fR. \fBn\fR must be equal to 2 or 3.
+.TP 10
+\fBsr1\fR, \fBsi2\fR, \fBsr2\fR, \fBsi2\fR
+.NL
+\fBREAL\fR for \fBslaqr1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr1\fR
+.IP
+Shift values that define \fIK\fR in the formula above.
+.TP 10
+\fBs1\fR, \fBs2\fR
+.NL
+\fBCOMPLEX\fR for \fBclaqr1\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr1\fR.Shift values that define \fIK\fR in the formula above.
+.TP 10
+\fBh\fR
+.NL
+\fBREAL\fR for \fBslaqr1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr1\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr1\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr1\fR.
+.IP
+Array, \fBDIMENSION\fR (\fIldh\fR, \fIn\fR), contains 2-by-2 or 3-by-3 matrix \fIH\fR in the formula above.
+.TP 10
+\fBldh\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+The leading dimension of the array \fBh\fR just as declared in the calling routine. \fBldh \fR\(>= \fBn\fR.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBv\fR
+.NL
+\fBREAL\fR for \fBslaqr1\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaqr1\fR
+.IP
+\fBCOMPLEX\fR for \fBclaqr1\fR
+.IP
+\fBCOMPLEX*16\fR for \fBzlaqr1\fR.
+.IP
+Array with dimension (\fBn\fR).
+.IP
+A scalar multiple of the first column of the matrix \fIK\fR in the formula above.

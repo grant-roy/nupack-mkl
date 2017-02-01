@@ -1,0 +1,92 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?\(ulcommit\(ulsph\(ulp/?\(ulcommit\(ulsph\(ulnp 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+\- Checks consistency and correctness of user\'s data as well as initializes certain data structures required to solve periodic/non-periodic Helmholtz problem on a sphere.
+.SH SYNOPSIS
+.PP
+\fBvoid d\(ulcommit\(ulsph\(ulp\fR(\fBdouble* \fR\fIf, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIhandle\(uls, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIhandle\(ulc, \fR\fBint* \fR\fIipar, \fR\fBdouble* \fR\fIdpar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid s\(ulcommit\(ulsph\(ulp\fR(\fBfloat* \fR\fIf, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIhandle\(uls, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIhandle\(ulc, \fR\fBint* \fR\fIipar, \fR\fBfloat* \fR\fIspar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid d\(ulcommit\(ulsph\(ulnp\fR(\fBdouble* \fR\fIf, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIhandle, \fR\fBint* \fR\fIipar, \fR\fBdouble* \fR\fIdpar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.PP
+\fBvoid s\(ulcommit\(ulsph\(ulnp\fR(\fBfloat* \fR\fIf, \fR\fBDFTI\(ulDESCIPTOR* \fR\fIhandle, \fR\fBint* \fR\fIipar, \fR\fBfloat* \fR\fIspar, \fR\fBint* \fR\fIstat\fR)\fB;\fR
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBf\fR
+.NL
+\fBdouble*\fR for \fBd\(ulcommit\(ulsph\(ulp/d\(ulcommit\(ulsph\(ulnp\fR,
+.IP
+\fBfloat*\fR for \fBs\(ulcommit\(ulsph\(ulp/s\(ulcommit\(ulsph\(ulnp\fR. 
+.IP
+Contains the right-hand side of the problem packed in a single vector. The size of the vector is (\fBnp\fR+1)*(\fBnt\fR+1) and value of the right-hand side in the mesh point (\fIi, j\fR) is stored in \fBf\fR[\fIi+j\fR*(\fBnp\fR+1)] . 
+.IP
+Note that the array \fBf\fR may be altered by the routine. Please save this vector in another memory location if you want to preserve it. 
+.TP 10
+\fBipar\fR
+.NL
+\fBint\fR array of size 128. Contains integer data to be used by Fast Helmholtz Solver on a sphere (for details, refer to Common Parameters). 
+.TP 10
+\fBdpar\fR
+.NL
+\fBdouble\fR array of size 5*\fBnp\fR/2+\fBnt\fR+10. Contains double-precision data to be used by Fast Helmholtz Solver on a sphere (for details, refer to Common Parameters). 
+.TP 10
+\fBspar\fR
+.NL
+\fBfloat\fR array of size 5*\fBnp\fR/2+\fBnt\fR+10. Contains single-precision data to be used by Fast Helmholtz Solver on a sphere (for details, refer to Common Parameters). 
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBf\fR
+.NL
+Vector of the right-hand side of the problem. Possibly, altered on output. 
+.TP 10
+\fBipar\fR
+.NL
+Contains integer data to be used by Fast Helmholtz Solver on a sphere. Modified on output as explained in Common Parameters. 
+.TP 10
+\fBdpar\fR
+.NL
+Contains double-precision data to be used by Fast Helmholtz Solver on a sphere. Modified on output as explained in Common Parameters. 
+.TP 10
+\fBspar\fR
+.NL
+Contains single-precision data to be used by Fast Helmholtz Solver on a sphere. Modified on output as explained in Common Parameters. 
+.TP 10
+\fBhandle\(uls, handle\(ulc, handle\fR
+.NL
+\fBDESCIPTOR\(ulHANDLE*\fR. Data structures used by the Intel MKL FFT interface (for details, refer to FFT Functions). \fBhandle\(uls\fR and \fBhandle\(ulc\fR are used only in \fB?\(ulcommit\(ulsph\(ulp\fR and\fB handle\fR is used only in \fB?\(ulcommit\(ulsph\(ulnp\fR. 
+.TP 10
+\fBstat\fR
+.NL
+\fBint*\fR. Routine completion status, which is also written to \fBipar[0]\fR. The status should be 0 to proceed to other PL routines. 
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBstat\fR= 1
+.NL
+The routine completed without errors and produced some warnings. 
+.TP 10
+\fBstat\fR= 0
+.NL
+The routine successfully completed the task. 
+.TP 10
+\fBstat\fR= -100
+.NL
+The routine stopped because an error in the user\'s data was found or the data in the \fBdpar\fR, \fBspar\fR or \fBipar\fR array was altered by mistake. 
+.TP 10
+\fBstat\fR= -1000
+.NL
+The routine stopped because of an Intel MKL FFT or TT interface error. 
+.TP 10
+\fBstat\fR= -10000
+.NL
+The routine stopped because the initialization failed to complete or the parameter \fBipar\fR[0] was altered by mistake. 
+.TP 10
+\fBstat\fR= -99999
+.NL
+The routine failed to complete the task because of a fatal error. 

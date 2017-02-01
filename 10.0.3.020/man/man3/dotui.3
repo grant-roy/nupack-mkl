@@ -1,0 +1,73 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?dotui 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?dotui \- Computes the dot product of a compressed sparse complex vector by a full-storage complex vector.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fIres\fR= \fBcdotui\fR(\fInz\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+\fIres\fR= \fBzdotui\fR(\fIn\fR\fIz\fR, \fIx\fR, \fIindx\fR, \fIy\fR)
+.PP
+.B Fortran 95
+.PP
+\fIres\fR= \fBdotui\fR(\fIx\fR, \fIindx\fR, \fIy\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBnz\fR
+.NL
+\fBINTEGER\fR. The number of elements in \fIx\fR and \fIindx\fR .
+.TP 10
+\fBx\fR
+.NL
+\fBCOMPLEX\fR for \fBcdotui\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzdotui\fR
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR.
+.TP 10
+\fBindx\fR
+.NL
+\fBINTEGER\fR.  Specifies the indices for the elements of \fIx\fR.
+.IP
+Array, \fBDIMENSION\fR at least \fInz\fR.
+.TP 10
+\fBy\fR
+.NL
+\fBCOMPLEX\fR for \fBcdotui\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzdotui\fR
+.IP
+Array, \fBDIMENSION\fR at least max(\fIindx(i)\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBres\fR
+.NL
+\fBCOMPLEX\fR for \fBcdotui\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzdotui\fR
+.IP
+Contains the dot product of \fIx\fR and \fIy\fR, if \fInz\fR is positive. Otherwise, \fIres\fR contains 0.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77   counterparts. For general conventions applied to skip redundant or reconstructible arguments, see Fortran 95 Interface Conventions.
+.PP
+Specific details for the routine \fBdotui\fR interface are the following:
+.TP 10
+\fBx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBindx\fR
+.NL
+Holds the vector of length (\fInz\fR).
+.TP 10
+\fBy\fR
+.NL
+Holds the vector of length (\fInz\fR).

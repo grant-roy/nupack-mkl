@@ -1,0 +1,71 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?laed6 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?laed6 \- Used by \fBsstedc\fR/\fBdstedc\fR. Computes one Newton step in solution of the secular equation.
+.SH SYNOPSIS
+.PP
+\fBcall slaed6\fR( \fIkniter\fR, \fIorgati\fR, \fIrho\fR, \fId\fR, \fIz\fR, \fIfinit\fR, \fItau\fR, \fIinfo\fR)
+.PP
+\fBcall dlaed6\fR( \fIkniter\fR, \fIorgati\fR, \fIrho\fR, \fId\fR, \fIz\fR, \fIfinit\fR, \fItau\fR, \fIinfo\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBkniter\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+Refer to \fB?laed4\fR for its significance.
+.TP 10
+\fBorgati\fR
+.NL
+\fBLOGICAL\fR. 
+.IP
+If \fIorgati\fR = \fB.TRUE.\fR, the needed root is between \fId\fR(2) and \fId\fR(3); otherwise it is between \fId\fR(1) and \fId\fR(2). See \fB?laed4\fR for further details.
+.TP 10
+\fBrho\fR
+.NL
+\fBREAL\fR for \fBslaed6\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed6\fR
+.IP
+Refer to the equation for \fIf\fR(\fIx\fR) above.
+.TP 10
+\fBd\fR, \fBz\fR
+.NL
+\fBREAL\fR for \fBslaed6\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed6\fR
+.IP
+Arrays, dimension (3) each.
+.IP
+The array \fId\fR satisfies \fId\fR(1) < \fId\fR(2) < \fId\fR(3).
+.IP
+Each of the elements in the array \fIz\fR must be positive.
+.TP 10
+\fBfinit\fR
+.NL
+\fBREAL\fR for \fBslaed6\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed6\fR
+.IP
+The value of \fIf\fR(\fIx\fR) at 0. It is more accurate than the one evaluated inside this routine (if someone wants to do so).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBtau\fR
+.NL
+\fBREAL\fR for \fBslaed6\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdlaed6\fR
+.IP
+The root of the equation for \fIf\fR(\fIx\fR).
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = 1, failure to converge.

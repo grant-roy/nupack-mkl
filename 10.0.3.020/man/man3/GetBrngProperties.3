@@ -1,0 +1,56 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH GetBrngProperties 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+GetBrngProperties \- 
+.SH SYNOPSIS
+.PP
+.B ! Fortran
+.PP
+\fIstatus\fR= \fBvslgetbrngproperties\fR( \fIbrng\fR, \fIproperties\fR)
+.PP
+.B /* C */
+.PP
+\fIstatus\fR= \fBvslGetBrngProperties\fR( \fIbrng\fR, \fI&properties\fR);
+.SH INPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBbrng\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBINTEGER\fR, \fBINTENT(IN)\fR
+.br
+\h\'2\'C:\h\'7\'\fBint\fR
+.br
+.SB Description
+.br
+\h\'1\'Number (index) of the registered basic generator; used for identification.  Negative values indicate the registration error.
+.SH OUTPUT PARAMETERS
+.PP
+.SB Name
+.br
+\h\'1\'\fBproperties\fR
+.br
+.SB Type
+.br
+\h\'2\'FORTRAN: \fBTYPE(VSL\(ulBRNG\(ulPROPERTIES)\fR, \fBINTENT(OUT)\fR
+.br
+\h\'2\'C:\h\'7\'\fBVSLBRngProperties*\fR
+.br
+.SB Description
+.br
+\h\'1\'Pointer to the structure containing properties of the generator with number \fIbrng\fR
+.SH RETURN VALUES
+.PP
+
+.TP 10
+\fBVSL\(ulERROR\(ulOK\fR, \fBVSL\(ulSTATUS\(ulOK\fR
+.NL
+Indicates no error, execution is successful.
+.TP 10
+\fBVSL\(ulERROR\(ulINVALID\(ulBRNG\(ulINDEX\fR
+.NL
+BRNG index is invalid.

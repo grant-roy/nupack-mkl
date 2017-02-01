@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+export KMP_AFFINITY=compact
+ 
+echo "This is a SAMPLE run script.  Change it to reflect the correct number"
+echo "of CPUs/threads, problem input files, etc.."
+ 
+date
+date > lin_itanium.txt
+./xlinpack_itanium lininput_itanium >> lin_itanium.txt
+date >> lin_itanium.txt
+echo -n "Done: "
+date

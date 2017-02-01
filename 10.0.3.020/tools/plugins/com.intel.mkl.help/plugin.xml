@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<!-- ================================================= -->
+<!-- This is the plugin for declaring the help         -->
+<!-- contributions of the Intel(R) MKL Ref manual plugin.                 -->
+<!-- ================================================= -->
+
+<plugin
+   name = "%pluginName"
+   id = "com.intel.mkl.help"
+   version = "1.0.0"
+   provider-name = "%providerName">
+
+<!-- ================================================= -->
+<!-- List toc files here.                           -->
+<!-- ================================================= -->
+
+	<extension point="org.eclipse.help.toc">
+		<toc file="mkl_toc.xml" primary="true"/>
+		<index path="help_index"/>
+	</extension>
+	<extension point="org.eclipse.help.index">
+         	<index file="mkl_index.xml"/>
+	</extension>
+	<extension point="org.eclipse.help.contexts">
+		<contexts file="f1analyzer.xml">
+		</contexts>
+	</extension>
+	<extension point="org.eclipse.help.ui.searchEngine">
+      <engine
+            enabled="true"
+            engineTypeId="org.eclipse.help.ui.web"
+            id="org.eclipse.sdk.Intel"
+            label="Intel.com">
+      		<description>
+	      		%search.Intel.desc
+      		</description>
+      		<param 
+      			name="url" 
+      			value="http://mysearch.intel.com/corporate/default.aspx?culture=en-US&amp;q={expression}&amp;searchsubmit.x=18&amp;searchsubmit.y=10">
+      		</param>
+      </engine>
+      
+    </extension>
+
+  </plugin>
+

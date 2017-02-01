@@ -1,0 +1,5 @@
+PDE_TT_C = \
+d_trig_tforms_bvp \
+d_trig_tforms_slae \
+s_trig_tforms_bvp \
+s_trig_tforms_slae

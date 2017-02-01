@@ -1,0 +1,35 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?trbs2d 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?trbs2d \- Starts a broadcast along a scope for a trapezoidal matrix.
+.SH SYNOPSIS
+.PP
+\fBcall itrbs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall strbs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall dtrbs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall ctrbs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.PP
+\fBcall ztrbs2d\fR( \fIicontxt\fR, \fIscope\fR, \fItop\fR, \fIuplo\fR, \fIdiag\fR, \fIm\fR, \fIn\fR, \fIa\fR, \fIlda\fR)
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBicontxt\fR
+.NL
+\fBINTEGER\fR.  Integer handle that indicates the context.
+.TP 10
+\fBscope\fR
+.NL
+\fBCHARACTER*1\fR. Indicates what scope the broadcast should proceed on. Limited to \'Row\', \'Column\', or \'All\'.
+.TP 10
+\fBtop\fR
+.NL
+\fBCHARACTER*1\fR. Indicates the communication pattern to use for the broadcast.
+.TP 10
+\fBuplo\fR, \fBdiag\fR, \fBm\fR, \fBn\fR, \fBa\fR, \fBlda\fR
+.NL
+Describe the matrix to be sent. See Matrix Shapes for details.

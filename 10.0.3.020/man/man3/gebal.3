@@ -1,0 +1,121 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?gebal 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?gebal \- Balances a general matrix to improve the accuracy of computed eigenvalues and eigenvectors.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sgebal\fR(\fIjob\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIilo\fR, \fIihi\fR, \fIscale\fR, \fIinfo\fR)
+.PP
+\fBcall dgebal\fR(\fIjob\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIilo\fR, \fIihi\fR, \fIscale\fR, \fIinfo\fR)
+.PP
+\fBcall cgebal\fR(\fIjob\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIilo\fR, \fIihi\fR, \fIscale\fR, \fIinfo\fR)
+.PP
+\fBcall zgebal\fR(\fIjob\fR, \fIn\fR, \fIa\fR, \fIlda\fR, \fIilo\fR, \fIihi\fR, \fIscale\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall gebal\fR(\fIa\fR[, \fIscale\fR] [,\fIilo\fR] [,\fIihi\fR] [,\fIjob\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBjob\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'N\'\fR or \fB\'P\'\fR or \fB\'S\'\fR or \fB\'B\'\fR. 
+.IP
+If \fIjob\fR = \fB\'N\'\fR, then \fIA\fR is neither permuted nor scaled (but \fIilo\fR, \fIihi\fR, and \fIscale\fR get their values). 
+.IP
+If \fIjob\fR = \fB\'P\'\fR, then \fIA\fR is permuted but not scaled. 
+.IP
+If \fIjob\fR = \fB\'S\'\fR, then \fIA\fR is scaled but not permuted. 
+.IP
+If \fIjob\fR = \fB\'B\'\fR, then \fIA\fR is both scaled and permuted.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIA\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBa\fR
+.NL
+\fBREAL\fR for \fBsgebal\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdgebal\fR
+.IP
+\fBCOMPLEX\fR for \fBcgebal\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzgebal\fR. 
+.IP
+Arrays: 
+.IP
+\fIa\fR (\fIlda\fR,*) contains the matrix \fIA\fR. 
+.IP
+The second dimension of \fIa\fR must be at least max(1, \fIn\fR). \fIa\fR is not referenced if \fIjob\fR = \fB\'N\'\fR.
+.TP 10
+\fBlda\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIa\fR; at least max(1, \fIn\fR).
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBa\fR
+.NL
+Overwritten by the balanced matrix (\fIa\fR is not referenced if \fIjob\fR = \fB\'N\'\fR).
+.TP 10
+\fBilo\fR, \fBihi\fR
+.NL
+\fBINTEGER\fR. The values \fIilo\fR and \fIihi\fR such that on exit \fIa\fR(\fIi,j\fR) is zero if \fIi\fR > \fIj\fR and 1 \(<=\fIj\fR < \fIilo\fR or \fIihi\fR < \fIi\fR\(<=\fIn\fR. 
+.IP
+If \fIjob\fR = \fB\'N\'\fR or \fB\'S\'\fR, then \fIilo\fR = 1 and \fIihi\fR = \fIn\fR.
+.TP 10
+\fBscale\fR
+.NL
+\fBREAL\fR for single-precision flavors \fBDOUBLE PRECISION\fR for double-precision flavors 
+.IP
+Array, \fBDIMENSION\fR at least max(1, \fIn\fR). 
+.IP
+Contains details of the permutations and scaling factors.
+.IP
+More precisely, if \fIp\fR(\fIj\fR) is the index of the row and column interchanged with row and column \fIj\fR, and \fId\fR(\fIj\fR) is the scaling factor used to balance row and column \fIj\fR, then 
+.IP
+\fIscale\fR(\fIj\fR) = \fIp\fR(\fIj\fR) for \fIj\fR = 1, 2,..., \fIilo\fR-1, \fIihi\fR+1,..., \fIn\fR;
+.IP
+\fIscale\fR(\fIj\fR) = \fId\fR(\fIj\fR) for \fIj\fR = \fIilo\fR, \fIilo\fR + 1,..., \fIihi\fR. 
+.IP
+The order in which the interchanges are made is \fIn\fR to \fIihi\fR+1, then 1 to \fIilo\fR-1.
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBgebal\fR interface are the following:
+.TP 10
+\fBa\fR
+.NL
+Holds the matrix \fIA\fR of size (\fIn,n\fR).
+.TP 10
+\fBscale\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBilo\fR
+.NL
+Default value for this argument is \fIilo\fR = 1.
+.TP 10
+\fBihi\fR
+.NL
+Default value for this argument is \fIihi\fR = \fIn\fR.
+.TP 10
+\fBjob\fR
+.NL
+Must be \fB\'B\'\fR, \fB\'S\'\fR, \fB\'P\'\fR, or \fB\'N\'\fR. The default value is \fB\'B\'\fR.

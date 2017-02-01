@@ -1,0 +1,201 @@
+.\" Copyright (c) 2002 \- 2008 Intel Corporation
+.\" All rights reserved.
+.\"
+.TH ?bdsqr 3 "Intel Corporation" "Copyright(C) 2002 \- 2008" "Intel(R) Math Kernel Library"
+.SH NAME
+?bdsqr \- Computes the singular value decomposition of a general matrix that has been reduced to bidiagonal form.
+.SH SYNOPSIS
+.PP
+.B Fortran 77
+.PP
+\fBcall sbdsqr\fR(\fIuplo\fR, \fIn\fR, \fIncvt\fR, \fInru\fR, \fIncc\fR, \fId\fR, \fIe\fR, \fIvt\fR, \fIldvt\fR, \fIu\fR, \fIldu\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall dbdsqr\fR(\fIuplo\fR, \fIn\fR, \fIncvt\fR, \fInru\fR, \fIncc\fR, \fId\fR, \fIe\fR, \fIvt\fR, \fIldvt\fR, \fIu\fR, \fIldu\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall cbdsqr\fR(\fIuplo\fR, \fIn\fR, \fIncvt\fR, \fInru\fR, \fIncc\fR, \fId\fR, \fIe\fR, \fIvt\fR, \fIldvt\fR, \fIu\fR, \fIldu\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+\fBcall zbdsqr\fR(\fIuplo\fR, \fIn\fR, \fIncvt\fR, \fInru\fR, \fIncc\fR, \fId\fR, \fIe\fR, \fIvt\fR, \fIldvt\fR, \fIu\fR, \fIldu\fR, \fIc\fR, \fIldc\fR, \fIwork\fR, \fIinfo\fR)
+.PP
+.B Fortran 95
+.PP
+\fBcall rbdsqr\fR(\fId\fR, \fIe\fR[,\fIvt\fR] [,\fIu\fR] [,\fIc\fR] [,\fIuplo\fR] [,\fIinfo\fR])
+.PP
+\fBcall bdsqr\fR(\fId\fR, \fIe\fR[,\fIvt\fR] [,\fIu\fR] [,\fIc\fR] [,\fIuplo\fR] [,\fIinfo\fR])
+.SH INPUT PARAMETERS
+
+.TP 10
+\fBuplo\fR
+.NL
+\fBCHARACTER*1\fR. Must be \fB\'U\'\fR or \fB\'L\'\fR.
+.IP
+If \fIuplo\fR = \fB\'U\'\fR, \fIB\fR is an upper bidiagonal matrix. 
+.IP
+If \fIuplo\fR = \fB\'L\'\fR, \fIB\fR is a lower bidiagonal matrix.
+.TP 10
+\fBn\fR
+.NL
+\fBINTEGER\fR. The order of the matrix \fIB\fR (\fIn\fR\(>= 0). 
+.TP 10
+\fBncvt\fR
+.NL
+\fBINTEGER\fR. The number of columns of the matrix \fIVT\fR, that is, the number of right singular vectors (\fIncvt\fR\(>= 0). 
+.IP
+Set \fIncvt\fR = 0 if no right singular vectors are required.
+.TP 10
+\fBnru\fR
+.NL
+\fBINTEGER\fR. The number of rows in \fIU\fR, that is, the number of left singular vectors (\fInru\fR\(>= 0). 
+.IP
+Set \fInru\fR = 0 if no left singular vectors are required.
+.TP 10
+\fBncc\fR
+.NL
+\fBINTEGER\fR. The number of columns in the matrix \fIC\fR used for computing the product \fIQ\fR**\fIH\fR*\fIC\fR (\fIncc\fR\(>= 0). Set \fIncc\fR = 0 if no matrix \fIC\fR is supplied.
+.TP 10
+\fBd\fR, \fBe\fR, \fBwork\fR
+.NL
+\fBREAL\fR for single-precision flavors
+.IP
+\fBDOUBLE PRECISION\fR for double-precision flavors. 
+.IP
+Arrays: 
+.IP
+\fId\fR(*) contains the diagonal elements of \fIB\fR. 
+.IP
+The dimension of \fId\fR must be at least max(1, \fIn\fR).
+.IP
+\fIe\fR(*) contains the (\fIn\fR-1) off-diagonal elements of \fIB\fR. 
+.IP
+The dimension of \fIe\fR must be at least max(1, \fIn\fR). \fIe\fR(\fIn\fR) is used for workspace.
+.IP
+\fIwork\fR(*) is a workspace array. 
+.IP
+The dimension of \fIwork\fR must be at least max(1, 2*\fIn\fR) if \fIncvt\fR = \fInru\fR = \fIncc\fR = 0;
+.IP
+max(1, 4*(\fIn\fR-1)) otherwise.
+.TP 10
+\fBvt\fR, \fBu\fR, \fBc\fR
+.NL
+\fBREAL\fR for \fBsbdsqr\fR
+.IP
+\fBDOUBLE PRECISION\fR for \fBdbdsqr\fR
+.IP
+\fBCOMPLEX\fR for \fBcbdsqr\fR
+.IP
+\fBDOUBLE COMPLEX\fR for \fBzbdsqr\fR. 
+.IP
+Arrays: 
+.IP
+\fIvt\fR(\fIldvt\fR,*) contains an \fIn\fR-by-\fIncvt\fR matrix \fIVT\fR. 
+.IP
+The second dimension of \fIvt\fR must be at least max(1, \fIncvt\fR).
+.IP
+\fIvt\fR is not referenced if \fIncvt\fR = 0.
+.IP
+\fIu\fR(\fIldu\fR,*) contains an \fInru\fR by \fIn\fR unit matrix \fIU\fR. 
+.IP
+The second dimension of \fIu\fR must be at least max(1, \fIn\fR).
+.IP
+\fIu\fR is not referenced if \fInru\fR = 0.
+.IP
+\fIc\fR(\fIldc\fR\fB,*)\fR contains the matrix \fIC\fR for computing the product \fIQ\fR**\fIH\fR*\fIC\fR. 
+.IP
+The second dimension of \fIc\fR must be at least max(1,\fI ncc\fR). The array is not referenced if \fIncc\fR = 0.
+.TP 10
+\fBldvt\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIvt\fR. Constraints:
+.IP
+\fIldvt\fR\(>= max(1, \fIn\fR) if \fIncvt\fR > 0;
+.IP
+\fIldvt\fR\(>= 1 if \fIncvt\fR = 0.
+.TP 10
+\fBldu\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIu\fR. Constraint:
+.IP
+\fIldu\fR\(>= max(1, \fInru\fR).
+.TP 10
+\fBldc\fR
+.NL
+\fBINTEGER\fR. The first dimension of \fIc\fR. Constraints:
+.IP
+\fIldc\fR\(>= max(1, \fIn\fR) if \fIncc\fR > 0;\fIldc\fR\(>= 1 otherwise.
+.SH OUTPUT PARAMETERS
+
+.TP 10
+\fBd\fR
+.NL
+On exit, if \fIinfo\fR = 0, overwritten by the singular values in decreasing order (see \fIinfo\fR). 
+.TP 10
+\fBe\fR
+.NL
+On exit, if \fIinfo\fR = 0, \fIe\fR is destroyed. See also \fIinfo\fR below. 
+.TP 10
+\fBc\fR
+.NL
+Overwritten by the product \fIQ\fR**\fIH\fR*\fIC\fR. 
+.TP 10
+\fBvt\fR
+.NL
+On exit, this array is overwritten by \fIP\fR**\fIH\fR *\fIVT\fR. 
+.TP 10
+\fBu\fR
+.NL
+On exit, this array is overwritten by \fIU\fR *\fIQ\fR . 
+.TP 10
+\fBinfo\fR
+.NL
+\fBINTEGER\fR. 
+.IP
+If \fIinfo\fR = 0, the execution is successful. 
+.IP
+If \fIinfo\fR = \fI-i\fR, the \fIi\fR-th parameter had an illegal value. 
+.IP
+If \fIinfo\fR = \fIi\fR, the algorithm failed to converge; \fIi\fR specifies how many off-diagonals did not converge. 
+.IP
+In this case, \fId\fR and \fIe\fR contain on exit the diagonal and off-diagonal elements, respectively, of a bidiagonal matrix orthogonally equivalent to \fIB\fR.
+.SH FORTRAN 95 INTERFACE NOTES
+.PP
+.PP
+Routines in Fortran 95 interface have fewer arguments in the calling sequence than their Fortran 77 counterparts. For general conventions applied to skip redundant or restorable arguments, see Fortran 95  Interface Conventions.
+.PP
+Specific details for the routine \fBbdsqr\fR interface are the following:
+.TP 10
+\fBd\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBe\fR
+.NL
+Holds the vector of length (\fIn\fR).
+.TP 10
+\fBvt\fR
+.NL
+Holds the matrix \fIVT\fR of size (\fIn\fR, \fBncvt\fR).
+.TP 10
+\fBu\fR
+.NL
+Holds the matrix \fIU\fR of size (\fInru,n\fR).
+.TP 10
+\fBc\fR
+.NL
+Holds the matrix \fIC\fR of size (\fIn,ncc\fR).
+.TP 10
+\fBuplo\fR
+.NL
+Must be \fB\'U\'\fR or \fB\'L\'\fR. The default value is \fB\'U\'\fR.
+.TP 10
+\fBncvt\fR
+.NL
+If argument \fIvt\fR is present, then \fIncvt\fR is equal to the number of columns in matrix \fIVT\fR; otherwise, \fIncvt\fR is set to zero.
+.TP 10
+\fBnru\fR
+.NL
+If argument \fIu\fR is present, then \fInru\fR is equal to the number of rows in matrix \fIU\fR; otherwise, \fInru\fR is set to zero.
+.TP 10
+\fBncc\fR
+.NL
+If argument \fIc\fR is present, then \fIncc\fR is equal to the number of columns in matrix \fIC\fR; otherwise, \fIncc\fR is set to zero.
+.PP
+Note that two variants of Fortran 95 interface for \fBbdsqr\fR routine are needed because of an ambiguous choice between real and complex cases appear when \fIvt\fR, \fIu\fR, and \fIc\fR are omitted. Thus, the name \fBrbdsqr\fR is used in real cases (single or double precision), and the name \fBbdsqr\fR is used in complex cases (single or double precision).
